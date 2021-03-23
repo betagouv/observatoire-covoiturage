@@ -3,7 +3,7 @@ import { aire_covoit } from './aire_covoit'
 
 async function main(){
   try{
-    //await perimeters()
+    await perimeters()
     await aire_covoit()  
   }
   catch(err){
