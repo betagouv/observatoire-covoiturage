@@ -1,0 +1,2 @@
+-- DROP SCHEMA IF EXISTS covoiturage CASCADE;
+CREATE SCHEMA IF NOT EXISTS covoiturage;
