@@ -1,0 +1,6 @@
+# Dependency directories
+node_modules
+# generated code
+dist
+# Environment variables
+.env
