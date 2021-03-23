@@ -10,7 +10,7 @@ export const downloadFile = async function(path:string, url: string, file?:strin
     spinner.start('Downloading file')    
     const response = await axios.get(url,{responseType: 'stream'})
     const contentDisposition =response.headers['content-disposition']
-    if(contentDisposition.indexOf("filename=")!== -1){
+    if(contentDisposition && contentDisposition.indexOf("filename=")!== -1){
       const startIndex = contentDisposition.indexOf("filename=") + 10
       const endIndex = contentDisposition.length - 1
       const filename = contentDisposition.substring(startIndex, endIndex)
