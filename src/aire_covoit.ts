@@ -1,4 +1,3 @@
-import fs from 'fs'
 import { join } from 'path'
 import axios from 'axios'
 import { downloadFile } from './donwload'

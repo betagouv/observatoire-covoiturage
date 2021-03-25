@@ -39,6 +39,7 @@ export const importCSV = async function (client:PoolClient,tableDef:string, path
     const sql = `COPY ${tableDef}
     FROM '${path+filename}'
     DELIMITER '${delimiter}'
+    ENCODING 'UTF8'
     CSV HEADER;`
     await client.query(sql)
     spinner.succeed(filename+' imported')

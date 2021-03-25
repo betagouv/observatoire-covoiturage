@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "csv-parser": "^3.0.0",
     "extract-zip": "^2.0.1",
     "ora": "^5.4.0",
     "pg": "^8.5.1",
