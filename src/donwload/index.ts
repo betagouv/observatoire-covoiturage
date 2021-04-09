@@ -3,6 +3,7 @@ import axios, { AxiosResponse } from 'axios'
 import ora from 'ora'
 import extract from 'extract-zip'
 import {createGunzip} from 'zlib'
+import { extractFull } from 'node-7z'
 
 export const downloadFile = async function(path:string, url: string, file?:string):Promise<void>{
   const spinner = ora()
@@ -28,6 +29,11 @@ export const downloadFile = async function(path:string, url: string, file?:strin
         spinner.start('Extracting file from '+filename)
         await ungzFile(path,filename)
         spinner.succeed(filename+' ungz')
+      }
+      if(filename.endsWith('.7z')){
+        spinner.start('Extracting file from '+filename)
+        await un7zFile(path,filename)
+        spinner.succeed(filename+' un7z')
       }
       spinner.succeed(filename+' downloaded')
     }
@@ -57,5 +63,12 @@ export const ungzFile = function(path:string,filename:string):Promise<void>{
     file.pipe(writeStream)
     file.on('finish', resolve)
     file.on('error',  reject)
+  })
+}
+export const un7zFile = function(path:string,filename:string):Promise<void>{
+  return new Promise((resolve, reject) => {
+    const stream = extractFull(path+filename,path)
+    stream.on('end', resolve)
+    stream.on('error', reject)
   })
 }

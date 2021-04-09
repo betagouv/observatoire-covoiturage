@@ -3,89 +3,234 @@ import { downloadFile } from './donwload'
 import {PoolClient} from 'pg'
 import pgConnection from './database/connection'
 import {execQuery, importCSV, importXLSX, importGeojson} from './database/queries'
+import {convertGeoFile} from './transform'
 
 
 async function inseeDownload(){
   const path =join(__dirname, '../assets/insee/')
   await Promise.all([
+    downloadFile(path,'https://www.insee.fr/fr/statistiques/fichier/5057840/commune2021-csv.zip'),
     downloadFile(path,'https://www.insee.fr/fr/statistiques/fichier/5057840/mvtcommune2021-csv.zip'),
     downloadFile(path,'https://www.insee.fr/fr/statistiques/fichier/2510634/Intercommunalite_Metropole_au_01-01-2019.zip'),
     downloadFile(path,'https://www.insee.fr/fr/statistiques/fichier/2510634/Intercommunalite_Metropole_au_01-01-2020.zip'),
-    downloadFile(path,'https://www.insee.fr/fr/statistiques/fichier/2510634/Intercommunalite_Metropole_au_01-01-2021.zip')
+    downloadFile(path,'https://www.insee.fr/fr/statistiques/fichier/2510634/Intercommunalite_Metropole_au_01-01-2021.zip'),
+    downloadFile(path,'https://www.insee.fr/fr/statistiques/fichier/5057840/departement2021-csv.zip'),
+    downloadFile(path,'https://www.insee.fr/fr/statistiques/fichier/5057840/region2021-csv.zip'),
+    downloadFile(path,'https://www.insee.fr/fr/statistiques/fichier/5057840/pays2021-csv.zip'),
+    
+    
   ])
 }
-async function geoDownload(){
-  const path =join(__dirname, '../assets/etalab/')
-  await downloadFile(path,'http://etalab-datasets.geo.data.gouv.fr/contours-administratifs/2019/geojson/communes-100m.geojson.gz','communes-100m.geojson.gz')
-  await downloadFile(path,'http://etalab-datasets.geo.data.gouv.fr/contours-administratifs/2019/geojson/communes-1000m.geojson.gz','communes-1000m.geojson.gz')
+
+async function ceremaDownload(){
+  const path =join(__dirname, '../assets/cerema/')
+  await Promise.all([
+    downloadFile(path,'http://www.cerema.fr/system/files/documents/2019/07/base_rt_2019_-_v1-1_-_version_diffusable_0.ods','aom_2019.ods'),
+    downloadFile(path,'https://www.cerema.fr/system/files/documents/2020/07/base_rt_2020_v1-1_diffusion_0.ods','aom_2020.ods')
+  ])
 }
+
+async function geoDownload(){
+  const path =join(__dirname, '../assets/ign/')
+  await Promise.all([
+    downloadFile(path,'http://files.opendatarchives.fr/professionnels.ign.fr/adminexpress/ADMIN-EXPRESS-COG_2-0__SHP__FRA_WGS84G_2019-09-24.7z','admin-express-2019.7z'),
+    downloadFile(path,'http://files.opendatarchives.fr/professionnels.ign.fr/adminexpress/ADMIN-EXPRESS-COG_2-1__SHP__FRA_WGS84G_2020-11-20.7z','admin-express-2020.7z')
+  ]) 
+}
+
+async function geoTransform(){
+  const path2019 =join(__dirname, '../assets/ign/ADMIN-EXPRESS-COG_2-0__SHP__FRA_2019-09-24/ADMIN-EXPRESS-COG/1_DONNEES_LIVRAISON_2019-09-24/ADE-COG_2-0_SHP_WGS84_FR/')
+  const path2020 =join(__dirname, '../assets/ign/ADMIN-EXPRESS-COG_2-1__SHP__FRA_2020-11-20/ADMIN-EXPRESS-COG/1_DONNEES_LIVRAISON_2020-11-20/ADE-COG_2-1_SHP_WGS84G_FRA/')
+  await Promise.all([
+    convertGeoFile(path2019,'COMMUNE_CARTO.shp',join(__dirname, '../assets/ign/'),'communes_2019.geojson','geojson',0.000001,'-simplify dp interval=100 keep-shapes'),
+    convertGeoFile(path2019,'CHEF_LIEU_CARTO.shp',join(__dirname, '../assets/ign/'),'chef_lieu_2019.geojson','geojson',0.000001),
+    convertGeoFile(path2020,'COMMUNE.shp',join(__dirname, '../assets/ign/'),'communes_2020.geojson','geojson',0.000001,' '+path2020+'ARRONDISSEMENT_MUNICIPAL.shp combine-files -merge-layers force -simplify 60%'),
+    convertGeoFile(path2020,'CHEF_LIEU_CARTO.shp',join(__dirname, '../assets/ign/'),'chef_lieu_2020.geojson','geojson',0.000001)
+  ])
+  // 2 simplifications supplémentaires pour la couche communes_2020
+  await convertGeoFile(join(__dirname, '../assets/ign/'),'communes_2020.geojson','force '+join(__dirname, '../assets/ign/'),'communes_2020.geojson','geojson',0.000001,'-simplify 50% keep-shapes')
+  await convertGeoFile(join(__dirname, '../assets/ign/'),'communes_2020.geojson','force '+join(__dirname, '../assets/ign/'),'communes_2020.geojson','geojson',0.000001,'-simplify 40% keep-shapes')
+}
+
 async function tablesCreation(client:PoolClient){
   const path =join(__dirname, './database/sql/perimeters/')
-  await execQuery(client,path,'create_schema_perimeters.sql')
+  //await execQuery(client,path,'create_schema_perimeters.sql')
   await Promise.all([
+    execQuery(client,path,'create_table_insee_mvt_communes.sql'),
+    execQuery(client,path,'create_table_insee_com_2021.sql'),
+    execQuery(client,path,'create_table_passage_arr.sql'),
     execQuery(client,path,'create_table_insee_perim_2019.sql'),
     execQuery(client,path,'create_table_insee_perim_2020.sql'),
     execQuery(client,path,'create_table_insee_perim_2021.sql'),
-    execQuery(client,path,'create_table_insee_mvt_communes.sql')
+    execQuery(client,path,'create_table_cerema_aom_2019.sql'),
+    execQuery(client,path,'create_table_cerema_aom_2020.sql'),
+    execQuery(client,path,'create_table_insee_dep_2021.sql'),
+    execQuery(client,path,'create_table_insee_reg_2021.sql'),
+    execQuery(client,path,'create_table_insee_pays_2021.sql')
   ])
 }
 async function tablesGeoCreation(client:PoolClient){
   const path =join(__dirname, './database/sql/perimeters/')
   await Promise.all([
-    execQuery(client,path,'create_table_etalab_com_100m_2019.sql'),
-    execQuery(client,path,'create_table_etalab_com_1000m_2019.sql')
+    execQuery(client,path,'create_table_communes_2019.sql'),
+    execQuery(client,path,'create_table_communes_2020.sql'),
+    execQuery(client,path,'create_table_communes_2021.sql'),
+    execQuery(client,path,'create_table_arrondissements_municipaux_2019.sql'),
+    execQuery(client,path,'create_table_arrondissements_municipaux_2020.sql'),
+    execQuery(client,path,'create_table_arrondissements_municipaux_2021.sql')
   ])
 }
 
 async function importData(client:PoolClient){
-  // import Intercommunalite_Metropole_au_01-01-2019.xls
-  const xls = {
-    path: join(__dirname, '../assets/insee/'),
-    filename:'Intercommunalite_Metropole_au_01-01-2019.xls',
-    sheet: 'Composition_communale',
-    startRow: 5
-  }
-  const sql = {
-    path: join(__dirname, './database/sql/perimeters/'),
-    filename:'insert_table_insee_perim_2019.sql',
-  }
-  await importXLSX(client,xls,sql)
-  
-  // import Intercommunalite_Metropole_au_01-01-2020.xlsx
-  xls.filename = 'Intercommunalite_Metropole_au_01-01-2020.xlsx'
-  sql.filename = 'insert_table_insee_perim_2020.sql'
-  await importXLSX(client,xls,sql)
-
-  // import Intercommunalite_Metropole_au_01-01-2021.xlsx
-  xls.filename = 'Intercommunalite-Metropole_au_01-01-2021.xlsx'
-  sql.filename = 'insert_table_insee_perim_2021.sql'
-  await importXLSX(client,xls,sql)
-  
-  // import mvtcommune2021.csv
-  const csv={
-    tableDef: 'perimeters.insee_mvt_communes(mod, date_eff, typecom_av, com_av, tncc_av, ncc_av, nccenr_av, libelle_av, typecom_ap, com_ap, tncc_ap, ncc_ap, nccenr_ap, libelle_ap)',
-    path: join(__dirname, '../assets/insee/'),
-    filename: 'mvtcommune2021.csv',
-    separator:','
-  }
-  await importCSV(client,csv.tableDef,csv.path,csv.filename,csv.separator)
+  await Promise.all([
+    // import mvtcommune2021.csv
+    importCSV(client,
+      'perimeters.insee_mvt_communes(mod, date_eff, typecom_av, com_av, tncc_av, ncc_av, nccenr_av, libelle_av, typecom_ap, com_ap, tncc_ap, ncc_ap, nccenr_ap, libelle_ap)',
+      join(__dirname, '../assets/insee/'),
+      'mvtcommune2021.csv',
+      ','
+    ),
+    // import commune2021.csv
+    importCSV(client,
+      'perimeters.insee_com_2021(typecom, com, reg, dep, ctcd, arr, tncc, ncc, nccenr, libelle, can, comparent)',
+      join(__dirname, '../assets/insee/'),
+      'commune2021.csv',
+      ','
+    ),
+    // import Intercommunalite_Metropole_au_01-01-2019.xls
+    importXLSX(client,{
+      path: join(__dirname, '../assets/insee/'),
+      filename:'Intercommunalite_Metropole_au_01-01-2019.xls',
+      sheet: 'Composition_communale',
+      startRow: 5
+    },
+    {
+      path: join(__dirname, './database/sql/perimeters/'),
+      filename:'insert_table_insee_perim_2019.sql',
+    }),
+    // import Intercommunalite_Metropole_au_01-01-2020.xlsx
+    importXLSX(client,{
+      path: join(__dirname, '../assets/insee/'),
+      filename:'Intercommunalite_Metropole_au_01-01-2020.xlsx',
+      sheet: 'Composition_communale',
+      startRow: 5
+    },
+    {
+      path: join(__dirname, './database/sql/perimeters/'),
+      filename:'insert_table_insee_perim_2020.sql',
+    }),
+    // import Intercommunalite_Metropole_au_01-01-2021.xlsx
+    importXLSX(client,{
+      path: join(__dirname, '../assets/insee/'),
+      filename:'Intercommunalite-Metropole_au_01-01-2021.xlsx',
+      sheet: 'Composition_communale',
+      startRow: 5
+    },
+    {
+      path: join(__dirname, './database/sql/perimeters/'),
+      filename:'insert_table_insee_perim_2021.sql',
+    }),
+    // import aom_2019.ods
+    importXLSX(client,{
+      path: join(__dirname, '../assets/cerema/'),
+      filename:'aom_2019.ods',
+      sheet: 'RT 2019- Composition communale',
+      startRow: 0
+    },
+    {
+      path: join(__dirname, './database/sql/perimeters/'),
+      filename:'insert_table_cerema_aom_2019.sql',
+    }),
+    // import aom_2020.ods
+    importXLSX(client,{
+      path: join(__dirname, '../assets/cerema/'),
+      filename:'aom_2020.ods',
+      sheet: 'RT_2020_-_Composition_communale',
+      startRow: 0
+    },
+    {
+      path: join(__dirname, './database/sql/perimeters/'),
+      filename:'insert_table_cerema_aom_2020.sql',
+    }),
+    // import departement2021.csv
+    importCSV(client,
+      'perimeters.insee_dep_2021(dep, reg, chef_lieu, tncc, ncc, nccenr, libelle)',
+      join(__dirname, '../assets/insee/'),
+      'departement2021.csv',
+      ','
+    ),
+    // import region2021.csv
+    importCSV(client,
+      'perimeters.insee_reg_2021(reg, chef_lieu, tncc, ncc, nccenr, libelle)',
+      join(__dirname, '../assets/insee/'),
+      'region2021.csv',
+      ','
+    ),
+    // import pays2021.csv
+    importCSV(client,
+      'perimeters.insee_pays_2021(cog, actual, capay, crpay, ani, libcog, libenr, ancnom, codeiso2, codeiso3, codenum3)',
+      join(__dirname, '../assets/insee/'),
+      'pays2021.csv',
+      ','
+    )
+  ])
+  // insert data in table perimeters.passage_arr
+  await execQuery(client,join(__dirname, './database/sql/perimeters/'),'insert_table_passage_arr.sql')
 }
 
 async function importGeo(client:PoolClient){
-  // import communes-100m.geojson
-  const geojson={
-    path: join(__dirname, '../assets/etalab/'),
-    filename:'communes-100m.geojson',
-  }
-  const sql = {
-    path: join(__dirname, './database/sql/perimeters/'),
-    filename:'insert_table_etalab_com_100m_2019.sql',
-  }
-  await importGeojson(client,geojson,sql)
-  // import communes-1000m.geojson
-  geojson.filename='communes-1000m.geojson'
-  sql.filename='insert_table_etalab_com_1000m_2019.sql'
-  await importGeojson(client,geojson,sql)
+  await Promise.all([
+    // import communes_2019.geojson
+    importGeojson(client,
+      {
+        path: join(__dirname, '../assets/ign/'),
+        filename:'communes_2019.geojson',
+      },
+      {
+        path: join(__dirname, './database/sql/perimeters/'),
+        filename:'insert_table_communes_2019.sql',
+      }
+    ),
+    // import arrondissements_municipaux_2019.geojson
+    importGeojson(client,
+      {
+        path: join(__dirname, '../assets/ign/'),
+        filename:'communes_2019.geojson',
+      },
+      {
+        path: join(__dirname, './database/sql/perimeters/'),
+        filename:'insert_table_arrondissements_municipaux_2019.sql',
+      }
+    ),
+    // import communes_2020.geojson
+    importGeojson(client,
+      {
+        path: join(__dirname, '../assets/ign/'),
+        filename:'communes_2020.geojson',
+      },
+      {
+        path: join(__dirname, './database/sql/perimeters/'),
+        filename:'insert_table_communes_2020.sql',
+      }
+    ),
+    // import arrondissements_municipaux_2020
+    importGeojson(client,
+      {
+        path: join(__dirname, '../assets/ign/'),
+        filename:'communes_2020.geojson',
+      },
+      {
+        path: join(__dirname, './database/sql/perimeters/'),
+        filename:'insert_table_arrondissements_municipaux_2020.sql',
+      }
+    )
+  ])
+  await Promise.all([
+    // insert communes_2021
+    execQuery(client,join(__dirname, './database/sql/perimeters/'),'insert_table_communes_2021.sql'),
+    // insert arrondissements_municipaux_2021
+    execQuery(client,join(__dirname, './database/sql/perimeters/'),'insert_table_arrondissements_municipaux_2021.sql'),
+  ])
 }
 
 async function treatments(client:PoolClient){
@@ -95,13 +240,15 @@ async function treatments(client:PoolClient){
     execQuery(client,path,'create_table_passage_com.sql'),
     execQuery(client,path,'create_table_epci_2019.sql'),
     execQuery(client,path,'create_table_epci_2020.sql'),
-    execQuery(client,path,'create_table_epci_2021.sql')
+    execQuery(client,path,'create_table_epci_2021.sql'),
+    execQuery(client,path,'create_table_aom_2020.sql')
   ])
   await execQuery(client,path,'insert_table_passage_com.sql')
   await Promise.all([
     execQuery(client,path,'insert_table_epci_2019.sql'),
     execQuery(client,path,'insert_table_epci_2020.sql'),
-    execQuery(client,path,'insert_table_epci_2021.sql')
+    execQuery(client,path,'insert_table_epci_2021.sql'),
+    execQuery(client,path,'insert_table_aom_2020.sql')
   ])
 }
 
@@ -110,6 +257,8 @@ export const perimeters = async function():Promise<void>{
   try{
     await inseeDownload()
     await geoDownload()
+    await ceremaDownload()
+    await geoTransform()
     if(client){
       await tablesCreation(client)
       await tablesGeoCreation(client)
