@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS perimeters.communes_2021 (
   id SERIAL PRIMARY KEY,
   com varchar(5) NOT NULL UNIQUE,
   l_com varchar,
+  statut varchar,
   epci varchar(9),
   l_epci varchar,
   aom varchar,

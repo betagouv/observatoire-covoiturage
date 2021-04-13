@@ -17,8 +17,6 @@ async function inseeDownload(){
     downloadFile(path,'https://www.insee.fr/fr/statistiques/fichier/5057840/departement2021-csv.zip'),
     downloadFile(path,'https://www.insee.fr/fr/statistiques/fichier/5057840/region2021-csv.zip'),
     downloadFile(path,'https://www.insee.fr/fr/statistiques/fichier/5057840/pays2021-csv.zip'),
-    
-    
   ])
 }
 
@@ -31,11 +29,13 @@ async function ceremaDownload(){
 }
 
 async function geoDownload(){
-  const path =join(__dirname, '../assets/ign/')
+  let path =join(__dirname, '../assets/ign/')
   await Promise.all([
     downloadFile(path,'http://files.opendatarchives.fr/professionnels.ign.fr/adminexpress/ADMIN-EXPRESS-COG_2-0__SHP__FRA_WGS84G_2019-09-24.7z','admin-express-2019.7z'),
     downloadFile(path,'http://files.opendatarchives.fr/professionnels.ign.fr/adminexpress/ADMIN-EXPRESS-COG_2-1__SHP__FRA_WGS84G_2020-11-20.7z','admin-express-2020.7z')
-  ]) 
+  ])
+  path = join(__dirname, '../assets/eurostat/') 
+  await downloadFile(path,'https://gisco-services.ec.europa.eu/distribution/v2/countries/geojson/CNTR_RG_10M_2020_4326.geojson','countries_2020.geojson')
 }
 
 async function geoTransform(){
@@ -43,9 +43,9 @@ async function geoTransform(){
   const path2020 =join(__dirname, '../assets/ign/ADMIN-EXPRESS-COG_2-1__SHP__FRA_2020-11-20/ADMIN-EXPRESS-COG/1_DONNEES_LIVRAISON_2020-11-20/ADE-COG_2-1_SHP_WGS84G_FRA/')
   await Promise.all([
     convertGeoFile(path2019,'COMMUNE_CARTO.shp',join(__dirname, '../assets/ign/'),'communes_2019.geojson','geojson',0.000001,'-simplify dp interval=100 keep-shapes'),
-    convertGeoFile(path2019,'CHEF_LIEU_CARTO.shp',join(__dirname, '../assets/ign/'),'chef_lieu_2019.geojson','geojson',0.000001),
+    convertGeoFile(path2019,'CHEF_LIEU_CARTO.shp',join(__dirname, '../assets/ign/'),'chefs_lieux_2019.geojson','geojson',0.000001),
     convertGeoFile(path2020,'COMMUNE.shp',join(__dirname, '../assets/ign/'),'communes_2020.geojson','geojson',0.000001,' '+path2020+'ARRONDISSEMENT_MUNICIPAL.shp combine-files -merge-layers force -simplify 60%'),
-    convertGeoFile(path2020,'CHEF_LIEU_CARTO.shp',join(__dirname, '../assets/ign/'),'chef_lieu_2020.geojson','geojson',0.000001)
+    convertGeoFile(path2020,'CHEF_LIEU_CARTO.shp',join(__dirname, '../assets/ign/'),'chefs_lieux_2020.geojson','geojson',0.000001,' '+path2020+'CHFLIEU_ARRONDISSEMENT_MUNICIPAL.shp combine-files -merge-layers force')
   ])
   // 2 simplifications supplémentaires pour la couche communes_2020
   await convertGeoFile(join(__dirname, '../assets/ign/'),'communes_2020.geojson','force '+join(__dirname, '../assets/ign/'),'communes_2020.geojson','geojson',0.000001,'-simplify 50% keep-shapes')
@@ -54,7 +54,7 @@ async function geoTransform(){
 
 async function tablesCreation(client:PoolClient){
   const path =join(__dirname, './database/sql/perimeters/')
-  //await execQuery(client,path,'create_schema_perimeters.sql')
+  await execQuery(client,path,'create_schema_perimeters.sql')
   await Promise.all([
     execQuery(client,path,'create_table_insee_mvt_communes.sql'),
     execQuery(client,path,'create_table_insee_com_2021.sql'),
@@ -75,9 +75,10 @@ async function tablesGeoCreation(client:PoolClient){
     execQuery(client,path,'create_table_communes_2019.sql'),
     execQuery(client,path,'create_table_communes_2020.sql'),
     execQuery(client,path,'create_table_communes_2021.sql'),
-    execQuery(client,path,'create_table_arrondissements_municipaux_2019.sql'),
-    execQuery(client,path,'create_table_arrondissements_municipaux_2020.sql'),
-    execQuery(client,path,'create_table_arrondissements_municipaux_2021.sql')
+    execQuery(client,path,'create_table_chefs_lieux_2019.sql'),
+    execQuery(client,path,'create_table_chefs_lieux_2020.sql'),
+    execQuery(client,path,'create_table_chefs_lieux_2021.sql'),
+    execQuery(client,path,'create_table_countries.sql')
   ])
 }
 
@@ -191,15 +192,15 @@ async function importGeo(client:PoolClient){
         filename:'insert_table_communes_2019.sql',
       }
     ),
-    // import arrondissements_municipaux_2019.geojson
+    // import chefs_lieux_2019.geojson
     importGeojson(client,
       {
         path: join(__dirname, '../assets/ign/'),
-        filename:'communes_2019.geojson',
+        filename:'chefs_lieux_2019.geojson',
       },
       {
         path: join(__dirname, './database/sql/perimeters/'),
-        filename:'insert_table_arrondissements_municipaux_2019.sql',
+        filename:'insert_table_chefs_lieux_2019.sql',
       }
     ),
     // import communes_2020.geojson
@@ -213,23 +214,34 @@ async function importGeo(client:PoolClient){
         filename:'insert_table_communes_2020.sql',
       }
     ),
-    // import arrondissements_municipaux_2020
+    // import chefs_lieux_2020.geojson
     importGeojson(client,
       {
         path: join(__dirname, '../assets/ign/'),
-        filename:'communes_2020.geojson',
+        filename:'chefs_lieux_2020.geojson',
       },
       {
         path: join(__dirname, './database/sql/perimeters/'),
-        filename:'insert_table_arrondissements_municipaux_2020.sql',
+        filename:'insert_table_chefs_lieux_2020.sql',
+      }
+    ),
+    // import countries
+    importGeojson(client,
+      {
+        path: join(__dirname, '../assets/eurostat/'),
+        filename:'countries_2020.geojson',
+      },
+      {
+        path: join(__dirname, './database/sql/perimeters/'),
+        filename:'insert_table_countries.sql',
       }
     )
   ])
   await Promise.all([
     // insert communes_2021
     execQuery(client,join(__dirname, './database/sql/perimeters/'),'insert_table_communes_2021.sql'),
-    // insert arrondissements_municipaux_2021
-    execQuery(client,join(__dirname, './database/sql/perimeters/'),'insert_table_arrondissements_municipaux_2021.sql'),
+    // insert chefs_lieux_2021
+    execQuery(client,join(__dirname, './database/sql/perimeters/'),'insert_table_chefs_lieux_2021.sql')
   ])
 }
 
@@ -241,15 +253,22 @@ async function treatments(client:PoolClient){
     execQuery(client,path,'create_table_epci_2019.sql'),
     execQuery(client,path,'create_table_epci_2020.sql'),
     execQuery(client,path,'create_table_epci_2021.sql'),
-    execQuery(client,path,'create_table_aom_2020.sql')
+    execQuery(client,path,'create_table_aom_2019.sql'),
+    execQuery(client,path,'create_table_aom_2020.sql'),
+    execQuery(client,path,'create_table_departements.sql'),
+    execQuery(client,path,'create_table_regions.sql')
   ])
   await execQuery(client,path,'insert_table_passage_com.sql')
   await Promise.all([
     execQuery(client,path,'insert_table_epci_2019.sql'),
     execQuery(client,path,'insert_table_epci_2020.sql'),
     execQuery(client,path,'insert_table_epci_2021.sql'),
-    execQuery(client,path,'insert_table_aom_2020.sql')
+    execQuery(client,path,'insert_table_aom_2019.sql'),
+    execQuery(client,path,'insert_table_aom_2020.sql'),
+    execQuery(client,path,'insert_table_departements.sql'),
+    execQuery(client,path,'insert_table_regions.sql')
   ])
+  await execQuery(client,path,'drop_unused_tables.sql')
 }
 
 export const perimeters = async function():Promise<void>{

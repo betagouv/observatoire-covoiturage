@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS perimeters.aom_2019;
 CREATE TABLE IF NOT EXISTS perimeters.aom_2019 (
   id SERIAL PRIMARY KEY,
-  id_reseau integer NOT NULL UNIQUE,
+  aom varchar(9) NOT NULL UNIQUE,
   l_aom varchar,
   geom geometry(MULTIPOLYGON,4326)
 );

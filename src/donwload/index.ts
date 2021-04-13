@@ -30,10 +30,15 @@ export const downloadFile = async function(path:string, url: string, file?:strin
         await ungzFile(path,filename)
         spinner.succeed(filename+' ungz')
       }
-      if(filename.endsWith('.7z')){
+      else if(filename.endsWith('.7z')){
         spinner.start('Extracting file from '+filename)
         await un7zFile(path,filename)
         spinner.succeed(filename+' un7z')
+      } 
+      else if (filename.endsWith('.zip')){
+        spinner.start('Extracting file from '+filename)
+        await extract(path+filename,{dir:path})
+        spinner.succeed(filename+' unzip')
       }
       spinner.succeed(filename+' downloaded')
     }
