@@ -3,14 +3,16 @@
 Programme d'ETL (Extract-Transform-Load) permettant de construire l'entrepôt de données de l'observatoire du covoiturage au quotidien
 
 ## Prérequis
-- Une base de données PostgreSQL 9 et + et son extension PostGIS version 2 et +
-- 7zip doit être installé sur la machine exécutant le programme
-- Node.js 10 et +
+- Les containers `postgres`et `etl` doivent être lancés.
+- Pour utiliser le programme sans les containers :
+  - Une base de données PostgreSQL 9 et + et son extension PostGIS version 2 et +
+  - 7zip doit être installé sur la machine exécutant le programme
+  - Node.js 10 et +
 
 ## Installation et utilisation
-1. Cloner le repository :
+1. se connecter au container :
 ```
-  git clone https://github.com/betagouv/observatoire-covoiturage.git
+  docker exec -it observatoire_covoiturage_etl_1 /bin/bash
 ```
 2. Installer les dépendances :
 ```
