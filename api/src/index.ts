@@ -6,7 +6,7 @@ import db from '@/config/db'
 
 
 const PORT = Number(process.env.PORT) || 3000
-const DOMAIN = process.env.DOMAIN || "http://127.0.0.1"
+const DOMAIN = process.env.DOMAIN || "0.0.0.0"
 
 
 const server = fastify()  

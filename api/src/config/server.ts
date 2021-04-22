@@ -31,7 +31,7 @@ const config: FastifyPluginAsync = async (server, options) => {
         url: 'https://swagger.io',
         description: 'Find more info here'
       },
-      host: process.env.DOMAIN || 'http://127.0.0.1',
+      host: 'localhost:'+process.env.PORT || 'localhost',
       schemes: ['http','https'],
       consumes: ['application/json'],
       produces: ['application/json'],
