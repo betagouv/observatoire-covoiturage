@@ -1,0 +1,34 @@
+version: '3.5'
+services:
+  postgres:
+    build:
+      context: ./docker/postgres
+      shm_size: 4gb
+    shm_size: 4gb
+    ports:
+      - 5432:5432
+    networks:
+      - back
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'postgres'
+      POSTGRES_DB: 'local'
+      PGDATA: '/var/lib/postgresql/data/pgdata'
+    volumes:
+      - ./db/postgres:/var/lib/postgresql/data/pgdata
+      - ./etl/assets:/etl/assets
+
+  etl:
+    build:
+      dockerfile: ../docker/etl/Dockerfile
+      context: ./etl
+    tty: true
+    networks:
+      - back
+    depends_on:
+      - postgres
+    volumes:
+      - ./etl:/etl
+
+networks:
+  back:
