@@ -30,5 +30,19 @@ services:
     volumes:
       - ./etl:/etl
 
+  api:
+    build:
+      dockerfile: ../docker/api/Dockerfile
+      context: ./api
+    tty: true
+    ports:
+      - 8080:8080
+    networks:
+      - back
+    depends_on:
+      - postgres
+    volumes:
+      - ./api:/api
+
 networks:
   back:

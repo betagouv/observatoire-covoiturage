@@ -3,16 +3,17 @@
   "version": "1.0.0",
   "description": "Programme d'etl pour importer les données necessaires à l'observatoire",
   "main": "src/index.ts",
-  "scripts": {
-    "start": "ts-node -r dotenv/config ./src/index.ts",
-    "dev": "nodemon -r dotenv/config --watch src --exec ts-node --files ./src/index.ts",
-    "lint": "eslint . --ext .ts"
-  },
   "author": "Beta Gouv <contact@covoiturage.beta.gouv.fr>",
   "contributors": [
     "Ludovic Delhomme <ludovic.delhomme@beta.gouv.fr>"
   ],
   "license": "Apache-2.0",
+  "scripts": {
+    "start": "ts-node -r dotenv/config ./src/index.ts",
+    "dev": "nodemon -L -r dotenv/config --watch src --exec ts-node --files ./src/index.ts",
+    "lint": "eslint . --ext .ts"
+  },
+  
   "_moduleAliases": {
     "@": "src"
   },
