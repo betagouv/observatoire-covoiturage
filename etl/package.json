@@ -13,7 +13,6 @@
     "dev": "nodemon -L -r dotenv/config --watch src --exec ts-node --files ./src/index.ts",
     "lint": "eslint . --ext .ts"
   },
-  
   "_moduleAliases": {
     "@": "src"
   },

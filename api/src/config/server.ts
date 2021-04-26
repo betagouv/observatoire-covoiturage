@@ -42,10 +42,10 @@ const config: FastifyPluginAsync = async (server, options) => {
     exposeRoute: true
   })
   // add plugin repository
-  server.register(autoLoad, {
+  /*server.register(autoLoad, {
     dir: join(__dirname,'../plugins'),
     options: { ...options },
-  })
+  })*/
   // add routes repository for V1
   server.register(autoLoad, {
     dir: join(__dirname,'../api/v1/routes'),

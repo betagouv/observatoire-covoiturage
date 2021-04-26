@@ -8,9 +8,17 @@ export default class HelperSchema {
         description:'Return all tables in database',
         items: {
           properties: {
-            schema: {type:'string'},
-            table: {type:'string'},
-            description:{type:'string', nullable:true}
+            com1: {type:'string'},
+            l_com1: {type:'string'},
+            com1_lng:{type:'number'},
+            com1_lat:{type:'number'},
+            com2: {type:'string'},
+            l_com2: {type:'string'},
+            com2_lng:{type:'number'},
+            com2_lat:{type:'number'},
+            vehicles:{type:'integer'},
+            passengers:{type:'integer'},
+            reserved_seats:{type:'integer'}
           }
         }
       }

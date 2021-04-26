@@ -5,7 +5,7 @@ import testSchema from '../schemas/test.s'
 
 const routes:FastifyPluginAsync = async (server) => {
   
-  server.get('/tables',{schema:testSchema.listDbTable}, testHandler.listDbTable)
+  server.get('/flux',{schema:testSchema.listDbTable}, testHandler.listDbTable)
 }
 
 export default routes
