@@ -264,7 +264,7 @@ async function treatments(client:PoolClient){
     execQuery(client,path,'insert_table_departements.sql'),
     execQuery(client,path,'insert_table_regions.sql')
   ])
-  //await execQuery(client,path,'drop_unused_tables.sql')
+  await execQuery(client,path,'drop_unused_tables.sql')
 }
 
 export const perimeters = async function():Promise<void>{

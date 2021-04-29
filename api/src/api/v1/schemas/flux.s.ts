@@ -1,6 +1,6 @@
-export default class HelperSchema {
+export default class monthlyFluxSchema {
   
-  static listDbTable = {
+  static monthly = {
     tags: ['helpers'],
     response: {
       200: {
