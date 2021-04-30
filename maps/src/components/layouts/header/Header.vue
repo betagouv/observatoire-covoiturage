@@ -19,7 +19,14 @@
               <a href="/" title="Accueil - [À MODIFIER | Nom du site / service]">
                 <p class="fr-header__service-title">Observatoire du covoiturage au quotidien</p>
               </a>
-              <p class="fr-header__service-tagline">Développer le covoiturage</p>
+              <p class="fr-header__service-tagline">Comprendre le covoiturage</p>
+            </div>
+            <div class="fr-header__tools-links">
+                <ul class="fr-links-group">
+                    <li>
+                        <button class="fr-link fr-fi-theme-fill fr-link--icon-left" aria-controls="fr-theme-modal" data-fr-opened="false">Paramètres d'affichage</button>
+                    </li>
+                </ul>
             </div>
           </div>
         </div>
