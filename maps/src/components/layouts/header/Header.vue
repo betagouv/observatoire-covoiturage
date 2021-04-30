@@ -6,27 +6,49 @@
           <div class="fr-header__brand fr-enlarge-link">
             <div class="fr-header__brand-top">
               <div class="fr-header__logo">
-                <a href="/" title="Accueil - Observatoire du covoiturage au quotidien">
-                  <p class="fr-logo">
-                    Ministère<br />
-                    de la transition<br />
-                    écologique
-                  </p>
-                </a>
+                <p class="fr-logo">
+                  Ministère<br />
+                  de la transition<br />
+                  écologique
+                </p>
+              </div>
+              <div class="fr-header__navbar">
+                <button
+                  class="fr-btn--menu fr-btn"
+                  data-fr-opened="false"
+                  aria-controls="modal-833"
+                  aria-haspopup="menu"
+                  title="Menu"
+                >
+                  Menu
+                </button>
               </div>
             </div>
             <div class="fr-header__service">
-              <a href="/" title="Accueil - [À MODIFIER | Nom du site / service]">
+              <a
+                href="/"
+                title="Accueil - [À MODIFIER | Nom du site / service] - [À MODIFIER | nom de l’entité (ministère , secrétariat d‘état, gouvernement)]"
+              >
                 <p class="fr-header__service-title">Observatoire du covoiturage au quotidien</p>
               </a>
-              <p class="fr-header__service-tagline">Comprendre le covoiturage</p>
+              <p class="fr-header__service-tagline">
+                Comprendre le covoiturage
+              </p>
             </div>
+          </div>
+          <div class="fr-header__tools">
             <div class="fr-header__tools-links">
-                <ul class="fr-links-group">
-                    <li>
-                        <button class="fr-link fr-fi-theme-fill fr-link--icon-left" aria-controls="fr-theme-modal" data-fr-opened="false">Paramètres d'affichage</button>
-                    </li>
-                </ul>
+              <ul class="fr-links-group">
+                <li>
+                  <a class="fr-link fr-fi-add-circle-line" href="#">Créer un espace</a>
+                </li>
+                <li>
+                  <a class="fr-link fr-fi-lock-line" href="#">Se connecter</a>
+                </li>
+                <li>
+                  <a class="fr-link fr-fi-account-line" href="#">S’enregistrer</a>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
@@ -40,3 +62,8 @@ export default {
   name: "Header",
 };
 </script>
+<style lang="scss">
+  .fr-header {
+    z-index: 1;
+  }
+</style>
