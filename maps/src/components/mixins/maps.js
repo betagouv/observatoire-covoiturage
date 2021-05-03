@@ -2,6 +2,7 @@ import maplibregl from 'maplibre-gl'
 import {Deck} from '@deck.gl/core'
 import axios from 'axios'
 import {ArcLayer} from '@deck.gl/layers'
+import {equalIntervalBreaks} from 'simple-statistics'
 
 export default {
   data() {
@@ -47,6 +48,11 @@ export default {
       ]
     }
   },
+  computed:{
+    jenksVehicles(){
+      return this.jenks(this.flux,'vehicles',['#99d8c9','#66c2a4','#41ae76','#238b45','#005824'],[3,6,12,24,48])
+    }
+  },
   methods:{
     async createMap(container,options) {
       return new Promise(resolve => {
@@ -64,6 +70,16 @@ export default {
           if(options.controls){
             this[container].addControl(new maplibregl.NavigationControl(), 'top-left')
           }
+          this[container].on(["zoom"], () => {
+            const { lat, lng } = this[container].getCenter()
+            const newViewState = {
+              longitude: lng,
+              latitude: lat,
+              zoom: this[container].getZoom(),
+              bearing: this[container].getBearing()
+            }
+            this['deck_'+options.name].setProps({ viewState: newViewState })
+          })
         }
         resolve()
       })
@@ -73,6 +89,9 @@ export default {
       this.flux = response.data
     },
     async createDeck(container,options) {
+      // empêche le menu contextuel de s'ouvrir sur le clic droit
+      document.getElementById(container)
+      .addEventListener("contextmenu", e => e.preventDefault())
       return new Promise(resolve => {
         this[container] = new Deck({
           canvas: container,
@@ -83,7 +102,7 @@ export default {
             longitude:options.center[0],
             zoom: options.zoom,
             bearing: 0,
-            pitch: 30
+            pitch: 0
           },
           controller: true,
           onViewStateChange: ({viewState}) => {
@@ -98,12 +117,13 @@ export default {
             new ArcLayer({
               id: 'flux-layer',
               data:this.flux,
+              opacity:0.6,
               pickable: true,
-              getWidth: 5,
+              getWidth: d => this.classWidth( d.vehicles,this.jenksVehicles),
               getSourcePosition: d => [d.com1_lng,d.com1_lat],
               getTargetPosition: d => [d.com2_lng,d.com2_lat],
-              getSourceColor: [0, 128, 200],
-              getTargetColor: [200, 0, 80],
+              getSourceColor: d => this.classColor( d.vehicles,this.jenksVehicles),
+              getTargetColor: d => this.classColor( d.vehicles,this.jenksVehicles),
             })
           ]
         })
@@ -115,6 +135,33 @@ export default {
         this.createMap('map_'+territory.name,territory)
         this.createDeck('deck_'+territory.name,territory)
       }
+    },
+    hexToRgb(hex) {
+      return hex.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i,(m, r, g, b) => '#' + r + r + g + g + b + b)
+      .substring(1).match(/.{2}/g)
+      .map(x => parseInt(x, 16))
+    },
+    jenks(data,field,colors,width){
+      const vals = data.map(d => d[field])
+      let breaks = equalIntervalBreaks(vals, colors.length - 1)
+      let jenks = breaks.map((b,i) => {
+        return {val:b,color:this.hexToRgb(colors[i]),width:width[i]} 
+      })
+      return jenks
+    },
+    classColor(val, datas) {
+      const analysisClass = datas.map(d => d.val)
+      const classe = analysisClass.reduce(function (prev, curr) {
+        return Math.abs(curr - val) > Math.abs(prev - val) ? prev : curr
+      })
+      return datas.find(d => d.val === classe).color
+    },
+    classWidth(val, datas) {
+      const analysisClass = datas.map(d => d.val)
+      const classe = analysisClass.reduce(function (prev, curr) {
+        return Math.abs(curr - val) > Math.abs(prev - val) ? prev : curr
+      })
+      return datas.find(d => d.val === classe).width
     }
   }
 }
