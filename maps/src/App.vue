@@ -16,8 +16,8 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "~@gouvfr/dsfr/dist/css/dsfr.min.css";
   @import "~maplibre-gl/dist/maplibre-gl.css";
+  @import "~@gouvfr/dsfr/dist/css/dsfr.min.css";
 </style>
 
 

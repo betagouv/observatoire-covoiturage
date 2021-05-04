@@ -1,11 +1,21 @@
 export default class monthlyFluxSchema {
   
   static monthly = {
-    tags: ['helpers'],
+    tags: ['flux'],
+    querystring: {
+      year: {
+        type: 'string',
+        description: 'Year (YYYY)'
+      },
+      month: {
+        type: 'string',
+        description: 'Month (MM)'
+      }
+    },
     response: {
       200: {
         type: 'array',
-        description:'Return all tables in database',
+        description:'Return monthly flux',
         items: {
           properties: {
             com1: {type:'string'},

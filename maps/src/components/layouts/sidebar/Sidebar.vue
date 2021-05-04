@@ -1,9 +1,8 @@
 <template>
   <nav class="fr-sidemenu--sticky-full-height" role="navigation" aria-label="Menu latéral">
     <div class="fr-sidemenu__inner">
-      <button class="fr-sidemenu__btn" aria-controls="fr-sidemenu-wrapper" aria-expanded="false">Dans cette rubrique</button>
+      <button class="fr-sidemenu__btn" aria-controls="fr-sidemenu-wrapper" aria-expanded="false">Configurer la carte</button>
       <div class="fr-collapse" id="fr-sidemenu-wrapper">
-        <div class="fr-sidemenu__title">Titre de rubrique</div>
         <ul class="fr-sidemenu__list">
           <li class="fr-sidemenu__item">
             <button class="fr-sidemenu__btn" aria-expanded="false" aria-controls="fr-sidemenu-item-0">Niveau 1</button>
@@ -17,18 +16,17 @@
           </li>
         </ul>
       </div>
+      <Slider :sliderOptions="{'min':1,'max':1000,'step':1}"/>
     </div>
   </nav>
 </template>
 
 <script>
+import Slider from '@/components/layouts/sidebar/Slider'
 export default {
   name: "Sidebar",
+  components: {
+    Slider
+  },
 };
 </script>
-<style lang="scss">
-.fr-sidemenu--sticky-full-height {
-  height: 86vh;
-  overflow-y: hidden;
-}
-</style>
