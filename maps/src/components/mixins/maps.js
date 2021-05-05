@@ -1,6 +1,6 @@
 import maplibregl from 'maplibre-gl'
 import {Deck} from '@deck.gl/core'
-import {equalIntervalBreaks} from 'simple-statistics'
+import geostats from 'geostats'
 
 export default {
   data() {
@@ -97,7 +97,19 @@ export default {
             pitch: viewState.pitch
           })
         },
-        layers:[layer]
+        layers:[layer],
+        getTooltip: ({object}) => object && {
+          html: `<h3>${object.l_com1} - ${object.l_com2}</h3>
+          <div>Véhicules : ${object.vehicles}</div>
+          <div>Passagers : ${object.passengers}</div>
+          <div>${((object.passengers + object.vehicles)/object.vehicles).toFixed(1)} personnes par véhicules</div>`,
+          className:'fr-callout',
+          style: {
+            color:'#000',
+            backgroundColor: '#fff',
+            fontSize: '1em'
+          }
+        }
       })
     },
     hexToRgb(hex) {
@@ -105,13 +117,13 @@ export default {
       .substring(1).match(/.{2}/g)
       .map(x => parseInt(x, 16))
     },
-    equalInterval(data,field,colors,width){
-      const vals = data.map(d => d[field])
-      let breaks = equalIntervalBreaks(vals, colors.length - 1)
-      let jenks = breaks.map((b,i) => {
+    jenks(data,field,colors,width){
+      const vals = new geostats(data.map(d => d[field]))
+      let breaks = vals.getClassJenks(width.length - 1)
+      let analysis = breaks.map((b,i) => {
         return {val:b,color:this.hexToRgb(colors[i]),width:width[i]} 
       })
-      return jenks
+      return analysis
     },
     classColor(val, datas) {
       const analysisClass = datas.map(d => d.val)

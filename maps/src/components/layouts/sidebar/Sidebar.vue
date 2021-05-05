@@ -16,7 +16,7 @@
           </li>
         </ul>
       </div>
-      <Slider :sliderOptions="{'min':1,'max':1000,'step':1}"/>
+      <Slider v-model="computedValue" :sliderOptions="{'min':sliderOptions.min,'max':sliderOptions.max,'step':sliderOptions.step}"/>
     </div>
   </nav>
 </template>
@@ -28,5 +28,28 @@ export default {
   components: {
     Slider
   },
-};
+  props:{
+    value: {
+      type: Array,
+      required: true
+    },
+    sliderOptions:{
+      type:Object,
+      default: () => {
+        return { 
+          min: Number,
+          max: Number,
+          step: Number,
+          format: String
+        }
+      }
+    }
+  },
+  computed:{
+    computedValue: {
+      get() { return this.value },
+      set(value) {this.$emit('input', value)}
+    }
+  }
+}
 </script>

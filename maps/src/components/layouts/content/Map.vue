@@ -1,7 +1,11 @@
 <template>
   <div class="fr-grid-row">
     <div class="fr-col-12 fr-col-lg-2 sidebar">
-      <Sidebar/>
+      <Sidebar 
+        v-if="flux" 
+        v-model="slider" 
+        :sliderOptions="{'min':0,'max':this.defaultSlider('vehicles')[1],'step':5}"
+      />
     </div>
     <div class="fr-col-12 fr-col-lg-10 map">
       <div class="fr-grid-row maps_container">
@@ -39,7 +43,6 @@ import maps from '@/components/mixins/maps'
 import Sidebar from '@/components/layouts/sidebar/Sidebar'
 import {ArcLayer} from '@deck.gl/layers'
 import axios from 'axios'
-import { mapState } from "vuex"
 
 export default {
   name: "Map",
@@ -50,21 +53,25 @@ export default {
   data(){
     return {
       flux:null,
+      filteredFlux: this.flux,
       year: '2021',
-      month: '03'
+      month: '03',
+      slider:[]
     }
   },
   computed:{
-    ...mapState({
-      slider:state => state.filters.slider,
-    }),
-    equalIntervalVehicles(){
-      return this.equalInterval(this.flux,'vehicles',['#99d8c9','#66c2a4','#41ae76','#238b45','#005824'],[3,6,12,24,48])
+    jenksVehicles(){
+      return this.jenks(this.flux,'vehicles',['#9478c7','#8a6dc1','#7455b7','#5335a7','#2c1599','#000091'],[1,5,10,20,40,80])
     }
   },
   async mounted() {
     await this.getData()
     this.renderMaps()
+  },
+  watch:{
+    slider(){
+      this.filterFlux('vehicles')
+    }
   },
   methods:{
     async getData(){
@@ -81,19 +88,32 @@ export default {
     addArcLayer(){
       return new ArcLayer({
         id: 'flux-layer',
-        data:this.flux,
-        opacity:0.6,
+        data:this.filteredFlux,
+        opacity:0.4,
         pickable: true,
-        getWidth: d => this.classWidth( d.vehicles,this.equalIntervalVehicles),
+        getWidth: d => this.classWidth( d.vehicles,this.jenksVehicles),
         getSourcePosition: d => [d.com1_lng,d.com1_lat],
         getTargetPosition: d => [d.com2_lng,d.com2_lat],
-        getSourceColor: d => this.classColor( d.vehicles,this.equalIntervalVehicles),
-        getTargetColor: d => this.classColor( d.vehicles,this.equalIntervalVehicles),
+        getSourceColor: [0,0,145],
+        getTargetColor:  [0,0,145],
       })
     },
     defaultSlider(field){
-      const values = this.flux.map(d => d[field])
-      return [Math.min(...values),Math.max(...values)]
+      if(this.flux){
+        const values = this.flux.map(d => d[field])
+        return [Math.min(...values),Math.max(...values)]
+      }else{
+        return []
+      }
+    },
+    filterFlux(field){
+      this.filteredFlux = this.flux.filter(d => d[field] >= this.slider[0] && d[field] <= this.slider[1])
+      for (let territory of this.territories) {
+        if(this['deck_'+territory.name]){
+          this['deck_'+territory.name].setProps({layers:[this.addArcLayer()]})
+        }
+      }
+      
     }
   }
 };

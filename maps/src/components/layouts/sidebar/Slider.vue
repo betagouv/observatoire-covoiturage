@@ -1,21 +1,30 @@
 <template>
-  <b-field class="slider">
+  <div class="slider">
     <b-slider  
       v-model="computedValue" 
       :min="sliderOptions.min" 
       :max="sliderOptions.max" 
       :step="sliderOptions.step" 
       expanded 
+      lazy
       :tooltip="false" 
       indicator
     >
     </b-slider>
-  </b-field>
+    <b-field>
+      <b-input v-model="computedValue[0]"></b-input>
+      <b-input v-model="computedValue[1]"></b-input>
+    </b-field>
+  </div>
 </template>
 <script>
 export default {
   name: "Slider",
   props:{
+    value: {
+      type: Array,
+      required: true
+    },
     sliderOptions:{
       type:Object,
       default: () => {
@@ -26,6 +35,12 @@ export default {
           format: String
         }
       }
+    }
+  },
+  computed:{
+    computedValue: {
+      get() { return this.value },
+      set(value) {this.$emit('input', value)}
     }
   }
 }
