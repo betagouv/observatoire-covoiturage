@@ -1,15 +1,16 @@
 <template>
-  <div class="fr-grid-row">
+  <div class="fr-grid-row content">
     <div class="fr-col-12 fr-col-lg-2 sidebar">
       <Sidebar 
         v-if="flux" 
         v-model="slider" 
+        :time="time"
         :sliderOptions="{'min':0,'max':this.defaultSlider('vehicles')[1],'step':5}"
       />
     </div>
     <div class="fr-col-12 fr-col-lg-10 map">
       <div class="fr-grid-row maps_container">
-        <div class="fr-col-12 fr-col-lg-9">
+        <div class="fr-col-12 fr-col-lg-9 map_metropole">
           <div class="map_container">
             <div id="map_metropole"></div>
             <canvas id="deck_metropole"></canvas>
@@ -54,8 +55,10 @@ export default {
     return {
       flux:null,
       filteredFlux: this.flux,
-      year: '2021',
-      month: '03',
+      time:{
+        year: '2021',
+        month: '03'
+      },
       slider:[]
     }
   },
@@ -71,11 +74,17 @@ export default {
   watch:{
     slider(){
       this.filterFlux('vehicles')
-    }
+    },
+    'time':{
+      handler: function() {
+        this.getData()
+      },
+      deep: true
+    }   
   },
   methods:{
     async getData(){
-      const response = await axios.get("http://localhost:8080/v1/monthly_flux?year='"+this.year+"'&month='"+this.month+"'")
+      const response = await axios.get('http://localhost:8080/v1/monthly_flux?year='+this.time.year+'&month='+this.time.month)
       this.flux = response.data
       this.slider = this.defaultSlider('vehicles')
     },
@@ -120,29 +129,30 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-.sidebar {
-  .fr-sidemenu--sticky-full-height {
-    height: 86vh;
-    overflow-y: hidden;
+.content{
+  position: absolute;
+  top: 170px;
+  bottom: 0;
+  width: 100%;
+  @media screen and (min-width: 1440px) {
+    top: 130px;
   }
 }
 .map {
   .maps_container {
-    height: 86vh;
+    height: 100%;
   }
   .map_container > * {
     position: absolute;
     top: 0;
-    left: 0;
+    bottom: 0;
     width: 100%;
-    height: 100%;
   }
   .maps_container *:focus,
   .maps_container *:focus-visible {
     z-index: auto;
   }
-  .map_container, .maps_drom {
+  .map_container, .maps_drom, .map_metropole {
     position:relative;
     display: flex;
     flex-flow: column wrap;

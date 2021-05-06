@@ -107,7 +107,8 @@ export default {
           style: {
             color:'#000',
             backgroundColor: '#fff',
-            fontSize: '1em'
+            fontSize: '1em',
+            'overflow-x':'auto'
           }
         }
       })

@@ -1,22 +1,29 @@
 <template>
-  <nav class="fr-sidemenu--sticky-full-height" role="navigation" aria-label="Menu latéral">
+  <nav class="fr-sidemenu--full-border" role="navigation" aria-label="Menu latéral">
     <div class="fr-sidemenu__inner">
-      <button class="fr-sidemenu__btn" aria-controls="fr-sidemenu-wrapper" aria-expanded="false">Configurer la carte</button>
-      <div class="fr-collapse" id="fr-sidemenu-wrapper">
-        <ul class="fr-sidemenu__list">
-          <li class="fr-sidemenu__item">
-            <button class="fr-sidemenu__btn" aria-expanded="false" aria-controls="fr-sidemenu-item-0">Niveau 1</button>
-            <div class="fr-collapse" id="fr-sidemenu-item-0">
-              <ul class="fr-sidemenu__list">
-                <li class="fr-sidemenu__item">
-                  <a class="fr-sidemenu__link" href="#" target="_self">Accès direct niveau 2</a>
-                </li>
-              </ul>
-            </div>
-          </li>
-        </ul>
-      </div>
-      <Slider v-model="computedValue" :sliderOptions="{'min':sliderOptions.min,'max':sliderOptions.max,'step':sliderOptions.step}"/>
+      <div class="fr-sidemenu__title">Mois Sélectionné :</div>
+      <ul class="fr-sidemenu__list">
+        <li class="fr-sidemenu__item">
+          <b-field grouped>
+            <b-field>
+              <select v-model="selectedTime.month" class="fr-select" id="select-month" name="select-month">
+                <option v-for="option in monthList" :value="option.id" :key="option.id">{{option.name}}</option>
+              </select>
+            </b-field>
+            <b-field>
+              <select v-model="selectedTime.year" class="fr-select" id="select-year" name="select-year">
+                <option v-for="option in yearList" :value="option" :key="option">{{option}}</option>
+              </select>
+            </b-field>
+          </b-field>
+        </li>
+      </ul>
+      <div class="fr-sidemenu__title">Flux de véhicules entre :</div>
+      <ul class="fr-sidemenu__list">
+        <li class="fr-sidemenu__item">
+          <Slider v-model="computedValue" :sliderOptions="{'min':sliderOptions.min,'max':sliderOptions.max,'step':sliderOptions.step}"/>
+        </li>
+      </ul>
     </div>
   </nav>
 </template>
@@ -33,6 +40,16 @@ export default {
       type: Array,
       required: true
     },
+    time:{
+      type: Object,
+      default: () => {
+        return { 
+          year: String,
+          month: String
+        }
+      },
+      required:true
+    },
     sliderOptions:{
       type:Object,
       default: () => {
@@ -45,11 +62,43 @@ export default {
       }
     }
   },
+  data(){
+    return{
+      yearList:['2021','2020','2019'],
+      monthList:[
+        {id:'01',name:'Janvier'},
+        {id:'02',name:'Février'},
+        {id:'03',name:'Mars'},
+        {id:'04',name:'Avril'},
+        {id:'05',name:'Mai'},
+        {id:'06',name:'Juin'},
+        {id:'07',name:'Juillet'},
+        {id:'08',name:'Août'},
+        {id:'09',name:'Septembre'},
+        {id:'10',name:'Octobre'},
+        {id:'11',name:'Novembre'},
+        {id:'12',name:'Décembre'}
+      ]
+    }
+  },
   computed:{
     computedValue: {
       get() { return this.value },
       set(value) {this.$emit('input', value)}
+    },
+    selectedTime:{
+      get() { return this.time },
+      set(time) {this.$emit('input', time)}
     }
   }
 }
 </script>
+<style lang="scss">
+  .slider{
+    padding: 0 1em;
+    // Set your colors
+    $primary: #000091;
+    @import "~bulma";
+    @import "~buefy/src/scss/buefy";
+  }
+</style>
