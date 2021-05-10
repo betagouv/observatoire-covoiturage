@@ -34,4 +34,18 @@ export default class monthlyFluxSchema {
       }
     }
   }
+
+  static lastRecordMonthly = {
+    tags: ['flux'],
+    response: {
+      200: {
+        type: 'object',
+        description:'Return last Month and Year available in monthly flux',
+        properties: {
+          month: {type:'string'},
+          year: {type:'string'}
+        }
+      }
+    }
+  }
 }

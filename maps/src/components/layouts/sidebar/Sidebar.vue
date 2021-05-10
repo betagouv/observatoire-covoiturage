@@ -1,7 +1,7 @@
 <template>
   <nav class="fr-sidemenu--full-border" role="navigation" aria-label="Menu latéral">
     <div class="fr-sidemenu__inner">
-      <div class="fr-sidemenu__title">Mois Sélectionné :</div>
+      <div class="fr-sidemenu__title">Mois sélectionné :</div>
       <ul class="fr-sidemenu__list">
         <li class="fr-sidemenu__item">
           <b-field grouped>
@@ -30,11 +30,13 @@
 
 <script>
 import Slider from '@/components/layouts/sidebar/Slider'
+import Time from '@/components/mixins/time'
 export default {
   name: "Sidebar",
   components: {
     Slider
   },
+  mixins:[Time],
   props:{
     value: {
       type: Array,
@@ -60,25 +62,6 @@ export default {
           format: String
         }
       }
-    }
-  },
-  data(){
-    return{
-      yearList:['2021','2020','2019'],
-      monthList:[
-        {id:'01',name:'Janvier'},
-        {id:'02',name:'Février'},
-        {id:'03',name:'Mars'},
-        {id:'04',name:'Avril'},
-        {id:'05',name:'Mai'},
-        {id:'06',name:'Juin'},
-        {id:'07',name:'Juillet'},
-        {id:'08',name:'Août'},
-        {id:'09',name:'Septembre'},
-        {id:'10',name:'Octobre'},
-        {id:'11',name:'Novembre'},
-        {id:'12',name:'Décembre'}
-      ]
     }
   },
   computed:{

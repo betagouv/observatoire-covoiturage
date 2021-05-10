@@ -40,14 +40,14 @@
 </template>
 
 <script>
-import maps from '@/components/mixins/maps'
+import Maps from '@/components/mixins/maps'
 import Sidebar from '@/components/layouts/sidebar/Sidebar'
 import {ArcLayer} from '@deck.gl/layers'
 import axios from 'axios'
 
 export default {
   name: "Map",
-  mixins:[maps],
+  mixins:[Maps],
   components: {
     Sidebar
   },
@@ -55,10 +55,7 @@ export default {
     return {
       flux:null,
       filteredFlux: this.flux,
-      time:{
-        year: '2021',
-        month: '03'
-      },
+      time:null,
       slider:[]
     }
   },
@@ -68,6 +65,7 @@ export default {
     }
   },
   async mounted() {
+    await this.getTime()
     await this.getData()
     this.renderMaps()
   },
@@ -83,15 +81,19 @@ export default {
     }   
   },
   methods:{
+    async getTime(){
+      const response = await axios.get('http://localhost:8080/v1/monthly_flux/last')
+      this.time = response.data
+    },
     async getData(){
       const response = await axios.get('http://localhost:8080/v1/monthly_flux?year='+this.time.year+'&month='+this.time.month)
       this.flux = response.data
       this.slider = this.defaultSlider('vehicles')
     },
-    renderMaps() {
+    async renderMaps() {
       for (let territory of this.territories) {
-        this.createMap('map_'+territory.name,territory)
-        this.createDeck('deck_'+territory.name,territory,this.addArcLayer())
+        await this.createMap('map_'+territory.name,territory)
+        await this.createDeck('deck_'+territory.name,territory,this.addArcLayer())
       }
     },
     addArcLayer(){
@@ -162,6 +164,9 @@ export default {
     height: 50%;
     width: 50%;
     border: 2px solid white;
+  }
+  .tooltip-title{
+    font-size: 1.2em !important;
   }
 }
 </style>
