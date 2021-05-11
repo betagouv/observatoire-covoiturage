@@ -24,6 +24,8 @@
           <Slider v-model="computedValue" :sliderOptions="{'min':sliderOptions.min,'max':sliderOptions.max,'step':sliderOptions.step}"/>
         </li>
       </ul>
+      <div class="fr-sidemenu__title">{{vehicles}} trajets</div>
+      <div class="fr-sidemenu__title">{{covoit}} covoitureurs</div>
     </div>
   </nav>
 </template>
@@ -31,6 +33,7 @@
 <script>
 import Slider from '@/components/layouts/sidebar/Slider'
 import Time from '@/components/mixins/time'
+
 export default {
   name: "Sidebar",
   components: {
@@ -62,6 +65,14 @@ export default {
           format: String
         }
       }
+    },
+    vehicles: {
+      type: String,
+      required: true
+    },
+    covoit: {
+      type: String,
+      required: true
     }
   },
   computed:{
@@ -79,9 +90,5 @@ export default {
 <style lang="scss">
   .slider{
     padding: 0 1em;
-    // Set your colors
-    $primary: #000091;
-    @import "~bulma";
-    @import "~buefy/src/scss/buefy";
   }
 </style>

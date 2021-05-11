@@ -5,16 +5,6 @@ import geostats from 'geostats'
 export default {
   data() {
     return {
-      map_metropole:null,
-      map_antilles:null,
-      map_guyane:null,
-      map_mayotte:null,
-      map_reunion:null,
-      deck_metropole:null,
-      deck_antilles:null,
-      deck_guyane:null,
-      deck_mayotte:null,
-      deck_reunion:null,
       territories:[
         {
           name: "metropole",
@@ -60,11 +50,12 @@ export default {
               style: process.env.VUE_APP_MAPLIBRE_STYLE,
               center: options.center,
               zoom: options.zoom,
+              interactive: false,
             })
             if(options.controls){
               this[container].addControl(new maplibregl.NavigationControl(), 'top-left')
             }
-            /*this[container].on(["zoom"], () => {
+            /*this[container].on(["load"], () => {
               const { lat, lng } = this[container].getCenter()
               const newViewState = {
                 longitude: lng,

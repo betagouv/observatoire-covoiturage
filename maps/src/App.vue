@@ -7,11 +7,20 @@
 
 <script>
 import Header from './components/layouts/header/Header'
+import Breakpoints from '@/components/mixins/breakpoints'
 export default {
   name: 'App',
+  mixins:[Breakpoints],
   components: {
     Header
   },
+  mounted() {
+    window.addEventListener('resize', this.handleResize)
+    this.handleResize()
+  },
+  destroyed() {
+    window.removeEventListener('resize', this.handleResize)
+  }
 }
 </script>
 

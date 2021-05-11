@@ -15,3 +15,11 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+  .slider, .map{
+    // Set your colors
+    $primary: #000091;
+    @import "~bulma";
+    @import "~buefy/src/scss/buefy";
+  }
+</style>

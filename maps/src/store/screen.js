@@ -3,15 +3,15 @@ const state = {
     width: 0,
     height: 0
   },
-  device: ''
+  breakpoint: ''
 }
 
 const mutations = {
   setWindow: (state, response) => {
     state.window = response
   },
-  setDevice: (state, response) => {
-    state.device = response
+  setBreakpoint: (state, response) => {
+    state.breakpoint = response
   },
 }
 
