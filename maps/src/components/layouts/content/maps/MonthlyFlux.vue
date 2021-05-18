@@ -5,9 +5,8 @@
         v-if="flux" 
         v-model="slider" 
         :time="time"
-        :sliderOptions="{'min':0,'max':this.defaultSlider('vehicles')[1],'step':5}"
-        :vehicles ="allVehicles"
-        :covoit ="allCovoit"
+        :sliderOptions="{'min':0,'max':this.defaultSlider('journeys')[1],'step':5}"
+        :journeys ="allJourneys"
       />
     </div>
     <div class="fr-col-12 fr-col-md-10 map">
@@ -18,6 +17,7 @@
             <canvas id="deck_metropole" class="deck"></canvas>
             <div id="map_metropole"></div>
           </div>
+          <Legend :title="legendTitle" :analysis="jenksJourneys"/>
         </div>
         <div class="fr-col-12 fr-col-md-3 maps_drom">
           <div class="map_container">
@@ -46,14 +46,17 @@
 import Maps from '@/components/mixins/maps'
 import Breakpoints from '@/components/mixins/breakpoints'
 import Sidebar from '@/components/layouts/sidebar/Sidebar'
+import Legend from '@/components/layouts/content/Legend'
 import {ArcLayer} from '@deck.gl/layers'
 import axios from 'axios'
+
 
 export default {
   name: "Map",
   mixins:[Maps,Breakpoints],
   components: {
-    Sidebar
+    Sidebar,
+    Legend
   },
   data(){
     return {
@@ -72,22 +75,20 @@ export default {
       time:null,
       slider:[],
       loading: true,
+      legendTitle:"Flux entre communes (nb de trajets, tout sens confondus)"
     }
   },
   computed:{
-    jenksVehicles(){
-      return this.jenks(this.flux,'vehicles',['#9478c7','#8a6dc1','#7455b7','#5335a7','#2c1599','#000091'],[1,5,10,20,40,80])
-    },
-    allVehicles(){
-      if(this.filteredFlux){
-        return this.filteredFlux.map(f=>f.vehicles).reduce((a, b) => a + b, 0).toLocaleString('fr-FR')
-      } else{
-        return 0
+    jenksJourneys(){
+      if(this.flux){
+        return this.jenks(this.flux,'journeys',['#000091','#000091','#000091','#000091','#000091','#000091'],[1,5,10,20,40,80])
+      }else{
+        return []
       }
     },
-    allCovoit(){
+    allJourneys(){
       if(this.filteredFlux){
-        return this.filteredFlux.map(f=>(f.vehicles+f.passengers)).reduce((a, b) => a + b, 0).toLocaleString('fr-FR')
+        return this.filteredFlux.map(f=>f.journeys).reduce((a, b) => a + b, 0).toLocaleString('fr-FR')
       } else{
         return 0
       }
@@ -104,7 +105,7 @@ export default {
   },
   watch:{
     slider(){
-      this.filterFlux('vehicles')
+      this.filterFlux('journeys')
     },
     'time':{
       handler: function() {
@@ -112,14 +113,16 @@ export default {
       },
       deep: true
     },
-    'screen.window':{
+    'screen':{
       handler: function() {
         for (let territory of this.territories) {
-          this['deck_'+territory.name].setProps({
-            ...this['deck_'+territory.name].props,
-            width: "100%",
-            height: "100%",
-          })
+          if(this['deck_'+territory.name]){
+            this['deck_'+territory.name].setProps({
+              ...this['deck_'+territory.name].props,
+              width: "100%",
+              height: "100%",
+            })
+          }
         }
       },
       deep: true
@@ -127,14 +130,14 @@ export default {
   },
   methods:{
     async getTime(){
-      const response = await axios.get('http://localhost:8080/v1/monthly_flux/last')
+      const response = await axios.get('http://localhost:8080/v1/journeys_monthly_flux/last')
       this.time = response.data 
     },
     async getData(){
       this.loading = true
-      const response = await axios.get('http://localhost:8080/v1/monthly_flux?year='+this.time.year+'&month='+this.time.month)
+      const response = await axios.get('http://localhost:8080/v1/journeys_monthly_flux?year='+this.time.year+'&month='+this.time.month)
       this.flux = response.data
-      this.slider = this.defaultSlider('vehicles')
+      this.slider = this.defaultSlider('journeys')
       this.loading = false
     },
     async renderMaps() {
@@ -153,7 +156,7 @@ export default {
         data:this.filteredFlux,
         opacity:0.4,
         pickable: true,
-        getWidth: d => this.classWidth( d.vehicles,this.jenksVehicles),
+        getWidth: d => this.classWidth( d.journeys,this.jenksJourneys),
         getSourcePosition: d => [d.com1_lng,d.com1_lat],
         getTargetPosition: d => [d.com2_lng,d.com2_lat],
         getSourceColor: [0,0,145],
@@ -175,7 +178,11 @@ export default {
           this['deck_'+territory.name].setProps({layers:[this.addArcLayer()]})
         }
       }
-      
+    },
+    tooltip(object){
+      return `<div class="tooltip-title"><b>${object.l_com1} - ${object.l_com2}</b></div>
+              <div>Trajets : ${object.journeys}</div>
+              <div>Passagers : ${object.passengers}</div>`
     }
   }
 };

@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@gouvfr/dsfr": "^1.0.0-rc1.0",
+    "@mdi/font": "^5.9.55",
     "axios": "^0.21.1",
     "buefy": "^0.9.7",
     "core-js": "^3.6.5",

@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import Map from '../layouts/content/Map'
+import Map from '../layouts/content/maps/MonthlyFlux'
 export default {
   name: 'Home',
   components: {

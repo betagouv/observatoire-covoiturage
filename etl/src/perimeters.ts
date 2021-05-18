@@ -12,7 +12,7 @@ async function inseeDownload(){
     downloadFile(path,'https://www.insee.fr/fr/statistiques/fichier/5057840/commune2021-csv.zip'),
     downloadFile(path,'https://www.insee.fr/fr/statistiques/fichier/5057840/mvtcommune2021-csv.zip'),
     downloadFile(path,'https://www.insee.fr/fr/statistiques/fichier/2510634/Intercommunalite_Metropole_au_01-01-2019.zip'),
-    downloadFile(path,'https://www.insee.fr/fr/statistiques/fichier/2510634/Intercommunalite_Metropole_au_01-01-2020.zip'),
+    downloadFile(path,'https://www.insee.fr/fr/statistiques/fichier/2510634/Intercommunalite_Metropole_au_01-01-2020_v1.zip'),
     downloadFile(path,'https://www.insee.fr/fr/statistiques/fichier/2510634/Intercommunalite_Metropole_au_01-01-2021.zip'),
     downloadFile(path,'https://www.insee.fr/fr/statistiques/fichier/5057840/departement2021-csv.zip'),
     downloadFile(path,'https://www.insee.fr/fr/statistiques/fichier/5057840/region2021-csv.zip'),
@@ -35,7 +35,7 @@ async function geoDownload(){
     downloadFile(path,'http://files.opendatarchives.fr/professionnels.ign.fr/adminexpress/ADMIN-EXPRESS-COG_2-1__SHP__FRA_WGS84G_2020-11-20.7z','admin-express-2020.7z')
   ])
   path = join(__dirname, '../assets/eurostat/') 
-  await downloadFile(path,'https://gisco-services.ec.europa.eu/distribution/v2/countries/geojson/CNTR_RG_10M_2020_4326.geojson','countries_2020.geojson')
+  await downloadFile(path,'https://gisco-services.ec.europa.eu/distribution/v2/countries/geojson/CNTR_RG_60M_2020_4326.geojson','countries_2020.geojson')
 }
 
 async function geoTransform(){

@@ -104,19 +104,16 @@ export default {
             getCursor: ({isDragging}) => (isDragging ? 'grabbing' : (this.isHovering ? 'pointer' : 'grab')),
             layers:[layer],
             getTooltip: ({object}) => object && {
-              html: `<div class="tooltip-title"><b>${object.l_com1} - ${object.l_com2}</b></div>
-              <div>Véhicules : ${object.vehicles}</div>
-              <div>Passagers : ${object.passengers}</div>
-              <div>${((object.passengers + object.vehicles)/object.vehicles).toFixed(1)} personnes par véhicules</div>`,
+              html: this.tooltip(object),
               className:'fr-callout',
               style: {
                 color:'#000',
                 backgroundColor: '#fff',
                 fontSize: '0.8em',
                 width:'250px',
-                height:'130px',
+                height:'110px',
                 left:'-125px',
-                top:'-130px'
+                top:'-110px'
               }
             }
           })

@@ -18,14 +18,13 @@
           </b-field>
         </li>
       </ul>
-      <div class="fr-sidemenu__title">Flux de véhicules entre :</div>
+      <div class="fr-sidemenu__title">Nombre de trajets entre :</div>
       <ul class="fr-sidemenu__list">
         <li class="fr-sidemenu__item">
           <Slider v-model="computedValue" :sliderOptions="{'min':sliderOptions.min,'max':sliderOptions.max,'step':sliderOptions.step}"/>
         </li>
       </ul>
-      <div class="fr-sidemenu__title">{{vehicles}} trajets</div>
-      <div class="fr-sidemenu__title">{{covoit}} covoitureurs</div>
+      <div class="fr-sidemenu__title">{{journeys}} trajets entre communes</div>
     </div>
   </nav>
 </template>
@@ -66,11 +65,7 @@ export default {
         }
       }
     },
-    vehicles: {
-      type: String,
-      required: true
-    },
-    covoit: {
+    journeys: {
       type: String,
       required: true
     }
@@ -83,7 +78,7 @@ export default {
     selectedTime:{
       get() { return this.time },
       set(time) {this.$emit('input', time)}
-    }
+    },
   }
 }
 </script>

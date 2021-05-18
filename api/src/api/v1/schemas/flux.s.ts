@@ -1,6 +1,6 @@
 export default class monthlyFluxSchema {
   
-  static monthly = {
+  static journeysMonthly = {
     tags: ['flux'],
     querystring: {
       year: {
@@ -15,7 +15,7 @@ export default class monthlyFluxSchema {
     response: {
       200: {
         type: 'array',
-        description:'Return monthly flux',
+        description:'Return journeys monthly flux',
         items: {
           properties: {
             com1: {type:'string'},
@@ -26,21 +26,20 @@ export default class monthlyFluxSchema {
             l_com2: {type:'string'},
             com2_lng:{type:'number'},
             com2_lat:{type:'number'},
-            vehicles:{type:'integer'},
-            passengers:{type:'integer'},
-            reserved_seats:{type:'integer'}
+            journeys:{type:'integer'},
+            passengers:{type:'integer'}
           }
         }
       }
     }
   }
 
-  static lastRecordMonthly = {
+  static lastRecordJourneysMonthly = {
     tags: ['flux'],
     response: {
       200: {
         type: 'object',
-        description:'Return last Month and Year available in monthly flux',
+        description:'Return last Month and Year available in journeys monthly flux',
         properties: {
           month: {type:'string'},
           year: {type:'string'}
