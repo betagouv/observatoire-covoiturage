@@ -36,21 +36,6 @@
               </p>
             </div>
           </div>
-          <div class="fr-header__tools">
-            <div class="fr-header__tools-links">
-              <ul class="fr-links-group">
-                <li>
-                  <a class="fr-link fr-fi-add-circle-line" href="#">Créer un espace</a>
-                </li>
-                <li>
-                  <a class="fr-link fr-fi-lock-line" href="#">Se connecter</a>
-                </li>
-                <li>
-                  <a class="fr-link fr-fi-account-line" href="#">S’enregistrer</a>
-                </li>
-              </ul>
-            </div>
-          </div>
         </div>
       </div>
     </div>

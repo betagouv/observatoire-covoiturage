@@ -7,8 +7,6 @@
     <link rel="apple-touch-icon" href="favicons/apple-touch-icon.png"><!-- 180×180 -->
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <link rel="manifest" href="favicons/manifest.webmanifest" crossorigin="use-credentials">
-    <script src="js/dsfr.module.min.js" type="module"></script>
-  <script src="js/dsfr.nomodule.min.js" nomodule type="text/javascript"></script>
     <title><%= htmlWebpackPlugin.options.title %></title>
   </head>
   <body>
@@ -17,6 +15,8 @@
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+    <script src="js/dsfr.module.min.js" type="module"></script>
+    <script src="js/dsfr.nomodule.min.js" nomodule type="text/javascript"></script>
   </body>
 </html>
 

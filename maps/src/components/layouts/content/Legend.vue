@@ -49,7 +49,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
   .legend {
     position: absolute;
     bottom: 25px;
