@@ -10,6 +10,7 @@
     </b-slider>
     <b-field>
       <b-numberinput v-model="computedValue[0]" size="is-small" :controls="false"/>
+      <span class="separator"> et </span>
       <b-numberinput v-model="computedValue[1]" size="is-small" :controls="false"/>
     </b-field>
   </div>
@@ -44,4 +45,9 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.separator{
+  padding: 0 10px;
+}
+</style>
 

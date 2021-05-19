@@ -45,6 +45,12 @@ export default {
       } else {
         return false
       }
+    },
+    openSidebar(){
+      this.$store.commit('setSidebarOpen',!this.screen.isSidebarOpen)
+    },
+    openLegend(){
+      this.$store.commit('setLegendOpen',!this.screen.isLegendOpen)
     }
   }
 }

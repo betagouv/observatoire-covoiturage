@@ -4,7 +4,7 @@
       <div class="fr-container">
         <div class="fr-header__body-row">
           <div class="fr-header__brand fr-enlarge-link">
-            <div class="fr-header__brand-top">
+            <div  class="fr-header__brand-top">
               <div class="fr-header__logo">
                 <p class="fr-logo">
                   Ministère<br />
@@ -12,28 +12,19 @@
                   écologique
                 </p>
               </div>
+              <div class="fr-header__operator">
+                <a href="/" title="Observatoire du covoiturage au quotidien - Ministère de la transition écologique">
+                  <p class="fr-header__service-title">Observatoire du covoiturage au quotidien</p>
+                </a>
+                <p v-if="lgAndAbove" class="fr-header__service-tagline">
+                  Comprendre le covoiturage
+                </p>
+              </div>
               <div class="fr-header__navbar">
-                <button
-                  class="fr-btn--menu fr-btn"
-                  data-fr-opened="false"
-                  aria-controls="modal-833"
-                  aria-haspopup="menu"
-                  title="Menu"
-                >
+                <button class="fr-btn--menu fr-btn" title="Menu" @click="openSidebar">
                   Menu
                 </button>
               </div>
-            </div>
-            <div class="fr-header__service">
-              <a
-                href="/"
-                title="Accueil - [À MODIFIER | Nom du site / service] - [À MODIFIER | nom de l’entité (ministère , secrétariat d‘état, gouvernement)]"
-              >
-                <p class="fr-header__service-title">Observatoire du covoiturage au quotidien</p>
-              </a>
-              <p class="fr-header__service-tagline">
-                Comprendre le covoiturage
-              </p>
             </div>
           </div>
         </div>
@@ -43,12 +34,18 @@
 </template>
 
 <script>
+import Breakpoints from '@/components/mixins/breakpoints'
 export default {
   name: "Header",
+  mixins:[Breakpoints]
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
   .fr-header {
     z-index: 1;
+  }
+  .obs_logo{
+    display: flex;
+    align-items: stretch;
   }
 </style>

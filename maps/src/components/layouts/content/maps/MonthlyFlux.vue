@@ -1,25 +1,28 @@
 <template>
   <div class="fr-grid-row content">
-    <div v-if="lgAndAbove" class="fr-col-2 sidebar">
+    <div v-if="lgAndAbove || screen.isSidebarOpen" class="fr-col-12 fr-col-lg-2 sidebar">
       <Sidebar 
         v-if="flux" 
         v-model="slider" 
         :time="time"
         :sliderOptions="{'min':0,'max':this.defaultSlider('journeys')[1],'step':5}"
-        :journeys ="allJourneys"
+        :journeys="allJourneys"
+        :map="map"
+        @selectedMap="selectMap"
       />
     </div>
-    <div class="fr-col-12 fr-col-md-10 map">
+    <div class="fr-col-12 fr-col-lg-10 map">
       <b-loading v-model="loading"></b-loading>
       <div class="fr-grid-row maps_container">
-        <div class="fr-col-12 fr-col-md-9 map_metropole">
+        <div v-if="['all','metropole'].includes(map)" :class="{'fr-hidden': screen.isSidebarOpen}" class="fr-col-12 fr-col-lg-9 map_metropole">
           <div class="map_container">
             <canvas id="deck_metropole" class="deck"></canvas>
             <div id="map_metropole"></div>
           </div>
           <Legend :title="legendTitle" :analysis="jenksJourneys"/>
         </div>
-        <div class="fr-col-12 fr-col-md-3 maps_drom">
+        <div v-if="['all','droms'].includes(map)" :class="{'fr-hidden': screen.isSidebarOpen}" class="fr-col-12 fr-col-lg-3 maps_drom">
+          <Legend v-if="map ==='droms'" :title="legendTitle" :analysis="jenksJourneys"/>
           <div class="map_container">
             <canvas id="deck_antilles" class="deck"></canvas>
             <div id="map_antilles"></div>
@@ -58,6 +61,12 @@ export default {
     Sidebar,
     Legend
   },
+  props:{
+    map: {
+      type: String,
+      required: true
+    }
+  },
   data(){
     return {
       map_metropole:null,
@@ -75,7 +84,7 @@ export default {
       time:null,
       slider:[],
       loading: true,
-      legendTitle:"Flux entre communes (nb de trajets, tout sens confondus)"
+      legendTitle:"Nb de trajets entre communes"
     }
   },
   computed:{
@@ -113,7 +122,7 @@ export default {
       },
       deep: true
     },
-    'screen':{
+    'screen.window':{
       handler: function() {
         for (let territory of this.territories) {
           if(this['deck_'+territory.name]){
@@ -126,7 +135,7 @@ export default {
         }
       },
       deep: true
-    }   
+    } 
   },
   methods:{
     async getTime(){
@@ -183,6 +192,9 @@ export default {
       return `<div class="tooltip-title"><b>${object.l_com1} - ${object.l_com2}</b></div>
               <div>Trajets : ${object.journeys}</div>
               <div>Passagers : ${object.passengers}</div>`
+    },
+    selectMap(event){
+      this.$emit('rerenderMap', event)
     }
   }
 };
@@ -191,7 +203,7 @@ export default {
 <style lang="scss" scoped>
 .content{
   position: absolute;
-  top: 170px;
+  top: 105px;
   bottom: 0;
   width: 100%;
   @media screen and (min-width: 992px) {
@@ -223,7 +235,7 @@ export default {
   .maps_drom .map_container {
     height: 50%;
     width: 50%;
-    border: 2px solid white;
+    border: 1px solid white;
   }
   .tooltip-title{
     font-size: 1.2em !important;

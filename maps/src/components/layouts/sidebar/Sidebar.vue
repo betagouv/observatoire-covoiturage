@@ -1,5 +1,5 @@
 <template>
-  <nav class="fr-sidemenu--full-border" role="navigation" aria-label="Menu latéral">
+  <nav class="fr-sidemenu--full-border" :class="{'fr-p-1w': !lgAndAbove}" role="navigation" aria-label="Menu latéral">
     <div class="fr-sidemenu__inner">
       <div class="fr-sidemenu__title">Mois sélectionné :</div>
       <ul class="fr-sidemenu__list">
@@ -25,6 +25,13 @@
         </li>
       </ul>
       <div class="fr-sidemenu__title">{{journeys}} trajets entre communes</div>
+      <ul  v-if="!lgAndAbove" class="fr-sidemenu__list control_maps">
+        <b-button type="is-primary" @click="selectedMap">
+          <p v-if="map ==='droms'">Voir la France métropolitaine</p>
+          <p v-else>Voir la France d'Outre-mer</p>
+        </b-button>
+      </ul>
+      
     </div>
   </nav>
 </template>
@@ -32,13 +39,14 @@
 <script>
 import Slider from '@/components/layouts/sidebar/Slider'
 import Time from '@/components/mixins/time'
+import Breakpoints from '@/components/mixins/breakpoints'
 
 export default {
   name: "Sidebar",
   components: {
     Slider
   },
-  mixins:[Time],
+  mixins:[Time,Breakpoints],
   props:{
     value: {
       type: Array,
@@ -68,6 +76,10 @@ export default {
     journeys: {
       type: String,
       required: true
+    },
+    map: {
+      type: String,
+      required: true
     }
   },
   computed:{
@@ -79,11 +91,24 @@ export default {
       get() { return this.time },
       set(time) {this.$emit('input', time)}
     },
+  },
+  methods:{
+    selectedMap(){
+      if (this.map === 'metropole'){
+        this.$emit('selectedMap', 'droms')
+      } else {
+        this.$emit('selectedMap', 'metropole')
+      }
+      this.$store.commit('setSidebarOpen',!this.screen.isSidebarOpen) 
+    }
   }
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
   .slider{
     padding: 0 1em;
+  }
+  .fr-sidemenu__title{
+    font-size: 1rem !important;
   }
 </style>

@@ -3,7 +3,9 @@ const state = {
     width: 0,
     height: 0
   },
-  breakpoint: ''
+  breakpoint: '',
+  isSidebarOpen:false,
+  isLegendOpen:true,
 }
 
 const mutations = {
@@ -12,6 +14,12 @@ const mutations = {
   },
   setBreakpoint: (state, response) => {
     state.breakpoint = response
+  },
+  setSidebarOpen: (state, response) => {
+    state.isSidebarOpen = response
+  },
+  setLegendOpen: (state, response) => {
+    state.isLegendOpen = response
   },
 }
 

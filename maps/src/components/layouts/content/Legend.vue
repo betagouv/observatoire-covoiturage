@@ -1,5 +1,5 @@
 <template>
-  <div class='legend'>
+  <div v-if="screen.isLegendOpen" class='legend'>
     <div class='legend-title'>{{title}}</div>
     <div class="item" v-for="classe in legend" :key="classe.name">
       <span class="legend-class" :style="'height:'+classe.width+'px;background-color:rgb('+classe.color[0]+','+classe.color[1]+','+classe.color[2]+')'"></span>
@@ -9,8 +9,10 @@
 </template>
 
 <script>
+import Breakpoints from '@/components/mixins/breakpoints'
 export default {
   name: 'Legend',
+  mixins:[Breakpoints],
   props:{
     title:{
       type: String,
@@ -57,19 +59,24 @@ export default {
     overflow: auto;
     border-radius: 10%;
     padding: 10px;
-    width: 250px;
     z-index: 1;
     background-color: #ffffff;
+    font-size: 0.8em;
+    width: 120px;
+      @media screen and (min-width: 992px) {
+        font-size: 1em;
+        width: 250px;
+      }
+    .legend-class{
+      display: inline-block;
+      width: 30px;
+      margin-right: 5px;
+      background-color: #ccc;
+    }
+    .legend-title{
+      font-weight: bold;
+    }
   }
-  .legend-class{
-    display: inline-block;
-    width: 30px;
-    margin-right: 5px;
-    background-color: #ccc;
-  }
-  .legend-title{
-    font-weight: bold;
-    font-size: 1em;
-  }
+  
 
 </style>

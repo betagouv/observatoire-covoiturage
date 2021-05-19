@@ -1,8 +1,10 @@
 import maplibregl from 'maplibre-gl'
 import {Deck} from '@deck.gl/core'
 import geostats from 'geostats'
+import Breakpoints from '@/components/mixins/breakpoints'
 
 export default {
+  mixins:[Breakpoints],
   data() {
     return {
       territories:[
@@ -10,6 +12,7 @@ export default {
           name: "metropole",
           center: [2.087, 46],
           zoom: 5,
+          zoomMobile: 4,
           controls: false,
         },
         {
@@ -21,6 +24,7 @@ export default {
           name: "guyane",
           center: [-53.097, 3.83],
           zoom: 5,
+          zoomMobile: 4,
         },
         {
           name: "mayotte",
@@ -49,22 +53,12 @@ export default {
             container: container,
               style: process.env.VUE_APP_MAPLIBRE_STYLE,
               center: options.center,
-              zoom: options.zoom,
+              zoom: this.zoomMobile(options),
               interactive: false,
             })
             if(options.controls){
               this[container].addControl(new maplibregl.NavigationControl(), 'top-left')
             }
-            /*this[container].on(["load"], () => {
-              const { lat, lng } = this[container].getCenter()
-              const newViewState = {
-                longitude: lng,
-                latitude: lat,
-                zoom: this[container].getZoom(),
-                bearing: this[container].getBearing()
-              }
-              this['deck_'+options.name].setProps({ viewState: newViewState })
-            })*/
             resolve()
           }
         }
@@ -87,7 +81,7 @@ export default {
             initialViewState: {
               latitude: options.center[1],
               longitude:options.center[0],
-              zoom: options.zoom,
+              zoom: this.zoomMobile(options),
               bearing: 0,
               pitch: 0
             },
@@ -150,6 +144,14 @@ export default {
         return Math.abs(curr - val) > Math.abs(prev - val) ? prev : curr
       })
       return datas.find(d => d.val === classe).width
+    },
+    zoomMobile(options){
+      if(!this.lgAndAbove && options.zoomMobile){
+        return options.zoomMobile
+      } else {
+        return options.zoom
+      }
+
     }
   }
 }
