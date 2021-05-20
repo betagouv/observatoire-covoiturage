@@ -16,7 +16,7 @@ export default {
     Header,
     Home
   },
-  mounted() {
+  created() {
     window.addEventListener('resize', this.handleResize)
     this.handleResize()
   },

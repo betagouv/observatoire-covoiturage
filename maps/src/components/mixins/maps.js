@@ -14,27 +14,31 @@ export default {
           zoom: 5,
           zoomMobile: 4,
           controls: false,
+          attribution: true
         },
         {
           name: "antilles",
           center: [-61.3367, 15.372],
           zoom: 6,
+          attribution: false
         },
         {
           name: "guyane",
           center: [-53.097, 3.83],
           zoom: 5,
-          zoomMobile: 4,
+          attribution: false
         },
         {
           name: "mayotte",
           center: [45.167, -12.8503],
           zoom: 8,
+          attribution: false
         },
         {
           name: "reunion",
           center: [55.5155, -21.0883],
           zoom: 7,
+          attribution: false
         }
       ],
       isHovering:false
@@ -55,6 +59,7 @@ export default {
               center: options.center,
               zoom: this.zoomMobile(options),
               interactive: false,
+              attributionControl: options.attribution
             })
             if(options.controls){
               this[container].addControl(new maplibregl.NavigationControl(), 'top-left')

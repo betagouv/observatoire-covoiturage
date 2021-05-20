@@ -5,7 +5,7 @@
         v-if="flux" 
         v-model="slider" 
         :time="time"
-        :sliderOptions="{'min':0,'max':this.defaultSlider('journeys')[1],'step':5}"
+        :sliderOptions="{'min':0,'max':this.defaultSlider('journeys')[1],'step':1}"
         :journeys="allJourneys"
         :map="map"
         @selectedMap="selectMap"
@@ -90,7 +90,7 @@ export default {
   computed:{
     jenksJourneys(){
       if(this.flux){
-        return this.jenks(this.flux,'journeys',['#000091','#000091','#000091','#000091','#000091','#000091'],[1,5,10,20,40,80])
+        return this.jenks(this.flux,'journeys',['#000091','#000091','#000091','#000091','#000091','#000091'],[1,3,6,12,24,48])
       }else{
         return []
       }
@@ -110,7 +110,6 @@ export default {
   async mounted(){
     await this.renderMaps()
     await this.renderDecks()
-
   },
   watch:{
     slider(){
@@ -150,13 +149,29 @@ export default {
       this.loading = false
     },
     async renderMaps() {
-      for (let territory of this.territories) {
-        this.createMap('map_'+territory.name,territory)
+      if (this.map === 'metropole'){ 
+        this.createMap('map_'+this.map,this.territories.find(t => t.name === this.map))
+      } else if(this.map === 'droms'){
+        for (let territory of this.territories.filter(t => t.name !== 'metropole')) {
+          this.createMap('map_'+territory.name,territory)
+        }
+      } else {
+        for (let territory of this.territories) {
+          this.createMap('map_'+territory.name,territory)
+        }
       }
     },
     async renderDecks() {
-      for (let territory of this.territories) {
-        this.createDeck('deck_'+territory.name,territory,this.addArcLayer())
+      if (this.map === 'metropole'){ 
+        this.createDeck('deck_'+this.map,this.territories.find(t => t.name === this.map),this.addArcLayer())
+      } else if(this.map === 'droms'){
+        for (let territory of this.territories.filter(t => t.name !== 'metropole')) {
+          this.createDeck('deck_'+territory.name,territory,this.addArcLayer())
+        }
+      } else {
+        for (let territory of this.territories) {
+          this.createDeck('deck_'+territory.name,territory,this.addArcLayer())
+        }
       }
     },
     addArcLayer(){

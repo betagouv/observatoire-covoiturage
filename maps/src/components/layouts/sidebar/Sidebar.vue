@@ -1,8 +1,8 @@
 <template>
   <nav class="fr-sidemenu--full-border" :class="{'fr-p-1w': !lgAndAbove}" role="navigation" aria-label="Menu latéral">
     <div class="fr-sidemenu__inner">
-      <div class="fr-sidemenu__title">Mois sélectionné :</div>
       <ul class="fr-sidemenu__list">
+        <div class="fr-sidemenu__title">Mois sélectionné :</div>
         <li class="fr-sidemenu__item">
           <b-field grouped>
             <b-field>
@@ -18,20 +18,22 @@
           </b-field>
         </li>
       </ul>
-      <div class="fr-sidemenu__title">Nombre de trajets entre :</div>
       <ul class="fr-sidemenu__list">
-        <li class="fr-sidemenu__item">
-          <Slider v-model="computedValue" :sliderOptions="{'min':sliderOptions.min,'max':sliderOptions.max,'step':sliderOptions.step}"/>
-        </li>
+        <div class="fr-sidemenu__title">Nombre de trajets entre :</div>
+        <Slider v-model="selectedValue" :sliderOptions="{'min':sliderOptions.min,'max':sliderOptions.max,'step':sliderOptions.step}"/>
       </ul>
-      <div class="fr-sidemenu__title">{{journeys}} trajets entre communes</div>
       <ul  v-if="!lgAndAbove" class="fr-sidemenu__list control_maps">
+        <div class="fr-sidemenu__title">{{journeys}} trajets entre communes</div>
         <b-button type="is-primary" @click="selectedMap">
           <p v-if="map ==='droms'">Voir la France métropolitaine</p>
           <p v-else>Voir la France d'Outre-mer</p>
         </b-button>
       </ul>
-      
+      <ul  v-if="!lgAndAbove" class="fr-sidemenu__list control_maps">
+        <b-switch size="is-small" v-model="screen.isLegendOpen">
+          Légende
+        </b-switch>
+      </ul>
     </div>
   </nav>
 </template>
@@ -83,7 +85,7 @@ export default {
     }
   },
   computed:{
-    computedValue: {
+    selectedValue: {
       get() { return this.value },
       set(value) {this.$emit('input', value)}
     },

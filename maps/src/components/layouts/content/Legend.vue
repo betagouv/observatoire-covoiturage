@@ -1,5 +1,5 @@
 <template>
-  <div v-if="screen.isLegendOpen" class='legend'>
+  <div v-if="lgAndAbove || screen.isLegendOpen" class='legend'>
     <div class='legend-title'>{{title}}</div>
     <div class="item" v-for="classe in legend" :key="classe.name">
       <span class="legend-class" :style="'height:'+classe.width+'px;background-color:rgb('+classe.color[0]+','+classe.color[1]+','+classe.color[2]+')'"></span>
@@ -65,7 +65,7 @@ export default {
     width: 120px;
       @media screen and (min-width: 992px) {
         font-size: 1em;
-        width: 250px;
+        width: 200px;
       }
     .legend-class{
       display: inline-block;

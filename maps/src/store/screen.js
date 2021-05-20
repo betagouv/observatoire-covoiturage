@@ -5,7 +5,7 @@ const state = {
   },
   breakpoint: '',
   isSidebarOpen:false,
-  isLegendOpen:true,
+  isLegendOpen:false,
 }
 
 const mutations = {

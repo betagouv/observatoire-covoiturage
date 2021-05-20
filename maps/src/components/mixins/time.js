@@ -2,7 +2,7 @@
 export default {
   data(){
     return{
-      yearList:['2021','2020','2019'],
+      yearList:['2021','2020'],
       monthList:[
         {id:'01',name:'Janvier'},
         {id:'02',name:'Février'},

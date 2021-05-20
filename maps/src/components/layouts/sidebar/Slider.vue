@@ -1,7 +1,7 @@
 <template>
   <div class="slider">
     <b-slider  
-      v-model="computedValue" 
+      v-model="selectedValue" 
       :min="sliderOptions.min" 
       :max="sliderOptions.max" 
       :step="sliderOptions.step" 
@@ -9,9 +9,9 @@
     >
     </b-slider>
     <b-field>
-      <b-numberinput v-model="computedValue[0]" size="is-small" :controls="false"/>
+      <b-numberinput v-model="selectedValue[0]" size="is-small" :controls="false"/>
       <span class="separator"> et </span>
-      <b-numberinput v-model="computedValue[1]" size="is-small" :controls="false"/>
+      <b-numberinput v-model="selectedValue[1]" size="is-small" :controls="false"/>
     </b-field>
   </div>
 </template>
@@ -36,7 +36,7 @@ export default {
     }
   },
   computed:{
-    computedValue: {
+    selectedValue: {
       get() { return this.value },
       set(value) {
         this.$emit('input', value)

@@ -1,7 +1,7 @@
 <template>
   <div class="fr-section">
     <div class="fr-container--fluid">
-      <Map :map="mobileMap" :key="mapKey" @rerenderMap="forceRerenderMaps"/>
+      <Map :map="selectedMap" :key="mapKey" @rerenderMap="forceRerenderMaps"/>
     </div>
   </div>
 </template>
@@ -25,14 +25,28 @@ export default {
     mobileMap(){
       if (this.lgAndAbove){
         return 'all'
-      } else if (this.selectedMap === 'all'){
+      } else {
         return 'metropole'
-      }else {
-        return this.selectedMap
       }
+    },
+  },
+  mounted(){
+    this.resize()
+  },
+  watch:{
+    lgAndAbove(){
+      this.resize()
+      this.mapKey += 1
     }
   },
   methods: {
+    resize(){
+      if (this.lgAndAbove){
+        this.selectedMap = 'all'
+      } else {
+        this.selectedMap = 'metropole'
+      }
+    },
     forceRerenderMaps(event) {
       this.selectedMap = event
       this.mapKey += 1

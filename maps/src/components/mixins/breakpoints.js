@@ -6,7 +6,7 @@ export default {
         width: window.innerWidth,
         height: window.innerHeight
       },
-      breakpoint: 'xl'
+      breakpoint: ''
     }
   },
   computed:{
