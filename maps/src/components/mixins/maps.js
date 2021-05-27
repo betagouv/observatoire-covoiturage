@@ -58,7 +58,6 @@ export default {
               style: process.env.VUE_APP_MAPLIBRE_STYLE,
               center: options.center,
               zoom: this.zoomMobile(options),
-              interactive: false,
               attributionControl: options.attribution
             })
             if(options.controls){

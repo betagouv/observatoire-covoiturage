@@ -10,7 +10,7 @@
 import Map from '../layouts/content/maps/MonthlyFlux'
 import Breakpoints from '@/components/mixins/breakpoints'
 export default {
-  name: 'Home',
+  name: 'Flux',
   mixins:[Breakpoints],
   components: {
     Map

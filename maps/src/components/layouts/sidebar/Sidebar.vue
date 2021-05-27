@@ -22,6 +22,7 @@
         <div class="fr-sidemenu__title">Nombre de trajets entre :</div>
         <Slider v-model="selectedValue" :sliderOptions="{'min':sliderOptions.min,'max':sliderOptions.max,'step':sliderOptions.step}"/>
       </ul>
+      <p>{{journeys}} trajets (un trajet correspond un couple conducteur-pasager)</p>
     </div>
   </nav>
 </template>

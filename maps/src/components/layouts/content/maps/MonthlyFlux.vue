@@ -237,7 +237,7 @@ export default {
   }
 }
 .map {
-  *:focus, *:focus-visible {
+  :focus, :focus-visible {
     z-index: auto;
   }
   .deck{

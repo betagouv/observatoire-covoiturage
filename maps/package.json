@@ -10,10 +10,12 @@
   "dependencies": {
     "@gouvfr/dsfr": "^1.0.0-rc1.0",
     "@mdi/font": "^5.9.55",
+    "@turf/helpers": "^6.3.0",
     "axios": "^0.21.1",
     "buefy": "^0.9.7",
     "core-js": "^3.6.5",
     "deck.gl": "^8.4.13",
+    "geojson-vt": "^3.2.1",
     "geostats": "^2.0.0",
     "maplibre-gl": "^1.14.0",
     "sass-loader": "^10.1.1",

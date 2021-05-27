@@ -1,11 +1,13 @@
 import VueRouter from 'vue-router'
-import Home from '../components/pages/Home'
+import Flux from '../components/pages/Flux'
+import Aires from '../components/pages/Aires'
 
 
 let router = new VueRouter({
   mode: 'history',
   routes: [
-    { path: '/', name: 'Home', component: Home },
+    { path: '/', name: 'Flux', component: Flux },
+    { path: '/aires-covoiturage', name: 'Aires', component: Aires },
     { path: '*', redirect: '/' }
   ]
 })

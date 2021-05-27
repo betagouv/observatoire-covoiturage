@@ -1,20 +1,18 @@
 <template>
   <div id="app">
     <Header/>
-    <Home/>
+    <router-view/>
   </div>
 </template>
 
 <script>
 import Header from './components/layouts/header/Header'
-import Home from './components/pages/Home'
 import Breakpoints from '@/components/mixins/breakpoints'
 export default {
   name: 'App',
   mixins:[Breakpoints],
   components: {
-    Header,
-    Home
+    Header
   },
   created() {
     window.addEventListener('resize', this.handleResize)
