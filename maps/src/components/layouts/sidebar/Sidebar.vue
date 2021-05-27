@@ -22,18 +22,6 @@
         <div class="fr-sidemenu__title">Nombre de trajets entre :</div>
         <Slider v-model="selectedValue" :sliderOptions="{'min':sliderOptions.min,'max':sliderOptions.max,'step':sliderOptions.step}"/>
       </ul>
-      <ul  v-if="!lgAndAbove" class="fr-sidemenu__list control_maps">
-        <div class="fr-sidemenu__title">{{journeys}} trajets entre communes</div>
-        <b-button type="is-primary" @click="selectedMap">
-          <p v-if="map ==='droms'">Voir la France métropolitaine</p>
-          <p v-else>Voir la France d'Outre-mer</p>
-        </b-button>
-      </ul>
-      <ul  v-if="!lgAndAbove" class="fr-sidemenu__list control_maps">
-        <b-switch size="is-small" v-model="screen.isLegendOpen">
-          Légende
-        </b-switch>
-      </ul>
     </div>
   </nav>
 </template>
@@ -78,10 +66,6 @@ export default {
     journeys: {
       type: String,
       required: true
-    },
-    map: {
-      type: String,
-      required: true
     }
   },
   computed:{
@@ -93,16 +77,6 @@ export default {
       get() { return this.time },
       set(time) {this.$emit('input', time)}
     },
-  },
-  methods:{
-    selectedMap(){
-      if (this.map === 'metropole'){
-        this.$emit('selectedMap', 'droms')
-      } else {
-        this.$emit('selectedMap', 'metropole')
-      }
-      this.$store.commit('setSidebarOpen',!this.screen.isSidebarOpen) 
-    }
   }
 }
 </script>

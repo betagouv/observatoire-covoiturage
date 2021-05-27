@@ -7,8 +7,6 @@
         :time="time"
         :sliderOptions="{'min':0,'max':this.defaultSlider('journeys')[1],'step':1}"
         :journeys="allJourneys"
-        :map="map"
-        @selectedMap="selectMap"
       />
     </div>
     <div class="fr-col-12 fr-col-lg-10 map">
@@ -39,6 +37,15 @@
             <canvas id="deck_reunion" class="deck"></canvas>
             <div id="map_reunion"></div>
           </div>
+        </div>
+        <div v-if="!lgAndAbove" class="controls" :class="{'fr-hidden': screen.isSidebarOpen}">
+          <b-button type="is-primary" size="is-small" @click="selectedMap">
+            <p v-if="map ==='droms'">Voir la France métropolitaine</p>
+            <p v-else>Voir la France d'Outre-mer</p>
+          </b-button>
+          <b-switch  class="legend" size="is-small" v-model="screen.isLegendOpen">
+              Légende
+          </b-switch>
         </div>
       </div>
     </div>
@@ -208,8 +215,12 @@ export default {
               <div>Trajets : ${object.journeys}</div>
               <div>Passagers : ${object.passengers}</div>`
     },
-    selectMap(event){
-      this.$emit('rerenderMap', event)
+    selectedMap(){
+      if (this.map === 'metropole'){
+        this.$emit('rerenderMap', 'droms')
+      } else {
+        this.$emit('rerenderMap', 'metropole')
+      }
     }
   }
 };
@@ -234,6 +245,17 @@ export default {
   }
   .maps_container {
     height: 100%;
+    .controls{
+      position:absolute;
+      z-index: 1;
+      padding: 0.2rem;
+      margin: auto;
+      background-color: #fff;
+      width: 100%;
+      .legend{
+        padding:10px;
+      }
+    }
   }
   .map_container > * {
     position: absolute;

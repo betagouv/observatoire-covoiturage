@@ -21,15 +21,6 @@ export default {
       selectedMap:'all'
     }
   },
-  computed:{
-    mobileMap(){
-      if (this.lgAndAbove){
-        return 'all'
-      } else {
-        return 'metropole'
-      }
-    },
-  },
   mounted(){
     this.resize()
   },
