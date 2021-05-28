@@ -1,6 +1,6 @@
-import { perimeters } from './perimeters'
-import { aire_covoit } from './aire_covoit'
-import { registre_covoit } from './registre_covoit'
+import { perimeters } from './tasks/perimeters'
+import { aire_covoit } from './tasks/aire_covoit'
+import { registre_covoit } from './tasks/registre_covoit'
 
 async function main(){
   try{

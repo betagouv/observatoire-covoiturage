@@ -1,7 +1,7 @@
 import fs from 'fs'
 import { PoolClient } from 'pg'
 import ora from 'ora'
-import {readXlsx} from './../transform'
+import {readXlsx} from '../transform'
 
 interface Xls{
   path: string,

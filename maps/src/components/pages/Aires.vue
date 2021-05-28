@@ -52,4 +52,8 @@ export default {
     @import "~bulma";
     @import "~buefy/src/scss/buefy";
   }
+  .mapboxgl-popup-content{
+    font-family: Marianne,arial,sans-serif !important;
+    font-size: 0.4rem;
+  }
 </style>

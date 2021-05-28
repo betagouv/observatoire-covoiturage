@@ -159,19 +159,19 @@ export default {
           let features = this[container].queryRenderedFeatures(e.point)
           this[container].getCanvas().style.cursor = 'pointer'
           let description = `
-            <div>
-              <p>id:${features[0].properties.id_lieu}</p>
-              <p>nom : ${features[0].properties.ad_lieu}</p>
-              <p>commune: ${features[0].properties.com_lieu}</p>
-              <p>type: ${features[0].properties.type}</p>
-              <p>date_maj: ${features[0].properties.date_maj}</p>
-              <p>nbre_pl: ${features[0].properties.nbre_pl}</p>
-              <p>nbre_pmr: ${features[0].properties.nbre_pmr}</p>
-              <p>duree: ${features[0].properties.duree}</p>
-              <p>horaires: ${features[0].properties.horaires}</p>
-              <p>proprio: ${features[0].properties.proprio}</p>
-              <p>lumiere: ${features[0].properties.lumiere}</p>
-              <p>comm: ${features[0].properties.comm}</p>
+            <div class="popup">
+              <p><b>id :</b>${features[0].properties.id_lieu}</p>
+              <p><b>nom :</b>${features[0].properties.ad_lieu}</p>
+              <p><b>commune :</b>${features[0].properties.com_lieu}</p>
+              <p><b>type :</b>${features[0].properties.type}</p>
+              <p><b>date_maj :</b>${features[0].properties.date_maj}</p>
+              <p><b>nbre_pl :</b>${features[0].properties.nbre_pl}</p>
+              <p><b>nbre_pmr :</b>${features[0].properties.nbre_pmr}</p>
+              <p><b>duree :</b>${features[0].properties.duree}</p>
+              <p><b>horaires :</b>${features[0].properties.horaires}</p>
+              <p><b>proprio :</b>${features[0].properties.proprio}</p>
+              <p><b>lumiere :</b>${features[0].properties.lumiere}</p>
+              <p><b>comm :</b>${features[0].properties.comm}</p>
             </div>`
           popup.setLngLat(e.lngLat)
           .setHTML(description)

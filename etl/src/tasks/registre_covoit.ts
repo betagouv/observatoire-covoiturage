@@ -2,10 +2,10 @@ import fs from 'fs'
 import { join } from 'path'
 import axios from 'axios'
 import csv from 'csv-parser'
-import { downloadFile } from './donwload'
+import { downloadFile } from '../extract'
 import {PoolClient} from 'pg'
-import pgConnection from './database/connection'
-import {execQuery, importCSV} from './database/queries'
+import pgConnection from '../database/connection'
+import {execQuery, importCSV} from '../load'
 
 interface File{
   url: string,
@@ -61,7 +61,7 @@ export const importFile = function(client:PoolClient,path:string, file:File):Pro
 
 async function tempTables(client:PoolClient,files:Array<File>):Promise<void>{
   try{
-    const path =join(__dirname, '../assets/registre_covoiturage/')
+    const path =join(__dirname, '../../assets/registre_covoiturage/')
     await Promise.all(files.map(async (file) =>{
         await downloadFile(path,file.url,file.name)
         await importFile(client,path,file)
@@ -73,7 +73,7 @@ async function tempTables(client:PoolClient,files:Array<File>):Promise<void>{
   }
 }
 async function treatments(client:PoolClient,files:Array<File>):Promise<void>{
-  const path =join(__dirname, './database/sql/covoiturage/')
+  const path =join(__dirname, '../database/sql/covoiturage/')
   await execQuery(client,path,'create_table_registre.sql')
   await execQuery(client,path,'insert_table_registre.sql')
   for(const file of files){

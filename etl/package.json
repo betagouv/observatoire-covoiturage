@@ -11,6 +11,7 @@
   "scripts": {
     "start": "ts-node -r dotenv/config ./src/index.ts",
     "dev": "nodemon -L -r dotenv/config --watch src --exec ts-node --files ./src/index.ts",
+    "migrate:create_views": "ts-node -r dotenv/config ./src/tasks/create_materialized_views.ts",
     "lint": "eslint . --ext .ts"
   },
   "_moduleAliases": {

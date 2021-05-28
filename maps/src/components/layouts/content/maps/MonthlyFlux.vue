@@ -91,7 +91,7 @@ export default {
       time:null,
       slider:[],
       loading: true,
-      legendTitle:"Nb de trajets entre communes"
+      legendTitle:"Nb de trajets entre communes (source RPC)"
     }
   },
   computed:{
