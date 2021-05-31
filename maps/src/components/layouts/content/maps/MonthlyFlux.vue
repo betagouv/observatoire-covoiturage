@@ -149,11 +149,28 @@ export default {
       this.time = response.data 
     },
     async getData(){
-      this.loading = true
-      const response = await axios.get('http://localhost:8080/v1/journeys_monthly_flux?year='+this.time.year+'&month='+this.time.month)
-      this.flux = response.data
-      this.slider = this.defaultSlider('journeys')
-      this.loading = false
+      try{
+        this.loading = true
+        const response = await axios.get('http://localhost:8080/v1/journeys_monthly_flux?year='+this.time.year+'&month='+this.time.month)
+        if(response.status === 204){
+            this.$buefy.snackbar.open({
+            message: response.data.message,
+            actionText:null
+          })
+        }
+        if(response.status === 200){
+          this.flux = response.data
+          this.slider = this.defaultSlider('journeys')
+        }
+        this.loading = false
+      }
+      catch(error) {
+        this.$buefy.snackbar.open({
+          message: error.response.data.message,
+          actionText:null
+        })
+        this.loading = false
+      }
     },
     async renderMaps() {
       if (this.map === 'metropole'){ 

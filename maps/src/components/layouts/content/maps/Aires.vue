@@ -144,7 +144,18 @@ export default {
           source: 'airesSource',
           paint: {
             'circle-radius': 5,     
-            'circle-color': '#000091',
+            'circle-color': [
+            'match',
+            ['get', 'type'],
+            'Supermarché','#66c2a5',
+            'Parking','#fc8d62',
+            'Aire de covoiturage','#8da0cb',
+            'Délaissé routier','#e78ac3',
+            'Auto-stop','#a6d854',
+            'Parking relais','#ffd92f',
+            'Sortie d\'autoroute','#e5c494',
+            /* other */ '#b3b3b3'
+            ],
             'circle-stroke-color': 'white',
             'circle-stroke-width': 1,
             'circle-opacity': 0.8

@@ -56,4 +56,9 @@ export default {
     font-family: Marianne,arial,sans-serif !important;
     font-size: 0.4rem;
   }
+  .mapboxgl-ctrl-top-left{
+    @media screen and (max-width: 992px) {
+      top:50px !important;
+    }
+  }
 </style>

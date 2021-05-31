@@ -8,32 +8,36 @@ export default class fluxHandler {
   static async journeysMonthly(request: FastifyRequest<fluxTypes.monthly>, reply: FastifyReply):Promise<void>{
     try {
       const client = await this.pg.connect()
-      const sql = `SELECT com1,l_com1,com1_lng,com1_lat,com2,l_com2,com2_lng,com2_lat,journeys,passengers FROM covoiturage.journeys_monthly_flux
+      const sql = `SELECT com1,l_com1,com1_lng,com1_lat,com2,l_com2,com2_lng,com2_lat,journeys,passengers FROM covoiturage.journeys_monthly_flux_com
         WHERE year = '${request.query.year}' and month = '${request.query.month}'
         ORDER BY com1,com2;`
-      const {rows} = await client.query(sql)
-      if (!rows) {
-        throw reply.code(404).send(new Error('error'))
+      const result = await client.query(sql)
+     
+      if (!result.rows) {
+        reply.code(404).send(new Error('page not found'))
       }
+      else if (result.rows.length === 0) {
+        reply.code(404).send(new Error('Pas de données disponibles'))
+      }
+      reply.send(result.rows)
       client.release()
-      return reply.send(rows)
     } catch (err) {
-      return reply.send(err)
+      reply.send(err)
     }
   }
   // Retourne l'année et le mois du dernier enregistrement de la vue matérialisée covoiturage.journeys_monthly_flux
   static async lastRecordJourneysMonthly(request: FastifyRequest, reply: FastifyReply):Promise<void>{
     try {
       const client = await this.pg.connect()
-      const sql = `SELECT month,year FROM covoiturage.journeys_monthly_flux ORDER BY id DESC LIMIT 1;`
+      const sql = `SELECT month,year FROM covoiturage.journeys_monthly_flux_com ORDER BY id DESC LIMIT 1;`
       const {rows} = await client.query(sql)
       if (!rows) {
-        throw reply.code(404).send(new Error('error'))
+        reply.code(404).send(new Error('page not found'))
       }
+      reply.send(rows[0])
       client.release()
-      return reply.send(rows[0])
     } catch (err) {
-      return reply.send(err)
+      reply.send(err)
     }
   }
 }
