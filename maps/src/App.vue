@@ -28,6 +28,13 @@ export default {
   @import "~maplibre-gl/dist/maplibre-gl.css";
   @import "~@gouvfr/dsfr/dist/css/dsfr.min.css";
   @import "~@mdi/font/css/materialdesignicons.min.css";
+  .dropdown, .slider, .filters, .map, .control_maps{
+    // Set your colors
+    $primary: #000091;
+    $link: $primary;
+    @import "~bulma";
+    @import "~buefy/src/scss/buefy";
+  }
   .notices{
     position: fixed;
     top: 50%;

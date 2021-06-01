@@ -46,6 +46,9 @@ export default {
         return false
       }
     },
+    openMenu(){
+      this.$store.commit('setMenuOpen',!this.screen.isMenuOpen)
+    },
     openSidebar(){
       this.$store.commit('setSidebarOpen',!this.screen.isSidebarOpen)
     },

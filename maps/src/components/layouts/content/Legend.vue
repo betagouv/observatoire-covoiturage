@@ -22,27 +22,42 @@ export default {
       type: Array,
       required: true
     },
+    type:{
+      type: String,
+      required: true
+    },
   },
   computed:{
     legend(){
       let legend =  []
       if (this.analysis.length > 1){
-        for(let key in this.analysis){
-          let classe = null
-          if(Number(key) === this.analysis.length-1){
-            classe = {
-              color: this.analysis[key].color,
-              name : ">= " +this.analysis[key].val,
-              width :  this.analysis[key].width
+        if(this.type === 'interval'){
+          for(let key in this.analysis){
+            let classe = null
+            if(Number(key) === this.analysis.length-1){
+              classe = {
+                color: this.analysis[key].color,
+                name : ">= " +this.analysis[key].val,
+                width :  this.analysis[key].width
+              }
+            } else {
+              classe = {
+                color: this.analysis[key].color,
+                name : this.analysis[key].val + " à " + (this.analysis[Number(key)+1].val -1),
+                width :  this.analysis[key].width
+              }
             }
-          } else {
-            classe = {
-              color: this.analysis[key].color,
-              name : this.analysis[key].val + " à " + (this.analysis[Number(key)+1].val -1),
-              width :  this.analysis[key].width
-            }
+            legend.push(classe)
           }
-          legend.push(classe)
+        } else if(this.type === 'category'){
+          for(let key in this.analysis){
+            const classe = {
+              color: this.analysis[key].color,
+              name : this.analysis[key].val,
+              width :  this.analysis[key].width
+            }
+            legend.push(classe)
+          }
         }
       }
       return legend
@@ -62,10 +77,9 @@ export default {
     z-index: 1;
     background-color: #ffffff;
     font-size: 0.8em;
-    width: 120px;
+    width: 200px;
       @media screen and (min-width: 992px) {
         font-size: 1em;
-        width: 200px;
       }
     .legend-class{
       display: inline-block;

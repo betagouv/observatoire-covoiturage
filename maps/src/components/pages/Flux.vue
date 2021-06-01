@@ -21,6 +21,9 @@ export default {
       selectedMap:'all'
     }
   },
+  created(){
+    this.$store.commit('setMenuOpen',false)
+  },
   mounted(){
     this.resize()
   },
@@ -45,11 +48,3 @@ export default {
   }
 }
 </script>
-<style lang="scss">
-  .slider, .map, .control_maps{
-    // Set your colors
-    $primary: #000091;
-    @import "~bulma";
-    @import "~buefy/src/scss/buefy";
-  }
-</style>

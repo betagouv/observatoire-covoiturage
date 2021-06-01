@@ -21,9 +21,21 @@
                 </p>
               </div>
               <div class="fr-header__navbar">
-                <button class="fr-btn--menu fr-btn" title="Menu" @click="openSidebar">
+                <button class="fr-btn--menu fr-btn" title="Menu" @click="openMenu">
                   Menu
                 </button>
+              </div>
+            </div>
+            <div class="fr-header__tools">
+              <div v-if="lgAndAbove || screen.isMenuOpen" class="dropdown" >
+                <b-navbar-dropdown label="Cartes">
+                  <b-navbar-item tag="router-link" :to="{ name: 'Flux' }" >
+                    Flux entre territoires
+                  </b-navbar-item>
+                  <b-navbar-item tag="router-link" :to="{ name: 'Aires' }">
+                    Aires de covoiturage
+                  </b-navbar-item>
+                </b-navbar-dropdown>
               </div>
             </div>
           </div>

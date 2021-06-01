@@ -23,6 +23,11 @@
         <Slider v-model="selectedValue" :sliderOptions="{'min':sliderOptions.min,'max':sliderOptions.max,'step':sliderOptions.step}"/>
       </ul>
       <p>{{journeys}} trajets dans le registre de preuve de covoiturage (un trajet correspond un couple conducteur-pasager)</p>
+      <b-field>
+        <button v-if="!lgAndAbove" class="fr-btn--menu fr-btn" title="Menu" @click="openSidebar">
+          Fermer
+        </button>
+      </b-field>
     </div>
   </nav>
 </template>
@@ -33,7 +38,7 @@ import Time from '@/components/mixins/time'
 import Breakpoints from '@/components/mixins/breakpoints'
 
 export default {
-  name: "Sidebar",
+  name: "FluxSidebar",
   components: {
     Slider
   },
@@ -78,6 +83,14 @@ export default {
       get() { return this.time },
       set(time) {this.$emit('input', time)}
     },
+  },
+  watch:{
+    'time':{
+      handler: function() {
+        this.openSidebar()
+      },
+      deep:true
+    }
   }
 }
 </script>

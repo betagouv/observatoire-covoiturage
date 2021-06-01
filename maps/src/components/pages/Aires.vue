@@ -21,6 +21,9 @@ export default {
       selectedMap:'all'
     }
   },
+  created(){
+    this.$store.commit('setMenuOpen',false)
+  },
   mounted(){
     this.resize()
   },
@@ -46,15 +49,9 @@ export default {
 }
 </script>
 <style lang="scss">
-  .slider, .map, .control_maps{
-    // Set your colors
-    $primary: #000091;
-    @import "~bulma";
-    @import "~buefy/src/scss/buefy";
-  }
-  .mapboxgl-popup-content{
-    font-family: Marianne,arial,sans-serif !important;
-    font-size: 0.4rem;
+  
+  .mapboxgl-popup {
+    font: 6px/10px Marianne, Arial, sans-serif;
   }
   .mapboxgl-ctrl-top-left{
     @media screen and (max-width: 992px) {

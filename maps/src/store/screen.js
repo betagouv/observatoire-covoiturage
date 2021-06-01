@@ -4,6 +4,7 @@ const state = {
     height: 0
   },
   breakpoint: '',
+  isMenuOpen:false,
   isSidebarOpen:false,
   isLegendOpen:false,
 }
@@ -14,6 +15,9 @@ const mutations = {
   },
   setBreakpoint: (state, response) => {
     state.breakpoint = response
+  },
+  setMenuOpen: (state, response) => {
+    state.isMenuOpen = response
   },
   setSidebarOpen: (state, response) => {
     state.isSidebarOpen = response
