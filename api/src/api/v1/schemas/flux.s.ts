@@ -15,7 +15,7 @@ export default class monthlyFluxSchema {
     response: {
       200: {
         type: 'array',
-        description:'Return journeys monthly flux',
+        description:'Nb de trajets entre communes (tout sens confondus)',
         items: {
           properties: {
             com1: {type:'string'},

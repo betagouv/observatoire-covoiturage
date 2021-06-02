@@ -87,7 +87,7 @@ export default {
   watch:{
     'time':{
       handler: function() {
-        this.openSidebar()
+        this.$store.commit('setSidebarOpen',false)
       },
       deep:true
     }

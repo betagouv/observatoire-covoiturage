@@ -7,10 +7,10 @@
 </template>
 
 <script>
-import Map from '../layouts/content/maps/Aires'
+import Map from '../layouts/content/maps/Occupation'
 import Breakpoints from '@/components/mixins/breakpoints'
 export default {
-  name: 'Aires',
+  name: 'Occupation',
   mixins:[Breakpoints],
   components: {
     Map

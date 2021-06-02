@@ -38,7 +38,7 @@ export default {
   },
   watch:{
     allFeatures(){
-      this.openSidebar()
+      this.$store.commit('setSidebarOpen',false)
     }
   }
 }

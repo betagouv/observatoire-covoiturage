@@ -1,11 +1,7 @@
 <template>
   <div class="fr-grid-row content">
     <div v-if="lgAndAbove || screen.isSidebarOpen" class="fr-col-12 fr-col-lg-2 sidebar">
-      <Sidebar 
-        v-if="aires"
-        :switch ="categories"
-        :allFeatures="countAires" 
-      />
+      
     </div>
     <div class="fr-col-12 fr-col-lg-10 map">
       <b-loading v-model="loading"></b-loading>
@@ -40,7 +36,7 @@
 <script>
 import Maps from '@/components/mixins/maps'
 import Breakpoints from '@/components/mixins/breakpoints'
-import Sidebar from '@/components/layouts/sidebar/AiresSidebar'
+//import Sidebar from '@/components/layouts/sidebar/AiresSidebar'
 import Controls from '@/components/layouts/content/Controls'
 import Legend from '@/components/layouts/content/Legend'
 import axios from 'axios'
@@ -52,7 +48,7 @@ export default {
   name: "Map",
   mixins:[Maps,Breakpoints],
   components: {
-    Sidebar,
+    //Sidebar,
     Controls,
     Legend
   },
@@ -69,8 +65,10 @@ export default {
       map_guyane:null,
       map_mayotte:null,
       map_reunion:null,
-      aires:null,
+      data:null,
+      type:'epci',
       time:null,
+      slider:[],
       loading: true,
       legendTitle:"Aires de covoiturage (source transport.data.gouv.fr)",
       categories:[
@@ -86,44 +84,36 @@ export default {
     }
   },
   computed:{
-    filteredAires(){
-      if(this.aires){
-        return turf.featureCollection(this.aires.filter(a => this.categories.filter(c => c.active === true).map(c=>c.val).includes(a.type)).map(d => turf.feature(d.geom,{
-          id_lieu:d.id_lieu,
-          ad_lieu:d.ad_lieu,
-          com_lieu:d.com_lieu,
-          type:d.type,
-          date_maj: d.date_maj,
-          nbre_pl:d.nbre_pl,
-          nbre_pmr:d.nbre_pmr,
-          duree:d.duree,
-          horaires:d.horaires,
-          proprio:d.proprio,
-          lumiere:d.lumiere,
-          comm:d.comm
+    filteredData(){
+      if(this.data){
+        return turf.featureCollection(this.data.map(d => turf.feature(d.geom,{
+          journeys:d.journeys,
+          passengers:d.passengers,
+          occupation_rate:d.occupation_rate
         })))
       }else{
         return null
       }
     },
-    countAires(){
-      if(this.filteredAires){
-        return this.filteredAires.features.length.toLocaleString('fr-FR')
+    countData(){
+      if(this.filteredData){
+        return this.filteredData.features.length.toLocaleString('fr-FR')
       } else{
         return 0
       }
     }
   },
   async created() {
+    await this.getTime()
     await this.getData()
     await this.renderMaps()
   },
   watch: {
-    'filteredAires':{ 
+    'filteredData':{ 
       handler: function() {
         for (let territory of this.territories) {
           if(this['map_'+territory.name]){
-            this['map_'+territory.name].getSource('airesSource').setData(this.filteredAires)
+            this['map_'+territory.name].getSource('occupationSource').setData(this.filteredData)
           }
         }
       },
@@ -131,10 +121,14 @@ export default {
     }
   },
   methods:{
+    async getTime(){
+      const response = await axios.get('http://localhost:8080/v1/journeys_monthly_flux/last')
+      this.time = response.data 
+    },
     async getData(){
       this.loading = true
-      const response = await axios.get('http://localhost:8080/v1/aires_covoiturage')
-      this.aires = response.data
+      const response = await axios.get('http://localhost:8080/v1/journeys_monthly_occupation?type='+this.type+'&year='+this.time.year+'&month='+this.time.month)
+      this.data = response.data
       this.loading = false
     },
     async renderMaps() {
@@ -157,36 +151,37 @@ export default {
     },
     addLayers(container) {
       this[container].on('style.load', () => {
-        this[container].addSource('airesSource', {
+        this[container].addSource('occupationSource', {
           type: 'geojson',
-          data: this.filteredAires
+          data: this.filteredData
         })
         this[container].addLayer({
-          id: 'airesLayer',
+          id: 'occupationLayer',
           type: 'circle',
-          source: 'airesSource',
+          source: 'occupationSource',
           paint: {
             'circle-radius': {
-              'base': 3,
-              'stops': [
-              [5, 3],
-              [10,10],
-              [15,15],
-              [22, 50]
+              property: 'journeys',
+              type: 'exponential',
+              stops: [
+                [0, 0],
+                [100, 5],
+                [10000,20],
+                [50000, 40]
               ]
             },   
-            'circle-color': [
-            'match',
-            ['get', 'type'],
-            'Supermarché','#66c2a5',
-            'Parking','#fc8d62',
-            'Aire de covoiturage','#8da0cb',
-            'Délaissé routier','#e78ac3',
-            'Auto-stop','#a6d854',
-            'Parking relais','#ffd92f',
-            'Sortie d\'autoroute','#e5c494',
-            /* other */ '#b3b3b3'
-            ],
+            'circle-color': {
+              property: 'occupation_rate',
+              type: 'exponential',
+              stops: [
+                [2, '#FFEDA0'],
+                [2.1, '#FED976'],
+                [2.2, '#FEB24C'],
+                [2.3, '#FD8D3C'],
+                [2.4, '#FC4E2A'],
+                [3, '#E31A1C']
+              ]
+            },
             'circle-stroke-color': 'white',
             'circle-stroke-width': 1,
             'circle-opacity': 0.8
@@ -197,29 +192,20 @@ export default {
           closeButton: false,
           closeOnClick: false
         })
-        this[container].on('mouseenter', 'airesLayer', e => {
+        this[container].on('mouseenter', 'occupationLayer', e => {
           let features = this[container].queryRenderedFeatures(e.point)
           this[container].getCanvas().style.cursor = 'pointer'
           let description = `
             <div class="popup">
-              <p><b>id :</b>${features[0].properties.id_lieu}</p>
-              <p><b>nom :</b>${features[0].properties.ad_lieu}</p>
-              <p><b>commune :</b>${features[0].properties.com_lieu}</p>
-              <p><b>type :</b>${features[0].properties.type}</p>
-              <p><b>date_maj :</b>${new Date(features[0].properties.date_maj).toLocaleDateString('fr-FR')}</p>
-              <p><b>nbre_pl :</b>${features[0].properties.nbre_pl}</p>
-              <p><b>nbre_pmr :</b>${features[0].properties.nbre_pmr}</p>
-              <p><b>duree :</b>${features[0].properties.duree}</p>
-              <p><b>horaires :</b>${features[0].properties.horaires}</p>
-              <p><b>proprio :</b>${features[0].properties.proprio}</p>
-              <p><b>lumiere :</b>${features[0].properties.lumiere}</p>
-              <p><b>comm :</b>${features[0].properties.comm}</p>
+              <p><b>Trajets :</b>${features[0].properties.journeys}</p>
+              <p><b>Passagers :</b>${features[0].properties.passengers}</p>
+              <p><b>Nb d'occupants moyen par véhicule :</b>${features[0].properties.occupation_rate}</p>
             </div>`
           popup.setLngLat(e.lngLat)
           .setHTML(description)
           .addTo(this[container])
         })
-        this[container].on('mouseleave', 'airesLayer', () => {
+        this[container].on('mouseleave', 'occupationLayer', () => {
           this[container].getCanvas().style.cursor = ''
           popup.remove()
         })

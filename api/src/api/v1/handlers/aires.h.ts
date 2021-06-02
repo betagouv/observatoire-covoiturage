@@ -1,5 +1,4 @@
 import { FastifyInstance,FastifyRequest, FastifyReply} from 'fastify'
-//import airesTypes from '../types/aires.t'
 
 export default class airesHandler {
   

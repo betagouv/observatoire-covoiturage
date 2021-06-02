@@ -12,7 +12,6 @@ export default class fluxHandler {
         WHERE year = '${request.query.year}' and month = '${request.query.month}'
         ORDER BY com1,com2;`
       const result = await client.query(sql)
-     
       if (!result.rows) {
         reply.code(404).send(new Error('page not found'))
       }
