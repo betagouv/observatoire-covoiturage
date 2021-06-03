@@ -17,10 +17,10 @@
             <div id="map_metropole"></div>
             <canvas id="deck_metropole" class="deck"></canvas>
           </div>
-          <Legend :title="legendTitle" :analysis="jenksJourneys" type="interval"/>
+          <Legend :title="legendTitle" :analyzes="jenksJourneys" type="interval"/>
         </div>
         <div v-if="['all','droms'].includes(map)" :class="{'fr-hidden': screen.isSidebarOpen}" class="fr-col-12 fr-col-lg-3 maps_drom">
-          <Legend v-if="map ==='droms'" :title="legendTitle" :analysis="jenksJourneys" type="interval"/>
+          <Legend v-if="map ==='droms'" :title="legendTitle" :analyzes="jenksJourneys" type="interval"/>
           <div class="map_container">
             <div id="map_antilles"></div>
             <canvas id="deck_antilles" class="deck"></canvas>

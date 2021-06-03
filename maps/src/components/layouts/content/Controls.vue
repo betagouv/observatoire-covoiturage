@@ -2,12 +2,12 @@
   <div v-if="!lgAndAbove" class="controls" :class="{'fr-hidden': screen.isSidebarOpen || screen.isMenuOpen}">
     <b-field grouped>
       <b-field>
-        <b-button type="is-primary" size="is-small" @click="openSidebar">
+        <b-button type="is-primary" outlined size="is-small" @click="openSidebar">
           <p >Menu</p>
         </b-button>
       </b-field>
       <b-field>
-        <b-button type="is-primary" size="is-small" @click="selectedMap">
+        <b-button type="is-primary" outlined size="is-small" @click="selectedMap">
           <p v-if="map ==='droms'">France métropolitaine</p>
           <p v-else>France d'Outre-mer</p>
         </b-button>

@@ -1,9 +1,20 @@
 <template>
   <div v-if="lgAndAbove || screen.isLegendOpen" class='legend'>
     <div class='legend-title'>{{title}}</div>
-    <div class="item" v-for="classe in legend" :key="classe.name">
-      <span class="legend-class" :style="'height:'+classe.width+'px;background-color:rgb('+classe.color[0]+','+classe.color[1]+','+classe.color[2]+')'"></span>
-      <span class="legend-class-name">{{classe.name}}</span>
+    <div v-if="type !== 'proportional_circles'">
+      <div class="item" v-for="classe in legend" :key="classe.name">
+        <span class="legend-class" :style="'height:'+classe.width+'px;background-color:rgb('+classe.color[0]+','+classe.color[1]+','+classe.color[2]+')'"></span>
+        <span class="legend-class-name">{{classe.name}}</span>
+      </div>
+    </div>
+    <div class="proportional_circles" v-else :style="'min-height:'+legend[0].width*2+'px;'">
+      <div v-for="(classe, index) in legend" :key="index" class="item">
+        <div class="circle-class" :style="'height:'+classe.width*2+'px; width:'+classe.width*2+'px; bottom:0px; left:'+(legend[0].width-classe.width)+'px;background-color:rgb('+classe.color[0]+','+classe.color[1]+','+classe.color[2]+')'"></div>
+        <hr :style="'width:'+legend[0].width+'px; bottom:'+(classe.width*2-1)+'px; left:'+(legend[0].width)+'px;'"/>
+        <div class="circle-label" :style="'bottom:'+(classe.width*2-10)+'px; left:'+(legend[0].width*2+10)+'px;'">
+          {{classe.name}}
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -18,7 +29,7 @@ export default {
       type: String,
       required: true
     },
-    analysis: {
+    analyzes: {
       type: Array,
       required: true
     },
@@ -30,31 +41,31 @@ export default {
   computed:{
     legend(){
       let legend =  []
-      if (this.analysis.length > 1){
+      if (this.analyzes.length > 1){
         if(this.type === 'interval'){
-          for(let key in this.analysis){
+          for(let key in this.analyzes){
             let classe = null
-            if(Number(key) === this.analysis.length-1){
+            if(Number(key) === this.analyzes.length-1){
               classe = {
-                color: this.analysis[key].color,
-                name : ">= " +this.analysis[key].val,
-                width :  this.analysis[key].width
+                color: this.analyzes[key].color,
+                name : ">= " +this.analyzes[key].val,
+                width :  this.analyzes[key].width
               }
             } else {
               classe = {
-                color: this.analysis[key].color,
-                name : this.analysis[key].val + " à " + (this.analysis[Number(key)+1].val -1),
-                width :  this.analysis[key].width
+                color: this.analyzes[key].color,
+                name : this.analyzes[key].val + " à " + (this.analyzes[Number(key)+1].val -1),
+                width :  this.analyzes[key].width
               }
             }
             legend.push(classe)
           }
-        } else if(this.type === 'category'){
-          for(let key in this.analysis){
+        } else if(['category','proportional_circles'].includes(this.type)){
+          for(let key in this.analyzes){
             const classe = {
-              color: this.analysis[key].color,
-              name : this.analysis[key].val,
-              width :  this.analysis[key].width
+              color: this.analyzes[key].color,
+              name : this.analyzes[key].val,
+              width :  this.analyzes[key].width
             }
             legend.push(classe)
           }
@@ -89,6 +100,26 @@ export default {
     }
     .legend-title{
       font-weight: bold;
+    }
+    .proportional_circles{
+      position: relative;
+      margin-top: 10px;
+      hr {
+        position: absolute;
+        height: 1px; 
+        background-color: black;
+        margin:0;
+      }
+      .circle-class{
+        border: 1px solid black;
+        border-radius: 50%;
+        background: whitesmoke;
+        position: absolute;
+      }
+      .circle-label{
+        position: absolute;
+        font-size: 0.8em;
+      }
     }
   }
   

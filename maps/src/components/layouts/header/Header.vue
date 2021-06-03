@@ -35,6 +35,9 @@
                   <b-navbar-item tag="router-link" :to="{ name: 'Aires' }">
                     Aires de covoiturage
                   </b-navbar-item>
+                  <b-navbar-item tag="router-link" :to="{ name: 'Occupation' }">
+                    Occupants par véhicules moyen
+                  </b-navbar-item>
                 </b-navbar-dropdown>
               </div>
             </div>

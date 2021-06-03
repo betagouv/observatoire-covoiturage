@@ -1,7 +1,11 @@
 <template>
   <div class="fr-grid-row content">
     <div v-if="lgAndAbove || screen.isSidebarOpen" class="fr-col-12 fr-col-lg-2 sidebar">
-      
+      <Sidebar 
+        v-if="data" 
+        :time="time"
+        :journeys="allJourneys"
+      />
     </div>
     <div class="fr-col-12 fr-col-lg-10 map">
       <b-loading v-model="loading"></b-loading>
@@ -10,10 +14,10 @@
           <div class="map_container">
             <div id="map_metropole"></div>
           </div>
-          <Legend :title="legendTitle" :analysis="categories" type="category"/>
+          <Legend :title="legendTitle" :analyzes="categories" type="proportional_circles"/>
         </div>
         <div v-if="['all','droms'].includes(map)" :class="{'fr-hidden': screen.isSidebarOpen}" class="fr-col-12 fr-col-lg-3 maps_drom">
-          <Legend v-if="map ==='droms'" :title="legendTitle" :analysis="categories" type="category"/>
+          <Legend v-if="map ==='droms'" :title="legendTitle" :analyzes="categories" type="proportional_circles"/>
           <div class="map_container">
             <div id="map_antilles"></div>
           </div>
@@ -36,7 +40,7 @@
 <script>
 import Maps from '@/components/mixins/maps'
 import Breakpoints from '@/components/mixins/breakpoints'
-//import Sidebar from '@/components/layouts/sidebar/AiresSidebar'
+import Sidebar from '@/components/layouts/sidebar/OccupationSidebar'
 import Controls from '@/components/layouts/content/Controls'
 import Legend from '@/components/layouts/content/Legend'
 import axios from 'axios'
@@ -48,7 +52,7 @@ export default {
   name: "Map",
   mixins:[Maps,Breakpoints],
   components: {
-    //Sidebar,
+    Sidebar,
     Controls,
     Legend
   },
@@ -66,20 +70,14 @@ export default {
       map_mayotte:null,
       map_reunion:null,
       data:null,
-      type:'epci',
+      type:'dep',
       time:null,
-      slider:[],
       loading: true,
-      legendTitle:"Aires de covoiturage (source transport.data.gouv.fr)",
       categories:[
-        {color:[102, 194, 165],val:'Supermarché',width:10,active:true},
-        {color:[252, 141, 98],val:'Parking',width:10,active:true},
-        {color:[141, 160, 203],val:'Aire de covoiturage',width:10,active:true},
-        {color:[231, 138, 195],val:'Délaissé routier',width:10,active:true},
-        {color:[166, 216, 84],val:'Auto-stop',width:10,active:true},
-        {color:[255, 217, 47],val:'Parking relais',width:10,active:true},
-        {color:[229, 196, 148],val:'Sortie d\'autoroute',width:10,active:true},
-        {color:[179, 179, 179],val:'Autres',width:10,active:true}
+        {color:[229, 229, 224],val:'>= 50 000',width:40,active:true},
+        {color:[229, 229, 224],val:'10 000',width:20,active:true},
+        {color:[229, 229, 224],val:'100',width:10,active:true},
+        {color:[229, 229, 224],val:'6',width:3,active:true}
       ]
     }
   },
@@ -87,6 +85,8 @@ export default {
     filteredData(){
       if(this.data){
         return turf.featureCollection(this.data.map(d => turf.feature(d.geom,{
+          territory:d.territory,
+          l_territory:d.l_territory,
           journeys:d.journeys,
           passengers:d.passengers,
           occupation_rate:d.occupation_rate
@@ -95,12 +95,15 @@ export default {
         return null
       }
     },
-    countData(){
+    allJourneys(){
       if(this.filteredData){
-        return this.filteredData.features.length.toLocaleString('fr-FR')
+        return this.filteredData.features.map(f=>f.properties.journeys).reduce((a, b) => a + b, 0).toLocaleString('fr-FR')
       } else{
         return 0
       }
+    },
+    legendTitle(){
+      return "Trajets et occupation moyenne des véhicules par "+this.type
     }
   },
   async created() {
@@ -118,6 +121,12 @@ export default {
         }
       },
       deep:true
+    },
+    'time':{
+      handler: function() {
+        this.getData()
+      },
+      deep: true
     }
   },
   methods:{
@@ -126,10 +135,27 @@ export default {
       this.time = response.data 
     },
     async getData(){
-      this.loading = true
-      const response = await axios.get('http://localhost:8080/v1/journeys_monthly_occupation?type='+this.type+'&year='+this.time.year+'&month='+this.time.month)
-      this.data = response.data
-      this.loading = false
+      try{
+        this.loading = true
+        const response = await axios.get('http://localhost:8080/v1/journeys_monthly_occupation?type='+this.type+'&year='+this.time.year+'&month='+this.time.month)
+        if(response.status === 204){
+            this.$buefy.snackbar.open({
+            message: response.data.message,
+            actionText:null
+          })
+        }
+        if(response.status === 200){
+          this.data = response.data
+        }
+        this.loading = false
+      }
+      catch(error) {
+        this.$buefy.snackbar.open({
+          message: error.response.data.message,
+          actionText:null
+        })
+        this.loading = false
+      }
     },
     async renderMaps() {
       if (this.map === 'metropole'){ 
@@ -164,8 +190,8 @@ export default {
               property: 'journeys',
               type: 'exponential',
               stops: [
-                [0, 0],
-                [100, 5],
+                [6, 3],
+                [100, 10],
                 [10000,20],
                 [50000, 40]
               ]
@@ -174,20 +200,20 @@ export default {
               property: 'occupation_rate',
               type: 'exponential',
               stops: [
-                [2, '#FFEDA0'],
-                [2.1, '#FED976'],
-                [2.2, '#FEB24C'],
-                [2.3, '#FD8D3C'],
-                [2.4, '#FC4E2A'],
-                [3, '#E31A1C']
+                [2, '#E5E5F4'],
+                [2.25, '#9A9AFF'],
+                [2.5, '#7F7FC8'],
+                [2.75, '#000091'],
+                 [3, '#000074'],
+                [4, '#00006D']
               ]
             },
-            'circle-stroke-color': 'white',
+            'circle-stroke-color': 'black',
             'circle-stroke-width': 1,
             'circle-opacity': 0.8
           }
         })
-
+        
         let popup = new maplibregl.Popup({
           closeButton: false,
           closeOnClick: false
@@ -197,9 +223,9 @@ export default {
           this[container].getCanvas().style.cursor = 'pointer'
           let description = `
             <div class="popup">
-              <p><b>Trajets :</b>${features[0].properties.journeys}</p>
-              <p><b>Passagers :</b>${features[0].properties.passengers}</p>
-              <p><b>Nb d'occupants moyen par véhicule :</b>${features[0].properties.occupation_rate}</p>
+              <p><b>${features[0].properties.l_territory}</b></p>
+              <p>Trajets :${features[0].properties.journeys.toLocaleString('fr-FR')}</p>
+              <p>Nb d'occupants moyen par véhicule :${features[0].properties.occupation_rate.toLocaleString('fr-FR')}</p>
             </div>`
           popup.setLngLat(e.lngLat)
           .setHTML(description)
