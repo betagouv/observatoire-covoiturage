@@ -70,7 +70,7 @@ export default {
       map_mayotte:null,
       map_reunion:null,
       data:null,
-      type:'dep',
+      type:'epci',
       time:null,
       loading: true,
       categories:[
