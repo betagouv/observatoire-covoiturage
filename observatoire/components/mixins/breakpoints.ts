@@ -1,37 +1,36 @@
 import { Component,Vue } from 'nuxt-property-decorator'
+import { mapState } from 'vuex'
 
-@Component
-export default class BreakpointsMixin extends Vue {
-  window = {
-    width: 0,
-    height: 0
+@Component({
+  computed:{
+    ...mapState({
+      screen: 'screen',
+    })
   }
-  breakpoint = ''
+})
+export default class BreakpointsMixin extends Vue {
 
   get lgAndAbove(){
     return this.includeInBreaks(['lg','xl'])
   }
 
   public handleResize() {
-    this.window.width = window.innerWidth
-    this.window.height = window.innerHeight
-    this.$store.commit('screen/setWindow',this.window)
-    if(this.window.width <= 576){
-      this.breakpoint = 'xs'
+    this.$store.commit('screen/setWindow', { width:window.innerWidth, height:window.innerHeight})
+    if(window.innerWidth <= 576){
+      this.$store.commit('screen/setBreakpoint', 'xs')
     }
-    else if (this.window.width > 576 && this.window.width <= 768) {
-      this.breakpoint = 'sm'
+    else if (window.innerWidth > 576 && window.innerWidth <= 768) {
+      this.$store.commit('screen/setBreakpoint', 'sm')
     }
-    else if (this.window.width > 768 && this.window.width <= 1024){
-      this.breakpoint = 'md'
+    else if (window.innerWidth > 768 && window.innerWidth <= 1024){
+      this.$store.commit('screen/setBreakpoint', 'md')
     }
-    else if (this.window.width > 1024 && this.window.width <= 1248){
-      this.breakpoint = 'lg'
+    else if (window.innerWidth > 1024 && window.innerWidth <= 1248){
+      this.$store.commit('screen/setBreakpoint', 'lg')
     }
     else{
-      this.breakpoint = 'xl'
+      this.$store.commit('screen/setBreakpoint', 'xl')
     }
-    this.$store.commit('screen/setBreakpoint', this.breakpoint)
   }
 
   public includeInBreaks(breaks:string[]){
@@ -43,15 +42,15 @@ export default class BreakpointsMixin extends Vue {
   }
 
   public openMenu(){
-    this.$store.commit('setMenuOpen',!this.$store.state.screen.isMenuOpen)
+    this.$store.commit('screen/setMenuOpen',!this.$store.state.screen.isMenuOpen)
   }
 
   public openSidebar(){
-    this.$store.commit('setSidebarOpen',!this.$store.state.screen.isSidebarOpen)
+    this.$store.commit('screen/setSidebarOpen',!this.$store.state.screen.isSidebarOpen)
   }
 
   public openLegend(){
-    this.$store.commit('setLegendOpen',!this.$store.state.screen.isLegendOpen)
+    this.$store.commit('screen/setLegendOpen',!this.$store.state.screen.isLegendOpen)
   }
 
 }

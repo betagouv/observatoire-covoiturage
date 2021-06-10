@@ -2,7 +2,7 @@ import { Component,mixins } from 'nuxt-property-decorator'
 import BreakpointsMixin from '~/components/mixins/breakpoints'
 import maplibregl from 'maplibre-gl'
 import {Deck} from '@deck.gl/core'
-import geostats from 'geostats'
+import {ckmeans} from 'simple-statistics'
 
 
 interface Territory {
@@ -68,7 +68,7 @@ export default class MapsMixin extends mixins(BreakpointsMixin) {
         } else {
           this.$data[container] = new maplibregl.Map({
           container: container,
-            style: process.env.VUE_APP_MAPLIBRE_STYLE,
+            style: process.env.maplibre_style,
             center: options.center,
             zoom: this.zoomMobile(options),
             attributionControl: options.attribution
@@ -143,11 +143,11 @@ export default class MapsMixin extends mixins(BreakpointsMixin) {
     .map(x => parseInt(x, 16))
   }
 
-  jenks(data:[],field:string,colors:Array<string>,width:Array<number>){
-    const vals = new geostats(data.map(d => d[field]))
-    const breaks:Array<number> = vals.getClassJenks(width.length - 1)
+  jenks(data:Array<Object>,field:string,colors:Array<string>,width:Array<number>){
+    const vals:Array<number> = data.map(d => d[field])
+    const breaks = ckmeans(vals, width.length - 1)
     let analysis = breaks.map((b,i) => {
-      return {val:b,color:this.hexToRgb(colors[i]),width:width[i]} 
+      return {val:b[0],color:this.hexToRgb(colors[i]),width:width[i]} 
     })
     return analysis
   }

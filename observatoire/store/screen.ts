@@ -11,9 +11,9 @@ export const state = () => ({
   isLegendOpen:false
 })
 
-export type RootState = ReturnType<typeof state>
+export type ScreenState = ReturnType<typeof state>
 
-export const mutations: MutationTree<RootState> = {
+export const mutations: MutationTree<ScreenState> = {
   setWindow: (state, val: {width: number, height: number}) => (
     state.window = val
   ),

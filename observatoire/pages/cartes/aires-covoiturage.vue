@@ -1,7 +1,7 @@
 <template>
   <div class="fr-section">
     <div class="fr-container--fluid">
-      <MapsFluxMap :map="selectedMap" :key="mapKey" @rerenderMap="forceRerenderMaps"/>
+      <MapsAiresMap :map="selectedMap" :key="mapKey" @rerenderMap="forceRerenderMaps"/>
     </div>
   </div>
 </template>
@@ -11,7 +11,7 @@ import { Component,mixins,Watch } from 'nuxt-property-decorator'
 import BreakpointsMixin from '../../components/mixins/breakpoints'
 
 @Component
-export default class Flux extends mixins(BreakpointsMixin){
+export default class Aires extends mixins(BreakpointsMixin){
   mapKey=0
   selectedMap='all'
 

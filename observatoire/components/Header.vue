@@ -72,8 +72,5 @@ import BreakpointsMixin from '../components/mixins/breakpoints'
 
 @Component
 export default class Header extends mixins(BreakpointsMixin){
-  public mounted() {
-    this.handleResize()
-  }
 }
 </script>
