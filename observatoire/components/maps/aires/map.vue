@@ -65,11 +65,11 @@ interface AiresData {
 export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
   @Prop({ required: true }) map!: string
 
-  map_metropole=null
-  map_antilles=null
-  map_guyane=null
-  map_mayotte=null
-  map_reunion=null
+  map_metropole:any=null
+  map_antilles:any=null
+  map_guyane:any=null
+  map_mayotte:any=null
+  map_reunion:any=null
   time:{year:string,month:string}={
     year:'',
     month:''
@@ -142,7 +142,7 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
 
   public async renderMaps() {
     if (this.map === 'metropole'){ 
-      await this.createMap('map_'+this.map,this.territories.find(t => t.name === this.map))
+      await this.createMap('map_'+this.map,this.territories.find(t => t.name === this.map) || this.territories[0])
       this.addLayers('map_'+this.map)
       this.$data['map_'+this.map].addControl(new maplibregl.NavigationControl(), 'top-left')
     } else if(this.map === 'droms'){
@@ -198,14 +198,14 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
       })
 
       let popup = new maplibregl.Popup({
-        closeButton: false,
+        closeButton: true,
         closeOnClick: false
       })
       this.$data[container].on('mouseenter', 'airesLayer', e => {
         let features = this.$data[container].queryRenderedFeatures(e.point)
         this.$data[container].getCanvas().style.cursor = 'pointer'
         let description = `
-          <div class="popup">
+          <div class="fr-popup">
             <p><b>id :</b>${features[0].properties.id_lieu}</p>
             <p><b>nom :</b>${features[0].properties.ad_lieu}</p>
             <p><b>commune :</b>${features[0].properties.com_lieu}</p>
@@ -284,9 +284,6 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
     height: 50%;
     width: 50%;
     border: 1px solid white;
-  }
-  .tooltip-title{
-    font-size: 1.2em !important;
   }
 }
 </style>

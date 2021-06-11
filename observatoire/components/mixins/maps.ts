@@ -1,8 +1,10 @@
-import { Component,mixins } from 'nuxt-property-decorator'
-import BreakpointsMixin from '~/components/mixins/breakpoints'
+import { Component, mixins } from 'nuxt-property-decorator'
+import { ckmeans } from 'simple-statistics'
 import maplibregl from 'maplibre-gl'
-import {Deck} from '@deck.gl/core'
-import {ckmeans} from 'simple-statistics'
+import { Deck } from '@deck.gl/core'
+import BreakpointsMixin from '~/components/mixins/breakpoints'
+
+
 
 
 interface Territory {
@@ -24,7 +26,7 @@ interface Data {
 export default class MapsMixin extends mixins(BreakpointsMixin) {
   territories:Array<Territory>=[
     {
-      name: "metropole",
+      name: 'metropole',
       center: [2.087, 46],
       zoom: 5,
       zoomMobile: 4,
@@ -32,37 +34,38 @@ export default class MapsMixin extends mixins(BreakpointsMixin) {
       attribution: true
     },
     {
-      name: "antilles",
+      name: 'antilles',
       center: [-61.3367, 15.372],
       zoom: 6,
       attribution: false
     },
     {
-      name: "guyane",
+      name: 'guyane',
       center: [-53.097, 3.83],
       zoom: 5,
       attribution: false
     },
     {
-      name: "mayotte",
+      name: 'mayotte',
       center: [45.167, -12.8503],
       zoom: 8,
       attribution: false
     },
     {
-      name: "reunion",
+      name: 'reunion',
       center: [55.5155, -21.0883],
       zoom: 7,
       attribution: false
     }
   ]
-  isHovering=false
+
+  isHovering = false
 
   createMap(container:string,options:Territory) {
     return new Promise<void>((resolve,reject) =>{
       try{
         let defaults = {center:[1.75, 47.5],zoom:5}
-        options = { ...defaults, ...(options || {}) }
+        options = { ...defaults, ...options }
         if (!maplibregl.supported()) {
           alert('Your browser does not support Maplibre GL')
         } else {

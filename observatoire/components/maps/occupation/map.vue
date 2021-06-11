@@ -1,7 +1,7 @@
 <template>
   <div class="fr-grid-row content">
     <div v-if="lgAndAbove || screen.isSidebarOpen" class="fr-col-12 fr-col-lg-2 sidebar">
-      <Sidebar 
+      <MapsOccupationSidebar 
         v-if="data" 
         :time="time"
         :journeys="allJourneys"
@@ -14,10 +14,10 @@
           <div class="map_container">
             <div id="map_metropole"></div>
           </div>
-          <Legend :title="legendTitle" :analyzes="categories" type="proportional_circles"/>
+          <MapsHelpersLegend :title="legendTitle" :analyzes="categories" type="proportional_circles"/>
         </div>
         <div v-if="['all','droms'].includes(map)" :class="{'fr-hidden': screen.isSidebarOpen}" class="fr-col-12 fr-col-lg-3 maps_drom">
-          <Legend v-if="map ==='droms'" :title="legendTitle" :analyzes="categories" type="proportional_circles"/>
+          <MapsHelpersLegend v-if="map ==='droms'" :title="legendTitle" :analyzes="categories" type="proportional_circles"/>
           <div class="map_container">
             <div id="map_antilles"></div>
           </div>
@@ -31,7 +31,7 @@
             <div id="map_reunion"></div>
           </div>
         </div>
-        <Controls :map="map" @selectedMap="selectedMap"/>
+        <MapsHelpersControls :map="map" @selectedMap="selectedMap"/>
       </div>
     </div>
   </div>
@@ -55,14 +55,14 @@ interface OccupData {
 }
 
 @Component
-export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
+export default class OccupMap extends mixins(BreakpointsMixin,MapsMixin){
   @Prop({ required: true }) map!: string
 
-  map_metropole=null
-  map_antilles=null
-  map_guyane=null
-  map_mayotte=null
-  map_reunion=null
+  map_metropole:any=null
+  map_antilles:any=null
+  map_guyane:any=null
+  map_mayotte:any=null
+  map_reunion:any=null
   time:{year:string,month:string}={
     year:'',
     month:''
@@ -156,9 +156,9 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
 
   public async renderMaps() {
     if (this.map === 'metropole'){ 
-      await this.createMap('map_'+this.map,this.territories.find(t => t.name === this.map))
+      await this.createMap('map_'+this.map,this.territories.find(t => t.name === this.map) || this.territories[0])
       this.addLayers('map_'+this.map)
-      this['map_'+this.map].addControl(new maplibregl.NavigationControl(), 'top-left')
+      this.$data['map_'+this.map].addControl(new maplibregl.NavigationControl(), 'top-left')
     } else if(this.map === 'droms'){
       for (let territory of this.territories.filter(t => t.name !== 'metropole')) {
         await this.createMap('map_'+territory.name,territory)
@@ -174,12 +174,12 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
   }
 
   public addLayers(container) {
-    this[container].on('style.load', () => {
-      this[container].addSource('occupationSource', {
+    this.$data[container].on('style.load', () => {
+      this.$data[container].addSource('occupationSource', {
         type: 'geojson',
         data: this.filteredData
       })
-      this[container].addLayer({
+      this.$data[container].addLayer({
         id: 'occupationLayer',
         type: 'circle',
         source: 'occupationSource',
@@ -216,9 +216,9 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
         closeButton: false,
         closeOnClick: false
       })
-      this[container].on('mouseenter', 'occupationLayer', e => {
-        let features = this[container].queryRenderedFeatures(e.point)
-        this[container].getCanvas().style.cursor = 'pointer'
+      this.$data[container].on('mouseenter', 'occupationLayer', e => {
+        let features = this.$data[container].queryRenderedFeatures(e.point)
+        this.$data[container].getCanvas().style.cursor = 'pointer'
         let description = `
           <div class="popup">
             <p><b>${features[0].properties.l_territory}</b></p>
@@ -227,10 +227,10 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
           </div>`
         popup.setLngLat(e.lngLat)
         .setHTML(description)
-        .addTo(this[container])
+        .addTo(this.$data[container])
       })
-      this[container].on('mouseleave', 'occupationLayer', () => {
-        this[container].getCanvas().style.cursor = ''
+      this.$data[container].on('mouseleave', 'occupationLayer', () => {
+        this.$data[container].getCanvas().style.cursor = ''
         popup.remove()
       })
     })
@@ -254,7 +254,7 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
   bottom: 0;
   width: 100%;
   @media screen and (min-width: 992px) {
-    top: 130px;
+    top: 185px;
   }
 }
 .map {

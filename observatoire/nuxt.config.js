@@ -23,9 +23,7 @@ export default {
     '@/assets/scss/main'
   ],
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-    '~/plugins/buefy.ts'
-  ],
+  plugins: [],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -42,6 +40,7 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
+    'nuxt-buefy'
   ],
   env: {
     maplibre_style: process.env.MAPLIBRE_STYLE || 'https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json'
@@ -51,7 +50,7 @@ export default {
 
   // Content module configuration: https://go.nuxtjs.dev/config-content
   content: {},
-
+  buefy: { },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {}
 }

@@ -15,7 +15,7 @@ export default class BreakpointsMixin extends Vue {
   }
 
   public handleResize() {
-    this.$store.commit('screen/setWindow', { width:window.innerWidth, height:window.innerHeight})
+    this.$store.commit('screen/setWindow', { width: window.innerWidth, height: window.innerHeight})
     if(window.innerWidth <= 576){
       this.$store.commit('screen/setBreakpoint', 'xs')
     }

@@ -5,7 +5,7 @@ export const state = () => ({
     width: 0,
     height: 0
   },
-  breakpoint:'',
+  breakpoint:'xl',
   isMenuOpen:false,
   isSidebarOpen:false,
   isLegendOpen:false

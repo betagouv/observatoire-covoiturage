@@ -1,5 +1,6 @@
 @import "@gouvfr/dsfr/dist/css/dsfr.min.css";
-.dropdown, .slider, .filters, .map, .control_maps{
+@import "maplibre-gl/dist/maplibre-gl.css";
+/*.dropdown, .slider, .filters, .map, .control_maps{
   // Set your colors
   $primary: #000091;
   $link: $primary;
@@ -18,4 +19,9 @@
     border-radius: 10%;
     padding: 10px;
   }
+}*/
+
+.fr-popup p{
+  font: 14px/20px Marianne, Arial, sans-serif;
+  margin:0 !important;
 }

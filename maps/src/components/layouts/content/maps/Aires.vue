@@ -244,7 +244,7 @@ export default {
   bottom: 0;
   width: 100%;
   @media screen and (min-width: 992px) {
-    top: 130px;
+    top: 185px;
   }
 }
 .map {

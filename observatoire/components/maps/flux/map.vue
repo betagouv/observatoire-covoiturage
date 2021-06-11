@@ -239,7 +239,6 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
 </script>
 
 <style lang="scss" scoped>
-@import "maplibre-gl/dist/maplibre-gl.css";
 .content{
   position: absolute;
   top: 105px;
@@ -283,9 +282,6 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
     height: 50%;
     width: 50%;
     border: 1px solid white;
-  }
-  .tooltip-title{
-    font-size: 1.2em !important;
   }
 }
 </style>
