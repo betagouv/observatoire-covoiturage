@@ -1,7 +1,10 @@
 ---
 title: My first Blog Post
 description: Learning how to use @nuxt/content to create a blog
-img: first-blog-post.jpg
+categories: 
+  - veille
+  - test-1
+img: social/github.svg
 alt: my first blog post
 ---
 

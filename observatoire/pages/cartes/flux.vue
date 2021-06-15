@@ -12,9 +12,13 @@ import BreakpointsMixin from '../../components/mixins/breakpoints'
 
 @Component
 export default class Flux extends mixins(BreakpointsMixin){
-  mapKey=0
-  selectedMap='all'
+  mapKey = 0
+  selectedMap = 'all'
 
+  layout () {
+    return 'carte'
+  }
+  
   created(){
     this.$store.commit('screen/setMenuOpen',false)
   }

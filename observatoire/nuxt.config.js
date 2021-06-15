@@ -43,14 +43,19 @@ export default {
     'nuxt-buefy'
   ],
   env: {
-    maplibre_style: process.env.MAPLIBRE_STYLE || 'https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json'
+    maplibre_style: process.env.MAPLIBRE_STYLE || 'https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json',
+    has_newsletter: process.env.NEWSLETTER || 'false'
   },
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},
 
   // Content module configuration: https://go.nuxtjs.dev/config-content
   content: {},
-  buefy: { },
+  buefy: { css:false },
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {}
+  build: {
+    splitChunks: {
+      layouts: true
+    }
+  }
 }

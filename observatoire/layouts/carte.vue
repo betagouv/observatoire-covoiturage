@@ -2,7 +2,6 @@
   <div>
     <Header />
     <Nuxt />
-    <Footer />
   </div>
 </template>
 
@@ -11,7 +10,7 @@ import { Component,mixins } from 'nuxt-property-decorator'
 import BreakpointsMixin from '../components/mixins/breakpoints'
 
 @Component
-export default class Default extends mixins(BreakpointsMixin){
+export default class CarteLayout extends mixins(BreakpointsMixin){
   public beforeMount() {
     window.addEventListener('resize', this.handleResize)
     this.handleResize()
@@ -21,3 +20,7 @@ export default class Default extends mixins(BreakpointsMixin){
   }
 }
 </script>
+
+<style lang="scss">
+  @import "~/assets/scss/cartes.scss";
+</style>
