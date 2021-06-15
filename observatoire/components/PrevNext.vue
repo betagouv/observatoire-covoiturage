@@ -1,5 +1,5 @@
 <template>
-  <nav role="navigation" class="fr-pagination" aria-label="Pagination">
+  <nav role="navigation" class="fr-pagination pagination-center" aria-label="Pagination">
     <ul class="fr-pagination__list">
       <li v-if="prev">
         <NuxtLink :to="prev.slug" class="fr-pagination__link fr-pagination__link--prev fr-pagination__link--lg-label">

@@ -29,7 +29,7 @@ import { Component, Prop, Vue } from 'nuxt-property-decorator'
 
 @Component
 export default class  extends Vue{
-  @Prop( {default() { return {name:'Articles',slug:'articles'} }}) type!: object
+  @Prop( {default() { return {name:'Actualités',slug:'actualites'} }}) type!: object
   @Prop({ default:null }) category!: object
   @Prop({ default:null }) current!: string
 }
