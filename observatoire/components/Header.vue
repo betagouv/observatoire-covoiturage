@@ -54,11 +54,41 @@
             <button class="fr-link--close fr-link" aria-controls="modal_menu">Fermer</button>
             <div class="fr-header__menu-links"></div>
             <nav class="fr-nav" id="navigation" role="navigation" aria-label="Menu principal">
-                <ul class="fr-nav__list">
-                    <li class="fr-nav__item">
-                        <a class="fr-nav__link" href="#" target="_self">accès direct</a>
-                    </li>
-                </ul>
+              <ul class="fr-nav__list">
+                <li class="fr-nav__item">
+                  <NuxtLink to="/" class="fr-nav__link" target="_self">
+                    Accueil
+                  </NuxtLink>
+                </li>
+                <li class="fr-nav__item">
+                  <NuxtLink to="/actualites" class="fr-nav__link" target="_self">
+                    Actualités
+                  </NuxtLink>
+                </li>
+                <li class="fr-nav__item">
+                  <button class="fr-nav__btn" aria-expanded="false" aria-controls="menu-cartes" aria-current="true">Cartes</button>
+                  <div class="fr-collapse fr-menu" id="menu-cartes">
+                    <ul class="fr-menu__list">
+                      <li>
+                        <NuxtLink to="/cartes/flux" class="fr-nav__link" target="_self">
+                          Flux entre communes
+                        </NuxtLink>
+                      </li>
+                      <li>
+                        <NuxtLink to="/cartes/occupation-vehicules" class="fr-nav__link" target="_self">
+                          Occupation des véhicules
+                        </NuxtLink>
+                      </li>
+                      <li>
+                        <NuxtLink to="/cartes/aires-covoiturage" class="fr-nav__link" target="_self">
+                          Aires de covoiturage
+                        </NuxtLink>
+                      </li>
+                      
+                    </ul>
+                  </div>
+                </li>
+              </ul>
             </nav>
         </div>
     </div>

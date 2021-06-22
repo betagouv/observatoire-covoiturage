@@ -1,4 +1,14 @@
 @import "@gouvfr/dsfr/dist/css/dsfr.min.css";
-.h-text-center, .pagination-center{
+.h-text-center{
   text-align:center;
+}
+.pagination-center{
+  justify-content:center;
+}
+.fr-pagination{
+  margin-top:20px;
+}
+
+.single-meta{
+  margin: 1rem 0;
 }

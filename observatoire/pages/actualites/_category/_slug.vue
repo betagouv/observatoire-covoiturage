@@ -5,13 +5,28 @@
       <div class="fr-col-12">
         <Breadcrumb :category="categories[0]" :current="actualite.title"/>
       </div>
-      <div class="fr-col-lg-10 fr-col-offset-lg-1">
+      <div class="fr-col-lg-8 fr-col-offset-lg-2">
         <div class="fr-grid-row fr-grid-row--gutters">
           <article class="fr-col-12">
             <h1 class="h-text-center">{{ actualite.title }}</h1>
-            <p>{{ actualite.description }}</p>
-            <img :src="actualite.img" :alt="actualite.alt" />
-            <nuxt-content :document="actualite" />
+            <div class="fr-text--xs single-meta">
+              <span>Publié le {{ formatDate(actualite.createdAt) }} </span>
+              <span v-if="categories && actualite.categories.length > 1">dans les catégories:</span>
+              <span v-else-if="categories" >dans la catégorie:</span>
+              <span v-for="(category,index) in actualite.categories" :key="index">
+                <span v-if="categories && index != 0">, </span>
+                <span v-if="categories">{{categories.find(c => c.slug === category).name}}</span>
+              </span>
+            </div>
+            <p class="fr-text--lead fr-text--alt">{{ actualite.description }}</p>
+            <figure v-if="actualite.img" class="fr-content-media fr-content-media--lg" role="group">
+              <div class="fr-content-media__img">
+                  <img :src="`/images/${actualite.img}`" :alt="actualite.alt">
+              </div>
+            </figure>
+            <div class="fr-text--lg">
+              <nuxt-content :document="actualite" />
+            </div>
           </article>
           <div class="fr-col-12">
             <Prev-next :prev="prev" :next="next" />
@@ -47,6 +62,10 @@ export default class SingleArticle extends Vue{
     .surround(params.slug)
     .fetch()
     return { actualite, categories, prev, next }
+  }
+
+  formatDate(date:string) {
+    return new Date(date).toLocaleDateString('fr-FR')
   }
 }
 </script>

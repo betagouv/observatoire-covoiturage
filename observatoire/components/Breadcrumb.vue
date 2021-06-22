@@ -7,17 +7,17 @@
               <a class="fr-breadcrumb__link" href="/">Accueil</a>
           </li>
           <li>
-              <NuxtLink :to="`/${type.slug}`" class="fr-breadcrumb__link">
-                {{type.name}}
-              </NuxtLink>
+            <NuxtLink :to="`/${type.slug}`" class="fr-breadcrumb__link">
+              {{type.name}}
+            </NuxtLink>
           </li>
           <li v-if="category">
-              <NuxtLink :to="`/${type.slug}/${category.slug}`" class="fr-breadcrumb__link">
-                {{category.name}}
-              </NuxtLink>
+            <NuxtLink :to="`/${type.slug}/${category.slug}`" class="fr-breadcrumb__link">
+              {{category.name}}
+            </NuxtLink>
           </li>
           <li  v-if="current">
-              <a class="fr-breadcrumb__link" aria-current="page">{{current}}</a>
+            <a class="fr-breadcrumb__link" aria-current="page">{{current}}</a>
           </li>
       </ol>
     </div>
@@ -28,7 +28,7 @@
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
 
 @Component
-export default class  extends Vue{
+export default class Breadcrumb extends Vue{
   @Prop( {default() { return {name:'Actualités',slug:'actualites'} }}) type!: object
   @Prop({ default:null }) category!: object
   @Prop({ default:null }) current!: string
