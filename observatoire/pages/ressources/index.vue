@@ -3,10 +3,10 @@
     <div class="fr-container">
       <div class="fr-grid-row">
         <div class="fr-col-12">
-          <Breadcrumb />
+          <Breadcrumb :type="type" />
         </div>
         <div class="fr-col-lg-10 fr-col-offset-lg-1">
-          <ContentList title="Actualités" :contents="actualites" :categories="categories" />
+          <ContentList title="Ressources" :contents="ressources" :categories="categories" />
         </div>
         <div class="fr-col-12">
           <Pagination :lastPage="lastPage" />
@@ -20,24 +20,26 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 
 @Component
-export default class Actualites extends Vue{
+export default class Ressources extends Vue{
+  type = {name:'Ressources',slug:'ressources'}
+
   async asyncData({ $content }) {
     const perPage = 3
-    const actualites = await $content('actualites')
+    const ressources = await $content('ressources')
     .only(['title', 'description', 'img', 'slug','categories','dir','createdAt'])
     .sortBy('createdAt', 'asc')
     .limit(perPage)
     .fetch()
 
-    const allActualites = await $content('actualites').fetch()
-    const totalActualites = allActualites.length
-    const lastPage = Math.ceil(totalActualites / perPage)
+    const allRessources = await $content('ressources').fetch()
+    const totalRessources = allRessources.length
+    const lastPage = Math.ceil(totalRessources / perPage)
 
     const categories = await $content('categories')
     .only(['name', 'slug'])
     .fetch()
 
-    return { actualites, categories, lastPage }
+    return { ressources, categories, lastPage }
   }
 }
 </script>

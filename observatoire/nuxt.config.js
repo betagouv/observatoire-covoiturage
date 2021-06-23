@@ -15,6 +15,10 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+    ],
+    script: [
+      { hid: 'module', type:'module', src:'/js/dsfr.module.min.js',defer:true,body:true},
+      { hid: 'nomodule', nomodule:true, src: '/js/dsfr.nomodule.min.js',defer:true,body:true}
     ]
   },
 

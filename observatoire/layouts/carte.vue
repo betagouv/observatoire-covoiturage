@@ -11,6 +11,7 @@ import BreakpointsMixin from '../components/mixins/breakpoints'
 
 @Component
 export default class CarteLayout extends mixins(BreakpointsMixin){
+  
   public beforeMount() {
     window.addEventListener('resize', this.handleResize)
     this.handleResize()

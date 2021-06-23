@@ -17,7 +17,7 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 
 @Component
-export default class Category extends Vue{
+export default class ActualitesCategory extends Vue{
     async asyncData({ $content, params, error }) {
       const category = await $content('categories')
       .only(['name', 'slug'])

@@ -1,5 +1,13 @@
 @import "@gouvfr/dsfr/dist/css/dsfr.min.css";
-.h-text-center{
+.hero{
+  background-color: #000091;
+  color: #ffffff;
+  padding: 2rem;
+}
+.home-section{
+  margin:2rem 0;
+}
+.h-text-center, .align-center{
   text-align:center;
 }
 .pagination-center{
@@ -8,7 +16,9 @@
 .fr-pagination{
   margin-top:20px;
 }
-
 .single-meta{
   margin: 1rem 0;
+}
+.img-medium{
+  max-height: 250px;
 }

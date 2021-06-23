@@ -2,14 +2,14 @@
   <nav role="navigation" class="fr-pagination" aria-label="Pagination">
     <ul class="fr-pagination__list pagination-center">
       <li v-if="prev">
-        <NuxtLink :to="prev.slug" class="fr-pagination__link fr-pagination__link--prev fr-pagination__link--lg-label">
+        <a :href="prev.slug" class="fr-pagination__link fr-pagination__link--prev fr-pagination__link--lg-label">
           {{ prev.title }}
-        </NuxtLink>
+        </a>
       </li>
       <li v-if="next">
-        <NuxtLink :to="next.slug" class="fr-pagination__link fr-pagination__link--next fr-pagination__link--lg-label">
+        <a :href="next.slug" class="fr-pagination__link fr-pagination__link--next fr-pagination__link--lg-label">
           {{ next.title }}
-        </NuxtLink>
+        </a>
       </li>
     </ul>
   </nav>

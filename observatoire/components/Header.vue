@@ -31,19 +31,7 @@
             </div>
           </div>
           <div class="fr-header__tools">
-            <div class="fr-header__search fr-modal" id="modal_search">
-              <div class="fr-container fr-container-lg--fluid">
-                <button class="fr-link--close fr-link" aria-controls="modal_search">Fermer</button>
-                <div class="fr-search-bar" id="search" role="search">
-                  <label class="fr-label" for="search-input">Recherche
-                  </label>
-                  <input class="fr-input" placeholder="Rechercher" type="search" id="search-input" name="search-input">
-                  <button class="fr-btn" title="Rechercher">
-                    Rechercher
-                  </button>
-                </div>
-              </div>
-            </div>
+            <SearchInput/>
           </div>
         </div>
       </div>
@@ -56,33 +44,38 @@
             <nav class="fr-nav" id="navigation" role="navigation" aria-label="Menu principal">
               <ul class="fr-nav__list">
                 <li class="fr-nav__item">
-                  <NuxtLink to="/" class="fr-nav__link" target="_self">
+                  <a href="/" class="fr-nav__link" target="_self">
                     Accueil
-                  </NuxtLink>
+                  </a>
                 </li>
                 <li class="fr-nav__item">
-                  <NuxtLink to="/actualites" class="fr-nav__link" target="_self">
+                  <a href="/actualites" class="fr-nav__link" target="_self">
                     Actualités
-                  </NuxtLink>
+                  </a>
+                </li>
+                <li class="fr-nav__item">
+                  <a href="/ressources" class="fr-nav__link" target="_self">
+                    Ressources
+                  </a>
                 </li>
                 <li class="fr-nav__item">
                   <button class="fr-nav__btn" aria-expanded="false" aria-controls="menu-cartes" aria-current="true">Cartes</button>
                   <div class="fr-collapse fr-menu" id="menu-cartes">
                     <ul class="fr-menu__list">
                       <li>
-                        <NuxtLink to="/cartes/flux" class="fr-nav__link" target="_self">
+                        <a href="/cartes/flux" class="fr-nav__link" target="_self">
                           Flux entre communes
-                        </NuxtLink>
+                        </a>
                       </li>
                       <li>
-                        <NuxtLink to="/cartes/occupation-vehicules" class="fr-nav__link" target="_self">
+                        <a href="/cartes/occupation-vehicules" class="fr-nav__link" target="_self">
                           Occupation des véhicules
-                        </NuxtLink>
+                        </a>
                       </li>
                       <li>
-                        <NuxtLink to="/cartes/aires-covoiturage" class="fr-nav__link" target="_self">
+                        <a href="/cartes/aires-covoiturage" class="fr-nav__link" target="_self">
                           Aires de covoiturage
-                        </NuxtLink>
+                        </a>
                       </li>
                       
                     </ul>

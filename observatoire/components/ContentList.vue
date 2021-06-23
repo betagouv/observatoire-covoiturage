@@ -16,9 +16,9 @@
             </span>
           </p>
           <h4 class="fr-card__title">
-            <NuxtLink :to="`${content.dir}/${content.categories[0]}/${content.slug}`" class="fr-card__link">
+            <a :href="`${content.dir}/${content.categories[0]}/${content.slug}`" class="fr-card__link">
               {{ content.title }}
-            </NuxtLink>
+            </a>
           </h4>
           <p class="fr-card__desc">
             {{ content.description }}
