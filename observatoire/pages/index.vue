@@ -18,7 +18,7 @@
     <div class="fr-container">
       <div class="fr-grid-row">
         <div class="fr-col-lg-10 fr-col-offset-lg-1">
-          <ContentList title="A la une" :contents="actualites" :categories="categories" />
+          <ContentList title="A la une" :contents="actualites" :taxonomies="categories" />
         </div>
         <div class="fr-col-12 align-center">
             <NuxtLink to="/actualites" class="fr-btn fr-btn--secondary">

@@ -4,7 +4,7 @@ description: Learning how to use @nuxt/content to create a blog
 categories: 
   - veille
   - test-1
-img: first-blog-post.jpg
+img: /images/first-blog-post.jpg
 alt: my first blog post
 ---
 

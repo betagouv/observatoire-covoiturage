@@ -3,7 +3,7 @@
   <div class="fr-container">
     <div class="fr-grid-row">
       <div class="fr-col-12">
-        <Breadcrumb :category="categories[0]" :current="actualite.title"/>
+        <Breadcrumb :taxonomy="categories[0]" :current="actualite.title"/>
       </div>
       <div class="fr-col-lg-8 fr-col-offset-lg-2">
         <div class="fr-grid-row fr-grid-row--gutters">
@@ -15,7 +15,7 @@
               <span v-else-if="categories" >dans la catégorie:</span>
               <span v-for="(category,index) in actualite.categories" :key="index">
                 <span v-if="categories && index != 0">, </span>
-                <span v-if="categories">{{categories.find(c => c.slug === category).name}}</span>
+                <span v-if="categories"><a :href="`/actualites/${getTaxonomy(categories,category).slug}`">{{getTaxonomy(categories,category).name}}</a></span>
               </span>
             </div>
             <p class="fr-text--lead fr-text--alt">{{ actualite.description }}</p>
@@ -23,6 +23,7 @@
               <div class="fr-content-media__img">
                   <img :src="`/images/${actualite.img}`" :alt="actualite.alt">
               </div>
+              <figcaption v-if="actualite.legend" class="fr-content-media__caption">{{actualite.legend}}</figcaption>
             </figure>
             <div class="fr-text--lg">
               <nuxt-content :document="actualite" />
@@ -66,6 +67,10 @@ export default class SingleActualite extends Vue{
 
   formatDate(date:string) {
     return new Date(date).toLocaleDateString('fr-FR')
+  }
+
+  getTaxonomy(taxonomies:Array<{name:string,slug:string}>,taxonomy:string){
+    return taxonomies.find(c => c.slug === taxonomy)
   }
 }
 </script>

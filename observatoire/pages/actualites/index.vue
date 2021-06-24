@@ -6,7 +6,7 @@
           <Breadcrumb />
         </div>
         <div class="fr-col-lg-10 fr-col-offset-lg-1">
-          <ContentList title="Actualités" :contents="actualites" :categories="categories" />
+          <ContentList title="Actualités" :contents="actualites" :taxonomies="categories" />
         </div>
         <div class="fr-col-12">
           <Pagination :lastPage="lastPage" />

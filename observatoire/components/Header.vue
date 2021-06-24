@@ -13,7 +13,7 @@
                 </p>
               </div>
               <div class="fr-header__navbar">
-                <button class="fr-btn--search fr-btn" data-fr-opened="false" aria-controls="modal_menu" title="Rechercher">
+                <button class="fr-btn--search fr-btn" data-fr-opened="false" aria-controls="modal_search" title="Rechercher">
                   Rechercher
                 </button>
                 <button class="fr-btn--menu fr-btn" data-fr-opened="false" aria-controls="modal_menu" aria-haspopup="menu" title="Menu">

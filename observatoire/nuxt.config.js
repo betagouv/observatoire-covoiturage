@@ -4,7 +4,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'observatoire',
+    title: 'Observatoire national du covoiturage au quotidien',
     htmlAttrs: {
       lang: 'fr'
     },
@@ -14,7 +14,9 @@ export default {
       { hid: 'description', name: 'description', content: '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'apple-touch-icon', size: '180x180', href: '/favicons/apple-touch-icon.png' },
+      { rel: 'icon', type: 'image/x-icon', href: '/favicons/favicon.ico' },
+      { rel: 'manifest', href: '/favicons/site.webmanifest' },
     ],
     script: [
       { hid: 'module', type:'module', src:'/js/dsfr.module.min.js',defer:true,body:true},
@@ -54,7 +56,9 @@ export default {
   axios: {},
 
   // Content module configuration: https://go.nuxtjs.dev/config-content
-  content: {},
+  content: {
+    fullTextSearchFields: ['title', 'description','text']
+  },
   buefy: { css:false },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {

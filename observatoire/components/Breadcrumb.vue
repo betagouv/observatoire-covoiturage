@@ -11,9 +11,9 @@
               {{type.name}}
             </a>
           </li>
-          <li v-if="category">
-            <a :href="`/${type.slug}/${category.slug}`" class="fr-breadcrumb__link">
-              {{category.name}}
+          <li v-if="taxonomy">
+            <a :href="`/${type.slug}/${taxonomy.slug}`" class="fr-breadcrumb__link">
+              {{taxonomy.name}}
             </a>
           </li>
           <li  v-if="current">
@@ -30,7 +30,7 @@ import { Component, Prop, Vue } from 'nuxt-property-decorator'
 @Component
 export default class Breadcrumb extends Vue{
   @Prop( {default() { return {name:'Actualités',slug:'actualites'} }}) type!: object
-  @Prop({ default:null }) category!: object
+  @Prop({ default:null }) taxonomy!: object
   @Prop({ default:null }) current!: string
 }
 </script>

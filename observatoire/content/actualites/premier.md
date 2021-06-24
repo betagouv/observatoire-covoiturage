@@ -4,7 +4,7 @@ description: Learning how to use @nuxt/content to create a blog and Welcome to m
 categories: 
   - veille
   - test-1
-img: social/github.svg
+img: /images/social/github.svg
 alt: my first blog post
 ---
 
