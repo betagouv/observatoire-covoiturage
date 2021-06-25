@@ -1,6 +1,6 @@
 @import "maplibre-gl/dist/maplibre-gl.css";
 //@import "buefy/dist/buefy.min.css";
-.dropdown, .slider, .filters, .map, .control_maps{
+.slider, .filters, .map, .control_maps{
   @import "bulma/sass/utilities/_all.sass";
   // Set your colors
   $primary: #000091;
@@ -25,4 +25,10 @@
 .fr-popup p{
   font: 14px/20px Marianne, Arial, sans-serif;
   margin:0 !important;
+}
+
+.mapboxgl-ctrl-top-left{
+  @media screen and (max-width: 991px) {
+    top: 50px;
+  }
 }

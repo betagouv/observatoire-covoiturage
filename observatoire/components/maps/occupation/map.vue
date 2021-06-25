@@ -250,7 +250,7 @@ export default class OccupMap extends mixins(BreakpointsMixin,MapsMixin){
 <style lang="scss" scoped>
 .content{
   position: absolute;
-  top: 105px;
+  top: 107px;
   bottom: 0;
   width: 100%;
   @media screen and (min-width: 992px) {

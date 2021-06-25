@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { Component,Vue,PropSync,Prop,VModel } from 'nuxt-property-decorator'
+import { Component,Vue,PropSync,Prop } from 'nuxt-property-decorator'
 
 @Component
 export default class Slider extends Vue{

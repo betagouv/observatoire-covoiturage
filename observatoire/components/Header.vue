@@ -55,7 +55,7 @@
                 </li>
                 <li class="fr-nav__item">
                   <a href="/ressources" class="fr-nav__link" target="_self">
-                    Ressources
+                    S'informer
                   </a>
                 </li>
                 <li class="fr-nav__item">
