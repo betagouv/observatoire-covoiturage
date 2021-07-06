@@ -1,0 +1,1 @@
+REFRESH MATERIALIZED VIEW perimeters.territories_points;
