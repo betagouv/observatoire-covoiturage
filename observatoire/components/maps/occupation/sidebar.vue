@@ -2,6 +2,16 @@
   <nav class="fr-sidemenu--full-border" :class="{'fr-p-1w': !lgAndAbove}" role="navigation" aria-label="Menu latéral">
     <div class="fr-sidemenu__inner">
       <ul class="fr-sidemenu__list">
+        <div class="fr-sidemenu__title">Type de territoire sélectionné :</div>
+        <li class="fr-sidemenu__item">
+          <b-field>
+            <select v-model="selectedType" class="fr-select" id="select-type" name="select-type">
+              <option v-for="option in territories" :value="option.type" :key="option.type">{{option.name}}</option>
+            </select>
+          </b-field>
+        </li>
+      </ul>
+      <ul class="fr-sidemenu__list">
         <div class="fr-sidemenu__title">Mois sélectionné :</div>
         <li class="fr-sidemenu__item">
           <b-field grouped>
@@ -35,11 +45,25 @@ import TimeMixin from '../../mixins/time'
 
 @Component
 export default class OccupSidebar extends mixins(BreakpointsMixin, TimeMixin){
+  @PropSync('type', { required: true, type: String }) selectedType!: String
   @PropSync('time', { required: true, type: Object }) selectedTime!: { year: String, month: String }
   @Prop({ required: true }) journeys!: string
 
+  territories = [
+    {type:'com',name:'Communes'},
+    {type:'epci',name:'EPCI'},
+    {type:'dep',name:'Départements'},
+    {type:'reg',name:'Régions'},
+    {type:'country',name:'Pays'}
+  ]
+
   @Watch('time',{ deep: true })
   onTimeChanged() {
+    this.$store.commit('screen/setSidebarOpen',false)
+  }
+
+  @Watch('type')
+  onTypeChanged() {
     this.$store.commit('screen/setSidebarOpen',false)
   }
 }

@@ -11,7 +11,7 @@
         </div>
       </div>
       <div class="results" v-if="searchstring !== ''">
-        <p v-if="results.length === 0">Pas de résultats pour cette recherche...</p>
+        <p v-if="!results || results.length === 0">Pas de résultats pour cette recherche...</p>
         <ul  v-if="results">
           <li v-for="result of results" :key="result.slug">
             <a v-if="result.dir === '/actualites'" :href="`${result.dir}/${result.categories[0]}/${result.slug}`">Actualites > {{ result.title }}</a>

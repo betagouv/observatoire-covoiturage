@@ -2,7 +2,8 @@
   <div class="fr-grid-row content">
     <div v-if="lgAndAbove || screen.isSidebarOpen" class="fr-col-12 fr-col-lg-2 sidebar">
       <MapsOccupationSidebar 
-        v-if="data" 
+        v-if="data"
+        :type.sync="type" 
         :time="time"
         :journeys="allJourneys"
       />
@@ -67,7 +68,7 @@ export default class OccupMap extends mixins(BreakpointsMixin,MapsMixin){
     year:'',
     month:''
   }
-  type='epci'
+  type='dep'
   data:Array<OccupData>=[]
   analyse:Array<{val:number,color:RegExpMatchArray | Array<number>,width:number}> = []
   loading=true
@@ -104,19 +105,24 @@ export default class OccupMap extends mixins(BreakpointsMixin,MapsMixin){
   get legendTitle(){
     return "Trajets et occupation moyenne des véhicules par "+this.type
   }
+  
+  @Watch('time', { deep: true })
+  onTimeChanged() {
+    this.getData()
+  }
+  
+  @Watch('type')
+  onTypeChanged() {
+    this.getData()
+  }
 
   @Watch('filteredData', { deep: true })
-  onFluxChanged() {
+  onDataChanged() {
     for (let territory of this.territories) {
       if(this.$data['map_'+territory.name]){
         this.$data['map_'+territory.name].getSource('occupationSource').setData(this.filteredData)
       }
     }
-  }
-  
-  @Watch('time', { deep: true })
-  onTimeChanged() {
-    this.getData()
   }
 
   public async created() {
@@ -133,7 +139,7 @@ export default class OccupMap extends mixins(BreakpointsMixin,MapsMixin){
   public async getData(){
     try{
       this.loading = true
-      const response = await axios.get('http://localhost:8080/v1/journeys_monthly_occupation?type='+this.type+'&year='+this.time.year+'&month='+this.time.month)
+      const response = await axios.get('http://localhost:8080/v1/journeys_monthly_occupation?t='+this.type+'&year='+this.time.year+'&month='+this.time.month)
       if(response.status === 204){
           this.$buefy.snackbar.open({
           message: response.data.message,
@@ -173,7 +179,7 @@ export default class OccupMap extends mixins(BreakpointsMixin,MapsMixin){
     }
   }
 
-  public addLayers(container) {
+  public addLayers(container:string) {
     this.$data[container].on('style.load', () => {
       this.$data[container].addSource('occupationSource', {
         type: 'geojson',

@@ -8,7 +8,7 @@ passage_arr as (
   SELECT a.codgeo,
   CASE WHEN b.arr IS NULL THEN a.codgeo
   ELSE b.arr END as arr
-  FROM perimeters.insee_perim_2019 a
+  FROM perimeters.insee_perim_2020 a
   LEFT JOIN perimeters.passage_arr b ON a.codgeo = b.com
 )
 SELECT (a.properties->>'INSEE_COM')::varchar(5) as com,

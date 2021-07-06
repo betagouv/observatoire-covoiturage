@@ -125,7 +125,7 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
   }
 
   @Watch('filteredAires', { deep: true })
-  onFluxChanged() {
+  onAiresChanged() {
     for (let territory of this.territories) {
       if(this.$data['map_'+territory.name]){
         this.$data['map_'+territory.name].getSource('airesSource').setData(this.filteredAires)

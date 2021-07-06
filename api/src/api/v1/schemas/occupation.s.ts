@@ -1,7 +1,21 @@
 export default class occupationSchema {
   
-  static monthly = {
+  static occupationMonthly = {
     tags: ['occupation'],
+    querystring: {
+      t: {
+        type: 'string',
+        description: 'type of territories'
+      },
+      year: {
+        type: 'string',
+        description: 'Year (YYYY)'
+      },
+      month: {
+        type: 'string',
+        description: 'Month (MM)'
+      }
+    },
     response: {
       200: {
         type: 'array',

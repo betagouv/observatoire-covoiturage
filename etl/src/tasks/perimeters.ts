@@ -24,7 +24,8 @@ async function ceremaDownload(){
   const path =join(__dirname, '../../assets/cerema/')
   await Promise.all([
     downloadFile(path,'http://www.cerema.fr/system/files/documents/2019/07/base_rt_2019_-_v1-1_-_version_diffusable_0.ods','aom_2019.ods'),
-    downloadFile(path,'https://www.cerema.fr/system/files/documents/2020/07/base_rt_2020_v1-1_diffusion_0.ods','aom_2020.ods')
+    downloadFile(path,'https://www.cerema.fr/system/files/documents/2020/07/base_rt_2020_v1-1_diffusion_0.ods','aom_2020.ods'),
+    downloadFile(path,'https://www.cerema.fr/system/files/documents/2021/06/base_rt_2021_v4_diffusion.xlsx','aom_2021.xlsx')
   ])
 }
 
@@ -64,6 +65,7 @@ async function tablesCreation(client:PoolClient){
     execQuery(client,path,'create_table_insee_perim_2021.sql'),
     execQuery(client,path,'create_table_cerema_aom_2019.sql'),
     execQuery(client,path,'create_table_cerema_aom_2020.sql'),
+    execQuery(client,path,'create_table_cerema_aom_2021.sql'),
     execQuery(client,path,'create_table_insee_dep_2021.sql'),
     execQuery(client,path,'create_table_insee_reg_2021.sql'),
     execQuery(client,path,'create_table_insee_pays_2021.sql')
@@ -151,6 +153,17 @@ async function importData(client:PoolClient){
       path: join(__dirname, '../database/sql/perimeters/'),
       filename:'insert_table_cerema_aom_2020.sql',
     }),
+    // import aom_2021.xlsx
+    importXLSX(client,{
+      path: join(__dirname, '../../assets/cerema/'),
+      filename:'aom_2021.xlsx',
+      sheet: 'RT_2021_-_Composition_communale',
+      startRow: 0
+    },
+    {
+      path: join(__dirname, '../database/sql/perimeters/'),
+      filename:'insert_table_cerema_aom_2021.sql',
+    }),
     // import departement2021.csv
     importCSV(client,
       'perimeters.insee_dep_2021(dep, reg, chef_lieu, tncc, ncc, nccenr, libelle)',
@@ -174,7 +187,7 @@ async function importData(client:PoolClient){
     )
   ])
   // insert data in table perimeters.passage_arr
-  await execQuery(client,join(__dirname, './database/sql/perimeters/'),'insert_table_passage_arr.sql')
+  await execQuery(client,join(__dirname, '../database/sql/perimeters/'),'insert_table_passage_arr.sql')
 }
 
 async function importGeo(client:PoolClient){
@@ -249,6 +262,7 @@ async function treatments(client:PoolClient){
     execQuery(client,path,'create_table_epci_2021.sql'),
     execQuery(client,path,'create_table_aom_2019.sql'),
     execQuery(client,path,'create_table_aom_2020.sql'),
+    execQuery(client,path,'create_table_aom_2021.sql'),
     execQuery(client,path,'create_table_departements.sql'),
     execQuery(client,path,'create_table_regions.sql')
   ])
@@ -261,6 +275,7 @@ async function treatments(client:PoolClient){
     execQuery(client,path,'insert_table_epci_2021.sql'),
     execQuery(client,path,'insert_table_aom_2019.sql'),
     execQuery(client,path,'insert_table_aom_2020.sql'),
+    execQuery(client,path,'insert_table_aom_2021.sql'),
     execQuery(client,path,'insert_table_departements.sql'),
     execQuery(client,path,'insert_table_regions.sql')
   ])
