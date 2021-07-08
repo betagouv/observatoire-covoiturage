@@ -5,6 +5,7 @@
       :min="sliderOptions.min" 
       :max="sliderOptions.max" 
       :step="sliderOptions.step"
+      lazy
     >
     </b-slider>
     <b-field>

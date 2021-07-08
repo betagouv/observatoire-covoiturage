@@ -15,10 +15,12 @@
           <div class="map_container">
             <div id="map_metropole"></div>
           </div>
-          <MapsHelpersLegend :title="legendTitle" :analyzes="categories" type="proportional_circles"/>
+          <MapsHelpersLegend :title="legendTitleJourneys" :analyzes="categories" type="proportional_circles" class="upper_legend"/>
+          <MapsHelpersLegend :title="legendTitleOccupation" :analyzes="analyse"/>
         </div>
         <div v-if="['all','droms'].includes(map)" :class="{'fr-hidden': screen.isSidebarOpen}" class="fr-col-12 fr-col-lg-3 maps_drom">
-          <MapsHelpersLegend v-if="map ==='droms'" :title="legendTitle" :analyzes="categories" type="proportional_circles"/>
+          <MapsHelpersLegend v-if="map ==='droms'" :title="legendTitleJourneys" :analyzes="categories" type="proportional_circles"/>
+          <MapsHelpersLegend v-if="map ==='droms'" :title="legendTitleOccupation" :analyzes="analyse"/>
           <div class="map_container">
             <div id="map_antilles"></div>
           </div>
@@ -68,15 +70,22 @@ export default class OccupMap extends mixins(BreakpointsMixin,MapsMixin){
     year:'',
     month:''
   }
-  type='dep'
+  type='epci'
   data:Array<OccupData>=[]
-  analyse:Array<{val:number,color:RegExpMatchArray | Array<number>,width:number}> = []
   loading=true
   categories=[
-    {color:[229, 229, 224],val:'>= 50 000',width:40,active:true},
+    {color:[229, 229, 224],val:'>= 100 000',width:40,active:true},
     {color:[229, 229, 224],val:'10 000',width:20,active:true},
     {color:[229, 229, 224],val:'100',width:10,active:true},
-    {color:[229, 229, 224],val:'6',width:3,active:true}
+    {color:[229, 229, 224],val:'10',width:5,active:true}
+  ]
+  analyse= [
+    {color:[229, 229, 224],val:2,width:5,active:true},
+    {color:[229, 229, 224],val:2.25,width:5,active:true},
+    {color:[229, 229, 224],val:2.5,width:5,active:true},
+    {color:[229, 229, 224],val:2.75,width:5,active:true},
+    {color:[229, 229, 224],val:3,width:5,active:true},
+    {color:[229, 229, 224],val:4,width:5,active:true},
   ]
   $buefy:any
 
@@ -102,8 +111,12 @@ export default class OccupMap extends mixins(BreakpointsMixin,MapsMixin){
     }
   }
 
-  get legendTitle(){
-    return "Trajets et occupation moyenne des véhicules par "+this.type
+  get legendTitleJourneys(){
+    return "Nb de trajets par "+this.$store.state.helpers.territories.find(t => t.type === this.type).name 
+  }
+
+  get legendTitleOccupation(){
+    return "Occupation moyenne des véhicules" 
   }
   
   @Watch('time', { deep: true })
@@ -114,6 +127,7 @@ export default class OccupMap extends mixins(BreakpointsMixin,MapsMixin){
   @Watch('type')
   onTypeChanged() {
     this.getData()
+    //this.test()
   }
 
   @Watch('filteredData', { deep: true })
@@ -185,6 +199,10 @@ export default class OccupMap extends mixins(BreakpointsMixin,MapsMixin){
         type: 'geojson',
         data: this.filteredData
       })
+      this.$data[container].addSource('decoupageSource', {
+        type: 'vector',
+        url: 'https://openmaptiles.geo.data.gouv.fr/data/decoupage-administratif.json'
+      })
       this.$data[container].addLayer({
         id: 'occupationLayer',
         type: 'circle',
@@ -194,10 +212,11 @@ export default class OccupMap extends mixins(BreakpointsMixin,MapsMixin){
             property: 'journeys',
             type: 'exponential',
             stops: [
-              [6, 3],
+              [0,0],
+              [10, 5],
               [100, 10],
               [10000,20],
-              [50000, 40]
+              [100000, 40]
             ]
           },   
           'circle-color': {
@@ -208,7 +227,7 @@ export default class OccupMap extends mixins(BreakpointsMixin,MapsMixin){
               [2.25, '#9A9AFF'],
               [2.5, '#7F7FC8'],
               [2.75, '#000091'],
-                [3, '#000074'],
+              [3, '#000074'],
               [4, '#00006D']
             ]
           },
@@ -247,6 +266,36 @@ export default class OccupMap extends mixins(BreakpointsMixin,MapsMixin){
       this.$emit('rerenderMap', 'droms')
     } else {
       this.$emit('rerenderMap', 'metropole')
+    }
+  }
+
+  public async test() {
+    if(this.type === "com"){
+      for (let territory of this.territories){
+        this.$data['map_'+territory.name].addLayer({
+          'id': 'decoupage-com',
+          'type': 'line',
+          'source': 'decoupageSource',
+          'source-layer': 'communes',
+          'paint': {
+          'line-color': '#ff69b4',
+          'line-width': 1
+          }
+        })
+      }
+    } else if (this.type === "dep"){
+      for (let territory of this.territories){
+        this.$data['map_'+territory.name].addLayer({
+          'id': 'decoupage-dep',
+          'type': 'line',
+          'source': 'decoupageSource',
+          'source-layer': 'departements',
+          'paint': {
+          'line-color': '#ff69b4',
+          'line-width': 1
+          }
+        })
+      }
     }
   }
 

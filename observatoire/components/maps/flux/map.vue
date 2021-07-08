@@ -3,7 +3,7 @@
     <div v-if="lgAndAbove || screen.isSidebarOpen" class="fr-col-12 fr-col-lg-2 sidebar">
       <MapsFluxSidebar 
         v-if="flux" 
-        v-model="slider" 
+        :value.sync="slider" 
         :time="time"
         :sliderOptions="{'min':0,'max':this.defaultSlider('journeys')[1],'step':1}"
         :journeys="allJourneys"
@@ -215,7 +215,7 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
   public defaultSlider(field:string){
     if(this.flux){
       const values = this.flux!.map((d:FluxData) => d[field])
-      return [Math.min(...values),Math.max(...values)]
+      return [10,Math.max(...values)]
     }else{
       return []
     }

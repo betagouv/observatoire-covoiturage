@@ -5,16 +5,16 @@
         <div class="fr-sidemenu__title">Mois sélectionné :</div>
         <li class="fr-sidemenu__item">
           <select v-model="selectedTime.month" class="fr-select" id="select-month" name="select-month">
-            <option v-for="option in monthList" :value="option.id" :key="option.id">{{option.name}}</option>
+            <option v-for="option in helpers.monthList" :value="option.id" :key="option.id">{{option.name}}</option>
           </select>
           <select v-model="selectedTime.year" class="fr-select" id="select-year" name="select-year">
-            <option v-for="option in yearList" :value="option" :key="option">{{option}}</option>
+            <option v-for="option in helpers.yearList" :value="option" :key="option">{{option}}</option>
           </select>
         </li>
       </ul>
       <ul class="fr-sidemenu__list">
         <div class="fr-sidemenu__title">Nombre de trajets entre :</div>
-        <MapsHelpersSlider v-model="selectedValue" :sliderOptions="{'min':sliderOptions.min,'max':sliderOptions.max,'step':sliderOptions.step}"/>
+        <MapsHelpersSlider :value.sync="selectedValue" :sliderOptions="{'min':sliderOptions.min,'max':sliderOptions.max,'step':sliderOptions.step}"/>
       </ul>
       <p>{{journeys}} trajets dans le registre de preuve de covoiturage (un trajet correspond un couple conducteur-pasager)</p>
       <b-field>
@@ -29,10 +29,16 @@
 <script lang="ts">
 import { Component,mixins,PropSync,Prop,Watch } from 'nuxt-property-decorator'
 import BreakpointsMixin from '../../mixins/breakpoints'
-import TimeMixin from '../../mixins/time'
+import { mapState } from 'vuex'
 
-@Component
-export default class FluxSidebar extends mixins(BreakpointsMixin,TimeMixin){
+@Component({
+  computed:{
+    ...mapState({
+      helpers: 'helpers',
+    })
+  }
+})
+export default class FluxSidebar extends mixins(BreakpointsMixin){
   @PropSync('value', { required: true, type: Array }) selectedValue!: [number,number]
   @PropSync('time', { required: true, type: Object }) selectedTime!: { year: String, month: String }
   @Prop({ required: true }) sliderOptions!: { min: Number, max: Number, step: Number }

@@ -114,4 +114,7 @@ export default class Legend extends mixins(BreakpointsMixin){
       }
     }
   }
+  .upper_legend{
+    bottom: 150px;
+  }
 </style>

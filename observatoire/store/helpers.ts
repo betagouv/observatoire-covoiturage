@@ -1,9 +1,6 @@
-import { Component,Vue } from 'nuxt-property-decorator'
-
-@Component
-export default class TimeMixin extends Vue {
-  yearList=['2021','2020']
-  monthList=[
+export const state = () => ({
+  yearList:['2021','2020'],
+  monthList:[
     {id:'01',name:'Janvier'},
     {id:'02',name:'Février'},
     {id:'03',name:'Mars'},
@@ -16,5 +13,12 @@ export default class TimeMixin extends Vue {
     {id:'10',name:'Octobre'},
     {id:'11',name:'Novembre'},
     {id:'12',name:'Décembre'}
+  ],
+  territories:[
+    {type:'com',name:'Communes'},
+    {type:'epci',name:'EPCI'},
+    {type:'dep',name:'Départements'},
+    {type:'reg',name:'Régions'},
+    {type:'country',name:'Pays'}
   ]
-}
+})
