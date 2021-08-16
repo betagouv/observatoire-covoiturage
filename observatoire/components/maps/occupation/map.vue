@@ -16,11 +16,11 @@
             <div id="map_metropole"></div>
           </div>
           <MapsHelpersLegend :title="legendTitleJourneys" :analyzes="categories" type="proportional_circles" class="upper_legend"/>
-          <MapsHelpersLegend :title="legendTitleOccupation" :analyzes="analyse"/>
+          <MapsHelpersLegend :title="legendTitleOccupation" :analyzes="analyse" type="interval"/>
         </div>
         <div v-if="['all','droms'].includes(map)" :class="{'fr-hidden': screen.isSidebarOpen}" class="fr-col-12 fr-col-lg-3 maps_drom">
           <MapsHelpersLegend v-if="map ==='droms'" :title="legendTitleJourneys" :analyzes="categories" type="proportional_circles"/>
-          <MapsHelpersLegend v-if="map ==='droms'" :title="legendTitleOccupation" :analyzes="analyse"/>
+          <MapsHelpersLegend v-if="map ==='droms'" :title="legendTitleOccupation" :analyzes="analyse" type="interval"/>
           <div class="map_container">
             <div id="map_antilles"></div>
           </div>
@@ -80,12 +80,12 @@ export default class OccupMap extends mixins(BreakpointsMixin,MapsMixin){
     {color:[229, 229, 224],val:'10',width:5,active:true}
   ]
   analyse= [
-    {color:[229, 229, 224],val:2,width:5,active:true},
-    {color:[229, 229, 224],val:2.25,width:5,active:true},
-    {color:[229, 229, 224],val:2.5,width:5,active:true},
-    {color:[229, 229, 224],val:2.75,width:5,active:true},
-    {color:[229, 229, 224],val:3,width:5,active:true},
-    {color:[229, 229, 224],val:4,width:5,active:true},
+    {color:[229, 229, 224],val:2,width:10,active:true},
+    {color:[229, 229, 224],val:2.25,width:10,active:true},
+    {color:[229, 229, 224],val:2.5,width:10,active:true},
+    {color:[229, 229, 224],val:2.75,width:10,active:true},
+    {color:[229, 229, 224],val:3,width:10,active:true},
+    {color:[229, 229, 224],val:4,width:10,active:true},
   ]
   $buefy:any
 

@@ -48,7 +48,7 @@ export default class Legend extends mixins(BreakpointsMixin){
           } else {
             classe = {
               color: this.analyzes[key].color,
-              name : this.analyzes[key].val + " à " + (this.analyzes[Number(key)+1].val-1),
+              name : this.analyzes[key].val + " à " + (this.analyzes[Number(key)+1].val),
               width :  this.analyzes[key].width
             }
           }
@@ -115,6 +115,6 @@ export default class Legend extends mixins(BreakpointsMixin){
     }
   }
   .upper_legend{
-    bottom: 150px;
+    bottom: 250px;
   }
 </style>
