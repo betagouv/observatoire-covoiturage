@@ -80,12 +80,12 @@ export default class OccupMap extends mixins(BreakpointsMixin,MapsMixin){
     {color:[229, 229, 224],val:'10',width:5,active:true}
   ]
   analyse= [
-    {color:[229, 229, 224],val:2,width:10,active:true},
-    {color:[229, 229, 224],val:2.25,width:10,active:true},
-    {color:[229, 229, 224],val:2.5,width:10,active:true},
-    {color:[229, 229, 224],val:2.75,width:10,active:true},
-    {color:[229, 229, 224],val:3,width:10,active:true},
-    {color:[229, 229, 224],val:4,width:10,active:true},
+    {color:[229, 229, 244],val:2,width:10,active:true},
+    {color:[154, 154, 255],val:2.25,width:10,active:true},
+    {color:[127, 127, 200],val:2.5,width:10,active:true},
+    {color:[0, 0, 145],val:2.75,width:10,active:true},
+    {color:[0, 0, 116],val:3,width:10,active:true},
+    {color:[0, 0, 109],val:4,width:10,active:true},
   ]
   $buefy:any
 
