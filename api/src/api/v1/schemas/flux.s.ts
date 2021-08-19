@@ -18,14 +18,14 @@ export default class monthlyFluxSchema {
         description:'Nb de trajets entre communes (tout sens confondus)',
         items: {
           properties: {
-            com1: {type:'string'},
-            l_com1: {type:'string'},
-            com1_lng:{type:'number'},
-            com1_lat:{type:'number'},
-            com2: {type:'string'},
-            l_com2: {type:'string'},
-            com2_lng:{type:'number'},
-            com2_lat:{type:'number'},
+            territory_1: {type:'string'},
+            l_territory_1: {type:'string'},
+            territory_1_lng:{type:'number'},
+            territory_1_lat:{type:'number'},
+            territory_2: {type:'string'},
+            l_territory_2: {type:'string'},
+            territory_2_lng:{type:'number'},
+            territory_2_lat:{type:'number'},
             journeys:{type:'integer'},
             passengers:{type:'integer'}
           }

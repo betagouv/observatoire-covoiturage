@@ -28,8 +28,7 @@
           </b-field>
         </li>
       </ul>
-      <p>{{journeys}} trajets dans le registre de preuve de covoiturage (un trajet correspond un couple conducteur-pasager)</p>
-      <b-field>
+      <p>{{journeys}} voyages dans le registre de preuve de covoiturage (un voyage correspond à un véhicule avec chauffeur et un ou plusieurs passagers)</p>      <b-field>
         <button v-if="!lgAndAbove" class="fr-btn--menu fr-btn" title="Menu" @click="openSidebar">
           Fermer
         </button>

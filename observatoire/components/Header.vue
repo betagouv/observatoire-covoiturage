@@ -64,7 +64,7 @@
                     <ul class="fr-menu__list">
                       <li>
                         <a href="/cartes/flux" class="fr-nav__link" target="_self">
-                          Flux entre communes
+                          Flux de trajets
                         </a>
                       </li>
                       <li>

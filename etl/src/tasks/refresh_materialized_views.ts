@@ -6,8 +6,8 @@ import {execQuery} from '../load'
 async function createMaterializedViews(client:PoolClient){
   const path =join(__dirname, '../database/sql/covoiturage/')
   await Promise.all([
-    execQuery(client,path,'refresh_m_view_journeys_monthly_flux_com.sql'),
     execQuery(client,path,'refresh_m_view_territories_points.sql'),
+    execQuery(client,path,'refresh_m_view_journeys_monthly_flux.sql'),
     execQuery(client,path,'refresh_m_view_journeys_monthly_occupation_rate.sql'),
   ])
 }

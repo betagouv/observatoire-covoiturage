@@ -180,7 +180,7 @@ export default class MapsMixin extends mixins(BreakpointsMixin) {
   }
 
   tooltip(object:any){
-    return `<div class="tooltip-title"><b>${object.l_com1} - ${object.l_com2}</b></div>
+    return `<div class="tooltip-title"><b>${object.l_territory_1} - ${object.l_territory_2}</b></div>
       <div>Trajets : ${object.journeys}</div>
       <div>Passagers : ${object.passengers}</div>`
   }

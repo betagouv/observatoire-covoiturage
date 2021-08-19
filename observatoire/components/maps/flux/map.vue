@@ -5,6 +5,7 @@
         v-if="flux" 
         :value.sync="slider" 
         :time="time"
+        :type.sync="type" 
         :sliderOptions="{'min':0,'max':this.defaultSlider('journeys')[1],'step':1}"
         :journeys="allJourneys"
       />
@@ -78,6 +79,7 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
   deck_guyane=null
   deck_mayotte=null
   deck_reunion=null
+  type='com'
   flux:Array<FluxData>=[]
   filteredFlux:Array<FluxData>=this.flux
   time:{year:string,month:string}={
@@ -87,7 +89,6 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
   analyse:Array<{val:number,color:RegExpMatchArray | Array<number>,width:number}> = []
   slider:Array<number>=[]
   loading=true
-  legendTitle="Nb de trajets entre communes (source RPC)"
   $buefy:any
 
   get allJourneys(){
@@ -96,6 +97,10 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
     } else{
       return 0
     }
+  }
+
+  get legendTitle(){
+    return "Nb de trajets entre "+this.$store.state.helpers.territories.find(t => t.type === this.type).name.toLowerCase()+" (source RPC)" 
   }
 
   public async created() {
@@ -123,6 +128,11 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
     this.getData()
   }
 
+  @Watch('type')
+  onTypeChanged() {
+    this.getData()
+  }
+
   @Watch('screen.window', { deep: true })
   onWindowChanged() {
     for (let territory of this.territories) {
@@ -144,7 +154,7 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
   public async getData(){
     try{
       this.loading = true
-      const response = await axios.get('http://localhost:8080/v1/journeys_monthly_flux?year='+this.time.year+'&month='+this.time.month)
+      const response = await axios.get('http://localhost:8080/v1/journeys_monthly_flux?t='+this.type+'&year='+this.time.year+'&month='+this.time.month)
       if(response.status === 204){
           this.$buefy.snackbar.open({
           message: response.data.message,
@@ -167,7 +177,11 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
   }
 
   public jenksAnalyse(){
-   this.analyse = this.jenks(this.flux!,'journeys',['#000091','#000091','#000091','#000091','#000091','#000091'],[1,3,6,12,24,48])
+   if(this.type !== 'country'){ 
+    this.analyse = this.jenks(this.flux!,'journeys',['#000091','#000091','#000091','#000091','#000091','#000091'],[1,3,6,12,24,48])
+   } else {
+     this.analyse = this.jenks(this.flux!,'journeys',['#000091','#000091','#000091'],[3,12,48])
+   }
   }
 
   public async renderMaps() {
@@ -205,8 +219,8 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
       opacity:0.4,
       pickable: true,
       getWidth: (d:any) => this.classWidth( d.journeys,this.analyse)!,
-      getSourcePosition: (d:any) => [d.com1_lng,d.com1_lat],
-      getTargetPosition: (d:any) => [d.com2_lng,d.com2_lat],
+      getSourcePosition: (d:any) => [d.territory_1_lng,d.territory_1_lat],
+      getTargetPosition: (d:any) => [d.territory_2_lng,d.territory_2_lat],
       getSourceColor: [0,0,145],
       getTargetColor:  [0,0,145],
     })

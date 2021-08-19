@@ -18,14 +18,35 @@ WITH journeys AS (
   FROM covoiturage.registre
 ),
 flux AS (
-  SELECT year, month, 'com'::varchar as type, LEAST(origin, destination) AS territory_1, GREATEST(origin, destination) AS territory_2, sum(journey) AS journeys, sum(passengers) AS passengers
-  FROM journeys 
-  GROUP BY year, month, (LEAST(origin, destination)), (GREATEST(origin, destination))
+  SELECT a.year, a.month, 'com'::varchar as type, LEAST(b.com, c.com) AS territory_1, GREATEST(b.com, c.com) AS territory_2, sum(journey) AS journeys, sum(passengers) AS passengers
+  FROM journeys a
+  LEFT JOIN perimeters.communes_2021 b ON a.origin=b.com
+  LEFT JOIN perimeters.communes_2021 c ON a.destination=c.com
+  WHERE a.year = '2021'
+  GROUP BY year, month, (LEAST(b.com, c.com)), (GREATEST(b.com, c.com))
+  HAVING (LEAST(b.com, c.com)) IS NOT NULL OR (GREATEST(b.com, c.com)) IS NOT NULL
+  UNION
+  SELECT a.year, a.month, 'com'::varchar as type, LEAST(b.com, c.com) AS territory_1, GREATEST(b.com, c.com) AS territory_2, sum(journey) AS journeys, sum(passengers) AS passengers
+  FROM journeys a
+  LEFT JOIN perimeters.communes_2020 b ON a.origin=b.com
+  LEFT JOIN perimeters.communes_2020 c ON a.destination=c.com
+  WHERE a.year = '2020'
+  GROUP BY year, month, (LEAST(b.com, c.com)), (GREATEST(b.com, c.com))
+  HAVING (LEAST(b.com, c.com)) IS NOT NULL OR (GREATEST(b.com, c.com)) IS NOT NULL
   UNION
   SELECT a.year, a.month, 'epci'::varchar as type, LEAST(b.epci, c.epci) AS territory_1, GREATEST(b.epci, c.epci) AS territory_2, sum(journey) AS journeys, sum(passengers) AS passengers
   FROM journeys a
   LEFT JOIN perimeters.communes_2021 b ON a.origin=b.com
   LEFT JOIN perimeters.communes_2021 c ON a.destination=c.com
+  WHERE a.year = '2021'
+  GROUP BY year, month, (LEAST(b.epci, c.epci)), (GREATEST(b.epci, c.epci))
+  HAVING (LEAST(b.epci, c.epci)) IS NOT NULL OR (GREATEST(b.epci, c.epci)) IS NOT NULL
+  UNION
+  SELECT a.year, a.month, 'epci'::varchar as type, LEAST(b.epci, c.epci) AS territory_1, GREATEST(b.epci, c.epci) AS territory_2, sum(journey) AS journeys, sum(passengers) AS passengers
+  FROM journeys a
+  LEFT JOIN perimeters.communes_2020 b ON a.origin=b.com
+  LEFT JOIN perimeters.communes_2020 c ON a.destination=c.com
+  WHERE a.year = '2020'
   GROUP BY year, month, (LEAST(b.epci, c.epci)), (GREATEST(b.epci, c.epci))
   HAVING (LEAST(b.epci, c.epci)) IS NOT NULL OR (GREATEST(b.epci, c.epci)) IS NOT NULL
   UNION
@@ -33,6 +54,15 @@ flux AS (
   FROM journeys a
   LEFT JOIN perimeters.communes_2021 b ON a.origin=b.com
   LEFT JOIN perimeters.communes_2021 c ON a.destination=c.com
+  WHERE a.year = '2021'
+  GROUP BY year, month, (LEAST(b.dep, c.dep)), (GREATEST(b.dep, c.dep))
+  HAVING (LEAST(b.dep, c.dep)) IS NOT NULL OR (GREATEST(b.dep, c.dep)) IS NOT NULL
+  UNION
+  SELECT a.year, a.month, 'dep'::varchar as type, LEAST(b.dep, c.dep) AS territory_1, GREATEST(b.dep, c.dep) AS territory_2, sum(journey) AS journeys, sum(passengers) AS passengers
+  FROM journeys a
+  LEFT JOIN perimeters.communes_2020 b ON a.origin=b.com
+  LEFT JOIN perimeters.communes_2020 c ON a.destination=c.com
+  WHERE a.year = '2020'
   GROUP BY year, month, (LEAST(b.dep, c.dep)), (GREATEST(b.dep, c.dep))
   HAVING (LEAST(b.dep, c.dep)) IS NOT NULL OR (GREATEST(b.dep, c.dep)) IS NOT NULL
   UNION
@@ -40,6 +70,15 @@ flux AS (
   FROM journeys a
   LEFT JOIN perimeters.communes_2021 b ON a.origin=b.com
   LEFT JOIN perimeters.communes_2021 c ON a.destination=c.com
+  WHERE a.year = '2021'
+  GROUP BY year, month, (LEAST(b.reg, c.reg)), (GREATEST(b.reg, c.reg))
+  HAVING (LEAST(b.reg, c.reg)) IS NOT NULL OR (GREATEST(b.reg, c.reg)) IS NOT NULL
+  UNION
+  SELECT a.year, a.month, 'reg'::varchar as type, LEAST(b.reg, c.reg) AS territory_1, GREATEST(b.reg, c.reg) AS territory_2, sum(journey) AS journeys, sum(passengers) AS passengers
+  FROM journeys a
+  LEFT JOIN perimeters.communes_2020 b ON a.origin=b.com
+  LEFT JOIN perimeters.communes_2020 c ON a.destination=c.com
+  WHERE a.year = '2020'
   GROUP BY year, month, (LEAST(b.reg, c.reg)), (GREATEST(b.reg, c.reg))
   HAVING (LEAST(b.reg, c.reg)) IS NOT NULL OR (GREATEST(b.reg, c.reg)) IS NOT NULL
   UNION
@@ -50,6 +89,6 @@ flux AS (
   LEFT JOIN perimeters.countries c ON a.destination=c.insee_cog
   GROUP BY year, month, LEAST(COALESCE(b.insee_cog,'XXXXX'), COALESCE(c.insee_cog,'XXXXX')), GREATEST(COALESCE(b.insee_cog,'XXXXX'), COALESCE(c.insee_cog,'XXXXX'))
 )
-SELECT row_number() OVER (ORDER BY year, month, type, territory_1, territory_2) AS id,* from flux 
+SELECT row_number() OVER (ORDER BY year, month, type, territory_1, territory_2) AS id,* from flux ;
 
 CREATE INDEX IF NOT EXISTS journeys_monthly_flux_id_index ON covoiturage.journeys_monthly_flux USING btree (id);
