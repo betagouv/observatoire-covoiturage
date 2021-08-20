@@ -22,4 +22,43 @@ export default class territorySchema {
       }
     }
   }
+
+  static territoryIndicators = {
+    tags: ['territories'],
+    querystring: {
+      territory: {
+        type: 'string',
+        description: 'territory id'
+      },
+      t: {
+        type: 'string',
+        description: 'type of territories'
+      },
+      year: {
+        type: 'string',
+        description: 'Year (YYYY)'
+      },
+      month: {
+        type: 'string',
+        description: 'Month (MM)'
+      }
+    },
+    response: {
+      200: {
+        type: 'array',
+        items: {
+          properties: {
+            year: {type:'string'},
+            month: {type:'string'},
+            territory: {type:'string'},
+            l_territory: {type:'string'},
+            journeys: {type:'integer'},
+            occupation_rate: {type:'number'},
+            trips: {type:'integer'},
+            nb_aires: {type:'integer'}
+          }
+        }
+      }
+    }
+  }
 }

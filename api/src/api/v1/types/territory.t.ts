@@ -4,6 +4,15 @@ declare module territoryTypes {
       year:string,
     }
   }
+
+  interface indicators {
+    Querystring: {
+      territory:string,
+      t:string,
+      year:string,
+      month:string
+    }
+  }
 }
 
 export default territoryTypes

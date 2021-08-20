@@ -6,6 +6,7 @@ import territoryTypes from '../types/territory.t'
 
 const routes:FastifyPluginAsync = async (server) => {
   server.get<territoryTypes.list>('/territories',{schema:territorySchema.territoriesList}, territoryHandler.territoriesList)
+  server.get<territoryTypes.indicators>('/indicators',{schema:territorySchema.territoryIndicators}, territoryHandler.indicators)
 }
 
 export default routes
