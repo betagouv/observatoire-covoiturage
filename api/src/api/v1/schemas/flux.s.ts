@@ -3,6 +3,10 @@ export default class monthlyFluxSchema {
   static journeysMonthly = {
     tags: ['flux'],
     querystring: {
+      t: {
+        type: 'string',
+        description: 'type of territories'
+      },
       year: {
         type: 'string',
         description: 'Year (YYYY)'

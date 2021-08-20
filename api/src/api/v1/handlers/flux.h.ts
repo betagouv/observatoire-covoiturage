@@ -4,7 +4,7 @@ import fluxTypes from '../types/flux.t'
 export default class fluxHandler {
   
   static pg: FastifyInstance["pg"]  
-  // Retourne les données de la vue matérialisée covoiturage.journeys_monthly_flux pour le mois et l'année en paramètres
+  // Retourne les données de la vue matérialisée covoiturage.journeys_monthly_flux pour le mois et l'année et le type de territoire en paramètres
   static async journeysMonthly(request: FastifyRequest<fluxTypes.monthly>, reply: FastifyReply):Promise<void>{
     try {
       const client = await this.pg.connect()
