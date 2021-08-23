@@ -57,6 +57,8 @@ interface OccupData {
   geom:{properties:{ type:string,coordinates:[number,number]}}
 }
 
+interface Time {year:string,month:string}
+
 @Component
 export default class OccupMap extends mixins(BreakpointsMixin,MapsMixin){
   @Prop({ required: true }) map!: string
@@ -66,7 +68,7 @@ export default class OccupMap extends mixins(BreakpointsMixin,MapsMixin){
   map_guyane:any=null
   map_mayotte:any=null
   map_reunion:any=null
-  time:{year:string,month:string}={
+  time:Time={
     year:'',
     month:''
   }
@@ -120,8 +122,10 @@ export default class OccupMap extends mixins(BreakpointsMixin,MapsMixin){
   }
   
   @Watch('time', { deep: true })
-  onTimeChanged() {
-    this.getData()
+  onTimeChanged(val:Time, oldval:Time) {
+    if (oldval.year !== '' || oldval.month !== ''){
+      this.getData()
+    }
   }
   
   @Watch('type')

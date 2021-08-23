@@ -1,8 +1,10 @@
 @import "@gouvfr/dsfr/dist/css/dsfr.css";
 .hero{
   background-color: #000091;
-  color: #ffffff;
   padding: 2rem;
+  h1{
+    color: #ffffff;
+  }
 }
 .home-section{
   margin:2rem 0;

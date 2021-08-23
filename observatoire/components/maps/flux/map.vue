@@ -65,6 +65,8 @@ interface FluxData {
   passengers:number
 }
 
+interface Time {year:string,month:string}
+
 @Component
 export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
   @Prop({ required: true }) map!: string
@@ -82,7 +84,7 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
   type='com'
   flux:Array<FluxData>=[]
   filteredFlux:Array<FluxData>=this.flux
-  time:{year:string,month:string}={
+  time:Time={
     year:'',
     month:''
   }
@@ -124,8 +126,10 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
   }
   
   @Watch('time', { deep: true })
-  onTimeChanged() {
-    this.getData()
+  onTimeChanged(val:Time, oldval:Time) {
+    if (oldval.year !== '' || oldval.month !== ''){
+      this.getData()
+    }
   }
 
   @Watch('type')
