@@ -61,4 +61,40 @@ export default class territorySchema {
       }
     }
   }
+
+  static territoryBestJourneys = {
+    tags: ['territories'],
+    querystring: {
+      territory: {
+        type: 'string',
+        description: 'territory id'
+      },
+      t: {
+        type: 'string',
+        description: 'type of territories'
+      },
+      year: {
+        type: 'string',
+        description: 'Year (YYYY)'
+      },
+      month: {
+        type: 'string',
+        description: 'Month (MM)'
+      }
+    },
+    response: {
+      200: {
+        type: 'array',
+        items: {
+          properties: {
+            territory_1: {type:'string'},
+            l_territory_1: {type:'string'},
+            territory_2: {type:'string'},
+            l_territory_2: {type:'string'},
+            journeys: {type:'integer'}
+          }
+        }
+      }
+    }
+  }
 }

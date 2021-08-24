@@ -29,14 +29,7 @@
     </div>
   </div>
   <div class="fr-section--banner hero">
-    <div class="fr-container">
-      <div class="fr-grid-row fr-grid-row--gutters">
-        <div class="fr-col-12">
-          <h1 class="h-text-center">Indicateurs</h1>
-          <Indicators />
-        </div>
-      </div>
-    </div>
+    <Indicators />
   </div>
 </div>
 </template>
