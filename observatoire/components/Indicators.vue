@@ -7,80 +7,104 @@
     </div>
     <div class="fr-grid-row fr-grid-row--gutters">
       <div class="fr-col">
-        <div class="fr-tile fr-tile--horizontal">
-          <div class="fr-tile__body">
-              <h4 class="fr-tile__title">
-                  {{data.journeys.toLocaleString()}}
-              </h4>
-              <p class="fr-tile__desc">trajets réalisés</p>
+        <div class="fr-grid-row">
+          <div class="fr-col">
+            <div class="fr-tile">
+              <div class="fr-tile__body">
+                <ul class="fr-btns-group fr-btns-group--inline fr-btns-group--center">
+                  <li>
+                      <button class="fr-btn" @click="changeDate">
+                          Changer de date
+                      </button>
+                  </li>
+                  <li>
+                      <button class="fr-btn fr-btn--secondary">
+                          Changer de territoire
+                      </button>
+                  </li>
+                </ul>
+                  <select v-if="changeDateOpen === true" v-model="time.month" class="fr-select" id="select-month" name="select-month">
+                    <option v-for="option in helpers.monthList" :value="option.id" :key="option.id">{{option.name}}</option>
+                  </select>
+                  <select v-if="changeDateOpen === true" v-model="time.year" class="fr-select" id="select-year" name="select-year">
+                    <option v-for="option in helpers.yearList" :value="option" :key="option">{{option}}</option>
+                  </select>
+              </div>
+            </div>
           </div>
-          <div class="fr-tile__img">
-            <img src="/images/Trajet.svg" alt=""/>
+        </div>
+        <div class="fr-grid-row">
+          <div class="fr-col">
+            <div class="fr-tile">
+              <div class="fr-tile__body">
+                  <h4 class="fr-tile__title">
+                      {{data.journeys.toLocaleString()}}
+                  </h4>
+                  <p class="fr-tile__desc">trajets réalisés</p>
+              </div>
+              <div class="fr-tile__img">
+                <img src="/images/Trajet.svg" alt=""/>
+              </div>
+            </div>
+          </div>
+          <div class="fr-col">
+            <div class="fr-tile">
+              <div class="fr-tile__body">
+                  <h4 class="fr-tile__title">
+                      {{data.trips.toLocaleString()}}
+                  </h4>
+                  <p class="fr-tile__desc">voyages réalisés</p>
+              </div>
+              <div class="fr-tile__img">
+                <img src="/images/Covoiturage.svg" alt=""/>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="fr-grid-row">
+          <div class="fr-col">
+            <div class="fr-tile">
+              <div class="fr-tile__body">
+                  <h4 class="fr-tile__title">
+                      {{data.occupation_rate.toLocaleString()}}
+                  </h4>
+                  <p class="fr-tile__desc">personnes par véhicule</p>
+              </div>
+              <div class="fr-tile__img">
+                <img src="/images/groupe.svg" alt=""/>
+              </div>
+            </div>
+          </div>
+          <div class="fr-col">
+            <div class="fr-tile">
+              <div class="fr-tile__body">
+                  <h4 class="fr-tile__title">
+                      {{data.nb_aires.toLocaleString()}}
+                  </h4>
+                  <p class="fr-tile__desc">aires de covoiturage</p>
+              </div>
+              <div class="fr-tile__img">
+                <img src="/images/Parking.svg" alt=""/>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="fr-col">
-        <div class="fr-tile fr-tile--horizontal">
-          <div class="fr-tile__body">
-              <h4 class="fr-tile__title">
-                  {{data.trips.toLocaleString()}}
-              </h4>
-              <p class="fr-tile__desc">voyages réalisés</p>
-          </div>
-          <div class="fr-tile__img">
-            <img src="/images/Covoiturage.svg" alt=""/>
-          </div>
-        </div>
-      </div>
-      <div class="fr-col">
-        <div class="fr-tile fr-tile--horizontal">
-          <div class="fr-tile__body">
-              <h4 class="fr-tile__title">
-                  {{data.occupation_rate.toLocaleString()}}
-              </h4>
-              <p class="fr-tile__desc">personnes par véhicule</p>
-          </div>
-          <div class="fr-tile__img">
-            <img src="/images/groupe.svg" alt=""/>
-          </div>
-        </div>
-      </div>
-      <div class="fr-col">
-        <div class="fr-tile fr-tile--horizontal">
-          <div class="fr-tile__body">
-              <h4 class="fr-tile__title">
-                  {{data.nb_aires.toLocaleString()}}
-              </h4>
-              <p class="fr-tile__desc">aires de covoiturage</p>
-          </div>
-          <div class="fr-tile__img">
-            <img src="/images/Parking.svg" alt=""/>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div v-if="best_journeys.length > 0" class="fr-grid-row fr-grid-row--gutters">
-      <div class="fr-col">
+      <div class="fr-col" v-if="best_journeys.length > 0">
         <div class="fr-tile">
           <div class="fr-tile__body">
             <div class="fr-table fr-table--layout-fixed">
               <table> 
-                <caption>10 trajets les plus covoiturés (tout sens confondus):</caption>
+                <caption>Les 10 trajets les plus covoiturés (tous sens confondus):</caption>
                 <thead>
                   <tr>
-                    <th scope="col">Code INSEE territoire 1</th>
-                    <th scope="col">Nom territoire 1</th>
-                    <th scope="col">Code INSEE territoire 2</th>
-                    <th scope="col">Nom territoire 2</th>
-                    <th scope="col">Nombre de trajets</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Nombre</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="(line,index) in best_journeys" :key="index">
-                    <td>{{line.territory_1}}</td>
-                    <td>{{line.l_territory_1}}</td>
-                    <td>{{line.territory_2}}</td>
-                    <td>{{line.l_territory_2}}</td>
+                    <td>{{line.l_territory_1}} - {{line.l_territory_2}}</td>
                     <td>{{line.journeys.toLocaleString()}}</td>
                   </tr>
                 </tbody>
@@ -94,8 +118,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'nuxt-property-decorator'
+import { Component, Watch, Vue } from 'nuxt-property-decorator'
 import axios from 'axios'
+import { mapState } from 'vuex'
 
 interface IndicatorsData {
   year: string,
@@ -110,13 +135,23 @@ interface IndicatorsData {
 interface Time {year:string,month:string}
 
 
-@Component
+@Component({
+  computed:{
+    ...mapState({
+      helpers: 'helpers',
+    })
+  }
+})
 export default class Indicators extends Vue{
-  @Prop({default:{year:'',month:''}}) time!:Time
   $buefy:any
   loading=true
+  changeDateOpen=false
   type='country'
   territory='XXXXX'
+  time:Time={
+    year:'',
+    month:''
+  }
   data:IndicatorsData={
     year: '',
     month: '',
@@ -135,6 +170,15 @@ export default class Indicators extends Vue{
     await this.getBestJourneys()
   }
 
+  @Watch('time', { deep: true })
+  onTimeChanged(val:Time, oldval:Time) {
+    if (oldval.year !== '' || oldval.month !== ''){
+      this.getData()
+      this.getBestJourneys()
+      this.changeDate()
+    }
+  }
+
   public async getTime(){
     if (this.time.year === '' || this.time.month === ''){
       const response = await axios.get('http://localhost:8080/v1/journeys_monthly_flux/last')
@@ -143,7 +187,6 @@ export default class Indicators extends Vue{
   }
   public async getData(){
     try{
-      this.loading = true
       const response = await axios.get('http://localhost:8080/v1/indicators?territory='+this.territory+'&t='+this.type+'&year='+this.time.year+'&month='+this.time.month)
       if(response.status === 204){
           this.$buefy.snackbar.open({
@@ -154,14 +197,22 @@ export default class Indicators extends Vue{
       if(response.status === 200){
         this.data = response.data[0]
       }
-      this.loading = false
     }
     catch(error) {
       this.$buefy.snackbar.open({
         message: error.response.data.message,
         actionText:null
       })
-      this.loading = false
+      this.data = {
+        year: this.time.year,
+        month: this.time.month,
+        territory: this.data.territory,
+        l_territory:this.data.l_territory,
+        journeys:0,
+        occupation_rate:0,
+        trips:0,
+        nb_aires:0,
+      }
     }
   }
 
@@ -183,8 +234,22 @@ export default class Indicators extends Vue{
         message: error.response.data.message,
         actionText:null
       })
+      this.best_journeys = []
     }
+  }
+  public changeDate(){
+    this.changeDateOpen = !this.changeDateOpen
   }
 }
 
 </script>
+<style scoped>
+.fr-table td, .fr-table th{
+  text-align: center;
+  line-height: 1rem;
+  padding: 0.5rem;
+}
+.fr-modal{
+  z-index: 1;
+}
+</style>
