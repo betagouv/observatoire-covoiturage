@@ -13,22 +13,35 @@
               <div class="fr-tile__body">
                 <ul class="fr-btns-group fr-btns-group--inline fr-btns-group--center">
                   <li>
-                      <button class="fr-btn" @click="changeDate">
-                          Changer de date
-                      </button>
+                    <button class="fr-btn" @click="changeDate">
+                      Changer de date
+                    </button>
                   </li>
                   <li>
-                      <button class="fr-btn fr-btn--secondary">
-                          Changer de territoire
-                      </button>
+                    <button class="fr-btn" @click="changeTerritory">
+                      Changer de territoire
+                    </button>
                   </li>
                 </ul>
-                  <select v-if="changeDateOpen === true" v-model="time.month" class="fr-select" id="select-month" name="select-month">
+                <div v-if="changeDateOpen === true" class="fr-select-group">
+                  <label class="fr-label" for="select-hint">Sélectionner un mois</label>
+                  <select v-model="time.month" class="fr-select" id="select-month" name="select-month">
                     <option v-for="option in helpers.monthList" :value="option.id" :key="option.id">{{option.name}}</option>
                   </select>
+                </div>
+                <div v-if="changeDateOpen === true" class="fr-select-group">
+                  <label class="fr-label" for="select-hint">Sélectionner une année</label>
                   <select v-if="changeDateOpen === true" v-model="time.year" class="fr-select" id="select-year" name="select-year">
                     <option v-for="option in helpers.yearList" :value="option" :key="option">{{option}}</option>
                   </select>
+                </div>
+                <div v-if="changeTerritoryOpen === true" class="fr-select-group">
+                  <label class="fr-label" for="select-hint">Sélectionner le type de territoire</label>
+                  <select v-model="type" class="fr-select" id="select-type" name="select-type">
+                    <option v-for="option in helpers.territories" :value="option.type" :key="option.type">{{option.name}}</option>
+                  </select>
+                </div>
+                <SearchTerritory v-if="changeTerritoryOpen === true" :year="time.year" :type="type" @changeTerritory="value => this.territory = value"/>
               </div>
             </div>
           </div>
@@ -146,6 +159,7 @@ export default class Indicators extends Vue{
   $buefy:any
   loading=true
   changeDateOpen=false
+  changeTerritoryOpen=false
   type='country'
   territory='XXXXX'
   time:Time={
@@ -175,9 +189,16 @@ export default class Indicators extends Vue{
     if (oldval.year !== '' || oldval.month !== ''){
       this.getData()
       this.getBestJourneys()
-      this.changeDate()
     }
   }
+
+  @Watch('territory')
+  onTerritoryChanged() {
+      this.getData()
+      this.getBestJourneys() 
+  }
+
+
 
   public async getTime(){
     if (this.time.year === '' || this.time.month === ''){
@@ -185,6 +206,7 @@ export default class Indicators extends Vue{
       this.time = response.data
     }
   }
+  
   public async getData(){
     try{
       const response = await axios.get('http://localhost:8080/v1/indicators?territory='+this.territory+'&t='+this.type+'&year='+this.time.year+'&month='+this.time.month)
@@ -237,8 +259,15 @@ export default class Indicators extends Vue{
       this.best_journeys = []
     }
   }
+
   public changeDate(){
     this.changeDateOpen = !this.changeDateOpen
+    this.changeTerritoryOpen = false
+  }
+
+  public changeTerritory(){
+    this.changeTerritoryOpen = !this.changeTerritoryOpen
+    this.changeDateOpen = false
   }
 }
 

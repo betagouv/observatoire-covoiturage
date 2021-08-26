@@ -29,14 +29,14 @@ export default class territoryHandler {
   static async indicators(request: FastifyRequest<territoryTypes.indicators>, reply: FastifyReply):Promise<void>{
     try {
       const client = await this.pg.connect()
-      const sql = `SELECT b.year,b.month,b.territory,c.l_territory,sum(a.journeys) as journeys,sum(a.passengers) as passengers, b.journeys as trips,b.occupation_rate,d.nb_aires FROM covoiturage.journeys_monthly_flux a
-      LEFT JOIN covoiturage.journeys_monthly_occupation_rate b on (a.territory_1 = b.territory or a.territory_2 = b.territory) and a.type = b.type and a.year = b.year and a.month = b.month
-      LEFT JOIN perimeters.territories_points c on b.territory = c.territory and b.year = c.year
-      LEFT JOIN (SELECT '${request.query.territory}' as territory, count(a.id) as nb_aires FROM covoiturage.aires a 
-      LEFT JOIN (select *,'XXXXX' as country FROM perimeters.communes_${request.query.year}) b on a.insee = b.com
-      where b.country = '${request.query.territory}') d on b.territory = d.territory 
-      where b.territory = '${request.query.territory}' and a.type = '${request.query.t}' and a.year = '${request.query.year}' and a.month = '${request.query.month}'
-      group by b.year,b.month,b.territory,c.l_territory,b.journeys,b.occupation_rate,d.nb_aires;`
+      const sql = `SELECT b.year,b.month,b.territory,c.l_territory,sum(a.journeys) AS journeys,sum(a.passengers) AS passengers, b.journeys AS trips,b.occupation_rate,d.nb_aires FROM covoiturage.journeys_monthly_flux a
+      LEFT JOIN covoiturage.journeys_monthly_occupation_rate b ON (a.territory_1 = b.territory OR a.territory_2 = b.territory) AND a.type = b.type AND a.year = b.year AND a.month = b.month
+      LEFT JOIN perimeters.territories_points c ON b.territory = c.territory AND b.year = c.year AND b.type = c.type
+      LEFT JOIN (SELECT '${request.query.territory}' AS territory, count(a.id) AS nb_aires FROM covoiturage.aires a 
+      LEFT JOIN (select *,'XXXXX' AS country FROM perimeters.communes_${request.query.year}) b ON a.insee = b.com
+      WHERE b.${request.query.t} = '${request.query.territory}') d ON b.territory = d.territory 
+      WHERE b.territory = '${request.query.territory}' AND a.type = '${request.query.t}' AND a.year = '${request.query.year}' AND a.month = '${request.query.month}'
+      GROUP BY b.year,b.month,b.territory,c.l_territory,b.journeys,b.occupation_rate,d.nb_aires;`
       const result = await client.query(sql)
       if (!result.rows) {
         reply.code(404).send(new Error('page not found'))
@@ -59,8 +59,8 @@ export default class territoryHandler {
       LEFT JOIN perimeters.territories_points b ON a.year = b.year AND a.type = b.type AND a.territory_1 = b.territory
       LEFT JOIN perimeters.territories_points c ON a.year = c.year AND a.type = c.type AND a.territory_2 = c.territory
       WHERE a.year = '${request.query.year}' AND a.month = '${request.query.month}'
-      AND (a.territory_1 IN (SELECT com FROM (SELECT *,'XXXXX' as country FROM perimeters.communes_${request.query.year}) t WHERE ${request.query.t} = '${request.query.territory}') 
-      OR a.territory_2 IN (SELECT com FROM (SELECT *,'XXXXX' as country FROM perimeters.communes_${request.query.year}) t WHERE ${request.query.t} = '${request.query.territory}'))
+      AND (a.territory_1 IN (SELECT com FROM (SELECT *,'XXXXX' AS country FROM perimeters.communes_${request.query.year}) t WHERE ${request.query.t} = '${request.query.territory}') 
+      OR a.territory_2 IN (SELECT com FROM (SELECT *,'XXXXX' AS country FROM perimeters.communes_${request.query.year}) t WHERE ${request.query.t} = '${request.query.territory}'))
       ORDER BY journeys DESC
       LIMIT 10;`
       const result = await client.query(sql)

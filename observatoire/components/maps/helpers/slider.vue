@@ -9,8 +9,9 @@
     >
     </b-slider>
     <b-field>
+      <span class="separator"> de </span>
       <b-numberinput v-model="selectedValue[0]" size="is-small" :controls="false"/>
-      <span class="separator"> et </span>
+      <span class="separator"> à </span>
       <b-numberinput v-model="selectedValue[1]" size="is-small" :controls="false"/>
     </b-field>
   </div>

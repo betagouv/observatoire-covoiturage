@@ -29,10 +29,12 @@
               <nuxt-content :document="actualite" />
             </div>
           </article>
-          <div class="fr-col-12">
-            <Prev-next :prev="prev" :next="next" />
-          </div>
         </div>
+      </div>
+    </div>
+    <div class="fr-grid-row">
+      <div class="fr-col-12">
+        <Prev-next :prev="prev" :next="next" />
       </div>
     </div>
   </div>

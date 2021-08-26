@@ -27,3 +27,18 @@
 .fr-sidemenu__list{
   padding: 0;
 }
+.fr-tile__body{
+  align-items: inherit;
+  justify-content:inherit;
+}
+.fr-select-group{
+  text-align: left;
+}
+.autocomplete{
+  @import "bulma/sass/utilities/_all.sass";
+  // Set your colors
+  $primary: #000091;
+  $link: $primary;
+  @import "bulma";
+  @import "buefy/src/scss/buefy";
+}
