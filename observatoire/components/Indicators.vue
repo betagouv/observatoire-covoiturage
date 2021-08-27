@@ -198,8 +198,6 @@ export default class Indicators extends Vue{
       this.getBestJourneys() 
   }
 
-
-
   public async getTime(){
     if (this.time.year === '' || this.time.month === ''){
       const response = await axios.get('http://localhost:8080/v1/journeys_monthly_flux/last')
@@ -277,8 +275,5 @@ export default class Indicators extends Vue{
   text-align: center;
   line-height: 1rem;
   padding: 0.5rem;
-}
-.fr-modal{
-  z-index: 1;
 }
 </style>

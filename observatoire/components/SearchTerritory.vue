@@ -22,13 +22,18 @@
 import { Component, Prop, Watch,  Vue } from 'nuxt-property-decorator'
 import axios from 'axios'
 
+interface Territory{
+  territory:string,
+  l_territory:string,
+  type:string
+}
 @Component
 export default class SearchTerritory extends Vue{
   @Prop({ required: true }) year!: string
   @Prop({ required: true }) type!: string
-  territories=[]
+  territories:Array<Territory>=[]
   searchfield =''
-  selectedTerritory = null
+  selectedTerritory:Territory | null = null
   results = null
 
   get filteredTeritories() {
