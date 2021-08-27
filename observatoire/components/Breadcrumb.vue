@@ -6,10 +6,13 @@
           <li>
               <a class="fr-breadcrumb__link" href="/">Accueil</a>
           </li>
-          <li>
+          <li v-if="taxonomy || current">
             <a :href="`/${type.slug}`" class="fr-breadcrumb__link">
               {{type.name}}
             </a>
+          </li>
+          <li v-else>
+            <a class="fr-breadcrumb__link" aria-current="page">{{type.name}}</a>
           </li>
           <li v-if="taxonomy">
             <a :href="`/${type.slug}/${taxonomy.slug}`" class="fr-breadcrumb__link">
