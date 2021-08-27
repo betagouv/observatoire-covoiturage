@@ -18,7 +18,7 @@
     <div class="fr-container">
       <div class="fr-grid-row">
         <div class="fr-col-lg-10 fr-col-offset-lg-1">
-          <ContentList title="A la une" :contents="actualites" :taxonomies="categories" />
+          <ContentList title="A la une" :contents="actualites" :taxonomies="taxonomies" />
         </div>
       </div>
       <div class="fr-grid-row">
@@ -44,7 +44,7 @@ export default class Home extends Vue{
   async asyncData({ $content }) {
     const perPage = 3
     const actualites = await $content('actualites')
-    .only(['title', 'description', 'img', 'slug','categories','dir','createdAt'])
+    .only(['title', 'description', 'img', 'slug','categories','themes','dir','createdAt'])
     .sortBy('createdAt', 'asc')
     .limit(perPage)
     .fetch()
@@ -53,7 +53,13 @@ export default class Home extends Vue{
     .only(['name', 'slug'])
     .fetch()
 
-    return { actualites, categories }
+    const themes = await $content('themes')
+    .only(['name', 'slug'])
+    .fetch()
+
+    const taxonomies = {'categories':categories,'themes':themes}
+
+    return { actualites, taxonomies }
   }
 }
 </script>

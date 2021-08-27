@@ -6,7 +6,7 @@
           <Breadcrumb :type="type" />
         </div>
         <div class="fr-col-lg-10 fr-col-offset-lg-1">
-          <ContentList title="S'informer" :contents="ressources" :taxonomies="themes" />
+          <ContentList title="S'informer" :contents="ressources" :taxonomies="taxonomies" />
         </div>
         <div class="fr-col-12">
           <Pagination :lastPage="lastPage" />
@@ -26,7 +26,7 @@ export default class Ressources extends Vue{
   async asyncData({ $content }) {
     const perPage = 3
     const ressources = await $content('ressources')
-    .only(['title', 'description', 'img', 'slug','themes','dir','createdAt'])
+    .only(['title', 'description', 'img', 'slug','categories','themes','dir','createdAt'])
     .sortBy('createdAt', 'asc')
     .limit(perPage)
     .fetch()
@@ -35,11 +35,17 @@ export default class Ressources extends Vue{
     const totalRessources = allRessources.length
     const lastPage = Math.ceil(totalRessources / perPage)
 
+    const categories = await $content('categories')
+    .only(['name', 'slug'])
+    .fetch()
+
     const themes = await $content('themes')
     .only(['name', 'slug'])
     .fetch()
 
-    return { ressources, themes, lastPage }
+    const taxonomies = {'categories':categories,'themes':themes}
+
+    return { ressources, taxonomies , lastPage }
   }
 }
 </script>

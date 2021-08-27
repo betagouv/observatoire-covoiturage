@@ -6,29 +6,29 @@
     <div class="fr-col-md-4" v-for="content of contents" :key="content.slug">
       <div class="fr-card fr-enlarge-link">
         <div class="fr-card__body">
-          <p v-if="content.categories" class="fr-card__detail">
+          <p class="fr-card__detail">
             <span>Publié le {{ formatDate(content.createdAt) }} </span>
-            <span v-if="taxonomies && content.categories.length > 1">dans les catégories:</span>
-            <span v-else-if="taxonomies" >dans la catégorie:</span>
-            <span v-for="(taxonomy,index) in content.categories" :key="index">
-              <span v-if="taxonomies && index != 0">, </span>
-              <span v-if="taxonomies">{{taxonomies.find(c => c.slug === taxonomy).name}}</span>
-            </span>
-          </p>
-          <p v-if="content.themes" class="fr-card__detail">
-            <span>Publié le {{ formatDate(content.createdAt) }} </span>
-            <span v-if="taxonomies && content.themes.length > 1">dans les thèmes:</span>
-            <span v-else-if="taxonomies" >dans le thème:</span>
-            <span v-for="(taxonomy,index) in content.themes" :key="index">
-              <span v-if="taxonomies && index != 0">, </span>
-              <span v-if="taxonomies">{{taxonomies.find(c => c.slug === taxonomy).name}}</span>
+            <span v-if="taxonomies">
+              <span v-if="content.categories && content.categories.length > 1">dans les catégories:</span>
+              <span v-else-if="content.categories" >dans la catégorie:</span>
+              <span v-for="(taxonomy,index) in content.categories" :key="index">
+                <span v-if="content.categories && index != 0">, </span>
+                <span v-if="content.categories">{{taxonomies.categories.find(t => t.slug === taxonomy).name}}</span>
+              </span>
+              <span v-if="content.categories && content.themes"> et </span>
+              <span v-if="content.themes && content.themes.length > 1">dans les thèmes:</span>
+              <span v-else-if="content.themes" >dans le thème:</span>
+              <span v-for="(taxonomy,index) in content.themes" :key="index">
+                <span v-if="content.themes && index != 0">, </span>
+                <span v-if="content.themes">{{taxonomies.themes.find(t => t.slug === taxonomy).name}}</span>
+              </span>
             </span>
           </p>
           <h4 class="fr-card__title">
-            <a v-if="content.categories" :href="`${content.dir}/${content.categories[0]}/${content.slug}`" class="fr-card__link">
+            <a v-if="$route.path.indexOf('categorie') >= 0" :href="`${content.dir}/categorie/${content.categories[0]}/${content.slug}`" class="fr-card__link">
               {{ content.title }}
             </a>
-            <a v-if="content.themes" :href="`${content.dir}/${content.themes[0]}/${content.slug}`" class="fr-card__link">
+            <a v-else :href="`${content.dir}/theme/${content.themes[0]}/${content.slug}`" class="fr-card__link">
               {{ content.title }}
             </a>
           </h4>
@@ -56,6 +56,5 @@ export default class ContentList extends Vue{
   formatDate(date:string) {
     return new Date(date).toLocaleDateString('fr-FR')
   }
-
 }
 </script>

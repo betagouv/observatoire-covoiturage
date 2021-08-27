@@ -6,7 +6,7 @@
            <Breadcrumb :type="type" :current="theme[0].name"/>
         </div>
         <div class="fr-col-lg-10 fr-col-offset-lg-1">
-          <ContentList :title="`S'informer sur le thème : ${theme[0].name}`" :contents="ressources" />
+          <ContentList :title="`S'informer sur le thème : ${theme[0].name}`" :contents="ressources" :taxonomies="taxonomies" />
         </div>
       </div>
     </div>
@@ -28,14 +28,25 @@ export default class RessourcesCategory extends Vue{
 
     const ressources = await $content('ressources')
       .where({themes:{$contains: params.theme}})
-      .only(['title', 'description', 'img', 'slug','themes','dir','createdAt'])
+      .only(['title', 'description', 'img', 'slug','categories', 'themes','dir','createdAt'])
       .sortBy('createdAt', 'asc')
       .fetch()
 
     if (!ressources.length) {
-      return error({ statusCode: 404, message: "La catégorie que vous recherchez est vide ou n'existe pas." });
+      return error({ statusCode: 404, message: "Le thème que vous recherchez est vide ou n'existe pas." });
     }
-    return { theme, ressources }
+
+    const categories = await $content('categories')
+    .only(['name', 'slug'])
+    .fetch()
+
+    const themes = await $content('themes')
+    .only(['name', 'slug'])
+    .fetch()
+
+    const taxonomies = {'categories':categories,'themes':themes}
+
+    return { theme, ressources, taxonomies }
   }
 }
 </script>

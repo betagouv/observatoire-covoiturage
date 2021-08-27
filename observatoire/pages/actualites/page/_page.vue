@@ -6,7 +6,7 @@
           <Breadcrumb :current="`Page ${currentPage}`"/>
         </div>
         <div class="fr-col-lg-10 fr-col-offset-lg-1">
-          <ContentList title="Actualités" :contents="actualites" :taxonomies="categories" />
+          <ContentList title="Actualités" :contents="actualites" :taxonomies="taxonomies" />
         </div>
         <div class="fr-col-12">
           <Pagination :currentPage="currentPage" :lastPage="lastPage" />
@@ -35,7 +35,7 @@ export default class Actualites extends Vue{
     }
 
     const actualites = await $content('actualites')
-    .only(['title', 'description', 'img', 'slug','categories','dir','createdAt'])
+    .only(['title', 'description', 'img', 'slug','categories', 'themes', 'dir','createdAt'])
     .sortBy('createdAt', 'asc')
     .limit(perPage)
     .skip(skipNumber())
@@ -45,7 +45,13 @@ export default class Actualites extends Vue{
     .only(['name', 'slug'])
     .fetch()
 
-    return { actualites, categories, currentPage, lastPage }
+    const themes = await $content('themes')
+    .only(['name', 'slug'])
+    .fetch()
+
+    const taxonomies = {'categories':categories,'themes':themes}
+
+    return { actualites, taxonomies, currentPage, lastPage }
   }
 }
 </script>

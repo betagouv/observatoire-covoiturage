@@ -3,7 +3,7 @@
   <div class="fr-container">
     <div class="fr-grid-row">
       <div class="fr-col-12">
-        <Breadcrumb :type="type" :taxonomy="themes[0]" :current="ressource.title"/>
+        <Breadcrumb :type="type" :taxonomy="taxonomies.categories[0]" :current="ressource.title"/>
       </div>
       <div class="fr-col-lg-8 fr-col-offset-lg-2">
         <div class="fr-grid-row fr-grid-row--gutters">
@@ -11,11 +11,22 @@
             <h1 class="h-text-center">{{ ressource.title }}</h1>
             <div class="fr-text--xs single-meta">
               <span>Publié le {{ formatDate(ressource.createdAt) }} </span>
-              <span v-if="themes && ressource.themes.length > 1">dans les thèmes:</span>
-              <span v-else-if="themes" >dans le thème:</span>
-              <span v-for="(theme,index) in ressource.themes" :key="index">
-                <span v-if="themes && index != 0">, </span>
-                <span v-if="themes"><a :href="`/ressources/${getTaxonomy(themes,theme).slug}`">{{getTaxonomy(themes,theme).name}}</a></span>
+              <span v-if="ressource.categories">
+                <span v-if="ressource.categories.length > 1">dans les catégories:</span>
+                <span v-else>dans la catégorie:</span>
+                <span v-for="(taxonomy,index) in ressource.categories" :key="index">
+                  <span v-if="index != 0">, </span>
+                  <span><a :href="`/ressources/categorie/${getTaxonomy(taxonomies.categories,taxonomy).slug}`">{{getTaxonomy(taxonomies.categories,taxonomy).name}}</a></span>
+                </span>
+              </span>
+              <span v-if="ressource.categories && ressource.themes"> et </span>
+              <span v-if="ressource.themes">
+                <span v-if="ressource.themes.length > 1">dans les thèmes:</span>
+                <span v-else>dans le thème:</span>
+                <span v-for="(taxonomy,index) in ressource.themes" :key="index">
+                  <span v-if="index != 0">, </span>
+                  <span><a :href="`/ressources/theme/${getTaxonomy(taxonomies.themes,taxonomy).slug}`">{{getTaxonomy(taxonomies.themes,taxonomy).name}}</a></span>
+                </span>
               </span>
             </div>
             <p class="fr-text--lead fr-text--alt">{{ ressource.description }}</p>
@@ -55,35 +66,37 @@
 
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component, mixins } from 'nuxt-property-decorator'
+import ContentMixin from '../../../../components/mixins/content'
 
 @Component
-export default class SingleRessource extends Vue{
+export default class SingleRessource extends mixins(ContentMixin){
   type = {name:'S\'informer',slug:'ressources'}
   async asyncData({ $content, params }) {
     const ressource = await $content('ressources', params.slug)
-    .where({themes:{$contains: params.theme}})
+    .where({categories:{$contains: params.category}})
+    .fetch()
+    
+    const [prev, next] = await $content('ressources')
+    .where({categories:{$contains: params.category}})
+    .only(['title', 'slug'])
+    .sortBy('createdAt', 'asc')
+    .surround(params.slug)
+    .fetch()
+
+    const categories = await $content('categories')
+    .only(['name', 'slug'])
+    .where({ slug: { $containsAny: ressource.categories } })
     .fetch()
 
     const themes = await $content('themes')
     .only(['name', 'slug'])
     .where({ slug: { $containsAny: ressource.themes } })
     .fetch()
-    
-    const [prev, next] = await $content('ressources')
-    .where({themes:{$contains: params.theme}})
-    .only(['title', 'slug'])
-    .sortBy('createdAt', 'asc')
-    .surround(params.slug)
-    .fetch()
-    return { ressource, themes, prev, next }
-  }
 
-  formatDate(date:string) {
-    return new Date(date).toLocaleDateString('fr-FR')
-  }
-  getTaxonomy(taxonomies:Array<{name:string,slug:string}>,taxonomy:string){
-    return taxonomies.find(c => c.slug === taxonomy)
+    const taxonomies = {'categories':categories,'themes':themes}
+
+    return { ressource, prev, next, taxonomies }
   }
 }
 </script>
