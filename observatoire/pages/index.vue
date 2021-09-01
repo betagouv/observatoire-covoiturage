@@ -1,7 +1,7 @@
 <template>
 <div class="fr-container--fluid">
   <div class="fr-section--banner hero">
-    <div class="fr-container">
+    <div class="fr-container home_header">
       <div class="fr-grid-row fr-grid-row--gutters">
         <div class="fr-col-4">
           <div class="align-center">
@@ -13,9 +13,9 @@
           <p>Ce site permet de suivre l’évolution des pratiques du covoiturage courte distance en analysant les données ouvertes produites sur le sujet afin de permettre aux territoires et aux citoyens d'être mieux informé.</p>
           <div class="fr-grid-row">
           <div class="fr-col-12">
-              <NuxtLink to="/cartes" class="fr-btn fr-btn--secondary">
+              <a href="/cartes" class="fr-btn fr-btn--secondary">
                 Consulter l'atlas cartographique
-              </NuxtLink>
+              </a>
           </div>
         </div>
         </div>
@@ -31,9 +31,9 @@
       </div>
       <div class="fr-grid-row">
         <div class="fr-col-12 align-center">
-            <NuxtLink to="/actualites" class="fr-btn fr-btn--secondary">
+            <a href="/actualites" class="fr-btn fr-btn--secondary">
               Plus d'actualités
-            </NuxtLink>
+            </a>
         </div>
       </div>
     </div>
@@ -50,9 +50,9 @@
       </div>
       <div class="fr-grid-row">
         <div class="fr-col-12 align-center">
-            <NuxtLink to="/ressources" class="fr-btn fr-btn--secondary">
+            <a href="/ressources" class="fr-btn fr-btn--secondary">
               Plus de ressources
-            </NuxtLink>
+            </a>
         </div>
       </div>
     </div>

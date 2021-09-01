@@ -59,27 +59,9 @@
                   </a>
                 </li>
                 <li class="fr-nav__item">
-                  <button class="fr-nav__btn" aria-expanded="false" aria-controls="menu-cartes" aria-current="true">Cartes</button>
-                  <div class="fr-collapse fr-menu" id="menu-cartes">
-                    <ul class="fr-menu__list">
-                      <li>
-                        <a href="/cartes/flux" class="fr-nav__link" target="_self">
-                          Flux de trajets
-                        </a>
-                      </li>
-                      <li>
-                        <a href="/cartes/occupation-vehicules" class="fr-nav__link" target="_self">
-                          Occupation des véhicules
-                        </a>
-                      </li>
-                      <li>
-                        <a href="/cartes/aires-covoiturage" class="fr-nav__link" target="_self">
-                          Aires de covoiturage
-                        </a>
-                      </li>
-                      
-                    </ul>
-                  </div>
+                  <a href="/cartes" class="fr-nav__link" target="_self">
+                    Cartes interactives
+                  </a>
                 </li>
               </ul>
             </nav>

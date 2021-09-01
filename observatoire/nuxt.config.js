@@ -48,10 +48,6 @@ export default {
     '@nuxt/content',
     'nuxt-buefy'
   ],
-  env: {
-    maplibre_style: process.env.MAPLIBRE_STYLE || 'https://openmaptiles.geo.data.gouv.fr/styles/osm-bright/style.json',
-    has_newsletter: process.env.NEWSLETTER || 'false'
-  },
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},
 

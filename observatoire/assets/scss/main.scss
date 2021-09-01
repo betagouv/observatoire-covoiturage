@@ -2,11 +2,16 @@
 .hero{
   background-color: #000091;
   padding: 2rem;
-  h1, p{
+  h1{
     color: #ffffff;
   }
-  .fr-btn{
-    background-color: #ffffff;
+  .home_header{
+    p{
+      color: #ffffff;
+    }
+    .fr-btn{
+      background-color: #ffffff;
+    }
   }
 }
 .home-section{
