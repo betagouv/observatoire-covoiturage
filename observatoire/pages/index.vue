@@ -14,7 +14,7 @@
           <div class="fr-grid-row">
           <div class="fr-col-12">
               <a href="/cartes" class="fr-btn fr-btn--secondary">
-                Consulter l'atlas cartographique
+                Consulter les cartes interactives
               </a>
           </div>
         </div>
@@ -45,7 +45,7 @@
     <div class="fr-container">
       <div class="fr-grid-row">
         <div class="fr-col-lg-10 fr-col-offset-lg-1">
-          <ContentList title="" :contents="ressources" :taxonomies="taxonomies" />
+          <ContentList title="Ressources" :contents="ressources" :taxonomies="taxonomies" />
         </div>
       </div>
       <div class="fr-grid-row">

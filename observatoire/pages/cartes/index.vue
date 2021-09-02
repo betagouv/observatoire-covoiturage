@@ -9,7 +9,7 @@
         </div>
       </div>
     </div>
-    <MapList :contents="cartes"/>
+    <MapsMapList :contents="cartes"/>
   </div>
 </template>
 
@@ -20,7 +20,6 @@ import { Component, Vue } from 'nuxt-property-decorator'
 export default class Cartes extends Vue{
   async asyncData({ $content }) {
     const cartes = await $content('cartes')
-    .only(['title', 'description', 'img', 'link'])
     .sortBy('asc')
     .fetch()
 

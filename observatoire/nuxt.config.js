@@ -11,12 +11,27 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' }
+      { hid: 'description', name: 'description', content: '' },
+      { property: 'og:site_name', content: 'Observatoire national du covoiturage au quotidien' },
+      { hid: 'og:type', property: "og:type", content: "website" },
+      { hid: 'og:url', property: "og:url", content: "" },
+      { hid: 'og:title', property: "og:title", content: "Observatoire national du covoiturage au quotidien"},
+      { hid: "og:description", property: "og:description", content: ""},
+      { hid: "og:image", property: "og:image", content: "/images/map.png"},
+      { property: "og:image:width", content: "740" },
+      { property: "og:image:height", content: "300" },
+      { name: "twitter:site", content: "@Covoitbetagouv" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { hid: "twitter:url", name: "twitter:url", content: ""},
+      { hid: "twitter:title", name: "twitter:title", content: "Observatoire national du covoiturage au quotidien"},
+      { hid: "twitter:description", name: "twitter:description", content: ""},
+      { hid: "twitter:image", name: "twitter:image", content: "/images/map.png" }
     ],
     link: [
       { rel: 'apple-touch-icon', size: '180x180', href: '/favicons/apple-touch-icon.png' },
       { rel: 'icon', type: 'image/x-icon', href: '/favicons/favicon.ico' },
       { rel: 'manifest', href: '/favicons/site.webmanifest' },
+      { hid: "canonical", rel: "canonical", href: "" }
     ],
     script: [
       { hid: 'module', type:'module', src:'/js/dsfr.module.min.js',defer:true,body:true},

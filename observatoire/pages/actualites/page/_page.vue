@@ -22,7 +22,7 @@ import { Component, Vue } from 'nuxt-property-decorator'
 @Component
 export default class Actualites extends Vue{
   async asyncData({ $content, params }) {
-    const perPage = 3
+    const perPage = 9
     const currentPage = parseInt(params.page)
     const allActualites = await $content('actualites').fetch()
     const totalActualites = allActualites.length

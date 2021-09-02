@@ -22,7 +22,7 @@ import { Component, Vue } from 'nuxt-property-decorator'
 @Component
 export default class Actualites extends Vue{
   async asyncData({ $content }) {
-    const perPage = 3
+    const perPage = 9
     const actualites = await $content('actualites')
     .only(['title', 'description', 'img', 'slug','categories','themes','dir','createdAt'])
     .sortBy('createdAt', 'asc')
