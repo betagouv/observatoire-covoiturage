@@ -60,6 +60,19 @@ import ContentMixin from '../../../../components/mixins/content'
 
 @Component
 export default class SingleActualite extends mixins(ContentMixin){
+  actualite: any
+  head() {
+    return { 
+      title: '4TOTO',
+      meta: [
+        {
+          hid: "description",
+          name: "description",
+          content: this.actualite.description,
+        }
+      ]
+    }
+  }
   async asyncData({ $content, params }) {
     const actualite = await $content('actualites', params.slug)
     .where({categories:{$contains: params.category}})

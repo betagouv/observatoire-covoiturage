@@ -1,21 +1,75 @@
 backend:
-  name: git-gateway
-  branch: main # Branch to update (optional; defaults to master)
+  name: github
+  repo: betagouv/observatoire-covoiturage
+  branch: main
 
-media_folder: static/img
-public_folder: /img
+local_backend: true
+
+media_folder: static/images
+public_folder: /images
+
+locale: fr
+
+slug:
+  clean_accents: true
 
 collections:
-  - name: 'blog'
-    label: 'Blog'
-    folder: 'content/blog'
+  - name: 'actualites'
+    label: 'Actualités'
+    folder: 'content/actualites'
     format: 'frontmatter'
     create: true
-    slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
+    slug: '{{slug}}'
     editor:
       preview: false
     fields:
-      - { label: 'Title', name: 'title', widget: 'string' }
-      - { label: 'Publish Date', name: 'date', widget: 'datetime' }
-      - { label: 'Description', name: 'description', widget: 'string' }
+      - { label: 'Titre', name: 'title', widget: 'string' }
+      - { label: 'Date de publication', name: 'date', widget: 'datetime' }
+      - { label: 'Description', name: 'description', widget: 'text' }
+      - { label: 'Catégories', name: 'categories', widget: 'relation', collection: 'categories', search_fields: ["name"], value_field: "slug", display_fields: ["name"],multiple: true}
+      - { label: 'thèmes', name: 'themes', widget: 'relation', collection: 'themes', search_fields: ["name"], value_field: "slug",display_fields: ["name"], multiple: true}
+      - { label: 'Image', name: 'img', widget: 'image', choose_url: true }
+      - { label: 'Titre alternatif image', name: 'alt', widget: 'string' }
       - { label: 'Body', name: 'body', widget: 'markdown' }
+
+  - name: 'ressources'
+    label: 'Ressources'
+    folder: 'content/ressources'
+    format: 'frontmatter'
+    create: true
+    slug: '{{slug}}'
+    editor:
+      preview: false
+    fields:
+      - { label: 'Titre', name: 'title', widget: 'string' }
+      - { label: 'Date de publication', name: 'date', widget: 'datetime' }
+      - { label: 'Description', name: 'description', widget: 'text' }
+      - { label: 'Catégories', name: 'categories', widget: 'relation', collection: 'categories', search_fields: ["name"], value_field: "slug", display_fields: ["name"],multiple: true}
+      - { label: 'thèmes', name: 'themes', widget: 'relation', collection: 'themes', search_fields: ["name"], value_field: "slug",display_fields: ["name"], multiple: true}
+      - { label: 'Image', name: 'img', widget: 'image', choose_url: true }
+      - { label: 'Titre alternatif image', name: 'alt', widget: 'string' }
+      - { label: 'Légende image', name: 'legend', widget: 'string' }    
+      - { label: 'Body', name: 'body', widget: 'markdown' }
+      - { label: 'Fichiers', name: 'files', widget: 'file' }
+  - name: 'categories'
+    label: 'Catégories'
+    folder: 'content/categories'
+    format: 'frontmatter'
+    create: true
+    slug: '{{slug}}'
+    editor:
+      preview: false
+    fields:
+      - { label: 'Nom', name: 'name', widget: 'string' }
+      - { label: 'Slug', name: 'slug', widget: 'string' }
+  - name: 'themes'
+    label: 'Thèmes'
+    folder: 'content/themes'
+    format: 'frontmatter'
+    create: true
+    slug: '{{slug}}'
+    editor:
+      preview: false
+    fields:
+      - { label: 'Nom', name: 'name', widget: 'string' }
+      - { label: 'Slug', name: 'slug', widget: 'string' }

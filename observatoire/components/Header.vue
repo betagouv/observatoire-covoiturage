@@ -40,3 +40,11 @@
   </header>
 </template>
 
+<script lang="ts">
+import { Component,mixins } from 'nuxt-property-decorator'
+import BreakpointsMixin from '../components/mixins/breakpoints'
+@Component
+export default class Header extends mixins(BreakpointsMixin){
+}
+</script>
+
