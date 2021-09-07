@@ -15,7 +15,7 @@ slug:
 
 collections:
   - name: 'actualites'
-    label: 'Actualités'
+    label: '📰 Actualités'
     folder: 'content/actualites'
     format: 'frontmatter'
     create: true
@@ -33,7 +33,7 @@ collections:
       - { label: 'Body', name: 'body', widget: 'markdown' }
 
   - name: 'ressources'
-    label: 'Ressources'
+    label: '📗 Ressources'
     folder: 'content/ressources'
     format: 'frontmatter'
     create: true
@@ -50,7 +50,29 @@ collections:
       - { label: 'Titre alternatif image', name: 'alt', widget: 'string' }
       - { label: 'Légende image', name: 'legend', widget: 'string' }    
       - { label: 'Body', name: 'body', widget: 'markdown' }
-      - { label: 'Fichiers', name: 'files', widget: 'file' }
+      - label: 'Fichiers' 
+        name: 'files' 
+        widget: 'list' 
+        fields:
+          - { label: Nom, name: name, widget: string }
+          - { label: Fichier, name: file, widget: file }
+          - { label: Auteur, name: author, widget: string }
+          - { label: 'Date de publication', name: 'publication_date', widget: 'datetime' }
+  
+  - name: 'cartes'
+    label: '🗺️ Cartes'
+    folder: 'content/cartes'
+    format: 'frontmatter'
+    create: true
+    slug: '{{slug}}'
+    editor:
+      preview: false
+    fields:
+      - { label: 'Titre', name: 'title', widget: 'string' }
+      - { label: 'Lien', name: 'link', widget: 'string' }
+      - { label: 'Image', name: 'img', widget: 'image', choose_url: true }
+      - { label: 'Body', name: 'body', widget: 'markdown' }
+
   - name: 'categories'
     label: 'Catégories'
     folder: 'content/categories'

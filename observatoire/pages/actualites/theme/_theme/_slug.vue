@@ -60,6 +60,7 @@ import ContentMixin from '../../../../components/mixins/content'
 
 @Component
 export default class SingleActualite extends mixins(ContentMixin){
+  actualite:any
   async asyncData({ $content, params }) {
     const actualite = await $content('actualites', params.slug)
     .where({themes:{$contains: params.theme}})
@@ -85,6 +86,12 @@ export default class SingleActualite extends mixins(ContentMixin){
     const taxonomies = {'categories':categories,'themes':themes}
 
     return { actualite, taxonomies, prev, next }
+  }
+
+  head() {
+    return {
+      title: this.actualite.title
+    }
   }
 }
 </script>

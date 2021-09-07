@@ -44,10 +44,10 @@
               <h4 v-else class="fr-callout__title">Téléchargez le fichier</h4>
               <ul class="fr-callout__text">
                 <li v-for="(file,index) in ressource.files" :key="index"> 
-                  <a :href="file.link" :alt="file.name" target="_blank" rel="noopener">
+                  <a :href="file.file" :alt="file.name" target="_blank" rel="noopener">
                     <span v-if="file.author">{{file.author}}</span> -
                     <span v-if="file.name">{{file.name}}</span> -
-                    <span v-if="file.publication_date">{{file.publication_date}}</span>
+                    <span v-if="file.publication_date">{{formatDate(file.publication_date)}}</span>
                   </a>
                 </li>
               </ul>
