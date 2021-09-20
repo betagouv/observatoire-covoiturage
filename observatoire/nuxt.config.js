@@ -1,6 +1,9 @@
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'server',
+  publicRuntimeConfig: {
+    domain: process.env.DOMAIN,
+  },
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -35,7 +38,8 @@ export default {
     ],
     script: [
       { hid: 'module', type:'module', src:'/js/dsfr.module.min.js',defer:true,body:true},
-      { hid: 'nomodule', nomodule:true, src: '/js/dsfr.nomodule.min.js',defer:true,body:true}
+      { hid: 'nomodule', nomodule:true, src: '/js/dsfr.nomodule.min.js',defer:true,body:true},
+      { hid: 'stats', src: '/js/stats.js'},
     ]
   },
 

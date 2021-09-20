@@ -48,7 +48,7 @@ export default class MapsMixin extends mixins(BreakpointsMixin) {
     {
       name: 'mayotte',
       center: [45.167, -12.8503],
-      zoom: 8,
+      zoom: 9,
       attribution: false
     },
     {

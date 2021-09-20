@@ -21,6 +21,10 @@ import { Component, Vue } from 'nuxt-property-decorator'
 
 @Component
 export default class Actualites extends Vue{
+  title='Actualités du covoiturage au quotidien'
+  description=''
+  $config:any
+  $route:any
   async asyncData({ $content }) {
     const perPage = 9
     const actualites = await $content('actualites')
@@ -44,6 +48,23 @@ export default class Actualites extends Vue{
     const taxonomies = {'categories':categories,'themes':themes}
 
     return { actualites, taxonomies, lastPage }
+  }
+  head() {
+    return {
+      title: this.title,
+      meta:[
+        { hid: 'description', name: 'description', content: this.description },
+        { hid: 'og:url', property: "og:url", content: `${this.$config.domain}${this.$route.path}` },
+        { hid: 'og:title', property: "og:title", content: this.title},
+        { hid: "og:description", property: "og:description", content: this.description},
+        { hid: "twitter:url", name: "twitter:url", content: `${this.$config.domain}${this.$route.path}`},
+        { hid: "twitter:title", name: "twitter:title", content: this.title},
+        { hid: "twitter:description", name: "twitter:description", content: this.description},
+      ],
+      link: [
+        { hid: "canonical", rel: "canonical", href: `${this.$config.domain}${this.$route.path}` }
+      ]
+    }
   }
 }
 </script>

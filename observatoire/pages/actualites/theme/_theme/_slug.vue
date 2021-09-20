@@ -3,7 +3,7 @@
   <div class="fr-container">
     <div class="fr-grid-row">
       <div class="fr-col-12">
-        <Breadcrumb :type="type" :taxonomy="taxonomies.themes[0]" :current="actualite.title"/>
+        <Breadcrumb :taxonomy="taxonomies.themes[0]" :current="actualite.title"/>
       </div>
       <div class="fr-col-lg-8 fr-col-offset-lg-2">
         <div class="fr-grid-row fr-grid-row--gutters">
@@ -39,6 +39,26 @@
             <div class="fr-text--lg">
               <nuxt-content :document="actualite" />
             </div>
+            <div class="fr-share">
+              <p class="fr-share__title">Partager la page</p>
+              <ul class="fr-share__group">
+                <li><a class="fr-share__link fr-share__link--facebook" title="Partager sur Facebook - ouvre une nouvelle fenêtre" :href="`https://www.facebook.com/sharer.php?u=${$config.domain}${$route.path}`" target="_blank" rel="noopener" onclick="window.open(this.href,'Partager sur Facebook','toolbar=no,location=yes,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=450'); event.preventDefault();">Partager sur Facebook</a>
+                </li>
+                <li>
+                  <!-- Les paramètres de la reqûete doivent être URI-encodés (ex: encodeURIComponent() en js) -->
+                  <a class="fr-share__link fr-share__link--twitter" title="Partager sur Twitter - ouvre une nouvelle fenêtre" :href="`https://twitter.com/intent/tweet?url=${$config.domain}${$route.path}`" target="_blank" rel="noopener" onclick="window.open(this.href,'Partager sur Twitter','toolbar=no,location=yes,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=420'); event.preventDefault();">Partager sur Twitter</a>
+                </li>
+                <li>
+                  <a class="fr-share__link fr-share__link--linkedin" title="Partager sur LinkedIn - ouvre une nouvelle fenêtre" :href="`https://www.linkedin.com/shareArticle?url=${$config.domain}${$route.path}`" target="_blank" rel="noopener" onclick="window.open(this.href,'Partager sur LinkedIn','toolbar=no,location=yes,status=no,menubar=no,scrollbars=yes,resizable=yes,width=550,height=550'); event.preventDefault();">Partager sur LinkedIn</a>
+                </li>
+                <li>
+                  <a class="fr-share__link fr-share__link--mail" :href="`mailto:?subject=${actualite.title}&body=${actualite.description} ${$config.domain}${$route.path}`" title="Partager par email" target="_blank">Partager par email</a>
+                </li>
+                <li>
+                  <button class="fr-share__link fr-share__link--copy" title="Copier dans le presse-papier" onclick="navigator.clipboard.writeText(window.location);alert('Adresse copiée dans le presse papier.');">Copier dans le presse-papier</button>
+                </li>
+              </ul>
+            </div>
           </article>
         </div>
       </div>
@@ -61,6 +81,9 @@ import ContentMixin from '../../../../components/mixins/content'
 @Component
 export default class SingleActualite extends mixins(ContentMixin){
   actualite:any
+  $config:any
+  $route:any
+
   async asyncData({ $content, params }) {
     const actualite = await $content('actualites', params.slug)
     .where({themes:{$contains: params.theme}})
@@ -90,7 +113,21 @@ export default class SingleActualite extends mixins(ContentMixin){
 
   head() {
     return {
-      title: this.actualite.title
+      title: this.actualite.title,
+      meta:[
+        { hid: 'description', name: 'description', content: this.actualite.description },
+        { hid: 'og:url', property: "og:url", content: `${this.$config.domain}${this.$route.path}` },
+        { hid: 'og:title', property: "og:title", content: this.actualite.title},
+        { hid: "og:description", property: "og:description", content: this.actualite.description},
+        { hid: "og:image", property: "og:image", content: this.actualite.img},
+        { hid: "twitter:url", name: "twitter:url", content: `${this.$config.domain}${this.$route.path}`},
+        { hid: "twitter:title", name: "twitter:title", content: this.actualite.title},
+        { hid: "twitter:description", name: "twitter:description", content: this.actualite.description},
+        { hid: "twitter:image", name: "twitter:image", content: this.actualite.img }
+      ],
+      link: [
+        { hid: "canonical", rel: "canonical", href: `${this.$config.domain}${this.$route.path}` }
+      ]
     }
   }
 }
