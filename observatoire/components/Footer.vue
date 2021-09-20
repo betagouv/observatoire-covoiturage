@@ -49,7 +49,7 @@
         <div class="fr-footer__bottom">
           <ul class="fr-footer__bottom-list">
             <li class="fr-footer__bottom-item">
-              <a class="fr-footer__bottom-link" href="/nous-contacter">Nous contacter</a>
+              <a class="fr-footer__bottom-link" href="https://covoiturage.beta.gouv.fr/nous-contacter" target="_blank">Nous contacter</a>
             </li>
             <li class="fr-footer__bottom-item">
               <a class="fr-footer__bottom-link" :href="services.legal" target="_blank">Mentions légales</a>

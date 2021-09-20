@@ -69,6 +69,7 @@ collections:
       preview: false
     fields:
       - { label: 'Titre', name: 'title', widget: 'string' }
+      - { label: 'Date de publication', name: 'date', widget: 'datetime' }
       - { label: 'Lien', name: 'link', widget: 'string' }
       - { label: 'Image', name: 'img', widget: 'image', choose_url: true }
       - { label: 'Body', name: 'body', widget: 'markdown' }

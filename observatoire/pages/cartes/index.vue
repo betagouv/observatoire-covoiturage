@@ -20,7 +20,7 @@ import { Component, Vue } from 'nuxt-property-decorator'
 export default class Cartes extends Vue{
   async asyncData({ $content }) {
     const cartes = await $content('cartes')
-    .sortBy('asc')
+    .sortBy('date', 'asc')
     .fetch()
 
     return { cartes }

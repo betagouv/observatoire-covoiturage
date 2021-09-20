@@ -276,4 +276,7 @@ export default class Indicators extends Vue{
   line-height: 1rem;
   padding: 0.5rem;
 }
+.fr-tile__img{
+  overflow:inherit !important;
+}
 </style>
