@@ -37,7 +37,7 @@ export const importFile = function(client:PoolClient,path:string, file:File):Pro
     fs.createReadStream(path+file.name)
     .pipe(csv())
     .on('headers', async (headers) => {
-      const csvHeaders = headers[0].substring(1)
+      const csvHeaders = headers[0].replace(/﻿/g,'')
       const table = 'covoiturage.temp_'+file.name.slice(0,-4).replace(/-/g,'_')
       const columns = 'id serial,'+csvHeaders.replace(/;/g,' varchar,')+' varchar'
       const csv={
