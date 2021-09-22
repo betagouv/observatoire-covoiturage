@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS covoiturage.registre;
+DROP TABLE IF EXISTS covoiturage.registre CASCADE;
 CREATE TABLE IF NOT EXISTS covoiturage.registre (
   id SERIAL PRIMARY KEY,
   journey_id varchar,
