@@ -15,8 +15,12 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
+import Breadcrumb from '../../../../components/Breadcrumb.vue'
+import ContentList from '../../../../components/ContentList.vue'
 
-@Component
+@Component({
+  components:{Breadcrumb,ContentList}
+})
 export default class RessourcesCategory extends Vue{
   type = {name:'S\'informer',slug:'ressources'}
   

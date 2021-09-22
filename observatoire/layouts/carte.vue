@@ -8,8 +8,11 @@
 <script lang="ts">
 import { Component,mixins } from 'nuxt-property-decorator'
 import BreakpointsMixin from '../components/mixins/breakpoints'
+import Header from '../components/Header.vue'
 
-@Component
+@Component({
+  components: { Header }
+})
 export default class CarteLayout extends mixins(BreakpointsMixin){
   
   public beforeMount() {

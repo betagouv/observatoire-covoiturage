@@ -1,7 +1,7 @@
 <template>
   <div class="fr-grid-row content">
     <div v-if="lgAndAbove || screen.isSidebarOpen" class="fr-col-12 fr-col-lg-2 sidebar">
-      <MapsAiresSidebar 
+      <Sidebar 
         v-if="data"
         :switch ="categories"
         :allFeatures="countAires" 
@@ -14,10 +14,10 @@
           <div class="map_container">
             <div id="map_metropole"></div>
           </div>
-          <MapsHelpersLegend :title="legendTitle" :analyzes="categories" type="category"/>
+          <Legend :title="legendTitle" :analyzes="categories" type="category"/>
         </div>
         <div v-if="['all','droms'].includes(map)" :class="{'fr-hidden': screen.isSidebarOpen}" class="fr-col-12 fr-col-lg-3 maps_drom">
-          <MapsHelpersLegend v-if="map ==='droms'" :title="legendTitle" :analyzes="categories" type="category"/>
+          <Legend v-if="map ==='droms'" :title="legendTitle" :analyzes="categories" type="category"/>
           <div class="map_container">
             <div id="map_antilles"></div>
           </div>
@@ -31,7 +31,7 @@
             <div id="map_reunion"></div>
           </div>
         </div>
-        <MapsHelpersControls :map="map" @selectedMap="selectedMap"/>
+        <Controls :map="map" @selectedMap="selectedMap"/>
       </div>
     </div>
   </div>
@@ -44,6 +44,9 @@ import MapsMixin from '../../mixins/maps'
 import * as turf from '@turf/helpers'
 import maplibregl from 'maplibre-gl'
 import axios from 'axios'
+import Sidebar from './sidebar.vue'
+import Legend from '../helpers/legend.vue'
+import Controls from '../helpers/controls.vue'
 
 interface AiresData {
   id_lieu:string,
@@ -61,7 +64,9 @@ interface AiresData {
   geom:{properties:{ type:string,coordinates:[number,number]}}
 }
 
-@Component
+@Component({
+  components:{Sidebar, Legend, Controls}
+})
 export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
   @Prop({ required: true }) map!: string
 

@@ -1,7 +1,7 @@
 <template>
   <div class="fr-grid-row content">
     <div v-if="lgAndAbove || screen.isSidebarOpen" class="fr-col-12 fr-col-lg-2 sidebar">
-      <MapsFluxSidebar 
+      <Sidebar 
         v-if="flux" 
         :value.sync="slider" 
         :time="time"
@@ -18,10 +18,10 @@
             <div id="map_metropole"></div>
             <canvas id="deck_metropole" class="deck"></canvas>
           </div>
-          <MapsHelpersLegend :title="legendTitle" :analyzes="analyse" type="interval"/>
+          <Legend :title="legendTitle" :analyzes="analyse" type="interval"/>
         </div>
         <div v-if="['all','droms'].includes(map)" :class="{'fr-hidden': screen.isSidebarOpen}" class="fr-col-12 fr-col-lg-3 maps_drom">
-          <MapsHelpersLegend v-if="map ==='droms'" :title="legendTitle" :analyzes="analyse" type="interval"/>
+          <Legend v-if="map ==='droms'" :title="legendTitle" :analyzes="analyse" type="interval"/>
           <div class="map_container">
             <div id="map_antilles"></div>
             <canvas id="deck_antilles" class="deck"></canvas>
@@ -39,7 +39,7 @@
             <canvas id="deck_reunion" class="deck"></canvas>
           </div>
         </div>
-        <MapsHelpersControls :map="map" @selectedMap="selectedMap"/>
+        <Controls :map="map" @selectedMap="selectedMap"/>
       </div>
     </div>
   </div>
@@ -51,6 +51,9 @@ import BreakpointsMixin from '../../mixins/breakpoints'
 import MapsMixin from '../../mixins/maps'
 import {ArcLayer} from '@deck.gl/layers'
 import axios from 'axios'
+import Sidebar from './sidebar.vue'
+import Legend from '../helpers/legend.vue'
+import Controls from '../helpers/controls.vue'
 
 interface FluxData {
   com1:string,
@@ -67,7 +70,9 @@ interface FluxData {
 
 interface Time {year:string,month:string}
 
-@Component
+@Component({
+  components:{Sidebar, Legend, Controls}
+})
 export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
   @Prop({ required: true }) map!: string
 

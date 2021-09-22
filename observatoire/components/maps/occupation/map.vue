@@ -1,7 +1,7 @@
 <template>
   <div class="fr-grid-row content">
     <div v-if="lgAndAbove || screen.isSidebarOpen" class="fr-col-12 fr-col-lg-2 sidebar">
-      <MapsOccupationSidebar 
+      <Sidebar 
         v-if="data"
         :type.sync="type" 
         :time="time"
@@ -15,12 +15,12 @@
           <div class="map_container">
             <div id="map_metropole"></div>
           </div>
-          <MapsHelpersLegend :title="legendTitleJourneys" :analyzes="categories" type="proportional_circles" class="upper_legend"/>
-          <MapsHelpersLegend :title="legendTitleOccupation" :analyzes="analyse" type="interval"/>
+          <Legend :title="legendTitleJourneys" :analyzes="categories" type="proportional_circles" class="upper_legend"/>
+          <Legend :title="legendTitleOccupation" :analyzes="analyse" type="interval"/>
         </div>
         <div v-if="['all','droms'].includes(map)" :class="{'fr-hidden': screen.isSidebarOpen}" class="fr-col-12 fr-col-lg-3 maps_drom">
-          <MapsHelpersLegend v-if="map ==='droms'" :title="legendTitleJourneys" :analyzes="categories" type="proportional_circles"/>
-          <MapsHelpersLegend v-if="map ==='droms'" :title="legendTitleOccupation" :analyzes="analyse" type="interval"/>
+          <Legend v-if="map ==='droms'" :title="legendTitleJourneys" :analyzes="categories" type="proportional_circles"/>
+          <Legend v-if="map ==='droms'" :title="legendTitleOccupation" :analyzes="analyse" type="interval"/>
           <div class="map_container">
             <div id="map_antilles"></div>
           </div>
@@ -34,7 +34,7 @@
             <div id="map_reunion"></div>
           </div>
         </div>
-        <MapsHelpersControls :map="map" @selectedMap="selectedMap"/>
+        <Controls :map="map" @selectedMap="selectedMap"/>
       </div>
     </div>
   </div>
@@ -47,6 +47,9 @@ import MapsMixin from '../../mixins/maps'
 import * as turf from '@turf/helpers'
 import maplibregl from 'maplibre-gl'
 import axios from 'axios'
+import Sidebar from './sidebar.vue'
+import Legend from '../helpers/legend.vue'
+import Controls from '../helpers/controls.vue'
 
 interface OccupData {
   territory:string,
@@ -59,7 +62,9 @@ interface OccupData {
 
 interface Time {year:string,month:string}
 
-@Component
+@Component({
+  components:{Sidebar, Legend, Controls}
+})
 export default class OccupMap extends mixins(BreakpointsMixin,MapsMixin){
   @Prop({ required: true }) map!: string
 
@@ -131,7 +136,6 @@ export default class OccupMap extends mixins(BreakpointsMixin,MapsMixin){
   @Watch('type')
   onTypeChanged() {
     this.getData()
-    //this.test()
   }
 
   @Watch('filteredData', { deep: true })
@@ -272,37 +276,6 @@ export default class OccupMap extends mixins(BreakpointsMixin,MapsMixin){
       this.$emit('rerenderMap', 'metropole')
     }
   }
-
-  public async test() {
-    if(this.type === "com"){
-      for (let territory of this.territories){
-        this.$data['map_'+territory.name].addLayer({
-          'id': 'decoupage-com',
-          'type': 'line',
-          'source': 'decoupageSource',
-          'source-layer': 'communes',
-          'paint': {
-          'line-color': '#ff69b4',
-          'line-width': 1
-          }
-        })
-      }
-    } else if (this.type === "dep"){
-      for (let territory of this.territories){
-        this.$data['map_'+territory.name].addLayer({
-          'id': 'decoupage-dep',
-          'type': 'line',
-          'source': 'decoupageSource',
-          'source-layer': 'departements',
-          'paint': {
-          'line-color': '#ff69b4',
-          'line-width': 1
-          }
-        })
-      }
-    }
-  }
-
 }
 </script>
 

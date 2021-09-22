@@ -18,8 +18,13 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
+import Breadcrumb from '../../../components/Breadcrumb.vue'
+import ContentList from '../../../components/ContentList.vue'
+import Pagination from '../../../components/Pagination.vue'
 
-@Component
+@Component({
+  components:{Breadcrumb,ContentList,Pagination}
+})
 export default class Actualites extends Vue{
   title='Actualités du covoiturage au quotidien'
   description=''

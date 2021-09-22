@@ -24,7 +24,7 @@
       </ul>
       <ul class="fr-sidemenu__list">
         <div class="fr-sidemenu__title">Nombre de trajets:</div>
-        <MapsHelpersSlider :value.sync="selectedValue" :sliderOptions="{'min':sliderOptions.min,'max':sliderOptions.max,'step':sliderOptions.step}"/>
+        <Slider :value.sync="selectedValue" :sliderOptions="{'min':sliderOptions.min,'max':sliderOptions.max,'step':sliderOptions.step}"/>
       </ul>
       <p>{{journeys}} trajets dans le registre de preuve de covoiturage (un trajet correspond un couple conducteur-pasager)</p>
       <b-field>
@@ -40,8 +40,10 @@
 import { Component,mixins,PropSync,Prop,Watch } from 'nuxt-property-decorator'
 import BreakpointsMixin from '../../mixins/breakpoints'
 import { mapState } from 'vuex'
+import Slider from '../helpers/slider.vue'
 
 @Component({
+  components:{Slider},
   computed:{
     ...mapState({
       helpers: 'helpers',

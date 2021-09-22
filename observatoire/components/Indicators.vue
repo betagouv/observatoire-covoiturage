@@ -134,6 +134,7 @@
 import { Component, Watch, Vue } from 'nuxt-property-decorator'
 import axios from 'axios'
 import { mapState } from 'vuex'
+import SearchTerritory from './SearchTerritory.vue'
 
 interface IndicatorsData {
   year: string,
@@ -149,6 +150,7 @@ interface Time {year:string,month:string}
 
 
 @Component({
+  components:{ SearchTerritory },
   computed:{
     ...mapState({
       helpers: 'helpers',

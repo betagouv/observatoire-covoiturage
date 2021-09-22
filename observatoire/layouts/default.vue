@@ -9,10 +9,13 @@
 <script lang="ts">
 import { Component,mixins } from 'nuxt-property-decorator'
 import BreakpointsMixin from '../components/mixins/breakpoints'
+import Header from '../components/Header.vue'
+import Footer from '../components/Footer.vue'
 
-@Component
+@Component({
+  components: { Header, Footer }
+})
 export default class Default extends mixins(BreakpointsMixin){
-  
   public beforeMount() {
     window.addEventListener('resize', this.handleResize)
     this.handleResize()

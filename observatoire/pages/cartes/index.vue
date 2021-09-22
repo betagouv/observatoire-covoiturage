@@ -9,14 +9,17 @@
         </div>
       </div>
     </div>
-    <MapsMapList :contents="cartes"/>
+    <MapList :contents="cartes"/>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
+import MapList from '../../components/maps/MapList.vue'
 
-@Component
+@Component({
+  components:{MapList}
+})
 export default class Cartes extends Vue{
   async asyncData({ $content }) {
     const cartes = await $content('cartes')

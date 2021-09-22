@@ -1,7 +1,7 @@
 import 'module-alias/register'
 import fastify from 'fastify'
-import configServer from '@/config/server'
-import db from '@/config/db'
+import configServer from './config/server'
+import db from './config/db'
 
 
 

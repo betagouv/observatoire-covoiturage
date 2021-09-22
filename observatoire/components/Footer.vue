@@ -43,7 +43,7 @@
           </div>
           <div v-if="hasNewletter"  class="fr-footer__newsletter">
             <h6>Recevoir les actualités</h6>
-            <p><a href="/abonnez-vous" class="fr-link fr-btn">Abonnez-vous</a></p>
+            <p><a href="https://covoiturage.beta.gouv.fr/abonnez-vous" class="fr-link fr-btn">Abonnez-vous</a></p>
           </div>
         </div>
         <div class="fr-footer__bottom">

@@ -31,7 +31,7 @@
             </div>
           </div>
           <div class="fr-header__tools">
-            <SearchInput/>
+            <SearchInput />
           </div>
         </div>
       </div>
@@ -43,7 +43,12 @@
 <script lang="ts">
 import { Component,mixins } from 'nuxt-property-decorator'
 import BreakpointsMixin from '../components/mixins/breakpoints'
-@Component
+import SearchInput from './SearchInput.vue'
+import Navbar from './Navbar.vue'
+
+@Component({
+  components: { SearchInput, Navbar }
+})
 export default class Header extends mixins(BreakpointsMixin){
 }
 </script>

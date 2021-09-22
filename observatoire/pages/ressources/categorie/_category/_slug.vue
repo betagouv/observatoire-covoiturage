@@ -74,7 +74,7 @@
             </div>
           </article>
           <div class="fr-col-12">
-            <Prev-next :prev="prev" :next="next" />
+            <PrevNext :prev="prev" :next="next" />
           </div>
         </div>
       </div>
@@ -88,8 +88,12 @@
 <script lang="ts">
 import { Component, mixins } from 'nuxt-property-decorator'
 import ContentMixin from '../../../../components/mixins/content'
+import Breadcrumb from '../../../../components/Breadcrumb.vue'
+import PrevNext from '../../../../components/PrevNext.vue'
 
-@Component
+@Component({
+  components:{Breadcrumb,PrevNext}
+})
 export default class SingleRessource extends mixins(ContentMixin){
   type = {name:'S\'informer',slug:'ressources'}
   async asyncData({ $content, params }) {

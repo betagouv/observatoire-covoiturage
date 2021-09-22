@@ -15,7 +15,7 @@
             <a class="fr-breadcrumb__link" aria-current="page">{{type.name}}</a>
           </li>
           <li v-if="taxonomy">
-            <a  v-if="taxonomy.path.indexOf('categories') >= 0" :href="`/${type.slug}/categorie/${taxonomy.slug}`" class="fr-breadcrumb__link">
+            <a  v-if="taxonomy.path && taxonomy.path.indexOf('categories') >= 0" :href="`/${type.slug}/categorie/${taxonomy.slug}`" class="fr-breadcrumb__link">
               {{taxonomy.name}}
             </a>
             <a v-else :href="`/${type.slug}/theme/${taxonomy.slug}`" class="fr-breadcrumb__link">

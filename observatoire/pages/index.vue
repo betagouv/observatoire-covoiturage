@@ -62,8 +62,12 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
+import Indicators from '../components/Indicators.vue'
+import ContentList from '../components/ContentList.vue'
 
-@Component
+@Component({
+  components:{Indicators,ContentList}
+})
 export default class Home extends Vue{
   async asyncData({ $content }) {
     const perPage = 3

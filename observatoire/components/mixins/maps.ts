@@ -2,7 +2,7 @@ import { Component, mixins } from 'nuxt-property-decorator'
 import { ckmeans } from 'simple-statistics'
 import maplibregl from 'maplibre-gl'
 import { Deck } from '@deck.gl/core'
-import BreakpointsMixin from '~/components/mixins/breakpoints'
+import BreakpointsMixin from './breakpoints'
 
 
 
@@ -66,8 +66,8 @@ export default class MapsMixin extends mixins(BreakpointsMixin) {
       try{
         let defaults = {center:[1.75, 47.5],zoom:5}
         options = { ...defaults, ...options }
-        if (!maplibregl.supported()) {
-          alert('Your browser does not support Maplibre GL')
+        if (!maplibregl.supported() && process.client) {
+          //alert('Your browser does not support Maplibre GL')
         } else {
           this.$data[container] = new maplibregl.Map({
           container: container,
@@ -92,8 +92,8 @@ export default class MapsMixin extends mixins(BreakpointsMixin) {
     return new Promise<void>((resolve,reject) =>{
       try{
         // empêche le menu contextuel de s'ouvrir sur le clic droit
-        document.getElementById(container)!
-        .addEventListener("contextmenu", e => e.preventDefault())
+          document.getElementById(container)!
+          .addEventListener("contextmenu", e => e.preventDefault())
         
         this.$data[container] = new Deck({
           canvas: container,
