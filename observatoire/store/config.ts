@@ -1,6 +1,6 @@
 
 export const state = () => ({
-  hasNewsletter : process.env.has_newsletter
+  hasNewsletter : process.env.NEWSLETTER
 })
 
 export type ConfigState = ReturnType<typeof state>

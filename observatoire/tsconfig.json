@@ -16,7 +16,6 @@
     "noEmit": true,
     "experimentalDecorators": true,
     "baseUrl": ".",
-    
     "types": [
       "@nuxt/types",
       "@nuxtjs/axios",

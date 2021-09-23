@@ -46,7 +46,7 @@ import BreakpointsMixin from '../../mixins/breakpoints'
 import MapsMixin from '../../mixins/maps'
 import * as turf from '@turf/helpers'
 import maplibregl from 'maplibre-gl'
-import axios from 'axios'
+import { $axios } from '../../../utils/api'
 import Sidebar from './sidebar.vue'
 import Legend from '../helpers/legend.vue'
 import Controls from '../helpers/controls.vue'
@@ -77,7 +77,7 @@ export default class OccupMap extends mixins(BreakpointsMixin,MapsMixin){
     year:'',
     month:''
   }
-  type='epci'
+  type='com'
   data:Array<OccupData>=[]
   loading=true
   categories=[
@@ -154,51 +154,71 @@ export default class OccupMap extends mixins(BreakpointsMixin,MapsMixin){
   }
 
   public async getTime(){
-    const response = await axios.get('http://localhost:8080/v1/journeys_monthly_flux/last')
-    this.time = response.data 
+    return new Promise<void>(async (resolve, reject) => {
+      try{
+        const response = await $axios.get('/journeys_monthly_flux/last')
+        this.time = response.data
+        resolve()
+      }
+      catch(err){
+        reject(err)
+      }
+    })
   }
 
   public async getData(){
-    try{
-      this.loading = true
-      const response = await axios.get('http://localhost:8080/v1/journeys_monthly_occupation?t='+this.type+'&year='+this.time.year+'&month='+this.time.month)
-      if(response.status === 204){
-          this.$buefy.snackbar.open({
-          message: response.data.message,
+    return new Promise<void>(async (resolve, reject) => {
+      try{
+        this.loading = true
+        const response = await $axios.get('/journeys_monthly_occupation?t='+this.type+'&year='+this.time.year+'&month='+this.time.month)
+        if(response.status === 204){
+            this.$buefy.snackbar.open({
+            message: response.data.message,
+            actionText:null
+          })
+        }
+        if(response.status === 200){
+          this.data = response.data
+        }
+        this.loading = false
+        resolve()
+      }
+      catch(error) {
+        this.$buefy.snackbar.open({
+          message: error.response.data.message,
           actionText:null
         })
+        this.loading = false
+        reject(error)
       }
-      if(response.status === 200){
-        this.data = response.data
-      }
-      this.loading = false
-    }
-    catch(error) {
-      this.$buefy.snackbar.open({
-        message: error.response.data.message,
-        actionText:null
-      })
-      this.loading = false
-    }
+    })
   }
 
   public async renderMaps() {
-    if (this.map === 'metropole'){ 
-      await this.createMap('map_'+this.map,this.territories.find(t => t.name === this.map) || this.territories[0])
-      this.addLayers('map_'+this.map)
-      this.$data['map_'+this.map].addControl(new maplibregl.NavigationControl(), 'top-left')
-    } else if(this.map === 'droms'){
-      for (let territory of this.territories.filter(t => t.name !== 'metropole')) {
-        await this.createMap('map_'+territory.name,territory)
-        this.addLayers('map_'+territory.name)
+    return new Promise<void>(async (resolve, reject) => {
+      try{
+        if (this.map === 'metropole'){ 
+          await this.createMap('map_'+this.map,this.territories.find(t => t.name === this.map) || this.territories[0])
+          this.addLayers('map_'+this.map)
+          this.$data['map_'+this.map].addControl(new maplibregl.NavigationControl(), 'top-left')
+        } else if(this.map === 'droms'){
+          for (let territory of this.territories.filter(t => t.name !== 'metropole')) {
+            await this.createMap('map_'+territory.name,territory)
+            this.addLayers('map_'+territory.name)
+          }
+        } else {
+          for (let territory of this.territories) {
+            await this.createMap('map_'+territory.name,territory)
+            this.addLayers('map_'+territory.name)
+          }
+          this.map_metropole.addControl(new maplibregl.NavigationControl(), 'top-left')
+        }
+        resolve()
       }
-    } else {
-      for (let territory of this.territories) {
-        await this.createMap('map_'+territory.name,territory)
-        this.addLayers('map_'+territory.name)
+      catch(err){
+        reject(err)
       }
-      this.map_metropole.addControl(new maplibregl.NavigationControl(), 'top-left')
-    }
+    })
   }
 
   public addLayers(container:string) {

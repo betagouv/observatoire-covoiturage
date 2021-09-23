@@ -43,7 +43,7 @@ import BreakpointsMixin from '../../mixins/breakpoints'
 import MapsMixin from '../../mixins/maps'
 import * as turf from '@turf/helpers'
 import maplibregl from 'maplibre-gl'
-import axios from 'axios'
+import { $axios } from '../../../utils/api'
 import Sidebar from './sidebar.vue'
 import Legend from '../helpers/legend.vue'
 import Controls from '../helpers/controls.vue'
@@ -139,29 +139,44 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
   }
 
   public async getData(){
-    this.loading = true
-    const response = await axios.get('http://localhost:8080/v1/aires_covoiturage')
-    this.data = response.data
-    this.loading = false
+    return new Promise<void>(async (resolve, reject) => {
+      try{
+        this.loading = true
+        const response = await $axios.get('/aires_covoiturage')
+        this.data = response.data
+        this.loading = false
+        resolve()
+      }
+      catch(err){
+        reject(err)
+      }
+    })
   }
 
   public async renderMaps() {
-    if (this.map === 'metropole'){ 
-      await this.createMap('map_'+this.map,this.territories.find(t => t.name === this.map) || this.territories[0])
-      this.addLayers('map_'+this.map)
-      this.$data['map_'+this.map].addControl(new maplibregl.NavigationControl(), 'top-left')
-    } else if(this.map === 'droms'){
-      for (let territory of this.territories.filter(t => t.name !== 'metropole')) {
-        await this.createMap('map_'+territory.name,territory)
-        this.addLayers('map_'+territory.name)
+    return new Promise<void>(async (resolve, reject) => {
+      try{  
+        if (this.map === 'metropole'){ 
+          await this.createMap('map_'+this.map,this.territories.find(t => t.name === this.map) || this.territories[0])
+          this.addLayers('map_'+this.map)
+          this.$data['map_'+this.map].addControl(new maplibregl.NavigationControl(), 'top-left')
+        } else if(this.map === 'droms'){
+          for (let territory of this.territories.filter(t => t.name !== 'metropole')) {
+            await this.createMap('map_'+territory.name,territory)
+            this.addLayers('map_'+territory.name)
+          }
+        } else {
+          for (let territory of this.territories) {
+            await this.createMap('map_'+territory.name,territory)
+            this.addLayers('map_'+territory.name)
+          }
+          this.map_metropole.addControl(new maplibregl.NavigationControl(), 'top-left')
+        }
       }
-    } else {
-      for (let territory of this.territories) {
-        await this.createMap('map_'+territory.name,territory)
-        this.addLayers('map_'+territory.name)
+      catch(err){
+        reject(err)
       }
-      this.map_metropole.addControl(new maplibregl.NavigationControl(), 'top-left')
-    }
+    })
   }
 
   public addLayers(container) {

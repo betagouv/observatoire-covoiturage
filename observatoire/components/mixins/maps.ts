@@ -67,7 +67,7 @@ export default class MapsMixin extends mixins(BreakpointsMixin) {
         let defaults = {center:[1.75, 47.5],zoom:5}
         options = { ...defaults, ...options }
         if (!maplibregl.supported() && process.client) {
-          //alert('Your browser does not support Maplibre GL')
+          alert('Your browser does not support Maplibre GL')
         } else {
           this.$data[container] = new maplibregl.Map({
           container: container,

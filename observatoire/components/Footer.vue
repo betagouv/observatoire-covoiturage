@@ -107,7 +107,7 @@ export default class Footer extends Vue{
     betagouv: 'https://beta.gouv.fr'
   }
   
-  hasNewletter(){
+  get hasNewletter(){
     if(this.$store.state.config.hasNewsletter.toLowerCase() == 'true'){
       return true
     } else {

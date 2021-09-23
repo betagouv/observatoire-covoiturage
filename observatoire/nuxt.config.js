@@ -2,7 +2,9 @@ export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
   publicRuntimeConfig: {
-    domain: process.env.DOMAIN,
+    url_app: process.env.URL_APP,
+    url_api: process.env.URL_API,
+    map_style: process.env.MAPLIBRE_STYLE
   },
 
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -48,7 +50,7 @@ export default {
     '@/assets/scss/main'
   ],
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: ['@/plugins/axios-accessor.ts'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: false,
@@ -68,7 +70,9 @@ export default {
     'nuxt-buefy'
   ],
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    baseURL:process.env.URL_API
+  },
 
   // Content module configuration: https://go.nuxtjs.dev/config-content
   content: {

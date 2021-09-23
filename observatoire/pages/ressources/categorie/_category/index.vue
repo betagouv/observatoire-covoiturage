@@ -23,7 +23,11 @@ import ContentList from '../../../../components/ContentList.vue'
 })
 export default class RessourcesCategory extends Vue{
   type = {name:'S\'informer',slug:'ressources'}
-  
+  title='Ressources du covoiturage au quotidien'
+  description=''
+  $config:any
+  $route:any
+
   async asyncData({ $content, params, error }) {
     const category = await $content('categories')
     .only(['name', 'slug'])
@@ -51,6 +55,24 @@ export default class RessourcesCategory extends Vue{
     const taxonomies = {'categories':categories,'themes':themes}
 
     return { category, ressources, taxonomies }
+  }
+
+  head() {
+    return {
+      title: this.title,
+      meta:[
+        { hid: 'description', name: 'description', content: this.description },
+        { hid: 'og:url', property: "og:url", content: `${this.$config.url_app}${this.$route.path}` },
+        { hid: 'og:title', property: "og:title", content: this.title},
+        { hid: "og:description", property: "og:description", content: this.description},
+        { hid: "twitter:url", name: "twitter:url", content: `${this.$config.url_app}${this.$route.path}`},
+        { hid: "twitter:title", name: "twitter:title", content: this.title},
+        { hid: "twitter:description", name: "twitter:description", content: this.description},
+      ],
+      link: [
+        { hid: "canonical", rel: "canonical", href: `${this.$config.url_app}${this.$route.path}` }
+      ]
+    }
   }
 }
 </script>

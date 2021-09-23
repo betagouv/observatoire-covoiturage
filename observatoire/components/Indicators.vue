@@ -132,8 +132,8 @@
 
 <script lang="ts">
 import { Component, Watch, Vue } from 'nuxt-property-decorator'
-import axios from 'axios'
 import { mapState } from 'vuex'
+import { $axios } from '../utils/api'
 import SearchTerritory from './SearchTerritory.vue'
 
 interface IndicatorsData {
@@ -202,14 +202,14 @@ export default class Indicators extends Vue{
 
   public async getTime(){
     if (this.time.year === '' || this.time.month === ''){
-      const response = await axios.get('http://localhost:8080/v1/journeys_monthly_flux/last')
+      const response = await $axios.get('/journeys_monthly_flux/last')
       this.time = response.data
     }
   }
   
   public async getData(){
     try{
-      const response = await axios.get('http://localhost:8080/v1/indicators?territory='+this.territory+'&t='+this.type+'&year='+this.time.year+'&month='+this.time.month)
+      const response = await $axios.get('/indicators?territory='+this.territory+'&t='+this.type+'&year='+this.time.year+'&month='+this.time.month)
       if(response.status === 204){
           this.$buefy.snackbar.open({
           message: response.data.message,
@@ -221,10 +221,12 @@ export default class Indicators extends Vue{
       }
     }
     catch(error) {
-      this.$buefy.snackbar.open({
-        message: error.response.data.message,
-        actionText:null
-      })
+      if (error.response) {
+        this.$buefy.snackbar.open({
+          message: error.response.data.message,
+          actionText:null
+        })
+      }
       this.data = {
         year: this.time.year,
         month: this.time.month,
@@ -240,7 +242,7 @@ export default class Indicators extends Vue{
 
   public async getBestJourneys(){
     try{
-      const response = await axios.get('http://localhost:8080/v1/best_journeys?territory='+this.territory+'&t='+this.type+'&year='+this.time.year+'&month='+this.time.month)
+      const response = await $axios.get('/best_journeys?territory='+this.territory+'&t='+this.type+'&year='+this.time.year+'&month='+this.time.month)
       if(response.status === 204){
           this.$buefy.snackbar.open({
           message: response.data.message,
@@ -252,10 +254,12 @@ export default class Indicators extends Vue{
       }
     }
     catch(error) {
-      this.$buefy.snackbar.open({
-        message: error.response.data.message,
-        actionText:null
-      })
+      if (error.response) {
+        this.$buefy.snackbar.open({
+          message: error.response.data.message,
+          actionText:null
+        })
+      }
       this.best_journeys = []
     }
   }

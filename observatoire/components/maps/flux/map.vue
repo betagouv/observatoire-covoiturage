@@ -50,7 +50,7 @@ import { Component,mixins,Prop,Watch } from 'nuxt-property-decorator'
 import BreakpointsMixin from '../../mixins/breakpoints'
 import MapsMixin from '../../mixins/maps'
 import {ArcLayer} from '@deck.gl/layers'
-import axios from 'axios'
+import { $axios } from '../../../utils/api'
 import Sidebar from './sidebar.vue'
 import Legend from '../helpers/legend.vue'
 import Controls from '../helpers/controls.vue'
@@ -88,7 +88,7 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
   deck_reunion=null
   type='com'
   flux:Array<FluxData>=[]
-  filteredFlux:Array<FluxData>=this.flux
+  filteredFlux:Array<FluxData>=[]
   time:Time={
     year:'',
     month:''
@@ -109,13 +109,10 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
   get legendTitle(){
     return "Nb de trajets entre "+this.$store.state.helpers.territories.find(t => t.type === this.type).name.toLowerCase()+" (source RPC)" 
   }
-
-  public async created() {
-    await this.getTime()
-    await this.getData()
-  }
   
   public async mounted(){
+    await this.getTime()
+    await this.getData()
     await this.renderMaps()
     await this.renderDecks()
   }
@@ -131,15 +128,15 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
   }
   
   @Watch('time', { deep: true })
-  onTimeChanged(val:Time, oldval:Time) {
+  async onTimeChanged(val:Time, oldval:Time) {
     if (oldval.year !== '' || oldval.month !== ''){
-      this.getData()
+      await this.getData()
     }
   }
 
   @Watch('type')
-  onTypeChanged() {
-    this.getData()
+  async onTypeChanged() {
+    await this.getData()
   }
 
   @Watch('screen.window', { deep: true })
@@ -156,33 +153,45 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
   }
 
   public async getTime(){
-    const response = await axios.get('http://localhost:8080/v1/journeys_monthly_flux/last')
-    this.time = response.data 
+    return new Promise<void>(async (resolve, reject) => {
+      try{
+        const response = await $axios.get('/journeys_monthly_flux/last')
+        this.time = response.data
+        resolve()
+      }
+      catch(err){
+        reject(err)
+      }
+    })
   }
 
   public async getData(){
-    try{
-      this.loading = true
-      const response = await axios.get('http://localhost:8080/v1/journeys_monthly_flux?t='+this.type+'&year='+this.time.year+'&month='+this.time.month)
-      if(response.status === 204){
-          this.$buefy.snackbar.open({
-          message: response.data.message,
+    return new Promise<void>(async (resolve, reject) => {
+      try{
+        this.loading = true
+        const response = await $axios.get('/journeys_monthly_flux?t='+this.type+'&year='+this.time.year+'&month='+this.time.month)
+        if(response.status === 204){
+            this.$buefy.snackbar.open({
+            message: response.data.message,
+            actionText:null
+          })
+        }
+        if(response.status === 200){
+          this.flux = response.data
+          this.slider = this.defaultSlider('journeys')
+        }
+        this.loading = false
+        resolve()
+      }
+      catch(error) {
+        this.$buefy.snackbar.open({
+          message: error.response.data.message,
           actionText:null
         })
+        this.loading = false
+        reject(error)
       }
-      if(response.status === 200){
-        this.flux = response.data
-        this.slider = this.defaultSlider('journeys')
-      }
-      this.loading = false
-    }
-    catch(error) {
-      this.$buefy.snackbar.open({
-        message: error.response.data.message,
-        actionText:null
-      })
-      this.loading = false
-    }
+    })
   }
 
   public jenksAnalyse(){
@@ -194,31 +203,48 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
   }
 
   public async renderMaps() {
-    if (this.map === 'metropole'){ 
-      this.createMap('map_'+this.map,this.territories.find(t => t.name === this.map)!)
-    } else if(this.map === 'droms'){
-      for (let territory of this.territories.filter(t => t.name !== 'metropole')) {
-        this.createMap('map_'+territory.name,territory)
+    return new Promise<void>(async(resolve, reject) => {
+      try{
+        if (this.map === 'metropole'){ 
+          await this.createMap('map_'+this.map,this.territories.find(t => t.name === this.map)!)
+        } else if(this.map === 'droms'){
+          for (let territory of this.territories.filter(t => t.name !== 'metropole')) {
+            await this.createMap('map_'+territory.name,territory)
+          }
+        } else {
+          for (let territory of this.territories) {
+            await this.createMap('map_'+territory.name,territory)
+          }
+        }
+        resolve()
       }
-    } else {
-      for (let territory of this.territories) {
-        this.createMap('map_'+territory.name,territory)
+      catch(err){
+        reject(err)
       }
-    }
+    })
   }
 
   public async renderDecks() {
-    if (this.map === 'metropole'){ 
-      this.createDeck('deck_'+this.map,this.territories.find(t => t.name === this.map)!,this.addArcLayer())
-    } else if(this.map === 'droms'){
-      for (let territory of this.territories.filter(t => t.name !== 'metropole')) {
-        this.createDeck('deck_'+territory.name,territory,this.addArcLayer())
+    return new Promise<void>(async(resolve, reject) => {
+      try{
+        if (this.map === 'metropole'){ 
+          await this.createDeck('deck_'+this.map,this.territories.find(t => t.name === this.map)!,this.addArcLayer())
+        } else if(this.map === 'droms'){
+          for (let territory of this.territories.filter(t => t.name !== 'metropole')) {
+          await this.createDeck('deck_'+territory.name,territory,this.addArcLayer())
+          }
+        } else {
+          for (let territory of this.territories) {
+          await  this.createDeck('deck_'+territory.name,territory,this.addArcLayer())
+          }
+        }
+        
+        resolve()
       }
-    } else {
-      for (let territory of this.territories) {
-        this.createDeck('deck_'+territory.name,territory,this.addArcLayer())
+      catch(err){
+        reject(err)
       }
-    }
+    })
   }
 
   public addArcLayer(){
@@ -244,7 +270,7 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
     }
   }
 
-  public async filterFlux(field:string){
+  public filterFlux(field:string){
     if(this.flux){
       this.filteredFlux = this.flux.filter(d => d[field] >= this.slider[0] && d[field] <= this.slider[1])
     }
