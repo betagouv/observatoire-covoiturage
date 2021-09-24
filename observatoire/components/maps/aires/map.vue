@@ -138,7 +138,7 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
     }
   }
 
-  public async getData(){
+  public getData(){
     return new Promise<void>(async (resolve, reject) => {
       try{
         this.loading = true
@@ -153,7 +153,7 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
     })
   }
 
-  public async renderMaps() {
+  public renderMaps() {
     return new Promise<void>(async (resolve, reject) => {
       try{  
         if (this.map === 'metropole'){ 
@@ -172,6 +172,7 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
           }
           this.map_metropole.addControl(new maplibregl.NavigationControl(), 'top-left')
         }
+        resolve()
       }
       catch(err){
         reject(err)

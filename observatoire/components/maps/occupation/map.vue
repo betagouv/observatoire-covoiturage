@@ -153,7 +153,7 @@ export default class OccupMap extends mixins(BreakpointsMixin,MapsMixin){
     await this.renderMaps()
   }
 
-  public async getTime(){
+  public getTime(){
     return new Promise<void>(async (resolve, reject) => {
       try{
         const response = await $axios.get('/journeys_monthly_flux/last')
@@ -166,7 +166,7 @@ export default class OccupMap extends mixins(BreakpointsMixin,MapsMixin){
     })
   }
 
-  public async getData(){
+  public getData(){
     return new Promise<void>(async (resolve, reject) => {
       try{
         this.loading = true
@@ -194,7 +194,7 @@ export default class OccupMap extends mixins(BreakpointsMixin,MapsMixin){
     })
   }
 
-  public async renderMaps() {
+  public renderMaps() {
     return new Promise<void>(async (resolve, reject) => {
       try{
         if (this.map === 'metropole'){ 
