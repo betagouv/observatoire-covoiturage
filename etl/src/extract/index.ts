@@ -5,42 +5,56 @@ import extract from 'extract-zip'
 import {createGunzip} from 'zlib'
 import { extractFull } from 'node-7z'
 
+export const checkIfFileExist = function(path:string, url:string, file?:string):boolean{
+  if(file){
+    return fs.existsSync(path+'/'+file)
+  } else {
+    const split = url.split('/')
+    const filename = split[split.length-1]
+    return fs.existsSync(path+'/'+filename)
+  }
+}
+
 export const downloadFile = async function(path:string, url: string, file?:string):Promise<void>{
   const spinner = ora()
   try{
-    spinner.start('Downloading file')    
-    const response = await axios.get(url,{responseType: 'stream'})
-    const contentDisposition =response.headers['content-disposition']
-    if(contentDisposition && contentDisposition.indexOf("filename=")!== -1){
-      const startIndex = contentDisposition.indexOf("filename=") + 10
-      const endIndex = contentDisposition.length - 1
-      const filename = contentDisposition.substring(startIndex, endIndex)
-      await writeFile(response,path,filename)
-      spinner.succeed(filename+' downloaded')
-      if (response.headers['content-type'] === 'application/zip'){
-        spinner.start('Extracting files from '+filename)
-        await extract(path+filename,{dir:path})
-        spinner.succeed()
+    if(checkIfFileExist(path,url,file)){
+      spinner.succeed('File already downloaded')
+    } else {
+      spinner.start('Downloading file')    
+      const response = await axios.get(url,{responseType: 'stream'})
+      const contentDisposition =response.headers['content-disposition']
+      if(contentDisposition && contentDisposition.indexOf("filename=")!== -1){
+        const startIndex = contentDisposition.indexOf("filename=") + 10
+        const endIndex = contentDisposition.length - 1
+        const filename = contentDisposition.substring(startIndex, endIndex)
+        await writeFile(response,path,filename)
+        spinner.succeed(filename+' downloaded')
+        if (response.headers['content-type'] === 'application/zip'){
+          spinner.start('Extracting files from '+filename)
+          await extract(path+filename,{dir:path})
+          spinner.succeed()
+        }
+      }else {
+        const filename = file || 'unknown'
+        await writeFile(response,path,filename)
+        if(filename.endsWith('.gz')){
+          spinner.start('Extracting file from '+filename)
+          await ungzFile(path,filename)
+          spinner.succeed(filename+' ungz')
+        }
+        else if(filename.endsWith('.7z')){
+          spinner.start('Extracting file from '+filename)
+          await un7zFile(path,filename)
+          spinner.succeed(filename+' un7z')
+        } 
+        else if (filename.endsWith('.zip')){
+          spinner.start('Extracting file from '+filename)
+          await extract(path+filename,{dir:path})
+          spinner.succeed(filename+' unzip')
+        }
+        spinner.succeed(filename+' downloaded')
       }
-    }else {
-      const filename = file || 'unknown'
-      await writeFile(response,path,filename)
-      if(filename.endsWith('.gz')){
-        spinner.start('Extracting file from '+filename)
-        await ungzFile(path,filename)
-        spinner.succeed(filename+' ungz')
-      }
-      else if(filename.endsWith('.7z')){
-        spinner.start('Extracting file from '+filename)
-        await un7zFile(path,filename)
-        spinner.succeed(filename+' un7z')
-      } 
-      else if (filename.endsWith('.zip')){
-        spinner.start('Extracting file from '+filename)
-        await extract(path+filename,{dir:path})
-        spinner.succeed(filename+' unzip')
-      }
-      spinner.succeed(filename+' downloaded')
     }
   }
   catch(err){
