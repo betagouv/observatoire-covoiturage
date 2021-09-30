@@ -1,6 +1,7 @@
 import fs from 'fs'
 import { PoolClient } from 'pg'
 import ora from 'ora'
+import csv from 'csv-parser'
 import {readXlsx} from '../transform'
 
 interface Xls{
@@ -32,22 +33,23 @@ export const execQuery = async function (client:PoolClient,path:string,filename:
   }
 }
 
-export const importCSV = async function (client:PoolClient,tableDef:string, path:string, filename: string,delimiter:string):Promise<void> {
-  const spinner = ora()
-  try{
-    spinner.start('Importing '+filename)
-    const sql = `COPY ${tableDef}
-    FROM '${path+filename}'
-    DELIMITER '${delimiter}'
-    ENCODING 'UTF8'
-    CSV HEADER;`
-    await client.query(sql)
-    spinner.succeed(filename+' imported')
-  }
-  catch(err){
-    spinner.fail('Error during import of '+filename)
-    console.log(err)
-  }
+export const importCSV = async function (client:PoolClient,csvFile:Sql,sql:Sql):Promise<void> {
+  return new Promise((resolve, reject) => {
+    let dataset:Array<object> = []
+    fs.createReadStream(csvFile.path+csvFile.filename)
+    .pipe(csv({
+      mapHeaders: ({ header, index }) => header.toLowerCase()
+    }))
+    .on('data', (data) => dataset.push(data))
+    .on('end', async () => {
+      await execQuery(client,sql.path,sql.filename,[JSON.stringify(dataset)])
+      resolve()
+    })
+    .on('error', (err) => {
+      console.log(err)
+      reject()
+    })
+  })
 }
 
 export const importXLSX = async function(client:PoolClient, xls:Xls,sql:Sql):Promise<void>{

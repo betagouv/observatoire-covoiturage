@@ -2,10 +2,11 @@ import fs from 'fs'
 import { join } from 'path'
 import axios from 'axios'
 import csv from 'csv-parser'
+import ora from 'ora'
 import { downloadFile } from '../extract'
 import {PoolClient} from 'pg'
 import pgConnection from '../database/connection'
-import {execQuery, importCSV} from '../load'
+import {execQuery} from '../load'
 
 interface File{
   url: string,
@@ -32,41 +33,60 @@ async function filesToImport(url:string){
   }
 }
 
-export const importFile = function(client:PoolClient,path:string, file:File):Promise<void>{
+export const importFile = function(client:PoolClient,path:string, file:string):Promise<void>{
+  const spinner = ora()
   return new Promise((resolve, reject) => {
-    fs.createReadStream(path+file.name)
-    .pipe(csv())
+    let table:String
+    let columns:String
+    let tableDef:String
+    let dataset:Array<object> = []
+    const chunkSize = 100000
+    spinner.start('Start importing '+file)
+    fs.createReadStream(path+file)
+    .pipe(csv({separator:';'}))
     .on('headers', async (headers) => {
-      const csvHeaders = headers[0].replace(/﻿/g,'')
-      const table = 'covoiturage.temp_'+file.name.slice(0,-4).replace(/-/g,'_')
-      const columns = 'id serial,'+csvHeaders.replace(/;/g,' varchar,')+' varchar'
-      const csv={
-        tableDef: table+'('+csvHeaders.replace(/;/g,',')+')',
-        path: path,
-        filename: file.name,
-        separator:';'
-      }
+      const csvHeaders = headers.map((header:string) => {
+        return header.replace(/﻿/g,'')
+      }).join(';')
+      table = 'covoiturage.temp_'+file.slice(0,-4).replace(/-/g,'_')
+      columns = csvHeaders.replace(/;/g,' varchar,')+' varchar'
+      tableDef = csvHeaders.replace(/;/g,',')
       if(client){
         await client.query(`DROP TABLE IF EXISTS ${table};`)
-        await client.query(`CREATE TABLE IF NOT EXISTS ${table}(${columns});`)
-        await importCSV(client,csv.tableDef,csv.path,csv.filename,csv.separator)
+        await client.query(`CREATE TABLE IF NOT EXISTS ${table}(id serial,${columns});`)
+      }else{
+        throw console.log('No connection to DB')
+      }
+    })
+    .on('data', (data) => dataset.push(data))
+    .on('end', async () => {
+      if(client){
+        for (let i = 0; i < dataset.length; i+= chunkSize){
+          await client.query(`INSERT INTO ${table}(${tableDef})
+          SELECT * FROM json_to_recordset('${JSON.stringify(dataset.slice(i,i+chunkSize)).replace(/'/g, "''")}')
+          as temp(${columns});`)
+        }
+        spinner.succeed(file+' imported')
         resolve()
       }else{
         throw console.log('No connection to DB')
       }
     })
-    .on('error',  reject)
+    .on('error', (err) => {
+      spinner.fail('Error during importinf '+file)
+      console.log(err)
+      reject()
+    })
   })
 }
 
 async function tempTables(client:PoolClient,files:Array<File>):Promise<void>{
   try{
     const path =join(__dirname, '../../assets/registre_covoiturage/')
-    await Promise.all(files.map(async (file) =>{
-        await downloadFile(path,file.url,file.name)
-        await importFile(client,path,file)
-      })
-    )    
+    for(const file of files){
+      await downloadFile(path,file.url,file.name)
+      await importFile(client,path,file.name)
+    }
   }
   catch(err){
     console.log(err)

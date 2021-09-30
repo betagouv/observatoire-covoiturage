@@ -26,13 +26,16 @@ export const aire_covoit = async function():Promise<void>{
     if(client){
       await tablesCreation(client)
       // import aires.csv
-      const csv={
-        tableDef: 'covoiturage.aires(id_lieu,nom_lieu,ad_lieu,com_lieu,insee,type,date_maj,ouvert,source,xlong,ylat,nbre_pl,nbre_pmr,duree,horaires,proprio,lumiere,comm)',
-        path: path,
-        filename: 'aires.csv',
-        separator:','
-      }
-      await importCSV(client,csv.tableDef,csv.path,csv.filename,csv.separator)
+      await importCSV(client,
+        {
+          path: join(__dirname, '../../assets/transport_data_gouv/'),
+          filename:'aires.csv',
+        },
+        {
+          path: join(__dirname, '../database/sql/covoiturage/'),
+          filename:'insert_table_aires.sql',
+        }
+      )
       await geoTreatment(client)
     }else{
       throw console.log('No connection to DB')

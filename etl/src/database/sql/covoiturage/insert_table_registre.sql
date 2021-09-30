@@ -124,11 +124,11 @@ UNION
 SELECT journey_id::varchar,trip_id::varchar,journey_start_datetime::timestamp,journey_start_lat::float,
 journey_start_lon::float,journey_start_insee::varchar,journey_start_postalcode::varchar as journey_start_postcode,journey_start_town::varchar,
 journey_start_country::varchar,journey_end_datetime::timestamp,journey_end_lat::float,journey_end_lon::float,journey_end_insee::varchar,
-journey_end_postalcode::varchar as journey_end_postcode,journey_end_town::varchar,journey_end_country::varchar,passenger_over_18::integer as passenger_seats
+journey_end_postalcode::varchar as journey_end_postcode,journey_end_town::varchar,journey_end_country::varchar,CASE WHEN passenger_over_18 = '' THEN 0 ELSE passenger_over_18::integer END as passenger_seats
 FROM covoiturage.temp_2021_07_vf
 UNION
 SELECT journey_id::varchar,trip_id::varchar,journey_start_datetime::timestamp,journey_start_lat::float,
 journey_start_lon::float,journey_start_insee::varchar,journey_start_postalcode::varchar as journey_start_postcode,journey_start_town::varchar,
 journey_start_country::varchar,journey_end_datetime::timestamp,journey_end_lat::float,journey_end_lon::float,journey_end_insee::varchar,
-journey_end_postalcode::varchar as journey_end_postcode,journey_end_town::varchar,journey_end_country::varchar,passenger_over_18::integer as passenger_seats
+journey_end_postalcode::varchar as journey_end_postcode,journey_end_town::varchar,journey_end_country::varchar,CASE WHEN passenger_over_18 = '' THEN 0 ELSE passenger_over_18::integer END as passenger_seats
 FROM covoiturage.temp_2021_08_vf

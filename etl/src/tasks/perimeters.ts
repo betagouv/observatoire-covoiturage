@@ -86,17 +86,25 @@ async function importData(client:PoolClient){
   await Promise.all([
     // import mvtcommune2021.csv
     importCSV(client,
-      'perimeters.insee_mvt_communes(mod, date_eff, typecom_av, com_av, tncc_av, ncc_av, nccenr_av, libelle_av, typecom_ap, com_ap, tncc_ap, ncc_ap, nccenr_ap, libelle_ap)',
-      join(__dirname, '../../assets/insee/'),
-      'mvtcommune2021.csv',
-      ','
+      {
+        path: join(__dirname, '../../assets/insee/'),
+        filename:'mvtcommune2021.csv',
+      },
+      {
+        path: join(__dirname, '../database/sql/perimeters/'),
+        filename:'insert_table_insee_mvt_communes.sql',
+      }
     ),
     // import commune2021.csv
     importCSV(client,
-      'perimeters.insee_com_2021(typecom, com, reg, dep, ctcd, arr, tncc, ncc, nccenr, libelle, can, comparent)',
-      join(__dirname, '../../assets/insee/'),
-      'commune2021.csv',
-      ','
+      {
+        path: join(__dirname, '../../assets/insee/'),
+        filename:'commune2021.csv',
+      },
+      {
+        path: join(__dirname, '../database/sql/perimeters/'),
+        filename:'insert_table_insee_com_2021.sql',
+      }
     ),
     // import Intercommunalite_Metropole_au_01-01-2019.xls
     importXLSX(client,{
@@ -166,24 +174,36 @@ async function importData(client:PoolClient){
     }),
     // import departement2021.csv
     importCSV(client,
-      'perimeters.insee_dep_2021(dep, reg, chef_lieu, tncc, ncc, nccenr, libelle)',
-      join(__dirname, '../../assets/insee/'),
-      'departement2021.csv',
-      ','
+      {
+        path: join(__dirname, '../../assets/insee/'),
+        filename:'departement2021.csv',
+      },
+      {
+        path: join(__dirname, '../database/sql/perimeters/'),
+        filename:'insert_table_insee_dep_2021.sql',
+      }
     ),
     // import region2021.csv
     importCSV(client,
-      'perimeters.insee_reg_2021(reg, chef_lieu, tncc, ncc, nccenr, libelle)',
-      join(__dirname, '../../assets/insee/'),
-      'region2021.csv',
-      ','
+      {
+        path: join(__dirname, '../../assets/insee/'),
+        filename:'region2021.csv',
+      },
+      {
+        path: join(__dirname, '../database/sql/perimeters/'),
+        filename:'insert_table_insee_reg_2021.sql',
+      }
     ),
     // import pays2021.csv
     importCSV(client,
-      'perimeters.insee_pays_2021(cog, actual, capay, crpay, ani, libcog, libenr, ancnom, codeiso2, codeiso3, codenum3)',
-      join(__dirname, '../../assets/insee/'),
-      'pays2021.csv',
-      ','
+      {
+        path: join(__dirname, '../../assets/insee/'),
+        filename:'pays2021.csv',
+      },
+      {
+        path: join(__dirname, '../database/sql/perimeters/'),
+        filename:'insert_table_insee_pays_2021.sql',
+      }
     )
   ])
   // insert data in table perimeters.passage_arr
