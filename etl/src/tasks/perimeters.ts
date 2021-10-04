@@ -120,7 +120,7 @@ async function importData(client:PoolClient){
     // import Intercommunalite_Metropole_au_01-01-2020.xlsx
     importXLSX(client,{
       path: join(__dirname, '../../assets/insee/'),
-      filename:'Intercommunalite_Metropole_au_01-01-2020_v1.xlsx',
+      filename:'Intercommunalite-Metropole_au_01-01-2020_v1.xlsx',
       sheet: 'Composition_communale',
       startRow: 5
     },
