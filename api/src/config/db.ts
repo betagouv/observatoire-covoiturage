@@ -10,7 +10,8 @@ const database: FastifyPluginAsync = async (server) => {
       user: process.env.DB_USERNAME,
       host: process.env.DB_HOST,
       database: process.env.DB_DATABASE,
-      password: process.env.DB_PASSWORD
+      password: process.env.DB_PASSWORD,
+      port: parseInt(process.env.DB_PORT || '5432', 10),
     })
     console.log('database connected')
   } catch (error) {
