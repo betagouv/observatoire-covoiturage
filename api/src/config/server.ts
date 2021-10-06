@@ -11,7 +11,7 @@ import autoLoad from 'fastify-autoload'
 const config: FastifyPluginAsync = async (server, options) => { 
   
   // add CORS and Helmet
-  server.register(cors)
+  server.register(cors,{origin:'*'})
   server.register(helmet)
 
   // compression - add x-protobuf
@@ -31,7 +31,7 @@ const config: FastifyPluginAsync = async (server, options) => {
         url: 'https://swagger.io',
         description: 'Find more info here'
       },
-      host: 'localhost:'+process.env.PORT || 'localhost',
+      host: process.env.DOMAIN+':'+process.env.PORT || 'localhost',
       schemes: ['http','https'],
       consumes: ['application/json'],
       produces: ['application/json'],
@@ -41,11 +41,6 @@ const config: FastifyPluginAsync = async (server, options) => {
     },
     exposeRoute: true
   })
-  // add plugin repository
-  /*server.register(autoLoad, {
-    dir: join(__dirname,'../plugins'),
-    options: { ...options },
-  })*/
   // add routes repository for V1
   server.register(autoLoad, {
     dir: join(__dirname,'../api/v1/routes'),
