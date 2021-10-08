@@ -1,0 +1,4 @@
+---
+name: Tendances
+slug: tendances
+---
