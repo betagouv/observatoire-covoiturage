@@ -1,4 +1,0 @@
----
-name: Opérateur
-slug: operateur
----
