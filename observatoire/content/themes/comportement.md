@@ -1,4 +1,0 @@
----
-name: Comportement
-slug: comportement
----
