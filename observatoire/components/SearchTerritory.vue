@@ -20,7 +20,7 @@
 
 <script lang="ts">
 import { Component, Prop, Watch,  Vue } from 'nuxt-property-decorator'
-import axios from 'axios'
+import { $axios } from '../utils/api'
 
 interface Territory{
   territory:string,
@@ -54,7 +54,7 @@ export default class SearchTerritory extends Vue{
   }
 
   public async getTerritories(){
-    const response = await axios.get('http://localhost:8080/v1/territories?year='+this.year)
+    const response = await $axios.get('/territories?year='+this.year)
     this.territories = response.data
   }
   
