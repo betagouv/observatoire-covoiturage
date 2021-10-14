@@ -31,7 +31,7 @@ export default class fluxHandler {
   static async lastRecordJourneysMonthly(request: FastifyRequest, reply: FastifyReply):Promise<void>{
     try {
       const client = await this.pg.connect()
-      const sql = `SELECT month,year FROM covoiturage.journeys_monthly_flux ORDER BY id DESC LIMIT 1;`
+      const sql = `SELECT month,year FROM covoiturage.journeys_monthly_flux WHERE type ='com' ORDER BY id DESC LIMIT 1;`
       const {rows} = await client.query(sql)
       if (!rows) {
         reply.code(404).send(new Error('page not found'))
