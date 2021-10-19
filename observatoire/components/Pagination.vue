@@ -51,7 +51,7 @@ import { Component, Prop, Vue } from 'nuxt-property-decorator'
 
 @Component
 export default class Pagination extends Vue{
-  @Prop({default:'actualites'}) type!: string
+  @Prop({default:'ressources'}) type!: string
   @Prop({default:1}) currentPage!: number
   @Prop({default:1}) lastPage!: number
 }

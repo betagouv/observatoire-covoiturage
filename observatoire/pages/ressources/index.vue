@@ -9,7 +9,7 @@
           <ContentList title="S'informer" :contents="ressources" :taxonomies="taxonomies" />
         </div>
         <div class="fr-col-12">
-          <Pagination :lastPage="lastPage" />
+          <Pagination :lastPage="lastPage" :type="type.slug"/>
         </div>
       </div>
     </div>

@@ -84,5 +84,8 @@ export default {
     splitChunks: {
       layouts: true
     }
+  },
+  generate: {
+    crawler: false
   }
 }
