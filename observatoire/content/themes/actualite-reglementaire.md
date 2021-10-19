@@ -1,4 +1,4 @@
 ---
 name: Actualité réglementaire
-slug: actualité-réglementaire
+slug: actualite-reglementaire
 ---

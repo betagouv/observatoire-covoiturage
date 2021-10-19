@@ -32,7 +32,7 @@
             <p class="fr-text--lead fr-text--alt">{{ ressource.description }}</p>
             <figure v-if="ressource.img" class="fr-content-media fr-content-media--lg" role="group">
               <div class="fr-content-media__img">
-                  <img :src="`${ressource.img}`" :alt="ressource.alt">
+                  <img :src="ressource.img" :alt="ressource.alt">
               </div>
               <figcaption v-if="ressource.legend" class="fr-content-media__caption">{{ressource.legend}}</figcaption>
             </figure>
