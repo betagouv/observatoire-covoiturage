@@ -1,19 +1,19 @@
 ---
-title: Freins et leviers au covoiturage courte et moyenne distance
+title: "Freins et leviers au covoiturage courte et moyenne distance"
 date: 2021-09-07T12:46:22.402Z
-description: Ce rapport commandé par le Ministère de la Transition Ecologique et
+description: "Ce rapport commandé par le Ministère de la Transition Ecologique et
   Solidaire présente des retours d'expériences, analyse les freins au
   développement de cette solution de mobilité et détaille les préconisations des
-  acteurs pour faciliter la pratique du co-voiturage courte distance.
+  acteurs pour faciliter la pratique du co-voiturage courte distance."
 categories:
   - etudes
 themes:
   - action-publique
 img: https://www.cerema.fr/sites/default/files/styles/uas_medium/public/media/images/2018/04/DaGLR5sU0AEM0ux.jpg%20large.jpg
-alt: Freins et leviers au covoiturage courte et moyenne distance
+alt: "Freins et leviers au covoiturage courte et moyenne distance"
 legend: © Arnaud Bouissou - Terra
 files:
-  - name: Freins et leviers au covoiturage courte et moyenne distance
+  - name: "Freins et leviers au covoiturage courte et moyenne distance"
     file: http://www.cerema.fr/system/files/documents/2018/10/Rapport_Cerema_covoiturage_courte-distance_final.pdf
     author: CEREMA
     publication_date: 2021-09-07T12:46:31.676Z
