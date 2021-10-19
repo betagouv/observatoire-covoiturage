@@ -1,8 +1,8 @@
 ---
-title: Développement du covoiturage régulier
+title: "Développement du covoiturage régulier"
 date: 2021-09-07T12:46:22.402Z
-description: Ce guide constitue une base de référence pour les collectivités territoriales et les entreprises souhaitant développer la pratique du covoiturage sur leur territoire ou entre salariés.
-Pratique et concret, il offre de nombreux témoignages d'entreprises, de collectivités, d'opérateurs et de techniciens. Il délivre des résultats d'étude permettant de mieux comprendre les « usages » du covoiturage, les coûts, les leviers d'une politique de développement de ce nouveau mode de déplacement.
+description: "Ce guide constitue une base de référence pour les collectivités territoriales et les entreprises souhaitant développer la pratique du covoiturage sur leur territoire ou entre salariés.
+Pratique et concret, il offre de nombreux témoignages d'entreprises, de collectivités, d'opérateurs et de techniciens. Il délivre des résultats d'étude permettant de mieux comprendre les « usages » du covoiturage, les coûts, les leviers d'une politique de développement de ce nouveau mode de déplacement."
 categories:
   - etudes
 themes:
@@ -10,7 +10,7 @@ themes:
 img: https://www.promobilite.fr/sites/default/files/developpement_covoit_regulier_photo.jpg
 alt: Développement du covoiturage régulier
 files:
-  - name: Développement du covoiturage régulier
+  - name: "Développement du covoiturage régulier"
     file: https://www.ademe.fr/sites/default/files/assets/documents/guide-covoiturage-8629.pdf
     author: ADEME
     publication_date: 2021-09-07T12:46:31.676Z
