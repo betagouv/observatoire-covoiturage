@@ -7,29 +7,29 @@
       <nav class="fr-nav" id="navigation" role="navigation" aria-label="Menu principal">
         <ul class="fr-nav__list">
           <li class="fr-nav__item">
-            <a href="/" class="fr-nav__link" target="_self">
+            <NuxtLink to="/" class="fr-nav__link" target="_self">
               Accueil
-            </a>
+            </NuxtLink>
           </li>
           <li class="fr-nav__item">
-            <a href="/actualites" class="fr-nav__link" target="_self">
+            <NuxtLink to="/actualites" class="fr-nav__link" target="_self">
               Actualités
-            </a>
+            </NuxtLink>
           </li>
           <li class="fr-nav__item">
-            <a href="/ressources" class="fr-nav__link" target="_self">
+            <NuxtLink to="/ressources" class="fr-nav__link" target="_self">
               S'informer
-            </a>
+            </NuxtLink>
           </li>
           <li class="fr-nav__item">
-            <a href="/cartes" class="fr-nav__link" target="_self">
+            <NuxtLink to="/cartes" class="fr-nav__link" target="_self">
               Cartes interactives
-            </a>
+            </NuxtLink>
           </li>
           <li class="fr-nav__item">
-            <a href="/dashboard" class="fr-nav__link" target="_self">
+            <NuxtLink to="/dashboard" class="fr-nav__link" target="_self">
               Tableau de bord
-            </a>
+            </NuxtLink>
           </li>
         </ul>
       </nav>

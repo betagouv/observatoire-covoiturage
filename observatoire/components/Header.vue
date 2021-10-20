@@ -21,9 +21,9 @@
                 </button>
               </div>
               <div class="fr-header__operator">
-                <a href="/" title="Observatoire du covoiturage au quotidien - Ministère de la transition écologique">
+                <NuxtLink to="/" title="Observatoire du covoiturage au quotidien - Ministère de la transition écologique">
                   <p class="fr-header__service-title">Observatoire national du covoiturage au quotidien</p>
-                </a>
+                </NuxtLink>
                 <p v-if="lgAndAbove" class="fr-header__service-tagline">
                   Comprendre le covoiturage
                 </p>

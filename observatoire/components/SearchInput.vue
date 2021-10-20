@@ -14,9 +14,10 @@
         <p v-if="!results || results.length === 0">Pas de résultats pour cette recherche...</p>
         <ul  v-if="results">
           <li v-for="result of results" :key="result.slug">
-            <a v-if="result.dir === '/actualites'" :href="`${result.dir}/${result.categories[0]}/${result.slug}`">Actualites > {{ result.title }}</a>
-            <a v-else-if="result.dir === '/ressources'" :href="`${result.dir}/${result.themes[0]}/${result.slug}`">S'informer > {{ result.title }}</a>
-            <a v-else :href="`/${result.slug}`">{{ result.title }}</a>
+            <NuxtLink v-if="result.dir === '/actualites'" :to="`${result.dir}/categorie/${result.categories[0]}/${result.slug}`" v-on:click.native="resetSearch()">Actualités > {{ result.title }}</NuxtLink>
+            <NuxtLink v-else-if="result.dir === '/ressources'" :to="`${result.dir}/theme/${result.themes[0]}/${result.slug}`" v-on:click.native="resetSearch()">S'informer > {{ result.title }}</NuxtLink>
+            <NuxtLink v-else-if="result.dir === '/cartes'" :to="`${result.dir}/${result.slug}`" @click="resetSearch">Cartes > {{ result.title }}</NuxtLink>
+            <NuxtLink v-else :to="`${result.dir}/${result.slug}`" @click="resetSearch">{{ result.title }}</NuxtLink>
           </li>
         </ul>
       </div>
@@ -45,6 +46,9 @@ export default class SearchInput extends Vue{
     .search(this.searchstring)
     .fetch()
   }
+  resetSearch(){
+    this.searchstring = ''
+  }
 }
 </script>
 <style lang="scss" scoped>
@@ -54,6 +58,7 @@ export default class SearchInput extends Vue{
     max-width: 400px;
     background-color: #ffffff;
     border: solid 1px #E7E7E7;
+    z-index: 1;
     p{
       padding: 0.2rem 0.5rem;
     }
