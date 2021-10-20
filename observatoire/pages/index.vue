@@ -9,13 +9,13 @@
           </div>
         </div>
         <div class="fr-col-8">
-          <h1>Bienvenue sur le site de l'Observatoire national du covoiturage du quotidien !</h1>
-          <p>Ce site permet de suivre l’évolution des pratiques du covoiturage courte distance en analysant les données ouvertes produites sur le sujet afin de permettre aux territoires et aux citoyens d'être mieux informé.</p>
+          <h1>Bienvenue sur le site de l'Observatoire national du covoiturage au quotidien !</h1>
+          <p>Ce site permet de suivre l’évolution des pratiques du covoiturage courte distance en analysant les données ouvertes produites sur le sujet afin de permettre aux territoires et aux acteurs des mobilités (entreprises, bureaux d'études,etc. ) d'être mieux informé.</p>
           <div class="fr-grid-row">
           <div class="fr-col-12">
-              <a href="/cartes" class="fr-btn fr-btn--secondary">
+              <NuxtLink to="/cartes" class="fr-btn fr-btn--secondary">
                 Consulter les cartes interactives
-              </a>
+              </NuxtLink>
           </div>
         </div>
         </div>
@@ -31,9 +31,9 @@
       </div>
       <div class="fr-grid-row">
         <div class="fr-col-12 align-center">
-            <a href="/actualites" class="fr-btn fr-btn--secondary">
+            <NuxtLink to="/actualites" class="fr-btn fr-btn--secondary">
               Plus d'actualités
-            </a>
+            </NuxtLink>
         </div>
       </div>
     </div>
@@ -50,9 +50,9 @@
       </div>
       <div class="fr-grid-row">
         <div class="fr-col-12 align-center">
-            <a href="/ressources" class="fr-btn fr-btn--secondary">
+            <NuxtLink to="/ressources" class="fr-btn fr-btn--secondary">
               Plus de ressources
-            </a>
+            </NuxtLink>
         </div>
       </div>
     </div>

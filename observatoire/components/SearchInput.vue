@@ -14,10 +14,10 @@
         <p v-if="!results || results.length === 0">Pas de résultats pour cette recherche...</p>
         <ul  v-if="results">
           <li v-for="result of results" :key="result.slug">
-            <NuxtLink v-if="result.dir === '/actualites'" :to="`${result.dir}/categorie/${result.categories[0]}/${result.slug}`" v-on:click.native="resetSearch()">Actualités > {{ result.title }}</NuxtLink>
-            <NuxtLink v-else-if="result.dir === '/ressources'" :to="`${result.dir}/theme/${result.themes[0]}/${result.slug}`" v-on:click.native="resetSearch()">S'informer > {{ result.title }}</NuxtLink>
-            <NuxtLink v-else-if="result.dir === '/cartes'" :to="`${result.dir}/${result.slug}`" @click="resetSearch">Cartes > {{ result.title }}</NuxtLink>
-            <NuxtLink v-else :to="`${result.dir}/${result.slug}`" @click="resetSearch">{{ result.title }}</NuxtLink>
+            <NuxtLink v-if="result.dir === '/actualites'" :to="`${result.dir}/categorie/${result.categories[0]}/${result.slug}`" v-on:click.native="resetSearch">Actualités > {{ result.title }}</NuxtLink>
+            <NuxtLink v-else-if="result.dir === '/ressources'" :to="`${result.dir}/theme/${result.themes[0]}/${result.slug}`" v-on:click.native="resetSearch">S'informer > {{ result.title }}</NuxtLink>
+            <NuxtLink v-else-if="result.dir === '/cartes'" :to="`${result.dir}/${result.slug}`" v-on:click.native="resetSearch">Cartes > {{ result.title }}</NuxtLink>
+            <NuxtLink v-else :to="`${result.dir}/${result.slug}`" v-on:click.native="resetSearch">{{ result.title }}</NuxtLink>
           </li>
         </ul>
       </div>
@@ -31,13 +31,13 @@ import { Component, Watch, Vue } from 'nuxt-property-decorator'
 @Component
 export default class SearchInput extends Vue{
   searchstring = ''
-  results = null
+  results = []
   $content:any
 
   @Watch('searchstring')
   async onSearchstringChanged() {
     if (!this.searchstring) {
-      this.results = null
+      this.results = []
       return
     }
     this.results = await this.$content('/',{deep:true})

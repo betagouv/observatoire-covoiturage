@@ -2,7 +2,7 @@
   <div v-if="data.territory !== ''" class="fr-container">
     <div class="fr-grid-row fr-grid-row--gutters">
       <div class="fr-col">
-        <h1 class="h-text-center">Chiffres clés sur le terrritoire : {{data.l_territory.charAt(0)}}{{data.l_territory.slice(1).toLowerCase()}} ({{data.month}}/{{data.year}})</h1>
+        <h1 class="h-text-center">Chiffres clés sur le territoire : {{data.l_territory.charAt(0)}}{{data.l_territory.slice(1).toLowerCase()}} ({{data.month}}/{{data.year}})</h1>
       </div>
     </div>
     <div class="fr-grid-row fr-grid-row--gutters">
