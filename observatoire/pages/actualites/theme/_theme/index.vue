@@ -6,7 +6,7 @@
            <Breadcrumb :current="theme[0].name"/>
         </div>
         <div class="fr-col-lg-10 fr-col-offset-lg-1">
-          <ContentList :title="`Actualités dans la catégorie : ${theme[0].name}`" :contents="actualites" :taxonomies="taxonomies"/>
+          <ContentList :title="`Actualités sur le thème : ${theme[0].name}`" :contents="actualites" :taxonomies="taxonomies"/>
         </div>
       </div>
     </div>

@@ -16,7 +16,7 @@
                 <span v-else>dans la catégorie:</span>
                 <span v-for="(taxonomy,index) in actualite.categories" :key="index">
                   <span v-if="index != 0">, </span>
-                  <span><a :href="`/actualites/categorie/${getTaxonomy(taxonomies.categories,taxonomy).slug}`">{{getTaxonomy(taxonomies.categories,taxonomy).name}}</a></span>
+                  <span><NuxtLink :to="`/actualites/categorie/${getTaxonomy(taxonomies.categories,taxonomy).slug}`">{{getTaxonomy(taxonomies.categories,taxonomy).name}}</NuxtLink></span>
                 </span>
               </span>
               <span v-if="actualite.categories && actualite.themes"> et </span>
@@ -25,7 +25,7 @@
                 <span v-else>dans le thème:</span>
                 <span v-for="(taxonomy,index) in actualite.themes" :key="index">
                   <span v-if="index != 0">, </span>
-                  <span><a :href="`/actualites/theme/${getTaxonomy(taxonomies.themes,taxonomy).slug}`">{{getTaxonomy(taxonomies.themes,taxonomy).name}}</a></span>
+                  <span><NuxtLink :to="`/actualites/theme/${getTaxonomy(taxonomies.themes,taxonomy).slug}`">{{getTaxonomy(taxonomies.themes,taxonomy).name}}</NuxtLink></span>
                 </span>
               </span>
             </div>

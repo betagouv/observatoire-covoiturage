@@ -9,7 +9,7 @@
           <ContentList title="S'informer" :contents="ressources" :taxonomies="taxonomies" />
         </div>
         <div class="fr-col-12">
-          <Pagination :lastPage="lastPage" />
+          <Pagination :lastPage="lastPage" :type="type.slug"/>
         </div>
       </div>
     </div>
@@ -33,7 +33,7 @@ export default class Ressources extends Vue{
   $route:any
 
   async asyncData({ $content }) {
-    const perPage = 3
+    const perPage = 9
     const ressources = await $content('ressources')
     .only(['title', 'description', 'img', 'slug','categories','themes','dir','createdAt'])
     .sortBy('createdAt', 'asc')
