@@ -25,12 +25,12 @@
             </span>
           </p>
           <h4 class="fr-card__title">
-            <a v-if="$route.path.indexOf('categorie') >= 0" :href="`${content.dir}/categorie/${content.categories[0]}/${content.slug}`" class="fr-card__link">
+            <NuxtLink v-if="$route.path.indexOf('theme') >= 0" :to="`${content.dir}/theme/${content.themes[0]}/${content.slug}`" class="fr-card__link">
               {{ content.title }}
-            </a>
-            <a v-else :href="`${content.dir}/theme/${content.themes[0]}/${content.slug}`" class="fr-card__link">
+            </NuxtLink>
+            <NuxtLink v-else :to="`${content.dir}/categorie/${content.categories[0]}/${content.slug}`" class="fr-card__link">
               {{ content.title }}
-            </a>
+            </NuxtLink>
           </h4>
           <p class="fr-card__desc">
             {{ content.description }}

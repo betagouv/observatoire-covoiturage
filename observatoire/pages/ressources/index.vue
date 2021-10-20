@@ -33,7 +33,7 @@ export default class Ressources extends Vue{
   $route:any
 
   async asyncData({ $content }) {
-    const perPage = 3
+    const perPage = 9
     const ressources = await $content('ressources')
     .only(['title', 'description', 'img', 'slug','categories','themes','dir','createdAt'])
     .sortBy('createdAt', 'asc')

@@ -4,26 +4,26 @@
     <div class="fr-collapse" id="breadcrumb">
       <ol class="fr-breadcrumb__list">
           <li>
-              <a class="fr-breadcrumb__link" href="/">Accueil</a>
+              <NuxtLink class="fr-breadcrumb__link" to="/">Accueil</NuxtLink>
           </li>
           <li v-if="taxonomy || current">
-            <a :href="`/${type.slug}`" class="fr-breadcrumb__link">
+            <NuxtLink :to="`/${type.slug}`" class="fr-breadcrumb__link">
               {{type.name}}
-            </a>
+            </NuxtLink>
           </li>
           <li v-else>
-            <a class="fr-breadcrumb__link" aria-current="page">{{type.name}}</a>
+            <p class="fr-breadcrumb__link" aria-current="page">{{type.name}}</p>
           </li>
           <li v-if="taxonomy">
-            <a  v-if="taxonomy.path && taxonomy.path.indexOf('categories') >= 0" :href="`/${type.slug}/categorie/${taxonomy.slug}`" class="fr-breadcrumb__link">
+            <NuxtLink  v-if="$route.path.indexOf('categorie') >= 0" :to="`/${type.slug}/categorie/${taxonomy.slug}`" class="fr-breadcrumb__link">
               {{taxonomy.name}}
-            </a>
-            <a v-else :href="`/${type.slug}/theme/${taxonomy.slug}`" class="fr-breadcrumb__link">
+            </NuxtLink>
+            <NuxtLink v-else :to="`/${type.slug}/theme/${taxonomy.slug}`" class="fr-breadcrumb__link">
               {{taxonomy.name}}
-            </a>
+            </NuxtLink>
           </li>
           <li  v-if="current">
-            <a class="fr-breadcrumb__link" aria-current="page">{{current}}</a>
+            <p class="fr-breadcrumb__link" aria-current="page">{{current}}</p>
           </li>
       </ol>
     </div>
