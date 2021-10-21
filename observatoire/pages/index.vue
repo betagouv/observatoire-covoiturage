@@ -9,8 +9,10 @@
           </div>
         </div>
         <div class="fr-col-8">
-          <h1>Bienvenue sur le site de l'Observatoire national du covoiturage au quotidien !</h1>
-          <p>Ce site permet de suivre l’évolution des pratiques du covoiturage courte distance en analysant les données ouvertes produites sur le sujet afin de permettre aux territoires et aux acteurs des mobilités (entreprises, bureaux d'études,etc. ) d'être mieux informé.</p>
+          <h1>Bienvenue sur le site de l'Observatoire national du covoiturage au quotidien* !</h1>
+          <p>Le site de référence pour suivre l’évolution des pratiques du covoiturage courte distance.
+          Notre mission est de collecter et diffuser les données ouvertes auprès des acteurs de la mobilité et de mesurer l’impact des politiques publiques.</p>
+          <i>*Le covoiturage au quotidien concerne principalement des trajets de moins de 50 km.</i>
           <div class="fr-grid-row">
           <div class="fr-col-12">
               <NuxtLink to="/cartes" class="fr-btn fr-btn--secondary">

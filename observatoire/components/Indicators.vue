@@ -53,7 +53,7 @@
                   <h4 class="fr-tile__title">
                       {{data.journeys.toLocaleString()}}
                   </h4>
-                  <p class="fr-tile__desc">trajets réalisés</p>
+                  <p class="fr-tile__desc">passagers transportés</p>
               </div>
               <div class="fr-tile__img">
                 <img src="/images/Trajet.svg" alt=""/>
@@ -66,7 +66,7 @@
                   <h4 class="fr-tile__title">
                       {{data.trips.toLocaleString()}}
                   </h4>
-                  <p class="fr-tile__desc">voyages réalisés</p>
+                  <p class="fr-tile__desc">véhicules partagés</p>
               </div>
               <div class="fr-tile__img">
                 <img src="/images/Covoiturage.svg" alt=""/>

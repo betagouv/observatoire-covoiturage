@@ -119,7 +119,7 @@ export default class OccupMap extends mixins(BreakpointsMixin,MapsMixin){
   }
 
   get legendTitleJourneys(){
-    return "Nb de voyages par "+this.$store.state.helpers.territories.find(t => t.type === this.type).name.toLowerCase() 
+    return "Nombre de véhicules partagés par "+this.$store.state.helpers.territories.find(t => t.type === this.type).name.toLowerCase() 
   }
 
   get legendTitleOccupation(){

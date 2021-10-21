@@ -107,7 +107,7 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
   }
 
   get legendTitle(){
-    return "Nb de trajets entre "+this.$store.state.helpers.territories.find(t => t.type === this.type).name.toLowerCase()+" (source RPC)" 
+    return "Nb de passagers transportés entre "+this.$store.state.helpers.territories.find(t => t.type === this.type).name.toLowerCase()+" (source RPC)" 
   }
   
   public async mounted(){

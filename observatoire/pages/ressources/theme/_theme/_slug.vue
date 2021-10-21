@@ -95,7 +95,7 @@ import PrevNext from '../../../../components/PrevNext.vue'
   components:{Breadcrumb,PrevNext}
 })
 export default class SingleRessource extends mixins(ContentMixin){
-  type = {name:'S\'informer',slug:'ressources'}
+  type = {name:'Ressources',slug:'ressources'}
   async asyncData({ $content, params }) {
     const ressource = await $content('ressources', params.slug)
     .where({themes:{$contains: params.theme}})

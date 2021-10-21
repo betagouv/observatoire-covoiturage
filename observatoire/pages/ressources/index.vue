@@ -6,7 +6,7 @@
           <Breadcrumb :type="type" />
         </div>
         <div class="fr-col-lg-10 fr-col-offset-lg-1">
-          <ContentList title="S'informer" :contents="ressources" :taxonomies="taxonomies" />
+          <ContentList title="Ressources" :contents="ressources" :taxonomies="taxonomies" />
         </div>
         <div class="fr-col-12">
           <Pagination :lastPage="lastPage" :type="type.slug"/>
@@ -26,7 +26,7 @@ import Pagination from '../../components/Pagination.vue'
   components:{Breadcrumb,ContentList,Pagination}
 })
 export default class Ressources extends Vue{
-  type = {name:'S\'informer',slug:'ressources'}
+  type = {name:'Ressources',slug:'ressources'}
   title='Ressources du covoiturage au quotidien'
   description=''
   $config:any
