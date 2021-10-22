@@ -6,4 +6,4 @@ img: carte_flux.png
 ---
 
 Cette carte représente les flux mensuels de trajets entre deux territoires.  
-Les données sont issuent du [registre de preuve de covoiturage](https://www.data.gouv.fr/fr/datasets/trajets-realises-en-covoiturage-registre-de-preuve-de-covoiturage/).  
+Les données sont issues du [registre de preuve de covoiturage](https://www.data.gouv.fr/fr/datasets/trajets-realises-en-covoiturage-registre-de-preuve-de-covoiturage/).  

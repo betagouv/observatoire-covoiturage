@@ -59,6 +59,16 @@
                 </li>
               </ul>
             </div>
+            <div v-if="actualite.link" class="fr-callout fr-fi-download-line">
+              <h4 class="fr-callout__title">Lien vers l'article source:</h4>
+              <ul class="fr-callout__text">
+                <li> 
+                  <a :href="actualite.link" target="_blank">
+                    {{actualite.link}}
+                  </a>
+                </li>
+              </ul>
+            </div>
           </article>
         </div>
       </div>

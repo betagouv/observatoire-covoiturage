@@ -1,5 +1,8 @@
 <template>
   <nav class="fr-sidemenu--full-border" :class="{'fr-p-1w': !lgAndAbove}" role="navigation" aria-label="Menu latéral">
+    <div class="map-title">
+      <h5>Nombre et occupation moyenne des véhicules partagés par territoires</h5>
+    </div>
     <div class="fr-sidemenu__inner">
       <ul class="fr-sidemenu__list">
         <div class="fr-sidemenu__title">Type de territoire :</div>
@@ -28,7 +31,7 @@
           </b-field>
         </li>
       </ul>
-      <p>{{journeys}} véhicules partagés selon les critères sélectionnés ci-dessus</p>      <b-field>
+      <p class="side-count">{{journeys}} véhicules partagés selon les critères sélectionnés ci-dessus</p>      <b-field>
         <button v-if="!lgAndAbove" class="fr-btn--menu fr-btn" title="Menu" @click="openSidebar">
           Fermer
         </button>

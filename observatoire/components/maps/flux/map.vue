@@ -107,7 +107,7 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
   }
 
   get legendTitle(){
-    return "Nb de passagers transportés entre "+this.$store.state.helpers.territories.find(t => t.type === this.type).name.toLowerCase()+" (source RPC)" 
+    return `Nb de passagers transportés entre ${this.$store.state.helpers.territories.find(t => t.type === this.type).name.toLowerCase()} (source RPC)` 
   }
   
   public async mounted(){
@@ -142,9 +142,9 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
   @Watch('screen.window', { deep: true })
   onWindowChanged() {
     for (let territory of this.territories) {
-      if(this.$data['deck_'+territory.name]){
-        this.$data['deck_'+territory.name].setProps({
-          ...this.$data['deck_'+territory.name].props,
+      if(this.$data[`deck_${territory.name}`]){
+        this.$data[`deck_${territory.name}`].setProps({
+          ...this.$data[`deck_${territory.name}`].props,
           width: "100%",
           height: "100%",
         })
@@ -169,7 +169,7 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
     return new Promise<void>(async (resolve, reject) => {
       try{
         this.loading = true
-        const response = await $axios.get('/journeys_monthly_flux?t='+this.type+'&year='+this.time.year+'&month='+this.time.month)
+        const response = await $axios.get(`/journeys_monthly_flux?t=${this.type}&year=${this.time.year}&month=${this.time.month}`)
         if(response.status === 204){
             this.$buefy.snackbar.open({
             message: response.data.message,
@@ -206,14 +206,14 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
     return new Promise<void>(async(resolve, reject) => {
       try{
         if (this.map === 'metropole'){ 
-          await this.createMap('map_'+this.map,this.territories.find(t => t.name === this.map)!)
+          await this.createMap(`map_${this.map}`,this.territories.find(t => t.name === this.map)!)
         } else if(this.map === 'droms'){
           for (let territory of this.territories.filter(t => t.name !== 'metropole')) {
-            await this.createMap('map_'+territory.name,territory)
+            await this.createMap(`map_${territory.name}`,territory)
           }
         } else {
           for (let territory of this.territories) {
-            await this.createMap('map_'+territory.name,territory)
+            await this.createMap(`map_${territory.name}`,territory)
           }
         }
         resolve()
@@ -228,14 +228,14 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
     return new Promise<void>(async(resolve, reject) => {
       try{
         if (this.map === 'metropole'){ 
-          await this.createDeck('deck_'+this.map,this.territories.find(t => t.name === this.map)!,this.addArcLayer())
+          await this.createDeck(`deck_${this.map}`,this.territories.find(t => t.name === this.map)!,this.addArcLayer())
         } else if(this.map === 'droms'){
           for (let territory of this.territories.filter(t => t.name !== 'metropole')) {
-          await this.createDeck('deck_'+territory.name,territory,this.addArcLayer())
+          await this.createDeck(`deck_${territory.name}`,territory,this.addArcLayer())
           }
         } else {
           for (let territory of this.territories) {
-          await  this.createDeck('deck_'+territory.name,territory,this.addArcLayer())
+          await  this.createDeck(`deck_${territory.name}`,territory,this.addArcLayer())
           }
         }
         resolve()
@@ -274,8 +274,8 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
       this.filteredFlux = this.flux.filter(d => d[field] >= this.slider[0] && d[field] <= this.slider[1])
     }
     for (let territory of this.territories) {
-      if(this.$data['deck_'+territory.name]){
-        this.$data['deck_'+territory.name].setProps({layers:[this.addArcLayer()]})
+      if(this.$data[`deck_${territory.name}`]){
+        this.$data[`deck_${territory.name}`].setProps({layers:[this.addArcLayer()]})
       }
     }
   }

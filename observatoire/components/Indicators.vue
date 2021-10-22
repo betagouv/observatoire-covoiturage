@@ -36,12 +36,9 @@
                   </select>
                 </div>
                 <div v-if="changeTerritoryOpen === true" class="fr-select-group">
-                  <label class="fr-label" for="select-hint">Sélectionner le type de territoire</label>
-                  <select v-model="type" class="fr-select" id="select-type" name="select-type">
-                    <option v-for="option in helpers.territories" :value="option.type" :key="option.type">{{option.name}}</option>
-                  </select>
+                  <SearchTerritory :year="time.year" @changeTerritory="emitTerritory"/>
                 </div>
-                <SearchTerritory v-if="changeTerritoryOpen === true" :year="time.year" :type="type" @changeTerritory="value => this.territory = value"/>
+                
               </div>
             </div>
           </div>
@@ -103,7 +100,7 @@
           </div>
         </div>
       </div>
-      <div class="fr-col" v-if="best_journeys.length > 0">
+      <div class="fr-col">
         <div class="fr-tile">
           <div class="fr-tile__body">
             <div class="fr-table fr-table--layout-fixed">
@@ -272,6 +269,11 @@ export default class Indicators extends Vue{
   public changeTerritory(){
     this.changeTerritoryOpen = !this.changeTerritoryOpen
     this.changeDateOpen = false
+  }
+
+  public emitTerritory(value:{territory:string, l_territory:string, type: string}){
+    this.territory = value.territory
+    this.type = value.type
   }
 }
 

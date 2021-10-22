@@ -25,7 +25,7 @@
                   <p class="fr-header__service-title">Observatoire national du covoiturage au quotidien</p>
                 </NuxtLink>
                 <p v-if="lgAndAbove" class="fr-header__service-tagline">
-                  Comprendre le covoiturage
+                  Comprendre le covoiturage courte distance
                 </p>
               </div>
             </div>

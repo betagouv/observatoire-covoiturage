@@ -28,12 +28,18 @@
             <NuxtLink v-if="$route.path.indexOf('theme') >= 0" :to="`${content.dir}/theme/${content.themes[0]}/${content.slug}`" class="fr-card__link">
               {{ content.title }}
             </NuxtLink>
-            <NuxtLink v-else :to="`${content.dir}/categorie/${content.categories[0]}/${content.slug}`" class="fr-card__link">
+            <NuxtLink v-else-if="content.dir.indexOf('actualites') >= 0" :to="`${content.dir}/categorie/${content.categories[0]}/${content.slug}`" class="fr-card__link">
+              {{ content.title }}
+            </NuxtLink>
+            <NuxtLink v-else-if="content.dir.indexOf('ressources') >= 0" :to="`${content.dir}/categorie/${content.categories[0]}/${content.slug}`" class="fr-card__link">
+              {{ content.title }}
+            </NuxtLink>
+            <NuxtLink v-else :to="`${content.dir}/${content.slug}`" class="fr-card__link">
               {{ content.title }}
             </NuxtLink>
           </h4>
           <p class="fr-card__desc">
-            {{ content.description }}
+            {{ shortString(content.description,200) }}
           </p>
         </div>
         <div class="fr-card__img">
