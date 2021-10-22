@@ -18,7 +18,7 @@
           </li>
           <li class="fr-nav__item">
             <NuxtLink to="/ressources" class="fr-nav__link" target="_self">
-              S'informer
+              Ressources
             </NuxtLink>
           </li>
           <li class="fr-nav__item">
@@ -29,6 +29,11 @@
           <li class="fr-nav__item">
             <NuxtLink to="/dashboard" class="fr-nav__link" target="_self">
               Tableau de bord
+            </NuxtLink>
+          </li>
+          <li class="fr-nav__item">
+            <NuxtLink to="/pages/glossaire" class="fr-nav__link" target="_self">
+              Glossaire
             </NuxtLink>
           </li>
         </ul>

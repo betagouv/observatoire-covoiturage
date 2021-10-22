@@ -1,5 +1,8 @@
 <template>
   <nav class="fr-sidemenu--full-border" :class="{'fr-p-1w': !lgAndAbove}" role="navigation" aria-label="Menu latéral">
+    <div class="map-title">
+      <h5>Aires de covoiturages sur le territoire français</h5>
+    </div>
     <div class="fr-sidemenu__inner">
       <ul class="fr-sidemenu__list">
         <div class="fr-sidemenu__title">Types d'aires de covoiturage :</div>
@@ -11,7 +14,7 @@
           </b-field>
         </li>
       </ul>
-      <p>{{allFeatures}} aires de covoiturage recensées (source: <a href="https://transport.data.gouv.fr/datasets/base-nationale-des-lieux-de-covoiturage/" target="_blank">transport.data.gouv.fr</a>)</p>
+      <p class="side-count">{{allFeatures}} aires de covoiturage recensées (source: <a href="https://transport.data.gouv.fr/datasets/base-nationale-des-lieux-de-covoiturage/" target="_blank">transport.data.gouv.fr</a>)</p>
       <b-field>
         <button v-if="!lgAndAbove" class="fr-btn--menu fr-btn" title="Menu" @click="openSidebar">
           Fermer

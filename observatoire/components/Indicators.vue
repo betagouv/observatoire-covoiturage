@@ -2,7 +2,7 @@
   <div v-if="data.territory !== ''" class="fr-container">
     <div class="fr-grid-row fr-grid-row--gutters">
       <div class="fr-col">
-        <h1 class="h-text-center">Chiffres clés sur le terrritoire : {{data.l_territory.charAt(0)}}{{data.l_territory.slice(1).toLowerCase()}} ({{data.month}}/{{data.year}})</h1>
+        <h1 class="h-text-center">Chiffres clés sur le territoire : {{data.l_territory.charAt(0)}}{{data.l_territory.slice(1).toLowerCase()}} ({{data.month}}/{{data.year}})</h1>
       </div>
     </div>
     <div class="fr-grid-row fr-grid-row--gutters">
@@ -36,12 +36,9 @@
                   </select>
                 </div>
                 <div v-if="changeTerritoryOpen === true" class="fr-select-group">
-                  <label class="fr-label" for="select-hint">Sélectionner le type de territoire</label>
-                  <select v-model="type" class="fr-select" id="select-type" name="select-type">
-                    <option v-for="option in helpers.territories" :value="option.type" :key="option.type">{{option.name}}</option>
-                  </select>
+                  <SearchTerritory :year="time.year" @changeTerritory="emitTerritory"/>
                 </div>
-                <SearchTerritory v-if="changeTerritoryOpen === true" :year="time.year" :type="type" @changeTerritory="value => this.territory = value"/>
+                
               </div>
             </div>
           </div>
@@ -53,7 +50,7 @@
                   <h4 class="fr-tile__title">
                       {{data.journeys.toLocaleString()}}
                   </h4>
-                  <p class="fr-tile__desc">trajets réalisés</p>
+                  <p class="fr-tile__desc">passagers transportés</p>
               </div>
               <div class="fr-tile__img">
                 <img src="/images/Trajet.svg" alt=""/>
@@ -66,7 +63,7 @@
                   <h4 class="fr-tile__title">
                       {{data.trips.toLocaleString()}}
                   </h4>
-                  <p class="fr-tile__desc">voyages réalisés</p>
+                  <p class="fr-tile__desc">véhicules partagés</p>
               </div>
               <div class="fr-tile__img">
                 <img src="/images/Covoiturage.svg" alt=""/>
@@ -103,7 +100,7 @@
           </div>
         </div>
       </div>
-      <div class="fr-col" v-if="best_journeys.length > 0">
+      <div class="fr-col">
         <div class="fr-tile">
           <div class="fr-tile__body">
             <div class="fr-table fr-table--layout-fixed">
@@ -272,6 +269,11 @@ export default class Indicators extends Vue{
   public changeTerritory(){
     this.changeTerritoryOpen = !this.changeTerritoryOpen
     this.changeDateOpen = false
+  }
+
+  public emitTerritory(value:{territory:string, l_territory:string, type: string}){
+    this.territory = value.territory
+    this.type = value.type
   }
 }
 

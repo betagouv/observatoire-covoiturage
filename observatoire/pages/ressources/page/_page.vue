@@ -26,7 +26,7 @@ import Pagination from '../../../components/Pagination.vue'
   components:{Breadcrumb,ContentList,Pagination}
 })
 export default class RessourcesPage extends Vue{
-  type = {name:'S\'informer',slug:'ressources'}
+  type = {name:'Ressources',slug:'ressources'}
   title='Ressources du covoiturage au quotidien'
   description=''
   currentPage:any

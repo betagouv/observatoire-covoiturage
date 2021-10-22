@@ -9,13 +9,19 @@
           </div>
         </div>
         <div class="fr-col-8">
-          <h1>Bienvenue sur le site de l'Observatoire national du covoiturage du quotidien !</h1>
-          <p>Ce site permet de suivre l’évolution des pratiques du covoiturage courte distance en analysant les données ouvertes produites sur le sujet afin de permettre aux territoires et aux citoyens d'être mieux informé.</p>
+          <h1>Bienvenue sur le site de l'Observatoire national du covoiturage au quotidien* !</h1>
+          <p>
+            Le site de référence pour suivre l’évolution des pratiques du covoiturage courte distance.
+            Notre mission est de collecter et diffuser les données ouvertes auprès des acteurs de la mobilité et de mesurer 
+            l’impact des politiques publiques.<br/>
+            <i>*Le covoiturage au quotidien concerne principalement des trajets de moins de 50 km.</i>
+          </p>
+          
           <div class="fr-grid-row">
           <div class="fr-col-12">
-              <a href="/cartes" class="fr-btn fr-btn--secondary">
+              <NuxtLink to="/cartes" class="fr-btn fr-btn--secondary">
                 Consulter les cartes interactives
-              </a>
+              </NuxtLink>
           </div>
         </div>
         </div>
@@ -26,14 +32,14 @@
     <div class="fr-container">
       <div class="fr-grid-row">
         <div class="fr-col-lg-10 fr-col-offset-lg-1">
-          <ContentList title="A la une" :contents="actualites" :taxonomies="taxonomies" />
+          <ContentList title="Les actualités du covoiturage au quotidien" :contents="actualites" :taxonomies="taxonomies" />
         </div>
       </div>
       <div class="fr-grid-row">
         <div class="fr-col-12 align-center">
-            <a href="/actualites" class="fr-btn fr-btn--secondary">
+            <NuxtLink to="/actualites" class="fr-btn fr-btn--secondary">
               Plus d'actualités
-            </a>
+            </NuxtLink>
         </div>
       </div>
     </div>
@@ -50,9 +56,9 @@
       </div>
       <div class="fr-grid-row">
         <div class="fr-col-12 align-center">
-            <a href="/ressources" class="fr-btn fr-btn--secondary">
+            <NuxtLink to="/ressources" class="fr-btn fr-btn--secondary">
               Plus de ressources
-            </a>
+            </NuxtLink>
         </div>
       </div>
     </div>

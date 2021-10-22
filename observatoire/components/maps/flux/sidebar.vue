@@ -1,8 +1,11 @@
 <template>
   <nav class="fr-sidemenu--full-border" :class="{'fr-p-1w': !lgAndAbove}" role="navigation" aria-label="Menu latéral">
+    <div class="map-title">
+      <h5>Flux mensuels de passagers transportés en covoiturage entre territoires</h5>
+    </div>
     <div class="fr-sidemenu__inner">
       <ul class="fr-sidemenu__list">
-        <div class="fr-sidemenu__title">Type de territoire sélectionné :</div>
+        <div class="fr-sidemenu__title">Flux entre :</div>
         <li class="fr-sidemenu__item">
           <b-field>
             <select v-model="selectedType" class="fr-select" id="select-type" name="select-type">
@@ -12,7 +15,7 @@
         </li>
       </ul>
       <ul class="fr-sidemenu__list">
-        <div class="fr-sidemenu__title">Mois sélectionné :</div>
+        <div class="fr-sidemenu__title">Période (Mois) :</div>
         <li class="fr-sidemenu__item">
           <select v-model="selectedTime.month" class="fr-select" id="select-month" name="select-month">
             <option v-for="option in helpers.monthList" :value="option.id" :key="option.id">{{option.name}}</option>
@@ -23,10 +26,10 @@
         </li>
       </ul>
       <ul class="fr-sidemenu__list">
-        <div class="fr-sidemenu__title">Nombre de trajets:</div>
+        <div class="fr-sidemenu__title">Nombre de passagers par flux:</div>
         <Slider :value.sync="selectedValue" :sliderOptions="{'min':sliderOptions.min,'max':sliderOptions.max,'step':sliderOptions.step}"/>
       </ul>
-      <p>{{journeys}} trajets dans le registre de preuve de covoiturage (un trajet correspond un couple conducteur-pasager)</p>
+      <p class="side-count">{{journeys}} passagers transportés selon les critères sélectionnés ci-dessus</p>
       <b-field>
         <button v-if="!lgAndAbove" class="fr-btn--menu fr-btn" title="Menu" @click="openSidebar">
           Fermer

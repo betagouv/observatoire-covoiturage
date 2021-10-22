@@ -12,7 +12,7 @@
       expanded
     >
       <template slot-scope="props">
-        {{ props.option.l_territory }} - {{ props.option.territory }}
+        {{ props.option.l_territory }} - {{ props.option.territory }} ({{ props.option.type }})
       </template>
     </b-autocomplete>
   </div>
@@ -30,7 +30,6 @@ interface Territory{
 @Component
 export default class SearchTerritory extends Vue{
   @Prop({ required: true }) year!: string
-  @Prop({ required: true }) type!: string
   territories:Array<Territory>=[]
   searchfield =''
   selectedTerritory:Territory | null = null
@@ -38,8 +37,8 @@ export default class SearchTerritory extends Vue{
 
   get filteredTeritories() {
     return this.territories.filter((option) => {
-      return option.type === this.type && (option.l_territory.toLowerCase().indexOf(this.searchfield.toLowerCase()) >= 0 || option.territory.indexOf(this.searchfield.toLowerCase()) >= 0)
-    }).slice(0, 100)
+      return (option.l_territory.toLowerCase().indexOf(this.searchfield.toLowerCase()) >= 0 || option.territory.indexOf(this.searchfield.toLowerCase()) >= 0)
+    }).slice(0, 20)
   }
 
   public async created() {
@@ -49,7 +48,7 @@ export default class SearchTerritory extends Vue{
    @Watch('selectedTerritory', { deep: true })
   onTerritoryChanged() {
     if(this.selectedTerritory){
-      this.$emit('changeTerritory', this.selectedTerritory.territory)
+      this.$emit('changeTerritory', this.selectedTerritory)
     }
   }
 

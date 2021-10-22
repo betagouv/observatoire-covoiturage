@@ -7,4 +7,4 @@ img: carte_aires.png
 ---
 
 Cette carte représente les aires de covoiturages catégorisés par type d'aire de covoiturage.  
-Les données sont issuent de [transport.data.gouv](https://transport.data.gouv.fr/datasets/base-nationale-des-lieux-de-covoiturage/).  
+Les données sont issues de [transport.data.gouv](https://transport.data.gouv.fr/datasets/base-nationale-des-lieux-de-covoiturage/).  

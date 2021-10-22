@@ -22,7 +22,7 @@ import ContentList from '../../../../components/ContentList.vue'
   components:{Breadcrumb,ContentList}
 })
 export default class RessourcesCategory extends Vue{
-  type = {name:'S\'informer',slug:'ressources'}
+  type = {name:'Ressources',slug:'ressources'}
   title='Ressources du covoiturage au quotidien'
   description=''
   $config:any
