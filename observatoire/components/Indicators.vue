@@ -2,7 +2,8 @@
   <div v-if="data.territory !== ''" class="fr-container">
     <div class="fr-grid-row fr-grid-row--gutters">
       <div class="fr-col">
-        <h1 class="h-text-center">Chiffres clés sur le territoire : {{data.l_territory.charAt(0)}}{{data.l_territory.slice(1).toLowerCase()}} ({{data.month}}/{{data.year}})</h1>
+        <h1 class="h-text-center">Chiffres clés sur le territoire : {{data.l_territory.charAt(0)}}{{data.l_territory.slice(1).toLowerCase()}}</h1>
+        <h2 class="h-text-center">Données concernant le mois : {{helpers.monthList.find(m=>m.id === data.month).name}} {{data.year}}</h2>
       </div>
     </div>
     <div class="fr-grid-row fr-grid-row--gutters">
@@ -58,7 +59,7 @@
                   </p>
               </div>
               <div class="fr-tile__img">
-                <img src="/images/Trajet.svg" alt=""/>
+                <img src="/images/Pouce.svg" alt=""/>
               </div>
             </div>
           </div>
