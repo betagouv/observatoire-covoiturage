@@ -2,6 +2,12 @@
   <nav class="fr-sidemenu--full-border" :class="{'fr-p-1w': !lgAndAbove}" role="navigation" aria-label="Menu latéral">
     <div class="map-title">
       <h5>Aires de covoiturages sur le territoire français</h5>
+      <p>
+        <NuxtLink to=/pages/glossaire/#aire target="_blank">
+          <span class="fr-fi-information-line" aria-hidden="true"></span>
+          définitions 
+        </NuxtLink>
+      </p>
     </div>
     <div class="fr-sidemenu__inner">
       <ul class="fr-sidemenu__list">

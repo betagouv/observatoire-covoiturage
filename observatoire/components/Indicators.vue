@@ -50,7 +50,12 @@
                   <h4 class="fr-tile__title">
                       {{data.journeys.toLocaleString()}}
                   </h4>
-                  <p class="fr-tile__desc">passagers transportés</p>
+                  <p class="fr-tile__desc">
+                    <NuxtLink to=/pages/glossaire/#passager>
+                      passagers transportés
+                      <span class="fr-fi-information-line" aria-hidden="true"></span>
+                    </NuxtLink>
+                  </p>
               </div>
               <div class="fr-tile__img">
                 <img src="/images/Trajet.svg" alt=""/>
@@ -63,7 +68,12 @@
                   <h4 class="fr-tile__title">
                       {{data.trips.toLocaleString()}}
                   </h4>
-                  <p class="fr-tile__desc">véhicules partagés</p>
+                  <p class="fr-tile__desc">
+                    <NuxtLink to=/pages/glossaire/#vehicule>
+                      véhicules partagés
+                      <span class="fr-fi-information-line" aria-hidden="true"></span>
+                    </NuxtLink>
+                  </p>
               </div>
               <div class="fr-tile__img">
                 <img src="/images/Covoiturage.svg" alt=""/>
@@ -78,7 +88,12 @@
                   <h4 class="fr-tile__title">
                       {{data.occupation_rate.toLocaleString()}}
                   </h4>
-                  <p class="fr-tile__desc">personnes par véhicule</p>
+                  <p class="fr-tile__desc">
+                    <NuxtLink to=/pages/glossaire/#occupation>
+                      personnes par véhicule
+                      <span class="fr-fi-information-line" aria-hidden="true"></span>
+                    </NuxtLink>
+                  </p>
               </div>
               <div class="fr-tile__img">
                 <img src="/images/groupe.svg" alt=""/>
@@ -91,7 +106,12 @@
                   <h4 class="fr-tile__title">
                       {{data.nb_aires.toLocaleString()}}
                   </h4>
-                  <p class="fr-tile__desc">aires de covoiturage</p>
+                  <p class="fr-tile__desc">
+                    <NuxtLink to=/pages/glossaire/#aire>
+                      aires de covoiturage
+                      <span class="fr-fi-information-line" aria-hidden="true"></span>
+                    </NuxtLink>
+                  </p>
               </div>
               <div class="fr-tile__img">
                 <img src="/images/Parking.svg" alt=""/>
