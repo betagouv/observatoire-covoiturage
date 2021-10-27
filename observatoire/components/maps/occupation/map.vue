@@ -123,7 +123,7 @@ export default class OccupMap extends mixins(BreakpointsMixin,MapsMixin){
   }
 
   get legendTitleOccupation(){
-    return "Occupation moyenne des véhicules" 
+    return "Nombre de personnes par véhicule (en moyenne)" 
   }
   
   @Watch('time', { deep: true })
