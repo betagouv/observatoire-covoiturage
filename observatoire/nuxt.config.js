@@ -41,7 +41,6 @@ export default {
     script: [
       { hid: 'module', type:'module', src:'/js/dsfr.module.min.js',defer:true,body:true},
       { hid: 'nomodule', nomodule:true, src: '/js/dsfr.nomodule.min.js',defer:true,body:true},
-      { hid: 'stats', src: '/js/stats.js'},
     ]
   },
 
@@ -67,7 +66,8 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
-    'nuxt-buefy'
+    'nuxt-buefy',
+    ['nuxt-matomo', { doNotTrack: true, matomoUrl: 'https://stats.data.gouv.fr/', siteId: 166, cookies: false }],
   ],
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
