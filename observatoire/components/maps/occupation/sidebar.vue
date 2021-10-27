@@ -1,7 +1,7 @@
 <template>
   <nav class="fr-sidemenu--full-border" :class="{'fr-p-1w': !lgAndAbove}" role="navigation" aria-label="Menu latéral">
     <div class="map-title">
-      <h5>Nombre et occupation moyenne des véhicules partagés par territoires</h5>
+      <h5>Nombre de personnes par véhicule partagé (en moyenne) et volume de ces véhicules par territoire</h5>
       <p>
         <NuxtLink to=/pages/glossaire/#occupation target="_blank">
           <span class="fr-fi-information-line" aria-hidden="true"></span>
