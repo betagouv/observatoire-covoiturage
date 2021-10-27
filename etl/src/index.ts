@@ -4,8 +4,8 @@ import { registre_covoit } from './tasks/registre_covoit'
 
 async function main(){
   try{
-    await perimeters()
-    await aire_covoit()
+    //await perimeters()
+    //await aire_covoit()
     await registre_covoit()
     console.log("All done")
     process.exit()  
