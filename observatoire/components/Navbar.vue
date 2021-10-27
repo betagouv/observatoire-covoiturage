@@ -13,7 +13,7 @@
           </li>
           <li class="fr-nav__item">
             <NuxtLink to="/pages/qui-sommes-nous" class="fr-nav__link" target="_self">
-              Qui sommes nous ?
+              Qui sommes-nous ?
             </NuxtLink>
           </li>
           <li class="fr-nav__item">

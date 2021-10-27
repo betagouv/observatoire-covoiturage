@@ -20,7 +20,7 @@
           <div class="fr-grid-row">
           <div class="fr-col-12">
             <NuxtLink to="/pages/qui-sommes-nous" class="fr-btn fr-btn--secondary">
-              Qui sommes nous ?
+              Qui sommes-nous ?
             </NuxtLink>
             <NuxtLink to="/cartes" class="fr-btn fr-btn--secondary">
               Consulter les cartes interactives
