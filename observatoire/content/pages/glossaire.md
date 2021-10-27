@@ -27,22 +27,24 @@ Exemple : un conducteur réalise un déplacement avec deux passagers différents
 <div role="alert" class="fr-alert fr-alert--info">
     <p class="fr-alert__title">Unité : nombre de personne(s) transporté(s)</p>
 </div>
-Un passager transporté est une personne ayant réalisé un trajet de covoiturage sans conduire de véhicules. Cet indicateur est calculé à partir du jeux de donnée <a href="https://www.data.gouv.fr/fr/datasets/trajets-realises-en-covoiturage-registre-de-preuve-de-covoiturage/">"Trajets réalisés en covoiturage"</a> du Registre de Preuve de Covoiturage et tient compte du nombre de sièges réservés par le passager. Il se base sur le champ 'passenger_seats' du jeux de données qui est le nombre de sièges réservés par l'occupant passager. Il est donc soumis à une anonymisation concernant les maille géographique "solitaire" (suppression des trajets sur les communes dont la somme des trajets à l'arrivé ou au départ du territoire est < 6)
+Un passager transporté est une personne ayant réalisé un trajet de covoiturage sans conduire de véhicules. Cet indicateur est calculé à partir du jeu de données <a href="https://www.data.gouv.fr/fr/datasets/trajets-realises-en-covoiturage-registre-de-preuve-de-covoiturage/">"Trajets réalisés en covoiturage"</a> du Registre de Preuve de Covoiturage et tient compte du nombre de sièges réservés par le passager. Il se base sur le champ 'passenger_seats' du jeu de données qui est le nombre de sièges réservés par l'occupant passager. Il est soumis à une anonymisation concernant les mailles géographiques "solitaires" (suppression des trajets sur les communes dont la somme des trajets à l'arrivé ou au départ de cette commune est < 6.)
 
 ### <a name="vehicule"></a>Véhicules partagés
 <div role="alert" class="fr-alert fr-alert--info">
     <p class="fr-alert__title">Unité : nombre de véhicule(s) partagé(s)</p>
 </div>
-Un véhicule partagé est un véhicule motorisé ayant réalisé un trajet de covoiturage avec au moins 2 covoitureurs transportés. Cet indicateur est calculé à partir du jeux de donnée <a href="https://www.data.gouv.fr/fr/datasets/trajets-realises-en-covoiturage-registre-de-preuve-de-covoiturage/">"Trajets réalisés en covoiturage"</a> du Registre de Preuve de Covoiturage. Il se base sur le champ 'trip_id' du jeux de données qui est l'identifiant permettant de recouper plusieurs couples passager/conducteur dans un même véhicule.
+Un véhicule partagé est un véhicule motorisé ayant réalisé un trajet de covoiturage avec au moins 2 covoitureurs transportés  (1 conducteur et au minimum 1 passager). Cet indicateur est calculé à partir du jeu de données <a href="https://www.data.gouv.fr/fr/datasets/trajets-realises-en-covoiturage-registre-de-preuve-de-covoiturage/">"Trajets réalisés en covoiturage"</a> du Registre de Preuve de Covoiturage. Il se base sur le champ 'trip_id' du jeu de données qui est l'identifiant permettant de recouper plusieurs couples passager/conducteur dans un même véhicule.
 
-### <a name="occupation"></a>Occupation moyenne des véhicules partagés
+### <a name="occupation"></a>Nombre de personnes moyen par véhicule partagé
 <div role="alert" class="fr-alert fr-alert--info">
     <p class="fr-alert__title">Unité : nombre de personne(s) par véhicule</p>
 </div>
-Cet indicateur représente le nombre de personnes moyen par véhicule partagés à l'arrivé ou au départ d'un territoire. Il est calculé à partir du jeux de donnée <a href="https://www.data.gouv.fr/fr/datasets/trajets-realises-en-covoiturage-registre-de-preuve-de-covoiturage/">"Trajets réalisés en covoiturage"</a> du Registre de Preuve de Covoiturage. Sa formule de calcul est : (somme des sièges réservés (champ 'passenger_seats') à l'arrivé ou au départ d'un territoire / nombre des véhicules partagés (champ 'trip_id') ayant transité sur le territoire) + 1 (afin d'inclure le conducteur du véhicule)
+Cet indicateur représente le nombre de personnes moyen par véhicule partagés à l'arrivé ou au départ d'un territoire  (conducteur compris). Il est calculé à partir du jeu de données <a href="https://www.data.gouv.fr/fr/datasets/trajets-realises-en-covoiturage-registre-de-preuve-de-covoiturage/">"Trajets réalisés en covoiturage"</a> du Registre de Preuve de Covoiturage.<br/> 
+Sa formule de calcul est : (somme des sièges réservés (champ 'passenger_seats') à l'arrivé ou au départ d'un territoire / nombre des véhicules partagés (champ 'trip_id') ayant transité sur le territoire) + 1 (afin d'inclure le conducteur du véhicule).<br/>
+Exemple : en considérant sur une période donnée 4 trajets (couple passager-conducteur). 1. Un trajet conducteur A / passager B (nombre de siège réservé = 1) 2. Un trajet conducteur A / passager C (nombre de siège réservé = 2) 3. Un trajet conducteur D / passager E (nombre de siège réservé = 1) 4. Un trajet conducteur D / passager F (nombre de siège réservé = 1) L'indicateur est ((1+2)+(1+1))/2 = 2,5 passagers par véhicule d'où 3,5 personnes par véhicule.
 
 ### <a name="aire"></a>Aires de covoiturage
 <div role="alert" class="fr-alert fr-alert--info">
     <p class="fr-alert__title">Unité : lieu de covoiturage</p>
 </div>
-Cet indicateur représente les lieux de covoiturage classés par type suivant la nomenclature établie par le Point d’Accès National aux données de transport <a href="https://transport.data.gouv.fr/datasets/base-nationale-des-lieux-de-covoiturage">"transport.data.gouv.fr"</a>
+Cet indicateur représente les lieux de covoiturage classés par type suivant la nomenclature établie par le Point d’Accès National aux données de transport <a href="https://transport.data.gouv.fr/datasets/base-nationale-des-lieux-de-covoiturage">"transport.data.gouv.fr"</a>.
