@@ -52,9 +52,8 @@
                       {{data.journeys.toLocaleString()}}
                   </h4>
                   <p class="fr-tile__desc">
-                    <NuxtLink to=/pages/glossaire/#passager>
+                    <NuxtLink to=/pages/glossaire/#passager target="_blank">
                       passagers transportés
-                      <span class="fr-fi-information-line" aria-hidden="true"></span>
                     </NuxtLink>
                   </p>
               </div>
@@ -70,9 +69,8 @@
                       {{data.trips.toLocaleString()}}
                   </h4>
                   <p class="fr-tile__desc">
-                    <NuxtLink to=/pages/glossaire/#vehicule>
+                    <NuxtLink to=/pages/glossaire/#vehicule target="_blank">
                       véhicules partagés
-                      <span class="fr-fi-information-line" aria-hidden="true"></span>
                     </NuxtLink>
                   </p>
               </div>
@@ -90,9 +88,8 @@
                       {{data.occupation_rate.toLocaleString()}}
                   </h4>
                   <p class="fr-tile__desc">
-                    <NuxtLink to=/pages/glossaire/#occupation>
+                    <NuxtLink to=/pages/glossaire/#occupation target="_blank">
                       personnes par véhicule
-                      <span class="fr-fi-information-line" aria-hidden="true"></span>
                     </NuxtLink>
                   </p>
               </div>
@@ -108,9 +105,8 @@
                       {{data.nb_aires.toLocaleString()}}
                   </h4>
                   <p class="fr-tile__desc">
-                    <NuxtLink to=/pages/glossaire/#aire>
+                    <NuxtLink to=/pages/glossaire/#aire target="_blank">
                       aires de covoiturage
-                      <span class="fr-fi-information-line" aria-hidden="true"></span>
                     </NuxtLink>
                   </p>
               </div>
