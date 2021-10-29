@@ -40,7 +40,7 @@ export default class SearchInput extends Vue{
       this.results = []
       return
     }
-    this.results = await this.$content('/',{deep:true})
+    this.results = await this.$content('',{deep:true})
     .only(['dir','categories','themes','title', 'slug'])
     .sortBy('createdAt', 'asc')
     .search(this.searchstring)
