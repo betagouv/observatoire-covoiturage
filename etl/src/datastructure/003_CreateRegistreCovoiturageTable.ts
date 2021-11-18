@@ -7,7 +7,7 @@ export class CreateRegistreCovoiturageTable extends AbstractDatastructure {
   readonly sql = `
       CREATE TABLE IF NOT EXISTS ${this.tableWithSchema} (
         id SERIAL PRIMARY KEY,
-        journey_id varchar,
+        journey_id varchar UNIQUE,
         trip_id varchar,
         journey_start_datetime timestamp,
         journey_start_lat float,

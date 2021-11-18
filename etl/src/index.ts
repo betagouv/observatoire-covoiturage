@@ -1,5 +1,5 @@
 import { buildApp, defaultConfig } from '@betagouvpdc/perimeters';
-import { datasets } from './datasets'
+import { datasets } from './datasets';
 
 import * as dotenv from 'dotenv';
 
@@ -10,7 +10,7 @@ async function main(): Promise<void> {
   const migrator = buildApp(defaultConfig);
   await migrator.prepare();
   await migrator.run();
-};
+}
 
 main().catch((e) => {
   console.error(e);

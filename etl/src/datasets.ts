@@ -5,6 +5,7 @@ import { CreateRegistreCovoiturageTable } from './datastructure/003_CreateRegist
 import { IgnAe2019 } from '@betagouvpdc/perimeters/dist/datasets/ign/admin_express/2019/IgnAe2019';
 import { IgnAe2020 } from '@betagouvpdc/perimeters/dist/datasets/ign/admin_express/2020/IgnAe2020';
 import { IgnAe2021 } from '@betagouvpdc/perimeters/dist/datasets/ign/admin_express/2021/IgnAe2021';
+// eslint-disable-next-line max-len
 import { EurostatCountries2020 } from '@betagouvpdc/perimeters/dist/datasets/eurostat/countries/2020/EurostatCountries2020';
 import { InseePerim2019 } from '@betagouvpdc/perimeters/dist/datasets/insee/perimetres/2019/InseePerim2019';
 import { InseePerim2020 } from '@betagouvpdc/perimeters/dist/datasets/insee/perimetres/2020/InseePerim2020';
@@ -20,6 +21,7 @@ import { InseeMvtcom2021 } from '@betagouvpdc/perimeters/dist/datasets/insee/mvt
 import { StaticMigrable } from '@betagouvpdc/perimeters';
 import { InseeCom2021 } from '@betagouvpdc/perimeters/dist/datasets/insee/communes/2021/InseeCom2021';
 import { TransportAires2021 } from './datasets/transport_data_gouv/aires_covoiturage/2021/TransportAires2021';
+import { RpcJourneys } from './datasets/rpc/journeys/RpcJourneys';
 
 export const datasets: Set<StaticMigrable> = new Set([
   CreateGeoTable,
@@ -43,4 +45,5 @@ export const datasets: Set<StaticMigrable> = new Set([
   DgclBanatic2021,
   InseeMvtcom2021,
   TransportAires2021,
+  RpcJourneys,
 ]);
