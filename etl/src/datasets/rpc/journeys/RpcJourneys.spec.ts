@@ -4,7 +4,7 @@ import { Pool } from 'pg';
 import { MemoryStateManager } from '@betagouvpdc/perimeters/dist/providers';
 import { AbstractDataset } from '@betagouvpdc/perimeters';
 import { createPool, createFileProvider } from '@betagouvpdc/perimeters/dist/helpers';
-import { RpcJourneys as Dataset } from './RpcJourneys';
+import RpcJourneys from './RpcJourneys';
 
 interface TestContext {
   connection: Pool;
@@ -13,7 +13,7 @@ interface TestContext {
 
 const test = anyTest as TestInterface<TestContext>;
 
-test.before(async (t) => {
+/*test.before(async (t) => {
   t.context.connection = createPool({
     user: process.env.POSTGRES_USER || 'postgres',
     password: process.env.POSTGRES_PASSWORD || 'postgres',
@@ -68,4 +68,4 @@ test.serial('should cleanup', async (t) => {
   await t.context.dataset.after();
   const query = `SELECT * FROM ${t.context.dataset.tableWithSchema}`;
   await t.throwsAsync(() => t.context.connection.query(query));
-});
+});*/
