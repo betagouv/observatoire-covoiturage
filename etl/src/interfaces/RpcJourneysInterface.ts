@@ -1,7 +1,5 @@
-import { StaticAbstractDataset, StaticMigrable } from '@betagouvpdc/perimeters/dist/interfaces/DatasetInterface'
+import { StaticAbstractDataset } from '@betagouvpdc/perimeters';
 
 export interface StaticRpcJourneysDataset extends StaticAbstractDataset {
   readonly month: number;
 }
-
-export type Datasets = Set<StaticMigrable>;

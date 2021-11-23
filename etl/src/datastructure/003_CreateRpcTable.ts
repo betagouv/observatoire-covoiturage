@@ -1,8 +1,8 @@
 import { AbstractDatastructure } from '@betagouvpdc/perimeters';
 
-export class CreateRegistreCovoiturageTable extends AbstractDatastructure {
-  static uuid = 'create_registre_covoiturage_table';
-  static table = 'registre_covoiturage';
+export class CreateRpcTable extends AbstractDatastructure {
+  static uuid = 'create_rpc_table';
+  static table = 'rpc';
   readonly indexWithSchema = this.tableWithSchema.replace('.', '_');
   readonly sql = `
       CREATE TABLE IF NOT EXISTS ${this.tableWithSchema} (

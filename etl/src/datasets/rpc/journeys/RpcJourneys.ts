@@ -2,8 +2,8 @@ import { AbstractDataset, ArchiveFileTypeEnum, FileTypeEnum, StaticMigrable } fr
 import { StaticRpcJourneysDataset } from '../../../interfaces/RpcJourneysInterface';
 import { getRpcDatasetUuid } from '../../../helpers';
 
-export default function rpcJourneys(year:number, month:number, url:string):StaticMigrable {
-  return class extends AbstractDataset { 
+export function rpcJourneys(year: number, month: number, url: string): StaticMigrable {
+  return class extends AbstractDataset {
     static get uuid(): string {
       const self = this as unknown as StaticRpcJourneysDataset;
       return getRpcDatasetUuid(self.producer, self.dataset, self.year, self.month);
@@ -12,8 +12,8 @@ export default function rpcJourneys(year:number, month:number, url:string):Stati
     static dataset = 'journeys';
     static year = year;
     static month = month;
-    static table = `registre_covoiturage_${this.year}_${this.month}`;
-    readonly targetTable = 'registre_covoiturage';
+    static table = `rpc_${this.year}_${this.month}`;
+    readonly targetTable = 'rpc';
     readonly url = url;
     readonly fileArchiveType: ArchiveFileTypeEnum = ArchiveFileTypeEnum.None;
     readonly rows: Map<string, [string, string]> = new Map([
@@ -70,5 +70,5 @@ export default function rpcJourneys(year:number, month:number, url:string):Stati
       FROM ${this.tableWithSchema} 
       ON CONFLICT DO NOTHING;
     `;
-  }
+  };
 }

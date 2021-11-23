@@ -1,4 +1,4 @@
-import { buildApp, defaultConfig } from '@betagouvpdc/perimeters';
+import { buildApp } from '@betagouvpdc/perimeters';
 import { datasets } from './datasets';
 
 import * as dotenv from 'dotenv';
@@ -6,9 +6,10 @@ import * as dotenv from 'dotenv';
 async function main(): Promise<void> {
   dotenv.config();
   const obsDatasets = await datasets();
-  defaultConfig.pool.host = process.env.POSTGRES_HOST || '127.0.0.1';
-  defaultConfig.app.migrations = obsDatasets;
-  const migrator = buildApp(defaultConfig);
+  const migrator = buildApp({
+    pool: { host: process.env.POSTGRES_HOST || '127.0.0.1' },
+    app: { migrations: obsDatasets },
+  });
   await migrator.prepare();
   await migrator.run();
 }
