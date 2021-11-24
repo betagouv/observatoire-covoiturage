@@ -25,14 +25,11 @@ jobs:
           HOST: ${{ secrets.REMOTE_HOST }}
           KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: Deploy
-        run: ssh $USER@$HOST $COMMAND
+        run: ssh $USER@$HOST $COMMAND && ssh $USER@$HOST $RESTART
         env: 
          HOST: ${{ secrets.REMOTE_HOST }}
          USER: ${{ secrets.REMOTE_USER }}
          COMMAND: >
-           export PUBLIC_DIR=/home/node/public &&
-           cd /home/node/app &&
-           sudo -u node git pull &&
-           sudo -u node /home/node/app/install.sh &&
+           sudo -u node /home/node/app/postdeploy.sh 
+         RESTART: >
            sudo systemctl restart app.service
- 
