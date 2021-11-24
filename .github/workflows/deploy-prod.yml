@@ -26,13 +26,14 @@ jobs:
       - name: Deploy
         run: ssh $USER@$HOST $COMMAND
         env: 
+         TAG: ${{ github.ref_name }}
          HOST: ${{ secrets.REMOTE_HOST }}
          USER: ${{ secrets.REMOTE_USER }}
          COMMAND: >
            export PUBLIC_DIR=/home/node/public &&
            cd /home/node/app &&
            sudo -u node git fetch &&
-           sudo -u node git merge $GITHUB_REF &&
+           sudo -u node git merge $TAG &&
            sh install.sh &&
            sudo systemctl restart app.service
  
