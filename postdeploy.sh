@@ -1,5 +1,6 @@
 #!/bin/bash
-set -e 
+set -e
+cd /home/node/app
 PUBLIC_DIR="$(pwd)/../public"
 git fetch
 git merge $1
