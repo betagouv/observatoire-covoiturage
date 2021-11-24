@@ -34,6 +34,6 @@ jobs:
            cd /home/node/app &&
            sudo -u node git fetch &&
            sudo -u node git merge $TAG &&
-           sh install.sh &&
+           sudo -u node /home/node/app/install.sh &&
            sudo systemctl restart app.service
  

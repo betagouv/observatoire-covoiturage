@@ -33,6 +33,6 @@ jobs:
            export PUBLIC_DIR=/home/node/public &&
            cd /home/node/app &&
            sudo -u node git pull &&
-           sh install.sh &&
+           sudo -u node /home/node/app/install.sh &&
            sudo systemctl restart app.service
  
