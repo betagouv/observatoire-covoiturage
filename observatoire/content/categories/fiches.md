@@ -1,0 +1,4 @@
+---
+name: Fiches
+slug: fiches
+---
