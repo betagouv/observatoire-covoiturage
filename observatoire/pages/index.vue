@@ -14,7 +14,9 @@
             Le site de référence pour suivre l’évolution des pratiques du covoiturage courte distance.
             Notre mission est de collecter et diffuser les données ouvertes auprès des acteurs de la mobilité et de mesurer 
             l’impact des politiques publiques.<br/>
-            <i>*Le covoiturage au quotidien concerne principalement des trajets de moins de 80 km.</i>
+            <i>*Le covoiturage au quotidien concerne principalement des trajets de moins de 80 km. 
+            Dans un premier temps, l'observatoire se concentre uniquement sur les données réelles enregistrées par les opérateurs du covoiturage 
+            partenaires du Registre de Preuve de Covoiturage.</i>
           </p>
           
           <div class="fr-grid-row">

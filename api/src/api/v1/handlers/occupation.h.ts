@@ -8,10 +8,8 @@ export default class occupationHandler {
   static async occupationMonthly(request: FastifyRequest<occupationTypes.monthly>, reply: FastifyReply):Promise<void>{
     try {
       const client = await this.pg.connect()
-      const sql = `SELECT a.territory, b.l_territory, a.journeys, a.occupation_rate, ST_AsGeoJSON(b.geom,6)::json as geom 
-      FROM covoiturage.journeys_monthly_occupation_rate a
-      LEFT JOIN perimeters.territories_points b on a.territory = b.territory AND a.type = b.type AND a.year = b.year
-      WHERE a.year = '${request.query.year}' AND a.month = '${request.query.month}' AND a.type = '${request.query.t}';`
+      const sql = `SELECT * FROM monthly_occupation
+      WHERE year = '${request.query.year}' AND month = '${request.query.month}' AND type = '${request.query.t}';`
       const result = await client.query(sql)
       if (!result.rows) {
         reply.code(404).send(new Error('page not found'))

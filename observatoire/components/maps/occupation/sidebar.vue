@@ -37,7 +37,8 @@
           </b-field>
         </li>
       </ul>
-      <p class="side-count">{{journeys}} véhicules partagés selon les critères sélectionnés ci-dessus</p>      <b-field>
+      <p class="side-count">{{journeys}} véhicules partagés selon les critères sélectionnés ci-dessus</p>
+      <b-field>
         <button v-if="!lgAndAbove" class="fr-btn--menu fr-btn" title="Menu" @click="openSidebar">
           Fermer
         </button>

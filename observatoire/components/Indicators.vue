@@ -3,7 +3,7 @@
     <div class="fr-grid-row fr-grid-row--gutters">
       <div class="fr-col">
         <h1 class="h-text-center">Chiffres clés sur le territoire : {{data.l_territory.charAt(0)}}{{data.l_territory.slice(1).toLowerCase()}}</h1>
-        <h2 class="h-text-center">Données concernant le mois : {{helpers.monthList.find(m=>m.id === data.month).name}} {{data.year}}</h2>
+        <h2 class="h-text-center">Données concernant le mois : {{helpers.monthList.find(m=>m.id === Number(time.month)).name}} {{time.year}}</h2>
       </div>
     </div>
     <div class="fr-grid-row fr-grid-row--gutters">
