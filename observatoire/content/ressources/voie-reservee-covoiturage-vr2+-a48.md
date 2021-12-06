@@ -1,5 +1,6 @@
 ---
 title: "Voie réservée au covoiturage (VR2+) sur l’autoroute A48"
+date: 2021-12-06T12:46:22.402Z
 description: "Ce document présente de manière synthétique les objectifs ainsi que le fonctionnement de la voie réservée au covoiturage (VR2+) sur l’autoroute A48"
 categories:
   - fiches
