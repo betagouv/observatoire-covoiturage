@@ -21,9 +21,7 @@
     "start": "node dist/index.js",
     "build": "tsc",
     "lint": "eslint src --ext .ts",
-    "test": "ava --config ava.cjs",
-    "migrate:create_views": "ts-node -r dotenv/config ./src/tasks/create_materialized_views.ts",
-    "migrate:refresh_views": "ts-node -r dotenv/config ./src/tasks/refresh_materialized_views.ts"
+    "test": "ava --config ava.cjs"
   },
   "dependencies": {
     "@betagouvpdc/perimeters": "^1.0.0-beta.3",

@@ -1,0 +1,36 @@
+name: 'Deploy prod'
+
+on:
+  release:
+    types: [published]
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+      - name: Prepare keys 
+        run: |
+          mkdir -p ~/.ssh
+          echo -e "$KEY" > ~/.ssh/id_rsa
+          chmod og-rwx ~/.ssh/id_rsa
+          ssh-keyscan $HOST >> ~/.ssh/known_hosts
+        env:
+          HOST: ${{ secrets.REMOTE_HOST }}
+          KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Deploy
+        run: ssh $USER@$HOST $COMMAND && ssh $USER@$HOST $RESTART
+        env: 
+         TAG: ${{ github.ref_name }}
+         HOST: ${{ secrets.REMOTE_HOST }}
+         USER: ${{ secrets.REMOTE_USER }}
+         COMMAND: >
+           sudo -u node /home/node/app/postdeploy.sh $TAG
+         RESTART: >
+           sudo systemctl restart app.service
+ 
