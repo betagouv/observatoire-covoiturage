@@ -1,4 +1,4 @@
-import { AbstractDataset, ArchiveFileTypeEnum, FileTypeEnum } from '@betagouvpdc/perimeters';
+import { AbstractDataset, ArchiveFileTypeEnum, FileTypeEnum } from '@betagouvpdc/evolution-geo';
 
 export class TransportAires2021 extends AbstractDataset {
   static producer = 'transport_data_gouv';

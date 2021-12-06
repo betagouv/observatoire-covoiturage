@@ -1,8 +1,8 @@
 import anyTest, { TestInterface } from 'ava';
 import { Pool } from 'pg';
-import { MemoryStateManager } from '@betagouvpdc/perimeters/dist/providers';
-import { Migrator, DatasetInterface } from '@betagouvpdc/perimeters';
-import { createPool, createFileProvider } from '@betagouvpdc/perimeters/dist/helpers/';
+import { MemoryStateManager } from '@betagouvpdc/evolution-geo/dist/providers';
+import { Migrator, DatasetInterface } from '@betagouvpdc/evolution-geo';
+import { createPool, createFileManager } from '@betagouvpdc/evolution-geo/dist/helpers/';
 import { CreateTerritoriesCodeTable } from '../../../datastructure/000_CreateTerritoriesCodeTable';
 import { TerritoriesCode2021 } from './TerritoriesCode2021';
 
@@ -17,12 +17,12 @@ const Dataset = TerritoriesCode2021;
 const table = TerritoriesCode2021.table;
 test.before(async (t) => {
   t.context.connection = createPool();
-  t.context.migrator = new Migrator(t.context.connection, createFileProvider(), {
+  t.context.migrator = new Migrator(t.context.connection, createFileManager(), {
     targetSchema: 'public',
     migrations: new Set([CreateTerritoriesCodeTable, Dataset]),
     noCleanup: false,
   });
-  t.context.dataset = new Dataset(t.context.connection, createFileProvider(), 'public');
+  t.context.dataset = new Dataset(t.context.connection, createFileManager(), 'public');
   await t.context.connection.query(`
     DROP TABLE IF EXISTS ${table}
   `);

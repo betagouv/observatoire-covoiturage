@@ -1,8 +1,8 @@
 import anyTest, { TestInterface } from 'ava';
 import { Pool } from 'pg';
-import { MemoryStateManager } from '@betagouvpdc/perimeters/dist/providers';
-import { Migrator, DatasetInterface } from '@betagouvpdc/perimeters';
-import { createPool, createFileProvider } from '@betagouvpdc/perimeters/dist/helpers/';
+import { MemoryStateManager } from '@betagouvpdc/evolution-geo/dist/providers';
+import { Migrator, DatasetInterface } from '@betagouvpdc/evolution-geo';
+import { createPool, createFileManager } from '@betagouvpdc/evolution-geo/dist/helpers/';
 import { CreateTerritoriesPointTable } from '../../../datastructure/001_CreateTerritoriesPointTable';
 import { TerritoriesPoint2020 } from './TerritoriesPoint2020';
 
@@ -23,12 +23,12 @@ test.before(async (t) => {
     host: process.env.POSTGRES_HOST || 'postgres',
     port: process.env.POSTGRES_PORT ? parseInt(process.env.POSTGRES_PORT, 10) : 5432,
   });
-  t.context.migrator = new Migrator(t.context.connection, createFileProvider(), {
+  t.context.migrator = new Migrator(t.context.connection, createFileManager(), {
     targetSchema: 'public',
     migrations: new Set([CreateTerritoriesPointTable, Dataset]),
     noCleanup: false,
   });
-  t.context.dataset = new Dataset(t.context.connection, createFileProvider(), 'public');
+  t.context.dataset = new Dataset(t.context.connection, createFileManager(), 'public');
   await t.context.connection.query(`
     DROP TABLE IF EXISTS ${table}
   `);

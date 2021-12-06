@@ -1,8 +1,8 @@
 import anyTest, { TestInterface } from 'ava';
 import { Pool } from 'pg';
-import { MemoryStateManager } from '@betagouvpdc/perimeters/dist/providers';
-import { Migrator, DatasetInterface } from '@betagouvpdc/perimeters';
-import { createPool, createFileProvider } from '@betagouvpdc/perimeters/dist/helpers/';
+import { MemoryStateManager } from '@betagouvpdc/evolution-geo/dist/providers';
+import { Migrator, DatasetInterface } from '@betagouvpdc/evolution-geo';
+import { createPool, createFileManager } from '@betagouvpdc/evolution-geo/dist/helpers/';
 import { CreateRpcTable } from '../../../datastructure/003_CreateRpcTable';
 import { rpcJourneys } from './RpcJourneys';
 
@@ -19,19 +19,13 @@ const url =
 const Dataset = rpcJourneys(2021, 1, url);
 const table = Dataset.table;
 test.before(async (t) => {
-  t.context.connection = createPool({
-    user: process.env.POSTGRES_USER || 'postgres',
-    password: process.env.POSTGRES_PASSWORD || 'postgres',
-    database: process.env.POSTGRES_DB || 'local',
-    host: process.env.POSTGRES_HOST || 'postgres',
-    port: process.env.POSTGRES_PORT ? parseInt(process.env.POSTGRES_PORT, 10) : 5432,
-  });
-  t.context.migrator = new Migrator(t.context.connection, createFileProvider(), {
+  t.context.connection = createPool();
+  t.context.migrator = new Migrator(t.context.connection, createFileManager(), {
     targetSchema: 'public',
     migrations: new Set([CreateRpcTable, Dataset]),
     noCleanup: false,
   });
-  t.context.dataset = new Dataset(t.context.connection, createFileProvider(), 'public');
+  t.context.dataset = new Dataset(t.context.connection, createFileManager(), 'public');
   await t.context.connection.query(`
       DROP TABLE IF EXISTS ${table}
     `);

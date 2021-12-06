@@ -1,4 +1,4 @@
-import { AbstractDatastructure } from '@betagouvpdc/perimeters';
+import { AbstractDatastructure } from '@betagouvpdc/evolution-geo';
 import { CreateTerritoriesPointTable } from './001_CreateTerritoriesPointTable';
 
 export class CreateMonthlyFluxTable extends AbstractDatastructure {

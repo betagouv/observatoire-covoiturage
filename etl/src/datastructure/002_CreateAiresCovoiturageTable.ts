@@ -1,4 +1,4 @@
-import { AbstractDatastructure } from '@betagouvpdc/perimeters';
+import { AbstractDatastructure } from '@betagouvpdc/evolution-geo';
 
 export class CreateAiresCovoiturageTable extends AbstractDatastructure {
   static uuid = 'create_aires_covoiturage_table';

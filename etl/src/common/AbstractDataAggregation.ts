@@ -1,14 +1,14 @@
 import {
+  FileManagerInterface,
   DatasetInterface,
   StateManagerInterface,
   State,
   StaticAbstractDataset,
   StaticMigrable,
-} from '@betagouvpdc/perimeters';
-import { FileProvider } from '@betagouvpdc/perimeters/dist/providers';
+} from '@betagouvpdc/evolution-geo';
 import { Pool } from 'pg';
-import { SqlError, ValidationError } from '@betagouvpdc/perimeters/dist/errors';
-import { getDatasetUuid, loadFileAsString } from '@betagouvpdc/perimeters/dist/helpers';
+import { SqlError, ValidationError } from '@betagouvpdc/evolution-geo/dist/errors';
+import { getDatasetUuid, loadFileAsString } from '@betagouvpdc/evolution-geo/dist/helpers';
 
 export abstract class AbstractDataAggregation implements DatasetInterface {
   static get uuid(): string {
@@ -28,7 +28,7 @@ export abstract class AbstractDataAggregation implements DatasetInterface {
     return `${this.targetSchema}.${this.table}`;
   }
 
-  constructor(protected connection: Pool, protected file: FileProvider, protected targetSchema: string = 'public') {}
+  constructor(protected connection: Pool, protected file: FileManagerInterface, protected targetSchema: string = 'public') {}
 
   async validate(state: StateManagerInterface): Promise<void> {
     const done = state.get(State.Done);

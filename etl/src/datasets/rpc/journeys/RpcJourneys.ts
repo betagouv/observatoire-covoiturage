@@ -1,4 +1,4 @@
-import { AbstractDataset, ArchiveFileTypeEnum, FileTypeEnum, StaticMigrable } from '@betagouvpdc/perimeters';
+import { AbstractDataset, ArchiveFileTypeEnum, FileTypeEnum, StaticMigrable } from '@betagouvpdc/evolution-geo';
 import { StaticRpcJourneysDataset } from '../../../interfaces/RpcJourneysInterface';
 import { getRpcDatasetUuid } from '../../../helpers';
 
@@ -12,7 +12,7 @@ export function rpcJourneys(year: number, month: number, url: string): StaticMig
     static dataset = 'journeys';
     static year = year;
     static month = month;
-    static table = `rpc_${this.year}_${this.month}`;
+    static table = `rpc_${year}_${month}`;
     readonly targetTable = 'rpc';
     readonly url = url;
     readonly fileArchiveType: ArchiveFileTypeEnum = ArchiveFileTypeEnum.None;

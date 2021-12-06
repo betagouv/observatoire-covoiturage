@@ -1,4 +1,4 @@
-import { buildApp } from '@betagouvpdc/perimeters';
+import { buildMigrator } from '@betagouvpdc/evolution-geo';
 import { datasets } from './datasets';
 
 import * as dotenv from 'dotenv';
@@ -6,7 +6,7 @@ import * as dotenv from 'dotenv';
 async function main(): Promise<void> {
   dotenv.config();
   const obsDatasets = await datasets();
-  const migrator = buildApp({
+  const migrator = buildMigrator({
     pool: { host: process.env.POSTGRES_HOST || '127.0.0.1' },
     app: { migrations: obsDatasets },
   });

@@ -1,4 +1,4 @@
-import { datasets as perimDatasets, StaticMigrable } from '@betagouvpdc/perimeters';
+import { datasets as perimDatasets, StaticMigrable } from '@betagouvpdc/evolution-geo';
 import { CreateTerritoriesCodeTable } from './datastructure/000_CreateTerritoriesCodeTable';
 import { CreateTerritoriesPointTable } from './datastructure/001_CreateTerritoriesPointTable';
 import { CreateAiresCovoiturageTable } from './datastructure/002_CreateAiresCovoiturageTable';

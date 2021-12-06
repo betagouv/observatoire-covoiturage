@@ -1,6 +1,6 @@
 import { AbstractDataAggregation } from '../../../common/AbstractDataAggregation';
-import { StaticAbstractDataset } from '@betagouvpdc/perimeters';
-import { CreateGeoTable } from '@betagouvpdc/perimeters/dist/datastructure/000_CreateGeoTable';
+import { StaticAbstractDataset } from '@betagouvpdc/evolution-geo';
+import { CreateGeoTable } from '@betagouvpdc/evolution-geo/dist/datastructure/000_CreateGeoTable';
 
 export class TerritoriesCode2020 extends AbstractDataAggregation {
   static producer = 'obs';
