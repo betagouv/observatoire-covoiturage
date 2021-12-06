@@ -1,4 +1,10 @@
-import { DatasetInterface, StateManagerInterface, State, StaticAbstractDataset, StaticMigrable } from '@betagouvpdc/perimeters';
+import {
+  DatasetInterface,
+  StateManagerInterface,
+  State,
+  StaticAbstractDataset,
+  StaticMigrable,
+} from '@betagouvpdc/perimeters';
 import { FileProvider } from '@betagouvpdc/perimeters/dist/providers';
 import { Pool } from 'pg';
 import { SqlError, ValidationError } from '@betagouvpdc/perimeters/dist/errors';
@@ -22,11 +28,7 @@ export abstract class AbstractDataAggregation implements DatasetInterface {
     return `${this.targetSchema}.${this.table}`;
   }
 
-  constructor(
-    protected connection: Pool,
-    protected file: FileProvider,
-    protected targetSchema: string = 'public',
-  ) {}
+  constructor(protected connection: Pool, protected file: FileProvider, protected targetSchema: string = 'public') {}
 
   async validate(state: StateManagerInterface): Promise<void> {
     const done = state.get(State.Done);
@@ -49,9 +51,7 @@ export abstract class AbstractDataAggregation implements DatasetInterface {
 
   async import(): Promise<void> {
     try {
-      console.log(this.sql)
       await this.connection.query(this.sql);
-      
     } catch (e) {
       throw new SqlError(this, (e as Error).message);
     }

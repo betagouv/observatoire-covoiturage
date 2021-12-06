@@ -19,7 +19,8 @@ export class CreateMonthlyOccupationTable extends AbstractDatastructure {
       );
       CREATE INDEX IF NOT EXISTS ${this.indexWithSchema}_id_index ON ${this.tableWithSchema} USING btree (id);
 
-      CREATE OR REPLACE FUNCTION ${this.targetSchema}.import_monthly_occupation(from_table varchar, year int, month int) 
+      CREATE OR REPLACE FUNCTION 
+      ${this.targetSchema}.import_monthly_occupation(from_table varchar, year int, month int) 
       RETURNS VOID LANGUAGE 'plpgsql' AS $PROC$
       DECLARE
       sql text;
