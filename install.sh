@@ -1,4 +1,7 @@
 #!/bin/sh
+echo "Build & launch etl"
+(cd etl && npm ci && npm run build && npm run start)
+
 echo "Install api"
 (cd api && npm ci && npm run build)
 

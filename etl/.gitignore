@@ -3,4 +3,9 @@ node_modules
 # generated code
 dist
 # Environment variables
+assets
 .env
+yarn-error.log
+.nyc_output
+package-lock.json
+yarn.lock

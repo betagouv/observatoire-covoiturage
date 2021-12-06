@@ -1,44 +1,42 @@
 {
   "name": "etl_observatoire_covoiturage",
-  "version": "1.0.0",
   "description": "Programme d'etl pour importer les données necessaires à l'observatoire",
-  "main": "src/index.ts",
   "author": "Beta Gouv <contact@covoiturage.beta.gouv.fr>",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/betagouv/observatoire-covoiturage.git",
+    "directory": "etl"
+  },
   "contributors": [
     "Ludovic Delhomme <ludovic.delhomme@beta.gouv.fr>"
   ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": ">=14"
+  },
   "license": "Apache-2.0",
   "scripts": {
-    "start": "ts-node -r dotenv/config ./src/index.ts",
-    "dev": "nodemon -L -r dotenv/config --watch src --exec ts-node --files ./src/index.ts",
-    "migrate:create_views": "ts-node -r dotenv/config ./src/tasks/create_materialized_views.ts",
-    "migrate:refresh_views": "ts-node -r dotenv/config ./src/tasks/refresh_materialized_views.ts",
-    "lint": "eslint . --ext .ts"
-  },
-  "_moduleAliases": {
-    "@": "src"
+    "start": "node dist/index.js",
+    "build": "tsc",
+    "lint": "eslint src --ext .ts",
+    "test": "ava --config ava.cjs"
   },
   "dependencies": {
-    "axios": "^0.21.1",
-    "csv-parser": "^3.0.0",
-    "extract-zip": "^2.0.1",
-    "mapshaper": "^0.5.41",
-    "node-7z": "^2.1.2",
-    "ora": "^5.4.0",
-    "pg": "^8.5.1",
-    "ts-node": "^9.1.1",
-    "xlsx": "^0.16.9",
-    "zlib": "^1.0.5"
+    "@betagouvpdc/perimeters": "^1.0.0-beta.3",
+    "dotenv": "^10.0.0"
   },
   "devDependencies": {
-    "@types/node": "^14.14.35",
-    "@types/node-7z": "^2.1.0",
-    "@types/pg": "^7.14.11",
+    "@types/node": "^14.17.19",
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "@typescript-eslint/parser": "^4.18.0",
-    "dotenv": "^8.2.0",
+    "ava": "^3.15.0",
     "eslint": "^7.22.0",
-    "nodemon": "^2.0.7",
+    "eslint-plugin-prettier": "^4.0.0",
+    "nyc": "^15.1.0",
+    "prettier": "^2.4.1",
+    "ts-node": "^9.1.1",
     "typescript": "^4.2.3"
   }
 }

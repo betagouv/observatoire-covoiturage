@@ -100,7 +100,7 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
 
   get allJourneys(){
     if(this.filteredFlux){
-      return this.filteredFlux.map((f: { journeys: any })=>f.journeys).reduce((a: any, b: any) => a + b, 0).toLocaleString('fr-FR')
+      return this.filteredFlux.map(f=>f.journeys).reduce((a, b) => a + b, 0).toLocaleString('fr-FR')
     } else{
       return 0
     }
@@ -195,7 +195,7 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
   }
 
   public jenksAnalyse(){
-   if(this.type !== 'country'){ 
+   if(this.type !== 'country' ){ 
     this.analyse = this.jenks(this.flux!,'journeys',['#000091','#000091','#000091','#000091','#000091','#000091'],[1,3,6,12,24,48])
    } else {
      this.analyse = this.jenks(this.flux!,'journeys',['#000091','#000091','#000091'],[3,12,48])
@@ -253,8 +253,8 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
       opacity:0.4,
       pickable: true,
       getWidth: (d:any) => this.classWidth( d.journeys,this.analyse)!,
-      getSourcePosition: (d:any) => [d.territory_1_lng,d.territory_1_lat],
-      getTargetPosition: (d:any) => [d.territory_2_lng,d.territory_2_lat],
+      getSourcePosition: (d:any) => [d.lng_1,d.lat_1],
+      getTargetPosition: (d:any) => [d.lng_2,d.lat_2],
       getSourceColor: [0,0,145],
       getTargetColor:  [0,0,145],
     })

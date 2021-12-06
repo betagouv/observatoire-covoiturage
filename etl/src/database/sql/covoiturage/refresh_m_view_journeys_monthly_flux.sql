@@ -1,1 +1,0 @@
-REFRESH MATERIALIZED VIEW covoiturage.journeys_monthly_flux;

@@ -55,7 +55,6 @@ interface OccupData {
   territory:string,
   l_territory:string,
   journeys:number,
-  passengers:number,
   occupation_rate:number,
   geom:{properties:{ type:string,coordinates:[number,number]}}
 }
@@ -102,7 +101,6 @@ export default class OccupMap extends mixins(BreakpointsMixin,MapsMixin){
         territory:d.territory,
         l_territory:d.l_territory,
         journeys:d.journeys,
-        passengers:d.passengers,
         occupation_rate:d.occupation_rate
       })))
     }else{

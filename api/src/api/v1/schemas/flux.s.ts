@@ -24,12 +24,12 @@ export default class monthlyFluxSchema {
           properties: {
             territory_1: {type:'string'},
             l_territory_1: {type:'string'},
-            territory_1_lng:{type:'number'},
-            territory_1_lat:{type:'number'},
+            lng_1:{type:'number'},
+            lat_1:{type:'number'},
             territory_2: {type:'string'},
             l_territory_2: {type:'string'},
-            territory_2_lng:{type:'number'},
-            territory_2_lat:{type:'number'},
+            lng_2:{type:'number'},
+            lat_2:{type:'number'},
             journeys:{type:'integer'},
             passengers:{type:'integer'}
           }

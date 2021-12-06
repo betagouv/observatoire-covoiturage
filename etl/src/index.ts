@@ -1,19 +1,20 @@
-import { perimeters } from './tasks/perimeters'
-import { aire_covoit } from './tasks/aire_covoit'
-import { registre_covoit } from './tasks/registre_covoit'
+import { buildApp } from '@betagouvpdc/perimeters';
+import { datasets } from './datasets';
 
-async function main(){
-  try{
-    //await perimeters()
-    //await aire_covoit()
-    await registre_covoit()
-    console.log("All done")
-    process.exit()  
-  }
-  catch(err){
-    console.log(err)
-    process.exit(1)
-  }  
+import * as dotenv from 'dotenv';
+
+async function main(): Promise<void> {
+  dotenv.config();
+  const obsDatasets = await datasets();
+  const migrator = buildApp({
+    pool: { host: process.env.POSTGRES_HOST || '127.0.0.1' },
+    app: { migrations: obsDatasets },
+  });
+  await migrator.prepare();
+  await migrator.run();
 }
 
-main()
+main().catch((e) => {
+  console.error(e);
+  process.exit(1);
+});
