@@ -37,7 +37,7 @@
           </b-field>
         </li>
       </ul>
-      <p class="side-count">{{journeys}} véhicules partagés selon les critères sélectionnés ci-dessus</p>
+      <p class="side-count">{{vehicles.toLocaleString()}} véhicules partagés selon les critères sélectionnés ci-dessus</p>
       <b-field>
         <button v-if="!lgAndAbove" class="fr-btn--menu fr-btn" title="Menu" @click="openSidebar">
           Fermer
@@ -51,6 +51,7 @@
 import { Component, mixins, PropSync, Prop, Watch } from 'nuxt-property-decorator'
 import BreakpointsMixin from '../../mixins/breakpoints'
 import { mapState } from 'vuex'
+import { $axios } from '../../../utils/api'
 
 @Component({
   computed:{
@@ -64,14 +65,29 @@ export default class OccupSidebar extends mixins(BreakpointsMixin){
   @PropSync('time', { required: true, type: Object }) selectedTime!: { year: String, month: String }
   @Prop({ required: true }) journeys!: string
 
+  vehicles = 0
+
   @Watch('time',{ deep: true })
   onTimeChanged() {
     this.$store.commit('screen/setSidebarOpen',false)
+    this.getVehicles()
   }
 
   @Watch('type')
   onTypeChanged() {
     this.$store.commit('screen/setSidebarOpen',false)
+  }
+
+  public async getVehicles(){
+    try{
+      const response = await $axios.get(`/indicators?territory=XXXXX&t=country&year=${this.selectedTime.year}&month=${this.selectedTime.month}`)
+      if(response.status === 200){
+        this.vehicles = response.data[0].trips
+      }
+    }
+    catch(error) {
+      this.vehicles = 0
+    }
   }
 }
 </script>
