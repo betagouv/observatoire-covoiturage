@@ -48,3 +48,23 @@ Exemple : en considérant sur une période donnée 4 trajets (couple passager-co
     <p class="fr-alert__title">Unité : lieu de covoiturage</p>
 </div>
 Cet indicateur représente les lieux de covoiturage classés par type suivant la nomenclature établie par le Point d’Accès National aux données de transport <a href="https://transport.data.gouv.fr/datasets/base-nationale-des-lieux-de-covoiturage">"transport.data.gouv.fr"</a>.
+
+### <a name="km_parcourus"></a>Distance parcouru
+<div role="alert" class="fr-alert fr-alert--info">
+    <p class="fr-alert__title">Unité : km parcourus</p>
+</div>
+Cet indicateur représente la somme des distances parcourues par chacun des couples passager / conducteur des jeux de données <a href="https://www.data.gouv.fr/fr/datasets/trajets-realises-en-covoiturage-registre-de-preuve-de-covoiturage/">"Trajets réalisés en covoiturage"</a>.
+
+### <a name="co2"></a>CO₂ économisé
+<div role="alert" class="fr-alert fr-alert--info">
+    <p class="fr-alert__title">Unité : tonnes de CO₂ économisées</p>
+</div>
+Cet indicateur représente la quantité de CO₂ économisée par les trajets issuent des jeux de données <a href="https://www.data.gouv.fr/fr/datasets/trajets-realises-en-covoiturage-registre-de-preuve-de-covoiturage/">"Trajets réalisés en covoiturage"</a>.
+Les économies de CO2 sont calculées en partant du principe que si le passager s’est déplacé en covoiturage, alors il n’a pas utilisé son véhicule personnel. Ceci représente donc un déplacement en moins réalisé par une voiture et autant de CO2 économisé. Les caractéristiques spécifiques des véhicules ne sont pas connues par le service. De ce fait, nous utilisons la moyenne des rejets de l’ensemble des voitures particulières immatriculées en France. Selon, l’ADEME (Agence de l’Environnement et de la Maîtrise de l'Énergie), les émissions moyennes de Gaz à Effet de Serre (GES) par véhicule et par kilomètre (du puits à la roue) sont de +195 g CO2 équivalent par véhicule-kilomètre (chiffres de 2016).
+
+### <a name="petrole"></a>Pétrole économisé
+<div role="alert" class="fr-alert fr-alert--info">
+    <p class="fr-alert__title">Unité : litres de pétrole économisés</p>
+</div>
+Cet indicateur représente la quantité de pétrole économisé par les trajets issuent des jeux de données <a href="https://www.data.gouv.fr/fr/datasets/trajets-realises-en-covoiturage-registre-de-preuve-de-covoiturage/">"Trajets réalisés en covoiturage"</a>.
+Les économies d’énergie en kilogramme équivalent pétrole (kep) sont calculées en partant du principe que si le passager s’est déplacé en covoiturage, alors il n’a pas utilisé son véhicule personnel. Ceci représente donc un déplacement en moins réalisé par une voiture et autant de kep économisé. Les caractéristiques spécifiques des véhicules ne sont pas connues par le service. De ce fait, nous utilisons la moyenne kep des voitures particulières immatriculées en France. Selon, l’ADEME (Agence de l’Environnement et de la Maîtrise de l'Énergie), les chiffres clés 2015 - Climat, air et énergie, les kep par véhicule particulier et par kilomètre (du puits à la roue) sont de 0,05 kep / km / véhicule particulier en moyenne.

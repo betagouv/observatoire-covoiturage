@@ -7,7 +7,7 @@
       </div>
     </div>
     <div class="fr-grid-row fr-grid-row--gutters">
-      <div class="fr-col">
+      <div class="fr-col-7">
         <div class="fr-grid-row">
           <div class="fr-col">
             <div class="fr-tile">
@@ -79,8 +79,6 @@
               </div>
             </div>
           </div>
-        </div>
-        <div class="fr-grid-row">
           <div class="fr-col">
             <div class="fr-tile">
               <div class="fr-tile__body">
@@ -112,6 +110,59 @@
               </div>
               <div class="fr-tile__img">
                 <img src="/images/Parking.svg" alt=""/>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div v-if="data.distance" class="fr-grid-row">
+          <div class="fr-col">
+            <div class="fr-tile">
+              <div class="fr-tile__body">
+                  <h4 class="fr-tile__title">
+                      {{Math.round(data.distance).toLocaleString()}}
+                  </h4>
+                  <p class="fr-tile__desc">
+                    <NuxtLink to=/pages/glossaire/#km_parcourus target="_blank">
+                      km parcourus
+                    </NuxtLink>
+                  </p>
+              </div>
+              <div class="fr-tile__img">
+                <img src="/images/Km.svg" alt=""/>
+              </div>
+            </div>
+          </div>
+          <div class="fr-col">
+            <div class="fr-tile">
+              <div class="fr-tile__body">
+                  <h4 class="fr-tile__title">
+                      {{(data.distance*0.000195).toLocaleString('fr-FR',{maximumFractionDigits: 2})}}
+                  </h4>
+                  <p class="fr-tile__desc">
+                    <NuxtLink to=/pages/glossaire/#co2 target="_blank">
+                      tonnes de CO₂ économisés
+                    </NuxtLink>
+                  </p>
+              </div>
+              <div class="fr-tile__img">
+                <img src="/images/Co2.svg" alt=""/>
+              </div>
+            </div>
+          </div>
+          <div class="fr-col">
+            <div class="fr-tile">
+              <div class="fr-tile__body">
+                  <h4 class="fr-tile__title">
+                      {{Math.round(data.distance*0.05).toLocaleString()}}
+                  </h4>
+                  <p class="fr-tile__desc">
+                    <NuxtLink to=/pages/glossaire/#petrole target="_blank">
+                      litres d'essence économisés
+                    </NuxtLink>
+                  </p>
+              </div>
+              <div class="fr-tile__img">
+                <img src="/images/Petrole.svg" alt=""/>
               </div>
             </div>
           </div>

@@ -7,5 +7,4 @@ assets
 .env
 yarn-error.log
 .nyc_output
-package-lock.json
 yarn.lock

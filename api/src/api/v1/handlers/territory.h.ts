@@ -32,6 +32,7 @@ export default class territoryHandler {
       const sql = `SELECT b.territory,b.l_territory,
       sum(a.journeys) AS journeys,
       sum(a.passengers) AS passengers,
+      sum(a.distance) AS distance,
       b.journeys AS trips,
       b.occupation_rate,
       c.nb_aires 
