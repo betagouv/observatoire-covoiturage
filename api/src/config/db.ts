@@ -5,7 +5,7 @@ import pg from 'fastify-postgres'
 
 const database: FastifyPluginAsync = async (server) => {
   try {
-    console.log('connecting to database...')
+    console.log('register credentials for database connection...')
     server.register(pg,{
       user: process.env.DB_USERNAME,
       host: process.env.DB_HOST,
@@ -13,7 +13,7 @@ const database: FastifyPluginAsync = async (server) => {
       password: process.env.DB_PASSWORD,
       port: parseInt(process.env.DB_PORT || '5432', 10),
     })
-    console.log('database connected')
+    console.log('connection registered')
   } catch (error) {
     console.log(error)
     console.log('Make sure you have set .env variables - see .env.example')
