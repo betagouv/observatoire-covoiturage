@@ -7,7 +7,6 @@ async function main(): Promise<void> {
   dotenv.config();
   const obsDatasets = await datasets();
   const migrator = buildMigrator({
-    pool: { host: process.env.POSTGRES_HOST || '127.0.0.1' },
     app: { migrations: obsDatasets },
   });
   await migrator.prepare();
