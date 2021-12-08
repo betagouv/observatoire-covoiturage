@@ -18,7 +18,8 @@ const config: FastifyPluginAsync = async (server, options) => {
   // cache
   server.register(cache, {
     privacy: 'public',
-    expiresIn: 3600
+    expiresIn: 3600,
+    serverExpiresIn:86400
   }
 )
 
