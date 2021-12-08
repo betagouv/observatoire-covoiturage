@@ -1,4 +1,6 @@
+---
 title: "Fiche Cerema covoiturage RPC"
+date: 2021-12-08T12:46:22.402Z
 description: "Ce document présente de manière synthétique les objectifs ainsi que le fonctionnement du Registre de Preuve de Covoiturage"
 categories:
   - fiches
@@ -10,7 +12,7 @@ img: https://covoiturage.beta.gouv.fr/images/logo-rpc.png
 alt: "Fiche Cerema covoiturage RPC 18-05-2021"
 files:
   - name: "Fiche Cerema covoiturage RPC 18-05-2021"
-    file: https://drive.google.com/drive/folders/13sUIk1HBr6tqnG503sKWn7o0cwxHZ2Je
+    file: https://drive.google.com/file/d/1RDkfAQ9ggR2T0ZIHf8zMBEqLDgMUefgd/view?usp=sharing
     author: CEREMA
     publication_date: 2021-05-18
 ---

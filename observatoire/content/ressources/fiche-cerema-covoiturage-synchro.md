@@ -1,4 +1,6 @@
-title: "Fiche Cerema covoiturage synchro 18-05-2021"
+---
+title: "Fiche Cerema covoiturage synchro"
+date: 2021-12-08T12:46:22.402Z
 description: "Ce document présente de manière synthétique les objectifs ainsi que le fonctionnement du réseau de lignes de covoiturage spontané – Synchro covoiturage"
 categories:
   - fiches
@@ -9,7 +11,7 @@ img: https://www.ecov.fr/thumbs/1100x550c/2020-09/synchro-123.jpg
 alt: "Fiche Cerema covoiturage synchro 18-05-2021"
 files:
   - name: "Fiche Cerema covoiturage synchro 18-05-2021"
-    file: https://drive.google.com/drive/folders/13sUIk1HBr6tqnG503sKWn7o0cwxHZ2Je
+    file: https://drive.google.com/file/d/1xit2siFiTaowW_QqmB8YBRKSNP2EjTn7/view?usp=sharing
     author: CEREMA
     publication_date: 2021-05-18
 ---
