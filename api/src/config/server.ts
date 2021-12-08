@@ -6,6 +6,7 @@ import helmet from 'fastify-helmet'
 import compress from 'fastify-compress'
 import swagger from 'fastify-oas'
 import autoLoad from 'fastify-autoload'
+import cache from 'fastify-caching'
 
 
 const config: FastifyPluginAsync = async (server, options) => { 
@@ -13,6 +14,13 @@ const config: FastifyPluginAsync = async (server, options) => {
   // add CORS and Helmet
   server.register(cors,{origin:'*'})
   server.register(helmet)
+
+  // cache
+  server.register(cache, {
+    privacy: 'public',
+    expiresIn: 3600
+  }
+)
 
   // compression - add x-protobuf
   server.register(compress, {
