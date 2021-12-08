@@ -5,8 +5,8 @@ import fluxTypes from '../types/flux.t'
 
 
 const routes:FastifyPluginAsync = async (server) => {
-  server.get<fluxTypes.monthly>('/journeys_monthly_flux',{schema:fluxSchema.journeysMonthly}, fluxHandler.journeysMonthly)
-  server.get('/journeys_monthly_flux/last',{schema:fluxSchema.lastRecordJourneysMonthly}, fluxHandler.lastRecordJourneysMonthly)
+  server.get<fluxTypes.monthly>('/passengers_monthly_flux',{schema:fluxSchema.passengersMonthly}, fluxHandler.passengersMonthly)
+  server.get('/monthly_flux/last',{schema:fluxSchema.lastRecordJourneysMonthly}, fluxHandler.lastRecordMonthlyFlux)
 }
 
 export default routes

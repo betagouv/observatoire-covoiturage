@@ -154,7 +154,7 @@ export default class OccupMap extends mixins(BreakpointsMixin,MapsMixin){
   public getTime(){
     return new Promise<void>(async (resolve, reject) => {
       try{
-        const response = await $axios.get('/journeys_monthly_flux/last')
+        const response = await $axios.get('/monthly_flux/last')
         this.time = response.data
         resolve()
       }

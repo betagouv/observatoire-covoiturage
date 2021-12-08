@@ -4,13 +4,13 @@ import fluxTypes from '../types/flux.t'
 export default class fluxHandler {
   
   static pg: FastifyInstance["pg"]  
-  // Retourne les données de la vue matérialisée covoiturage.journeys_monthly_flux pour le mois et l'année et le type de territoire en paramètres
-  static async journeysMonthly(request: FastifyRequest<fluxTypes.monthly>, reply: FastifyReply):Promise<void>{
+  // Retourne les données de la table monthly_flux pour le mois et l'année et le type de territoire en paramètres
+  static async passengersMonthly(request: FastifyRequest<fluxTypes.monthly>, reply: FastifyReply):Promise<void>{
     try {
       const client = await this.pg.connect()
-      const sql = `SELECT territory_1, l_territory_1, lng_1, lat_1,
-      territory_2, l_territory_2, lng_2, lat_2,
-      journeys, passengers,distance,duration 
+      const sql = `SELECT l_territory_1 as ter_1, lng_1, lat_1,
+      l_territory_2 as ter_2, lng_2, lat_2,
+      passengers,distance,duration 
       FROM monthly_flux
       WHERE year = '${request.query.year}' 
       AND month = '${request.query.month}' 
@@ -29,8 +29,8 @@ export default class fluxHandler {
       reply.send(err)
     }
   }
-  // Retourne l'année et le mois du dernier enregistrement de la vue matérialisée covoiturage.journeys_monthly_flux
-  static async lastRecordJourneysMonthly(request: FastifyRequest, reply: FastifyReply):Promise<void>{
+  // Retourne l'année et le mois du dernier enregistrement de la table monthly_flux
+  static async lastRecordMonthlyFlux(request: FastifyRequest, reply: FastifyReply):Promise<void>{
     try {
       const client = await this.pg.connect()
       const sql = `SELECT distinct year,month FROM monthly_flux WHERE type ='com' ORDER BY year DESC,month desc LIMIT 1;`

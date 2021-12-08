@@ -35,7 +35,7 @@
         <div class="fr-sidemenu__title">Nombre de passagers par flux:</div>
         <Slider :value.sync="selectedValue" :sliderOptions="{'min':sliderOptions.min,'max':sliderOptions.max,'step':sliderOptions.step}"/>
       </ul>
-      <p class="side-count">{{journeys}} passagers transportés selon les critères sélectionnés ci-dessus</p>
+      <p class="side-count">{{passengers}} passagers transportés selon les critères sélectionnés ci-dessus</p>
       <b-field>
         <button v-if="!lgAndAbove" class="fr-btn--menu fr-btn" title="Menu" @click="openSidebar">
           Fermer
@@ -64,7 +64,7 @@ export default class FluxSidebar extends mixins(BreakpointsMixin){
   @PropSync('value', { required: true, type: Array }) selectedValue!: [number,number]
   @PropSync('time', { required: true, type: Object }) selectedTime!: { year: String, month: String }
   @Prop({ required: true }) sliderOptions!: { min: Number, max: Number, step: Number }
-  @Prop({ required: true }) journeys!: string
+  @Prop({ required: true }) passengers!: string
 
   @Watch('time',{ deep: true })
   onTimeChanged() {

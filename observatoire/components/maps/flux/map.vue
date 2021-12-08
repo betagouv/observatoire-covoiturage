@@ -6,8 +6,8 @@
         :value.sync="slider" 
         :time="time"
         :type.sync="type" 
-        :sliderOptions="{'min':0,'max':this.defaultSlider('journeys')[1],'step':1}"
-        :journeys="allJourneys"
+        :sliderOptions="{'min':0,'max':this.defaultSlider('passengers')[1],'step':1}"
+        :passengers="allPassengers"
       />
     </div>
     <div class="fr-col-12 fr-col-lg-10 map">
@@ -56,16 +56,14 @@ import Legend from '../helpers/legend.vue'
 import Controls from '../helpers/controls.vue'
 
 interface FluxData {
-  com1:string,
-  l_com1:string,
-  com1_lng:number,
-  com1_lat:number,
-  com2:string,
-  l_com2:string,
-  com2_lng:number,
-  com2_lat:number,
-  journeys:number,
-  passengers:number
+  ter_1:string,
+  lng_1:number,
+  lat_1:number,
+  ter_2:string,
+  lng_2:number,
+  lat_2:number,
+  passengers:number,
+  distance:number,
 }
 
 interface Time {year:string,month:string}
@@ -98,9 +96,9 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
   loading=true
   $buefy:any
 
-  get allJourneys(){
+  get allPassengers(){
     if(this.filteredFlux){
-      return this.filteredFlux.map(f=>f.journeys).reduce((a, b) => a + b, 0).toLocaleString('fr-FR')
+      return this.filteredFlux.map(f=>f.passengers).reduce((a, b) => a + b, 0).toLocaleString('fr-FR')
     } else{
       return 0
     }
@@ -124,7 +122,7 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
 
   @Watch('slider')
   onSliderChanged() {
-    this.filterFlux('journeys')
+    this.filterFlux('passengers')
   }
   
   @Watch('time', { deep: true })
@@ -155,7 +153,7 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
   public getTime(){
     return new Promise<void>(async (resolve, reject) => {
       try{
-        const response = await $axios.get('/journeys_monthly_flux/last')
+        const response = await $axios.get('/monthly_flux/last')
         this.time = response.data
         resolve()
       }
@@ -169,7 +167,7 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
     return new Promise<void>(async (resolve, reject) => {
       try{
         this.loading = true
-        const response = await $axios.get(`/journeys_monthly_flux?t=${this.type}&year=${this.time.year}&month=${this.time.month}`)
+        const response = await $axios.get(`/passengers_monthly_flux?t=${this.type}&year=${this.time.year}&month=${this.time.month}`)
         if(response.status === 204){
             this.$buefy.snackbar.open({
             message: response.data.message,
@@ -178,7 +176,7 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
         }
         if(response.status === 200){
           this.flux = response.data
-          this.slider = this.defaultSlider('journeys')
+          this.slider = this.defaultSlider('passengers')
         }
         this.loading = false
         resolve()
@@ -196,9 +194,9 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
 
   public jenksAnalyse(){
    if(this.type !== 'country' ){ 
-    this.analyse = this.jenks(this.flux!,'journeys',['#000091','#000091','#000091','#000091','#000091','#000091'],[1,3,6,12,24,48])
+    this.analyse = this.jenks(this.flux!,'passengers',['#000091','#000091','#000091','#000091','#000091','#000091'],[1,3,6,12,24,48])
    } else {
-     this.analyse = this.jenks(this.flux!,'journeys',['#000091','#000091','#000091'],[3,12,48])
+     this.analyse = this.jenks(this.flux!,'passengers',['#000091','#000091','#000091'],[3,12,48])
    }
   }
 
@@ -252,7 +250,7 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
       data:this.filteredFlux,
       opacity:0.4,
       pickable: true,
-      getWidth: (d:any) => this.classWidth( d.journeys,this.analyse)!,
+      getWidth: (d:any) => this.classWidth( d.passengers,this.analyse)!,
       getSourcePosition: (d:any) => [d.lng_1,d.lat_1],
       getTargetPosition: (d:any) => [d.lng_2,d.lat_2],
       getSourceColor: [0,0,145],

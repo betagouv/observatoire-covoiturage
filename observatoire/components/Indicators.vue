@@ -267,7 +267,7 @@ export default class Indicators extends Vue{
 
   public async getTime(){
     if (this.time.year === '' || this.time.month === ''){
-      const response = await $axios.get('/journeys_monthly_flux/last')
+      const response = await $axios.get('/monthly_flux/last')
       this.time = response.data
     }
   }

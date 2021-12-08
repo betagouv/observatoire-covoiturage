@@ -1,6 +1,6 @@
 export default class monthlyFluxSchema {
   
-  static journeysMonthly = {
+  static passengersMonthly = {
     tags: ['flux'],
     querystring: {
       t: {
@@ -22,16 +22,14 @@ export default class monthlyFluxSchema {
         description:'Nb de trajets entre communes (tout sens confondus)',
         items: {
           properties: {
-            territory_1: {type:'string'},
-            l_territory_1: {type:'string'},
+            ter_1: {type:'string'},
             lng_1:{type:'number'},
             lat_1:{type:'number'},
-            territory_2: {type:'string'},
-            l_territory_2: {type:'string'},
+            ter_2: {type:'string'},
             lng_2:{type:'number'},
             lat_2:{type:'number'},
-            journeys:{type:'integer'},
-            passengers:{type:'integer'}
+            passengers:{type:'integer'},
+            distance:{type:'number'},
           }
         }
       }
@@ -43,7 +41,7 @@ export default class monthlyFluxSchema {
     response: {
       200: {
         type: 'object',
-        description:'Return last Month and Year available in journeys monthly flux',
+        description:'Return last Month and Year available in passengers monthly flux',
         properties: {
           month: {type:'string'},
           year: {type:'string'}
