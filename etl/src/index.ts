@@ -1,10 +1,9 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
 import { buildMigrator } from '@betagouvpdc/evolution-geo';
 import { datasets } from './datasets';
 
-import * as dotenv from 'dotenv';
-
 async function main(): Promise<void> {
-  dotenv.config();
   const obsDatasets = await datasets();
   const migrator = buildMigrator({
     app: { migrations: obsDatasets },

@@ -28,7 +28,11 @@ export abstract class AbstractDataAggregation implements DatasetInterface {
     return `${this.targetSchema}.${this.table}`;
   }
 
-  constructor(protected connection: Pool, protected file: FileManagerInterface, protected targetSchema: string = 'public') {}
+  constructor(
+    protected connection: Pool,
+    protected file: FileManagerInterface,
+    protected targetSchema: string = 'public',
+  ) {}
 
   async validate(state: StateManagerInterface): Promise<void> {
     const done = state.get(State.Done);
