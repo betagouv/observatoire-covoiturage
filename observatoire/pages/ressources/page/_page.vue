@@ -48,7 +48,7 @@ export default class RessourcesPage extends Vue{
 
     const ressources = await $content('ressources')
     .only(['title', 'description', 'img', 'slug','categories','themes','dir','createdAt'])
-    .sortBy('createdAt', 'asc')
+    .sortBy('createdAt', 'desc')
     .limit(perPage)
     .skip(skipNumber())
     .fetch()

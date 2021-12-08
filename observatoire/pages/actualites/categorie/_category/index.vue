@@ -35,7 +35,7 @@ export default class ActualitesCategory extends Vue{
     const actualites = await $content('actualites')
       .where({categories:{$contains: params.category}})
       .only(['title', 'description', 'img', 'slug','categories','themes','dir','createdAt'])
-      .sortBy('createdAt', 'asc')
+      .sortBy('createdAt', 'desc')
       .fetch()
 
     if (!actualites.length) {

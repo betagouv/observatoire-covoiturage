@@ -37,7 +37,7 @@ export default class RessourcesCategory extends Vue{
     const ressources = await $content('ressources')
       .where({themes:{$contains: params.theme}})
       .only(['title', 'description', 'img', 'slug','categories', 'themes','dir','createdAt'])
-      .sortBy('createdAt', 'asc')
+      .sortBy('createdAt', 'desc')
       .fetch()
 
     if (!ressources.length) {

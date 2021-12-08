@@ -104,7 +104,7 @@ export default class SingleRessource extends mixins(ContentMixin){
     const [prev, next] = await $content('ressources')
     .where({categories:{$contains: params.category}})
     .only(['title', 'slug'])
-    .sortBy('createdAt', 'asc')
+    .sortBy('createdAt', 'desc')
     .surround(params.slug)
     .fetch()
 

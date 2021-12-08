@@ -87,13 +87,13 @@ export default class Home extends Vue{
     const perPage = 3
     const actualites = await $content('actualites')
     .only(['title', 'description', 'img', 'slug','categories','themes','dir','createdAt'])
-    .sortBy('createdAt', 'asc')
+    .sortBy('createdAt', 'desc')
     .limit(perPage)
     .fetch()
 
     const ressources = await $content('ressources')
     .only(['title', 'description', 'img', 'slug','categories','themes','dir','createdAt'])
-    .sortBy('createdAt', 'asc')
+    .sortBy('createdAt', 'desc')
     .limit(perPage)
     .fetch()
 

@@ -107,7 +107,7 @@ export default class SingleActualite extends mixins(ContentMixin){
     const [prev, next] = await $content('actualites')
     .where({categories:{$contains: params.category}})
     .only(['title', 'slug'])
-    .sortBy('createdAt', 'asc')
+    .sortBy('createdAt', 'desc')
     .surround(params.slug)
     .fetch()
 

@@ -23,7 +23,7 @@ import MapList from '../../components/maps/MapList.vue'
 export default class Cartes extends Vue{
   async asyncData({ $content }) {
     const cartes = await $content('cartes')
-    .sortBy('date', 'asc')
+    .sortBy('date', 'desc')
     .fetch()
 
     return { cartes }

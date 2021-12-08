@@ -33,7 +33,7 @@ export default class Pages extends Vue{
     const perPage = 9
     const pages = await $content('pages')
     .only(['title', 'description', 'img', 'slug','dir','createdAt'])
-    .sortBy('createdAt', 'asc')
+    .sortBy('createdAt', 'desc')
     .limit(perPage)
     .fetch()
 
