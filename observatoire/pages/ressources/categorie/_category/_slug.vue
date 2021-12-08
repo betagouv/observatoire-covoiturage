@@ -10,7 +10,7 @@
           <article class="fr-col-12">
             <h1 class="h-text-center">{{ ressource.title }}</h1>
             <div class="fr-text--xs single-meta">
-              <span>Publié le {{ formatDate(ressource.createdAt) }} </span>
+              <span>Publié le {{ formatDate(ressource.date) }} </span>
               <span v-if="ressource.categories">
                 <span v-if="ressource.categories.length > 1">dans les catégories:</span>
                 <span v-else>dans la catégorie:</span>
@@ -104,7 +104,7 @@ export default class SingleRessource extends mixins(ContentMixin){
     const [prev, next] = await $content('ressources')
     .where({categories:{$contains: params.category}})
     .only(['title', 'slug'])
-    .sortBy('createdAt', 'desc')
+    .sortBy('date', 'desc')
     .surround(params.slug)
     .fetch()
 

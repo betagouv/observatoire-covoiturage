@@ -10,7 +10,7 @@
           <article class="fr-col-12">
             <h1 class="h-text-center">{{ actualite.title }}</h1>
             <div class="fr-text--xs single-meta">
-              <span>Publié le {{ formatDate(actualite.createdAt) }} </span>
+              <span>Publié le {{ formatDate(actualite.date) }} </span>
               <span v-if="actualite.categories">
                 <span v-if="actualite.categories.length > 1">dans les catégories:</span>
                 <span v-else>dans la catégorie:</span>
@@ -106,7 +106,7 @@ export default class SingleActualite extends mixins(ContentMixin){
     const [prev, next] = await $content('actualites')
     .where({themes:{$contains: params.theme}})
     .only(['title', 'slug'])
-    .sortBy('createdAt', 'desc')
+    .sortBy('date', 'desc')
     .surround(params.slug)
     .fetch()
 

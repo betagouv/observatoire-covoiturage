@@ -32,8 +32,8 @@ export default class Pages extends Vue{
   async asyncData({ $content }) {
     const perPage = 9
     const pages = await $content('pages')
-    .only(['title', 'description', 'img', 'slug','dir','createdAt'])
-    .sortBy('createdAt', 'desc')
+    .only(['title', 'description', 'img', 'slug','dir','date'])
+    .sortBy('date', 'desc')
     .limit(perPage)
     .fetch()
 

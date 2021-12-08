@@ -8,7 +8,8 @@ themes:
   - action-publique
   - actualite-reglementaire
   - intermodalite
-img: https://www.cerema.fr/themes/custom/uas_base/images/LogoCerema_horizontal.svg
+img: https://www.cerema.fr/sites/default/files/styles/uas_medium/public/media/images/2021/11/voie_de_covoiturage_a_grenoble_-_grenoble_alpes_metropole.jpg
+legend: "Grenoble Alpes Métropole - L Frangella - CC-BY-SA"
 link: https://www.cerema.fr/fr/actualites/covoiturage-acceleration-ouverture-voies-reservees-2022?folder=9945
 alt: cerema
 ---

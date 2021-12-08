@@ -7,7 +7,7 @@
       <div class="fr-card fr-enlarge-link">
         <div class="fr-card__body">
           <p class="fr-card__detail">
-            <span>Publié le {{ formatDate(content.createdAt) }} </span>
+            <span>Publié le {{ formatDate(content.date) }} </span>
             <span v-if="taxonomies">
               <span v-if="content.categories && content.categories.length > 1">dans les catégories:</span>
               <span v-else-if="content.categories" >dans la catégorie:</span>

@@ -6,7 +6,7 @@ categories:
   - etudes
 themes:
   - action-publique
-img: https://librairie.ademe.fr/342976-large_default/mobilite-urbanisme-air-agir-du-territoire-au-quartier-pour-une-meilleure-qualite-de-vie.jpg
+img: https://librairie.ademe.fr/361980-large_default/mobilite-urbanisme-air-agir-du-territoire-au-quartier-pour-une-meilleure-qualite-de-vie.jpg
 alt: "Mobilité, urbanisme, air : agir du territoire au quartier pour une meilleure qualité de vie"
 files:
   - name: "Mobilité, urbanisme, air : agir du territoire au quartier pour une meilleure qualité de vie"

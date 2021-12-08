@@ -1,5 +1,6 @@
 ---
 title: "Fiche covoiturage Lane 21-06-2021"
+date: 2021-12-08T12:46:22.402Z
 description: "Ce document présente de manière synthétique les objectifs ainsi que le fonctionnement du service de covoiturage instantané à haut niveau de service - Lane"
 categories:
   - fiches

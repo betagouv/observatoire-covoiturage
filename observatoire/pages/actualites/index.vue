@@ -34,8 +34,8 @@ export default class Actualites extends Vue{
   async asyncData({ $content }) {
     const perPage = 9
     const actualites = await $content('actualites')
-    .only(['title', 'description', 'img', 'slug','categories','themes','dir','createdAt'])
-    .sortBy('createdAt', 'desc')
+    .only(['title', 'description', 'img', 'slug','categories','themes','dir','date'])
+    .sortBy('date', 'desc')
     .limit(perPage)
     .fetch()
 

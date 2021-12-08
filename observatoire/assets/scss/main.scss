@@ -1,4 +1,7 @@
 @import "@gouvfr/dsfr/dist/css/dsfr.css";
+.fr-card__img img{
+  object-fit: contain;
+}
 .hero{
   background-color: #000091;
   padding: 2rem;

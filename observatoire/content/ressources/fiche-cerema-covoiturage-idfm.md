@@ -1,5 +1,6 @@
 ---
 title: "Fiche Cerema covoiturage IDFM"
+date: 2021-12-08T12:46:22.402Z
 description: "Ce document présente de manière synthétique le principe de l'incitation financière pour le covoiturage courte distance – opération « Tous ensemble pour le covoiturage"
 categories:
   - fiches

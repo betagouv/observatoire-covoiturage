@@ -35,8 +35,8 @@ export default class Ressources extends Vue{
   async asyncData({ $content }) {
     const perPage = 9
     const ressources = await $content('ressources')
-    .only(['title', 'description', 'img', 'slug','categories','themes','dir','createdAt'])
-    .sortBy('createdAt', 'desc')
+    .only(['title', 'description', 'img', 'slug','categories','themes','dir','date'])
+    .sortBy('date', 'desc')
     .limit(perPage)
     .fetch()
 
