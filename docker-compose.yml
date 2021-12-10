@@ -20,7 +20,7 @@ services:
 
   etl:
     build:
-      dockerfile: ../docker/etl/Dockerfile
+      dockerfile: ../docker/etl/dev.Dockerfile
       context: ./etl
     tty: true
     networks:
@@ -32,7 +32,7 @@ services:
 
   api:
     build:
-      dockerfile: ../docker/api/Dockerfile
+      dockerfile: ../docker/api/dev.Dockerfile
       context: ./api
     tty: true
     ports:
