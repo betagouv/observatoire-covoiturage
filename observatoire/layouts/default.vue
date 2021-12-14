@@ -16,14 +16,13 @@ import Footer from '../components/Footer.vue'
   components: { Header, Footer }
 })
 export default class Default extends mixins(BreakpointsMixin){
-  public created() {
-    this.handleResize()
-  }
-
   public beforeMount() {
+    this.$nextTick(function () {
+      this.handleResize()
+    })
     window.addEventListener('resize', this.handleResize)
   }
-  
+
   public beforeDestroy() {
     window.removeEventListener('resize', this.handleResize)
   }
