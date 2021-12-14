@@ -15,10 +15,14 @@ import Header from '../components/Header.vue'
 })
 export default class CarteLayout extends mixins(BreakpointsMixin){
   
-  public beforeMount() {
-    window.addEventListener('resize', this.handleResize)
+  public created() {
     this.handleResize()
   }
+
+  public beforeMount() {
+    window.addEventListener('resize', this.handleResize)
+  }
+  
   public beforeDestroy() {
     window.removeEventListener('resize', this.handleResize)
   }
