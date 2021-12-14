@@ -3,14 +3,14 @@
   <div class="fr-section--banner hero">
     <div class="fr-container home_header">
       <div class="fr-grid-row fr-grid-row--gutters">
-        <div class="fr-col-4">
+        <div v-if="lgAndAbove" class="fr-col-3">
           <div class="align-center">
             <img class="fr-responsive-img" src="/images/phare.svg" alt="observatoire"/>
           </div>
         </div>
-        <div class="fr-col-8">
-          <h1>Bienvenue sur le site de l'Observatoire national du covoiturage au quotidien* !</h1>
-          <p>
+        <div class="fr-col">
+          <h1>Bienvenue sur le site de l'Observatoire national du covoiturage au quotidien<span v-if="lgAndAbove">*</span> !</h1>
+          <p v-if="lgAndAbove">
             Le site de référence pour suivre l’évolution des pratiques du covoiturage courte distance.
             Notre mission est de collecter et diffuser les données ouvertes auprès des acteurs de la mobilité et de mesurer 
             l’impact des politiques publiques.<br/>
@@ -20,17 +20,23 @@
           </p>
           
           <div class="fr-grid-row">
-          <div class="fr-col-12">
-            <NuxtLink to="/pages/qui-sommes-nous" class="fr-btn fr-btn--secondary">
-              Qui sommes-nous ?
-            </NuxtLink>
+          <ul class="fr-btns-group fr-btns-group--inline-lg">
+            <li>
+              <NuxtLink to="/pages/qui-sommes-nous" class="fr-btn fr-btn--secondary">
+                Qui sommes-nous ?
+              </NuxtLink>
+            </li>
+            <li>
             <NuxtLink to="/cartes" class="fr-btn fr-btn--secondary">
               Consulter les cartes interactives
             </NuxtLink>
+            </li>
+            <li>
             <NuxtLink to="/dashboard" class="fr-btn fr-btn--secondary">
               Consulter le tableau de bord
             </NuxtLink>
-          </div>
+            </li>
+          </ul>
         </div>
         </div>
       </div>
@@ -75,14 +81,15 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component, mixins } from 'nuxt-property-decorator'
+import BreakpointsMixin from '../components/mixins/breakpoints'
 import Indicators from '../components/Indicators.vue'
 import ContentList from '../components/ContentList.vue'
 
 @Component({
   components:{Indicators,ContentList}
 })
-export default class Home extends Vue{
+export default class Home extends mixins(BreakpointsMixin){
   async asyncData({ $content }) {
     const perPage = 3
     const actualites = await $content('actualites')

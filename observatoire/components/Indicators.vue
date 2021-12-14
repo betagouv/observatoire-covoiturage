@@ -7,7 +7,7 @@
       </div>
     </div>
     <div class="fr-grid-row fr-grid-row--gutters">
-      <div class="fr-col-7">
+      <div class="fr-col-12 fr-col-lg-7">
         <div class="fr-grid-row">
           <div class="fr-col">
             <div class="fr-tile">
@@ -153,11 +153,11 @@
             <div class="fr-tile">
               <div class="fr-tile__body">
                   <h4 class="fr-tile__title">
-                      {{Math.round(data.distance*0.05).toLocaleString()}}
+                      {{Math.round(data.distance*0.0636).toLocaleString()}}
                   </h4>
                   <p class="fr-tile__desc">
                     <NuxtLink to=/pages/glossaire/#petrole target="_blank">
-                      litres d'essence économisés
+                      litres de pétrole économisés
                     </NuxtLink>
                   </p>
               </div>
