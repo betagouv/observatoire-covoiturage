@@ -2,9 +2,8 @@ export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
   publicRuntimeConfig: {
-    url_app: process.env.URL_APP,
-    url_api: process.env.URL_API,
-    map_style: process.env.MAPLIBRE_STYLE
+    map_style: process.env.MAPLIBRE_STYLE || '/style.json',
+    newsletter : process.env.NEWSLETTER || 'false',
   },
 
   // Global page headers: https://go.nuxtjs.dev/config-head

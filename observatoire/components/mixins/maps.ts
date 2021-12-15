@@ -71,7 +71,7 @@ export default class MapsMixin extends mixins(BreakpointsMixin) {
         } else {
           this.$data[container] = new maplibregl.Map({
           container: container,
-            style: process.env.NUXT_ENV_MAPLIBRE_STYLE,
+            style: this.$config.map_style,
             center: options.center,
             zoom: this.zoomMobile(options),
             attributionControl: options.attribution

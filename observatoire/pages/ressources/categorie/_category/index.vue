@@ -25,7 +25,6 @@ export default class RessourcesCategory extends Vue{
   type = {name:'Ressources',slug:'ressources'}
   title='Ressources du covoiturage au quotidien'
   description=''
-  $config:any
   $route:any
 
   async asyncData({ $content, params, error }) {
@@ -62,15 +61,15 @@ export default class RessourcesCategory extends Vue{
       title: this.title,
       meta:[
         { hid: 'description', name: 'description', content: this.description },
-        { hid: 'og:url', property: "og:url", content: `${this.$config.url_app}${this.$route.path}` },
+        { hid: 'og:url', property: "og:url", content: `${this.$store.state.env.url_app}${this.$route.path}` },
         { hid: 'og:title', property: "og:title", content: this.title},
         { hid: "og:description", property: "og:description", content: this.description},
-        { hid: "twitter:url", name: "twitter:url", content: `${this.$config.url_app}${this.$route.path}`},
+        { hid: "twitter:url", name: "twitter:url", content: `${this.$store.state.env.url_app}${this.$route.path}`},
         { hid: "twitter:title", name: "twitter:title", content: this.title},
         { hid: "twitter:description", name: "twitter:description", content: this.description},
       ],
       link: [
-        { hid: "canonical", rel: "canonical", href: `${this.$config.url_app}${this.$route.path}` }
+        { hid: "canonical", rel: "canonical", href: `${this.$store.state.env.url_app}${this.$route.path}` }
       ]
     }
   }

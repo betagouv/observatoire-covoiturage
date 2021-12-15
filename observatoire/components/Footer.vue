@@ -41,7 +41,7 @@
               </li>
             </ul>
           </div>
-          <div v-if="hasNewletter"  class="fr-footer__newsletter">
+          <div v-if="$config.newsletter"  class="fr-footer__newsletter">
             <h6>Recevoir les actualités</h6>
             <p><a href="https://covoiturage.beta.gouv.fr/abonnez-vous" class="fr-link fr-btn">Abonnez-vous</a></p>
           </div>
@@ -105,14 +105,6 @@ export default class Footer extends Vue{
     tech: 'https://tech.covoiturage.beta.gouv.fr',
     ministry: 'https://ecologie.gouv.fr',
     betagouv: 'https://beta.gouv.fr'
-  }
-  
-  get hasNewletter(){
-    if(this.$store.state.config.hasNewsletter.toLowerCase() == 'true'){
-      return true
-    } else {
-      return false
-    }
   }
 }
 </script>
@@ -199,7 +191,7 @@ export default class Footer extends Vue{
 
   .fr-footer__newsletter-success,
   .fr-footer__newsletter-error {
-    ovefrlow: hidden;
+    overflow: hidden;
     max-height: 100px;
     transition: max-height 0.5s ease;
     &.hidden {

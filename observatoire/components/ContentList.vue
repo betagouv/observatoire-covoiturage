@@ -3,7 +3,7 @@
     <div class="fr-col-12">
       <h1 class="h-text-center">{{title}}</h1>
     </div>
-    <div class="fr-col-md-4" v-for="content of contents" :key="content.slug">
+    <div class="fr-col-md-4" v-for="(content, i) of contents" :key="i">
       <div class="fr-card fr-enlarge-link">
         <div class="fr-card__body">
           <p class="fr-card__detail">

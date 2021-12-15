@@ -13,6 +13,6 @@ export default class ContentMixin extends Vue {
 
   public shortString(string:string,length:number){
     if (string.length <= length) return string;
-    return `${string.substr(0, string.lastIndexOf(' ', length))} ...`;
+    return `${string.substring(0, string.lastIndexOf(' ', length))} ...`;
   }
 }
