@@ -6,6 +6,7 @@ export class CreateMonthlyFluxTable extends AbstractDatastructure {
   static table = 'monthly_flux';
   readonly indexWithSchema = this.tableWithSchema.replace('.', '_');
   readonly sql = `
+      DROP TABLE IF EXISTS ${this.tableWithSchema};
       CREATE TABLE IF NOT EXISTS ${this.tableWithSchema} (
         id SERIAL PRIMARY KEY,
         year smallint NOT NULL,

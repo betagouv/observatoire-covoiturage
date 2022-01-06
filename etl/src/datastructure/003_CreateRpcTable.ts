@@ -5,6 +5,7 @@ export class CreateRpcTable extends AbstractDatastructure {
   static table = 'rpc';
   readonly indexWithSchema = this.tableWithSchema.replace('.', '_');
   readonly sql = `
+      DROP TABLE IF EXISTS ${this.tableWithSchema};
       CREATE TABLE IF NOT EXISTS ${this.tableWithSchema} (
         id SERIAL PRIMARY KEY,
         journey_id varchar UNIQUE,

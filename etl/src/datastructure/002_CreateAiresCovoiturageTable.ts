@@ -5,6 +5,7 @@ export class CreateAiresCovoiturageTable extends AbstractDatastructure {
   static table = 'aires_covoiturage';
   readonly indexWithSchema = this.tableWithSchema.replace('.', '_');
   readonly sql = `
+      DROP TABLE IF EXISTS ${this.tableWithSchema};
       CREATE TABLE IF NOT EXISTS ${this.tableWithSchema} (
         id SERIAL PRIMARY KEY,
         year integer,
