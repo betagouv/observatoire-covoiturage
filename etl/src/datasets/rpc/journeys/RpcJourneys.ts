@@ -17,24 +17,25 @@ export function rpcJourneys(year: number, month: number, url: string): StaticMig
     readonly url = url;
     readonly fileArchiveType: ArchiveFileTypeEnum = ArchiveFileTypeEnum.None;
     readonly rows: Map<string, [string, string]> = new Map([
-      ['journey_id', ['0', 'varchar']],
-      ['trip_id', ['1', 'varchar']],
-      ['journey_start_date', ['3', 'date']],
-      ['journey_start_lat', ['5', 'float']],
-      ['journey_start_lon', ['6', 'float']],
-      ['journey_start_insee', ['7', 'varchar']],
-      ['journey_end_date', ['13', 'date']],
-      ['journey_end_lat', ['15', 'float']],
-      ['journey_end_lon', ['16', 'float']],
-      ['journey_end_insee', ['17', 'varchar']],
-      ['journey_distance', ['24', 'integer']],
-      ['journey_duration', ['25', 'integer']],
-      ['passenger_seats', ['22', 'integer']],
-      ['operator_class', ['23', 'varchar']],
+      ['journey_id', ['journey_id', 'varchar']],
+      ['trip_id', ['trip_id', 'varchar']],
+      ['journey_start_date', ['journey_start_date', 'date']],
+      ['journey_start_lon', ['journey_start_lon', 'float']],
+      ['journey_start_lat', ['journey_start_lat', 'float']],
+      ['journey_start_insee', ['journey_start_insee', 'varchar']],
+      ['journey_end_date', ['journey_end_date', 'date']],
+      ['journey_end_lon', ['journey_end_lon', 'float']],
+      ['journey_end_lat', ['journey_end_lat', 'float']],
+      ['journey_end_insee', ['journey_end_insee', 'varchar']],
+      ['passenger_seats', ['passenger_seats', 'integer']],
+      ['operator_class', ['operator_class', 'varchar']],
+      ['journey_distance', ['journey_distance', 'integer']],
+      ['journey_duration', ['journey_duration', 'integer']],
     ]);
     fileType: FileTypeEnum = FileTypeEnum.Csv;
     sheetOptions = {
       delimiter: ';',
+      columns: true,
     };
     readonly importSql = `
       INSERT INTO ${this.targetTableWithSchema} (
