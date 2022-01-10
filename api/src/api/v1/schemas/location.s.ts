@@ -18,8 +18,8 @@ export default class locationSchema {
         description:'coordonnées des trajets de la période sélectionnée (tout sens confondus)',
         items: {
           properties: {
-            lon:{type:'number'},
-            lat:{type:'number'}
+            hex:{type:'string'},
+            count:{type:'number'}
           }
         }
       }

@@ -1,7 +1,8 @@
 import { FastifyInstance,FastifyRequest, FastifyReply} from 'fastify'
 import locationTypes from '../types/location.t'
+import { geoToH3 } from 'h3-js'
 
-export default class fluxHandler {
+export default class locationHandler {
   
   static pg: FastifyInstance["pg"]  
 
@@ -23,7 +24,10 @@ export default class fluxHandler {
       else if (result.rows.length === 0) {
         reply.code(404).send(new Error('Pas de données disponibles'))
       }
-      reply.send(result.rows)
+      const test = result.rows.map(r => geoToH3(r.lat,r.lon, 4)).reduce((acc:any, curr) => (acc[curr] = (acc[curr] || 0) + 1, acc), {})
+      const test2:Array<{hex:string,count:unknown}> = []
+      Object.entries(test).forEach(([key, val]) => test2.push({hex:key, count:val}))
+      reply.send(test2)
       client.release()
     } catch (err) {
       reply.send(err)

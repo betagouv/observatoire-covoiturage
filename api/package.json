@@ -27,6 +27,7 @@
     "fastify-oas": "^3.0.8",
     "fastify-plugin": "^3.0.0",
     "fastify-postgres": "^3.5.0",
+    "h3-js": "^3.7.2",
     "pg": "^8.6.0"
   },
   "devDependencies": {

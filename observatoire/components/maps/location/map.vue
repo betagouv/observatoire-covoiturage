@@ -40,23 +40,23 @@
 import { Component,mixins,Prop,Watch } from 'nuxt-property-decorator'
 import BreakpointsMixin from '../../mixins/breakpoints'
 import MapsMixin from '../../mixins/maps'
-import { HexagonLayer } from '@deck.gl/aggregation-layers'
+import { H3HexagonLayer } from '@deck.gl/geo-layers'
 import { $axios } from '../../../utils/api'
 //import Sidebar from './sidebar.vue'
 //import Legend from '../helpers/legend.vue'
 import Controls from '../helpers/controls.vue'
 
 interface LocationData {
-  lng:number,
-  lat:number,
+  hex:string,
+  count:number,
 }
 
 interface Time {year:string,month:string}
 
 @Component({
-  components:{ Controls}
+  components:{Controls}
 })
-export default class LocationMap extends mixins(BreakpointsMixin,MapsMixin){
+export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
   @Prop({ required: true }) map!: string
 
   map_metropole=null
@@ -71,25 +71,24 @@ export default class LocationMap extends mixins(BreakpointsMixin,MapsMixin){
   deck_reunion=null
   type='com'
   data:Array<LocationData>=[]
+  //filteredFlux:Array<FluxData>=[]
   time:Time={
     year:'',
     month:''
   }
-  test=[]
   analyse:Array<{val:number,color:RegExpMatchArray | Array<number>,width:number}> = []
   slider:Array<number>=[]
   loading=true
   $buefy:any
-  colorRange = [
-    [1, 152, 189],
-    [73, 227, 206],
-    [216, 254, 181],
-    [254, 237, 177],
-    [254, 173, 84],
-    [209, 55, 78]
-  ]
 
-  
+  /*get allPassengers(){
+    if(this.filteredFlux){
+      return this.filteredFlux.map(f=>f.passengers).reduce((a, b) => a + b, 0).toLocaleString('fr-FR')
+    } else{
+      return 0
+    }
+  }*/
+
   get legendTitle(){
     return `Nb de passagers transportés entre ${this.$store.state.helpers.territories.find(t => t.type === this.type).name.toLowerCase()} (source RPC)` 
   }
@@ -101,17 +100,26 @@ export default class LocationMap extends mixins(BreakpointsMixin,MapsMixin){
     await this.renderDecks()
   }
 
-  @Watch('data', { deep: true })
-  onDataChanged() {
+  @Watch('flux', { deep: true })
+  onFluxChanged() {
     this.jenksAnalyse()
   }
 
+  /*@Watch('slider')
+  onSliderChanged() {
+    this.filterFlux('passengers')
+  }*/
   
   @Watch('time', { deep: true })
   async onTimeChanged(val:Time, oldval:Time) {
     if (oldval.year !== '' || oldval.month !== ''){
       await this.getData()
     }
+  }
+
+  @Watch('type')
+  async onTypeChanged() {
+    await this.getData()
   }
 
   @Watch('screen.window', { deep: true })
@@ -144,7 +152,7 @@ export default class LocationMap extends mixins(BreakpointsMixin,MapsMixin){
     return new Promise<void>(async (resolve, reject) => {
       try{
         this.loading = true
-        const response = await $axios.get(`/location?date_1=2021-10-01&date_2=2021-11-01`)
+        const response = await $axios.get(`/location?date_1=2021-11-01&date_2=2021-12-01`)
         if(response.status === 204){
             this.$buefy.snackbar.open({
             message: response.data.message,
@@ -203,14 +211,14 @@ export default class LocationMap extends mixins(BreakpointsMixin,MapsMixin){
     return new Promise<void>(async(resolve, reject) => {
       try{
         if (this.map === 'metropole'){ 
-          await this.createDeck(`deck_${this.map}`,this.territories.find(t => t.name === this.map)!,this.addArcLayer())
+          await this.createDeck(`deck_${this.map}`,this.territories.find(t => t.name === this.map)!,this.addHexLayer())
         } else if(this.map === 'droms'){
           for (let territory of this.territories.filter(t => t.name !== 'metropole')) {
-          await this.createDeck(`deck_${territory.name}`,territory,this.addArcLayer())
+          await this.createDeck(`deck_${territory.name}`,territory,this.addHexLayer())
           }
         } else {
           for (let territory of this.territories) {
-          await  this.createDeck(`deck_${territory.name}`,territory,this.addArcLayer())
+          await  this.createDeck(`deck_${territory.name}`,territory,this.addHexLayer())
           }
         }
         resolve()
@@ -221,15 +229,18 @@ export default class LocationMap extends mixins(BreakpointsMixin,MapsMixin){
     })
   }
 
-  public addArcLayer(){
-    return new HexagonLayer({
-      id: 'location-layer',
+  public addHexLayer(){
+    return new H3HexagonLayer({
+      id: 'flux-layer',
       data:this.data,
       opacity:0.4,
-      getPosition: d => [d.lat, d.lon],
-      radius: 500,
-      onSetColorDomain: ([min, max])=> { this.test.push([min, max])}
-  
+      filled: true,
+      extruded: false,
+      getHexagon: d => d.hex,
+      getFillColor: d => [255, (1 - d.count / 500) * 255, 0],
+      getLineColor: d => [0, 0, 0],
+      lineWidthMinPixels: 1,
+      getLineWidth: 1
     })
   }
 
