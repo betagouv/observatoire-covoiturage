@@ -51,12 +51,12 @@ interface LocationData {
   count:number,
 }
 
-interface Time {year:string,month:string}
+interface Time {start:string,end:string}
 
 @Component({
   components:{Controls}
 })
-export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
+export default class LocationMap extends mixins(BreakpointsMixin,MapsMixin){
   @Prop({ required: true }) map!: string
 
   map_metropole=null
@@ -69,30 +69,22 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
   deck_guyane=null
   deck_mayotte=null
   deck_reunion=null
-  type='com'
+  zoom=7
   data:Array<LocationData>=[]
-  //filteredFlux:Array<FluxData>=[]
   time:Time={
-    year:'',
-    month:''
+    start:'',
+    end:''
   }
   analyse:Array<{val:number,color:RegExpMatchArray | Array<number>,width:number}> = []
   slider:Array<number>=[]
   loading=true
   $buefy:any
 
-  /*get allPassengers(){
-    if(this.filteredFlux){
-      return this.filteredFlux.map(f=>f.passengers).reduce((a, b) => a + b, 0).toLocaleString('fr-FR')
-    } else{
-      return 0
-    }
-  }*/
+ 
 
   get legendTitle(){
-    return `Nb de passagers transportés entre ${this.$store.state.helpers.territories.find(t => t.type === this.type).name.toLowerCase()} (source RPC)` 
+    return `(source RPC)` 
   }
-  
   public async mounted(){
     await this.getTime()
     await this.getData()
@@ -100,8 +92,8 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
     await this.renderDecks()
   }
 
-  @Watch('flux', { deep: true })
-  onFluxChanged() {
+  @Watch('data', { deep: true })
+  onDataChanged() {
     this.jenksAnalyse()
   }
 
@@ -112,13 +104,13 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
   
   @Watch('time', { deep: true })
   async onTimeChanged(val:Time, oldval:Time) {
-    if (oldval.year !== '' || oldval.month !== ''){
+    if (oldval.start !== '' || oldval.end !== ''){
       await this.getData()
     }
   }
 
-  @Watch('type')
-  async onTypeChanged() {
+  @Watch('zoom')
+  async onZoomChanged() {
     await this.getData()
   }
 
@@ -138,8 +130,10 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
   public getTime(){
     return new Promise<void>(async (resolve, reject) => {
       try{
-        const response = await $axios.get('/monthly_flux/last')
-        this.time = response.data
+        const response = await $axios.get('/rpc/last')
+        const date = new Date(response.data.date)
+        this.time.end = date.toLocaleDateString()
+        this.time.start = new Date(date.setMonth(date.getMonth() - 1)).toLocaleDateString()
         resolve()
       }
       catch(err){
@@ -152,7 +146,7 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
     return new Promise<void>(async (resolve, reject) => {
       try{
         this.loading = true
-        const response = await $axios.get(`/location?date_1=2021-11-01&date_2=2021-12-01`)
+        const response = await $axios.get(`/location?date_1=${this.time.start}&date_2=${this.time.end}&zoom=${this.zoom}`)
         if(response.status === 204){
             this.$buefy.snackbar.open({
             message: response.data.message,
@@ -161,7 +155,6 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
         }
         if(response.status === 200){
           this.data = response.data
-          this.slider = this.defaultSlider('passengers')
         }
         this.loading = false
         resolve()
@@ -178,11 +171,7 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
   }
 
   public jenksAnalyse(){
-   if(this.type !== 'country' ){ 
-    this.analyse = this.jenks(this.data!,'passengers',['#000091','#000091','#000091','#000091','#000091','#000091'],[1,3,6,12,24,48])
-   } else {
-     this.analyse = this.jenks(this.data!,'passengers',['#000091','#000091','#000091'],[3,12,48])
-   }
+    this.analyse = this.jenks(this.data!,'count',['#f1eef6','#bdc9e1','#74a9cf','#2b8cbe','#045a8d'],[1,1,1,1,1])
   }
 
   public renderMaps() {
@@ -233,24 +222,12 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
     return new H3HexagonLayer({
       id: 'flux-layer',
       data:this.data,
-      opacity:0.4,
-      filled: true,
+      opacity:0.2,
       extruded: false,
       getHexagon: d => d.hex,
-      getFillColor: d => [255, (1 - d.count / 500) * 255, 0],
+      getFillColor: d => this.classColor( d.count,this.analyse)!,
       getLineColor: d => [0, 0, 0],
-      lineWidthMinPixels: 1,
-      getLineWidth: 1
     })
-  }
-
-  public defaultSlider(field:string){
-    if(this.data){
-      const values = this.data!.map((d:LocationData) => d[field])
-      return [10,Math.max(...values)]
-    }else{
-      return []
-    }
   }
 
   public selectedMap(event:any){
