@@ -141,14 +141,15 @@ export default class MapsMixin extends mixins(BreakpointsMixin) {
   }
 
   hexToRgb(hex:string) {
-    return hex.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i,(_m, r, g, b) => '#' + r + r + g + g + b + b)
-    .substring(1).match(/.{2}/g) || []
-    .map(x => parseInt(x, 16))
+    const m = hex.match(/^#?([\da-f]{2})([\da-f]{2})([\da-f]{2})$/i)
+    if(m)
+    return [parseInt(m[1], 16),parseInt(m[2], 16),parseInt(m[3], 16)]
+    else [0,0,0]
   }
 
   jenks(data:Array<Object>,field:string,colors:Array<string>,width:Array<number>){
     const vals:Array<number> = data.map(d => d[field])
-    const breaks = ckmeans(vals, width.length - 1)
+    const breaks = ckmeans(vals, colors.length - 1)
     let analysis = breaks.map((b,i) => {
       return {val:b[0],color:this.hexToRgb(colors[i]),width:width[i]} 
     })
@@ -165,7 +166,7 @@ export default class MapsMixin extends mixins(BreakpointsMixin) {
 
   classWidth(val:number, datas:Array<Data>) {
     const analysisClass = datas.map(d => d.val)
-    const classe = analysisClass.reduce((prev:number, curr:number) => {
+    const classe = analysisClass.reduce((prev, curr) => {
       return Math.abs(curr - val) > Math.abs(prev - val) ? prev : curr
     })
     return datas.find(d => d.val === classe)?.width
