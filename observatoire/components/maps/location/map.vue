@@ -75,7 +75,7 @@ export default class LocationMap extends mixins(BreakpointsMixin,MapsMixin){
     start:'',
     end:''
   }
-  analyse:Array<{val:number,color:RegExpMatchArray | Array<number>,width:number}> = []
+  analyse:Array<{val:number,color:[number, number, number],width:number}> = []
   slider:Array<number>=[]
   loading=true
   $buefy:any
@@ -171,7 +171,7 @@ export default class LocationMap extends mixins(BreakpointsMixin,MapsMixin){
   }
 
   public jenksAnalyse(){
-    this.analyse = this.jenks(this.data!,'count',['#f1eef6','#bdc9e1','#74a9cf','#2b8cbe','#045a8d'],[1,1,1,1,1])
+    this.analyse = this.jenks(this.data,'count',['#fef0d9','#fdcc8a','#fc8d59','#e34a33','#b30000'],[1,1,1,1,1])
   }
 
   public renderMaps() {
@@ -222,11 +222,17 @@ export default class LocationMap extends mixins(BreakpointsMixin,MapsMixin){
     return new H3HexagonLayer({
       id: 'flux-layer',
       data:this.data,
-      opacity:0.2,
-      extruded: false,
+      opacity:0.6,
+      pickable: true,
+      wireframe: false,
+      filled: true,
+      extruded: true,
+      elevationScale: 20,
+      lineWidthMinPixels: 1,
       getHexagon: d => d.hex,
-      getFillColor: d => this.classColor( d.count,this.analyse)!,
-      getLineColor: d => [0, 0, 0],
+      getElevation: d => d.count,
+      getFillColor: d => this.classColor( d.count,this.analyse),
+      getLineColor: d => [80, 80, 80],
     })
   }
 

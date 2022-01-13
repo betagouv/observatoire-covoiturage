@@ -257,7 +257,7 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
       getTargetColor:  [0,0,145],
     })
   }
-
+  
   public defaultSlider(field:string){
     if(this.flux){
       const values = this.flux!.map((d:FluxData) => d[field])
