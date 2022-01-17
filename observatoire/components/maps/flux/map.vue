@@ -226,14 +226,14 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
     return new Promise<void>(async(resolve, reject) => {
       try{
         if (this.map === 'metropole'){ 
-          await this.createDeck(`deck_${this.map}`,this.territories.find(t => t.name === this.map)!,this.addArcLayer())
+          await this.createDeck(`deck_${this.map}`,this.territories.find(t => t.name === this.map)!,this.addArcLayer(),this.addTooltip())
         } else if(this.map === 'droms'){
           for (let territory of this.territories.filter(t => t.name !== 'metropole')) {
-          await this.createDeck(`deck_${territory.name}`,territory,this.addArcLayer())
+          await this.createDeck(`deck_${territory.name}`,territory,this.addArcLayer(),this.addTooltip())
           }
         } else {
           for (let territory of this.territories) {
-          await  this.createDeck(`deck_${territory.name}`,territory,this.addArcLayer())
+          await  this.createDeck(`deck_${territory.name}`,territory,this.addArcLayer(),this.addTooltip())
           }
         }
         resolve()
@@ -274,6 +274,24 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
     for (let territory of this.territories) {
       if(this.$data[`deck_${territory.name}`]){
         this.$data[`deck_${territory.name}`].setProps({layers:[this.addArcLayer()]})
+      }
+    }
+  }
+
+  public addTooltip(){
+    return ({object}) => object && {
+      html: `<div class="tooltip-title"><b>${object.ter_1} - ${object.ter_2}</b></div>
+      <div>${object.passengers} passagers transportés</div>
+      <div>${object.distance.toLocaleString()} Km parcourus</div>`,
+      className:'fr-callout',
+      style: {
+        color:'#000',
+        backgroundColor: '#fff',
+        fontSize: '0.8em',
+        width:'250px',
+        height:'110px',
+        left:'-125px',
+        top:'-110px'
       }
     }
   }

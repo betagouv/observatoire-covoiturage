@@ -1,7 +1,11 @@
 <template>
   <div class="fr-grid-row content">
     <div v-if="lgAndAbove || screen.isSidebarOpen" class="fr-col-12 fr-col-lg-2 sidebar">
-      
+      <Sidebar 
+        v-if="data" 
+        :zoom.sync="zoom" 
+        :time="time"
+      />
     </div>
     <div class="fr-col-12 fr-col-lg-10 map">
       <b-loading v-model="loading"></b-loading>
@@ -11,8 +15,10 @@
             <div id="map_metropole"></div>
             <canvas id="deck_metropole" class="deck"></canvas>
           </div>
+          <Legend :title="legendTitle" :analyzes="analyse" type="interval"/>
         </div>
         <div v-if="['all','droms'].includes(map)" :class="{'fr-hidden': screen.isSidebarOpen}" class="fr-col-12 fr-col-lg-3 maps_drom">
+          <Legend v-if="map ==='droms'" :title="legendTitle" :analyzes="analyse" type="interval"/>
           <div class="map_container">
             <div id="map_antilles"></div>
             <canvas id="deck_antilles" class="deck"></canvas>
@@ -42,8 +48,8 @@ import BreakpointsMixin from '../../mixins/breakpoints'
 import MapsMixin from '../../mixins/maps'
 import { H3HexagonLayer } from '@deck.gl/geo-layers'
 import { $axios } from '../../../utils/api'
-//import Sidebar from './sidebar.vue'
-//import Legend from '../helpers/legend.vue'
+import Sidebar from './sidebar.vue'
+import Legend from '../helpers/legend.vue'
 import Controls from '../helpers/controls.vue'
 
 interface LocationData {
@@ -54,7 +60,7 @@ interface LocationData {
 interface Time {start:string,end:string}
 
 @Component({
-  components:{Controls}
+  components:{Sidebar, Legend, Controls}
 })
 export default class LocationMap extends mixins(BreakpointsMixin,MapsMixin){
   @Prop({ required: true }) map!: string
@@ -76,7 +82,6 @@ export default class LocationMap extends mixins(BreakpointsMixin,MapsMixin){
     end:''
   }
   analyse:Array<{val:number,color:[number, number, number],width:number}> = []
-  slider:Array<number>=[]
   loading=true
   $buefy:any
 
@@ -96,11 +101,6 @@ export default class LocationMap extends mixins(BreakpointsMixin,MapsMixin){
   onDataChanged() {
     this.jenksAnalyse()
   }
-
-  /*@Watch('slider')
-  onSliderChanged() {
-    this.filterFlux('passengers')
-  }*/
   
   @Watch('time', { deep: true })
   async onTimeChanged(val:Time, oldval:Time) {
@@ -112,6 +112,11 @@ export default class LocationMap extends mixins(BreakpointsMixin,MapsMixin){
   @Watch('zoom')
   async onZoomChanged() {
     await this.getData()
+  }
+  
+  @Watch('analyse', { deep: true })
+  onAnalyseChanged() {
+    this.changeZoom()
   }
 
   @Watch('screen.window', { deep: true })
@@ -171,7 +176,7 @@ export default class LocationMap extends mixins(BreakpointsMixin,MapsMixin){
   }
 
   public jenksAnalyse(){
-    this.analyse = this.jenks(this.data,'count',['#fef0d9','#fdcc8a','#fc8d59','#e34a33','#b30000'],[1,1,1,1,1])
+    this.analyse = this.jenks(this.data,'count',['#fdd49e','#fdbb84','#fc8d59','#e34a33','#b30000','#000000'],[10,10,10,10,10,10])
   }
 
   public renderMaps() {
@@ -200,14 +205,14 @@ export default class LocationMap extends mixins(BreakpointsMixin,MapsMixin){
     return new Promise<void>(async(resolve, reject) => {
       try{
         if (this.map === 'metropole'){ 
-          await this.createDeck(`deck_${this.map}`,this.territories.find(t => t.name === this.map)!,this.addHexLayer())
+          await this.createDeck(`deck_${this.map}`,this.territories.find(t => t.name === this.map)!,this.addHexLayer(),this.addTooltip())
         } else if(this.map === 'droms'){
           for (let territory of this.territories.filter(t => t.name !== 'metropole')) {
-          await this.createDeck(`deck_${territory.name}`,territory,this.addHexLayer())
+          await this.createDeck(`deck_${territory.name}`,territory,this.addHexLayer(),this.addTooltip())
           }
         } else {
           for (let territory of this.territories) {
-          await  this.createDeck(`deck_${territory.name}`,territory,this.addHexLayer())
+          await  this.createDeck(`deck_${territory.name}`,territory,this.addHexLayer(),this.addTooltip())
           }
         }
         resolve()
@@ -224,16 +229,36 @@ export default class LocationMap extends mixins(BreakpointsMixin,MapsMixin){
       data:this.data,
       opacity:0.6,
       pickable: true,
-      wireframe: false,
-      filled: true,
-      extruded: true,
-      elevationScale: 20,
+      extruded: false,
       lineWidthMinPixels: 1,
       getHexagon: d => d.hex,
-      getElevation: d => d.count,
       getFillColor: d => this.classColor( d.count,this.analyse),
       getLineColor: d => [80, 80, 80],
     })
+  }
+
+  public addTooltip(){
+    return ({object}) => object && {
+      html: `<div>${object.count} trajets</div>`,
+      className:'fr-callout',
+      style: {
+        color:'#000',
+        backgroundColor: '#fff',
+        fontSize: '0.8em',
+        width:'250px',
+        height:'110px',
+        left:'-125px',
+        top:'-110px'
+      }
+    }
+  }
+
+  public changeZoom(){
+    for (let territory of this.territories) {
+      if(this.$data[`deck_${territory.name}`]){
+        this.$data[`deck_${territory.name}`].setProps({layers:[this.addHexLayer()]})
+      }
+    }
   }
 
   public selectedMap(event:any){

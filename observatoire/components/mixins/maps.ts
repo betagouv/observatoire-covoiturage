@@ -88,7 +88,7 @@ export default class MapsMixin extends mixins(BreakpointsMixin) {
     })
   }
 
-  createDeck(container:any,options:Territory,layer:any) {
+  createDeck(container:any,options:Territory,layer:any,tooltip:any) {
     return new Promise<void>((resolve,reject) =>{
       try{
         // empêche le menu contextuel de s'ouvrir sur le clic droit
@@ -118,19 +118,8 @@ export default class MapsMixin extends mixins(BreakpointsMixin) {
           onHover: ({object}) => (this.isHovering = Boolean(object)),
           getCursor: ({isDragging}) => (isDragging ? 'grabbing' : (this.isHovering ? 'pointer' : 'grab')),
           layers:[layer],
-          getTooltip: ({object}) => object && {
-            html: this.tooltip(object),
-            className:'fr-callout',
-            style: {
-              color:'#000',
-              backgroundColor: '#fff',
-              fontSize: '0.8em',
-              width:'250px',
-              height:'110px',
-              left:'-125px',
-              top:'-110px'
-            }
-          }
+          getTooltip:tooltip
+          
         })
         resolve()
       }
@@ -185,11 +174,5 @@ export default class MapsMixin extends mixins(BreakpointsMixin) {
     } else {
       return options.zoom
     }
-  }
-
-  tooltip(object:any){
-    return `<div class="tooltip-title"><b>${object.ter_1} - ${object.ter_2}</b></div>
-      <div>${object.passengers} passagers transportés</div>
-      <div>${object.distance.toLocaleString()} Km parcourus</div>`
   }
 }
