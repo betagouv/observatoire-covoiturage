@@ -12,8 +12,33 @@
     <div class="fr-sidemenu__inner">
       
       <ul class="fr-sidemenu__list">
-        <div class="fr-sidemenu__title">Zoom:</div>
+        
         <div class="slider">
+          <b-field label="Début">
+            <b-datepicker 
+              v-model=selectedTime.start
+              :min-date=minTime 
+              :max-date=maxTime
+              icon="calendar-today"
+              :icon-right="selected ? 'close-circle' : ''"
+              icon-right-clickable
+              @icon-right-click="clearDate"
+              trap-focus
+            />
+          </b-field>
+          <b-field label="Fin">
+            <b-datepicker 
+              v-model=selectedTime.end
+              :min-date=minTime
+              :max-date=maxTime
+              icon="calendar-today"
+              :icon-right="selected ? 'close-circle' : ''"
+              icon-right-clickable
+              @icon-right-click="clearDate"
+              trap-focus
+            />
+          </b-field>
+          <div class="fr-sidemenu__title">Zoom:</div>
           <b-slider v-model="selectedZoom" :min="1" :max="7" lazy ticks></b-slider>
         </div>
       </ul>
@@ -27,13 +52,16 @@
 </template>
 
 <script lang="ts">
-import { Component,mixins,PropSync,Watch } from 'nuxt-property-decorator'
+import { Component,mixins,PropSync,Prop,Watch } from 'nuxt-property-decorator'
 import BreakpointsMixin from '../../mixins/breakpoints'
 
 @Component
 export default class LocationSidebar extends mixins(BreakpointsMixin){
   @PropSync('zoom', { required: true, type: Number }) selectedZoom!: number
-  @PropSync('time', { required: true, type: Object }) selectedTime!: { start:string, end:string }
+  @PropSync('time', { required: true, type: Object }) selectedTime!: { start:Date, end:Date }
+  @Prop({ required: true }) maxTime!: Date
+
+  minTime = new Date('01/01/2020')
 
   @Watch('time',{ deep: true })
   onTimeChanged() {

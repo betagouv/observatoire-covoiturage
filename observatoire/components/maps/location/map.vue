@@ -5,6 +5,7 @@
         v-if="data" 
         :zoom.sync="zoom" 
         :time="time"
+        :maxTime="time.end"
       />
     </div>
     <div class="fr-col-12 fr-col-lg-10 map">
@@ -57,7 +58,7 @@ interface LocationData {
   count:number,
 }
 
-interface Time {start:string,end:string}
+interface Time {start:Date,end:Date}
 
 @Component({
   components:{Sidebar, Legend, Controls}
@@ -78,8 +79,8 @@ export default class LocationMap extends mixins(BreakpointsMixin,MapsMixin){
   zoom=7
   data:Array<LocationData>=[]
   time:Time={
-    start:'',
-    end:''
+    start: null,
+    end: null
   }
   analyse:Array<{val:number,color:[number, number, number],width:number}> = []
   loading=true
@@ -104,7 +105,7 @@ export default class LocationMap extends mixins(BreakpointsMixin,MapsMixin){
   
   @Watch('time', { deep: true })
   async onTimeChanged(val:Time, oldval:Time) {
-    if (oldval.start !== '' || oldval.end !== ''){
+    if ( oldval.start || oldval.end ){
       await this.getData()
     }
   }
@@ -136,9 +137,10 @@ export default class LocationMap extends mixins(BreakpointsMixin,MapsMixin){
     return new Promise<void>(async (resolve, reject) => {
       try{
         const response = await $axios.get('/rpc/last')
-        const date = new Date(response.data.date)
-        this.time.end = date.toLocaleDateString()
-        this.time.start = new Date(date.setMonth(date.getMonth() - 1)).toLocaleDateString()
+        this.time = { 
+          start: new Date(new Date(response.data.date).setMonth(new Date(response.data.date).getMonth() - 1)),
+          end: new Date(response.data.date)
+        }
         resolve()
       }
       catch(err){
@@ -151,7 +153,7 @@ export default class LocationMap extends mixins(BreakpointsMixin,MapsMixin){
     return new Promise<void>(async (resolve, reject) => {
       try{
         this.loading = true
-        const response = await $axios.get(`/location?date_1=${this.time.start}&date_2=${this.time.end}&zoom=${this.zoom}`)
+        const response = await $axios.get(`/location?date_1=${this.time.start.toLocaleDateString()}&date_2=${this.time.end.toLocaleDateString()}&zoom=${this.zoom}`)
         if(response.status === 204){
             this.$buefy.snackbar.open({
             message: response.data.message,
