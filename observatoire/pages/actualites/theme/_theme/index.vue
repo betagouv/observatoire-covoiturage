@@ -24,7 +24,7 @@ import ContentList from '../../../../components/ContentList.vue'
 export default class ActualitesCategory extends Vue{
   title='Actualités du covoiturage au quotidien'
   description=''
-  $route:any
+
   async asyncData({ $content, params, error }) {
     const theme = await $content('themes')
     .only(['name', 'slug'])
@@ -53,20 +53,20 @@ export default class ActualitesCategory extends Vue{
 
     return { theme, actualites, taxonomies }
   }
-  head() {
+  head({$route}) {
     return {
       title: this.title,
       meta:[
         { hid: 'description', name: 'description', content: this.description },
-        { hid: 'og:url', property: "og:url", content: `${this.$store.state.env.url_app}${this.$route.path}` },
+        { hid: 'og:url', property: "og:url", content: `${this.$store.state.env.url_app}${$route.path}` },
         { hid: 'og:title', property: "og:title", content: this.title},
         { hid: "og:description", property: "og:description", content: this.description},
-        { hid: "twitter:url", name: "twitter:url", content: `${this.$store.state.env.url_app}${this.$route.path}`},
+        { hid: "twitter:url", name: "twitter:url", content: `${this.$store.state.env.url_app}${$route.path}`},
         { hid: "twitter:title", name: "twitter:title", content: this.title},
         { hid: "twitter:description", name: "twitter:description", content: this.description},
       ],
       link: [
-        { hid: "canonical", rel: "canonical", href: `${this.$store.state.env.url_app}${this.$route.path}` }
+        { hid: "canonical", rel: "canonical", href: `${this.$store.state.env.url_app}${$route.path}` }
       ]
     }
   }

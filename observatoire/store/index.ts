@@ -1,26 +1,25 @@
 import { MutationTree,ActionTree } from 'vuex'
+import env from 'static/js/env'
+
+const getEnv = () =>
+  process.server
+    ? env || {}
+    : {}
 
 export const state = () => ({
-  env: {
-    url_api: null,
-    url_app: null,
-  }
+  env: {}
 })
 
 export type EnvState = ReturnType<typeof state>
 
 export const mutations: MutationTree<EnvState> = {
-  setUrlApi(state, value) {
-    state.env.url_api = value
-  },
-  setUrlApp(state, value) {
-    state.env.url_app = value
+  setEnv (state, content) {
+    state.env = content
   }
 }
 
 export const actions:ActionTree<EnvState,EnvState> = {
   nuxtServerInit({ commit }) {
-    commit('setUrlApi', process.env.URL_API || 'http://localhost:8080/v1')
-    commit('setUrlApp', process.env.URL_APP || 'http://localhost:3000')
+    commit('setEnv', getEnv())
   }
 }

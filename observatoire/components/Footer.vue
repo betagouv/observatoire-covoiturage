@@ -41,7 +41,7 @@
               </li>
             </ul>
           </div>
-          <div v-if="$config.newsletter"  class="fr-footer__newsletter">
+          <div v-if="$store.state.env.newsletter"  class="fr-footer__newsletter">
             <h6>Recevoir les actualités</h6>
             <p><a href="https://covoiturage.beta.gouv.fr/abonnez-vous" class="fr-link fr-btn">Abonnez-vous</a></p>
           </div>

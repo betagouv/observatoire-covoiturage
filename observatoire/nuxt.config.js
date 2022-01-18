@@ -1,11 +1,6 @@
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
-  publicRuntimeConfig: {
-    map_style: process.env.MAPLIBRE_STYLE || '/style.json',
-    newsletter : process.env.NEWSLETTER || 'false',
-  },
-
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'Observatoire national du covoiturage au quotidien',
@@ -66,13 +61,8 @@ export default {
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
     'nuxt-buefy',
-    ['nuxt-matomo', { doNotTrack: true, matomoUrl: 'https://stats.data.gouv.fr/', siteId: 166, cookies: false }],
+    ['nuxt-matomo', { doNotTrack: true, matomoUrl: 'https://stats.data.gouv.fr/', siteId: 213, cookies: false }],
   ],
-  // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {
-    baseURL:process.env.URL_API
-  },
-
   // Content module configuration: https://go.nuxtjs.dev/config-content
   content: {
     fullTextSearchFields: ()=>['title', 'description','text']

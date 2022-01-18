@@ -95,7 +95,6 @@ import PrevNext from '../../../../components/PrevNext.vue'
 })
 export default class SingleActualite extends mixins(ContentMixin){
   actualite:any
-  $route: any
   taxonomies:any
 
   async asyncData({ $content, params }) {
@@ -125,22 +124,22 @@ export default class SingleActualite extends mixins(ContentMixin){
     return { actualite, taxonomies, prev, next }
   }
 
-  head() {
+  head({$route}) {
     return {
       title: this.actualite.title,
       meta:[
         { hid: 'description', name: 'description', content: this.actualite.description },
-        { hid: 'og:url', property: "og:url", content: `${this.$store.state.env.url_app}${this.$route.path}` },
+        { hid: 'og:url', property: "og:url", content: `${this.$store.state.env.url_app}${$route.path}` },
         { hid: 'og:title', property: "og:title", content: this.actualite.title},
         { hid: "og:description", property: "og:description", content: this.actualite.description},
         { hid: "og:image", property: "og:image", content: this.actualite.img},
-        { hid: "twitter:url", name: "twitter:url", content: `${this.$store.state.env.url_app}${this.$route.path}`},
+        { hid: "twitter:url", name: "twitter:url", content: `${this.$store.state.env.url_app}${$route.path}`},
         { hid: "twitter:title", name: "twitter:title", content: this.actualite.title},
         { hid: "twitter:description", name: "twitter:description", content: this.actualite.description},
         { hid: "twitter:image", name: "twitter:image", content: this.actualite.img }
       ],
       link: [
-        { hid: "canonical", rel: "canonical", href: `${this.$store.state.env.url_app}${this.$route.path}` }
+        { hid: "canonical", rel: "canonical", href: `${this.$store.state.env.url_app}${$route.path}` }
       ]
     }
   }

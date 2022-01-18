@@ -29,7 +29,7 @@ import Pagination from '../../components/Pagination.vue'
 export default class Actualites extends Vue{
   title='Actualités du covoiturage au quotidien'
   description=''
-  $route:any
+  
   async asyncData({ $content }) {
     const perPage = 9
     const actualites = await $content('actualites')
@@ -54,20 +54,20 @@ export default class Actualites extends Vue{
 
     return { actualites, taxonomies, lastPage }
   }
-  head() {
+  head({$route}) {
     return {
       title: this.title,
       meta:[
         { hid: 'description', name: 'description', content: this.description },
-        { hid: 'og:url', property: "og:url", content: `${this.$store.state.env.url_app}${this.$route.path}` },
+        { hid: 'og:url', property: "og:url", content: `${this.$store.state.env.url_app}${$route.path}` },
         { hid: 'og:title', property: "og:title", content: this.title},
         { hid: "og:description", property: "og:description", content: this.description},
-        { hid: "twitter:url", name: "twitter:url", content: `${this.$store.state.env.url_app}${this.$route.path}`},
+        { hid: "twitter:url", name: "twitter:url", content: `${this.$store.state.env.url_app}${$route.path}`},
         { hid: "twitter:title", name: "twitter:title", content: this.title},
         { hid: "twitter:description", name: "twitter:description", content: this.description},
       ],
       link: [
-        { hid: "canonical", rel: "canonical", href: `${this.$store.state.env.url_app}${this.$route.path}` }
+        { hid: "canonical", rel: "canonical", href: `${this.$store.state.env.url_app}${$route.path}` }
       ]
     }
   }
