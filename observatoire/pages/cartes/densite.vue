@@ -11,12 +11,12 @@
 <script lang="ts">
 import { Component,mixins,Watch } from 'nuxt-property-decorator'
 import BreakpointsMixin from '../../components/mixins/breakpoints'
-import Map from '../../components/maps/location/map.vue'
+import Map from '../../components/maps/densite/map.vue'
 
 @Component({
   components:{Map}
 })
-export default class Location extends mixins(BreakpointsMixin){
+export default class Densite extends mixins(BreakpointsMixin){
   mapKey = 0
   selectedMap = 'all'
 

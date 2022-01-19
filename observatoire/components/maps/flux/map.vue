@@ -65,8 +65,8 @@ interface FluxData {
   passengers:number,
   distance:number,
 }
-
 interface Time {year:string,month:string}
+interface Analyse {val:number,color:[number, number, number],width:number}
 
 @Component({
   components:{Sidebar, Legend, Controls}
@@ -91,7 +91,7 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
     year:'',
     month:''
   }
-  analyse:Array<{val:number,color:RegExpMatchArray | Array<number>,width:number}> = []
+  analyse:Array<Analyse> = []
   slider:Array<number>=[]
   loading=true
   $buefy:any

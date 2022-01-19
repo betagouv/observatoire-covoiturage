@@ -53,17 +53,19 @@ import Sidebar from './sidebar.vue'
 import Legend from '../helpers/legend.vue'
 import Controls from '../helpers/controls.vue'
 
-interface LocationData {
+interface DensiteData {
   hex:string,
   count:number,
 }
 
 interface Time {start:Date,end:Date}
 
+interface Analyse {val:number,color:[number, number, number],width:number}
+
 @Component({
   components:{Sidebar, Legend, Controls}
 })
-export default class LocationMap extends mixins(BreakpointsMixin,MapsMixin){
+export default class DensiteMap extends mixins(BreakpointsMixin,MapsMixin){
   @Prop({ required: true }) map!: string
 
   map_metropole=null
@@ -76,20 +78,20 @@ export default class LocationMap extends mixins(BreakpointsMixin,MapsMixin){
   deck_guyane=null
   deck_mayotte=null
   deck_reunion=null
-  zoom=7
-  data:Array<LocationData>=[]
+  zoom=8
+  data:Array<DensiteData>=[]
   time:Time={
-    start: null,
-    end: null
+    start:new Date('01/01/2020'),
+    end: new Date('01/01/2020')
   }
-  analyse:Array<{val:number,color:[number, number, number],width:number}> = []
+  analyse:Array<Analyse> = []
   loading=true
   $buefy:any
 
  
 
   get legendTitle(){
-    return `(source RPC)` 
+    return `Densité de départ ou d'arrivée de covoiturage dans la maille hexagonale (source RPC)` 
   }
   public async mounted(){
     await this.getTime()
@@ -105,13 +107,14 @@ export default class LocationMap extends mixins(BreakpointsMixin,MapsMixin){
   
   @Watch('time', { deep: true })
   async onTimeChanged(val:Time, oldval:Time) {
-    if ( oldval.start || oldval.end ){
+    if ( oldval.start !== val.start){
       await this.getData()
     }
   }
 
   @Watch('zoom')
-  async onZoomChanged() {
+  async onZoomChanged(val:number, oldval:number) {
+    if ( oldval !== val)
     await this.getData()
   }
   
@@ -234,21 +237,21 @@ export default class LocationMap extends mixins(BreakpointsMixin,MapsMixin){
       extruded: false,
       lineWidthMinPixels: 1,
       getHexagon: d => d.hex,
-      getFillColor: d => this.classColor( d.count,this.analyse),
+      getFillColor: d => this.classColor(d.count,this.analyse),
       getLineColor: d => [80, 80, 80],
     })
   }
-
+  
   public addTooltip(){
     return ({object}) => object && {
-      html: `<div>${object.count} trajets</div>`,
+      html: `<div><b>${object.count.toLocaleString()}</b> départ(s) ou arrivée(s) de covoiturage dans cette maille héxagonale</div>`,
       className:'fr-callout',
       style: {
         color:'#000',
         backgroundColor: '#fff',
         fontSize: '0.8em',
         width:'250px',
-        height:'110px',
+        height:'80px',
         left:'-125px',
         top:'-110px'
       }
@@ -258,7 +261,9 @@ export default class LocationMap extends mixins(BreakpointsMixin,MapsMixin){
   public changeZoom(){
     for (let territory of this.territories) {
       if(this.$data[`deck_${territory.name}`]){
-        this.$data[`deck_${territory.name}`].setProps({layers:[this.addHexLayer()]})
+        this.$data[`deck_${territory.name}`].setProps({
+          layers:[this.addHexLayer()],
+        })
       }
     }
   }

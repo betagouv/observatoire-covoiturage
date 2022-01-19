@@ -1,7 +1,7 @@
 <template>
   <nav class="fr-sidemenu--full-border" :class="{'fr-p-1w': !lgAndAbove}" role="navigation" aria-label="Menu latéral">
     <div class="map-title">
-      <h5>Flux mensuels de passagers transportés en covoiturage entre territoires</h5>
+      <h5>Densité de départ ou d'arrivée de covoiturage dans la maille hexagonale</h5>
       <p>
         <NuxtLink to=/pages/glossaire/#passager target="_blank">
           <span class="fr-fi-information-line" aria-hidden="true"></span>
@@ -14,32 +14,32 @@
       <ul class="fr-sidemenu__list">
         
         <div class="slider">
-          <b-field label="Début">
-            <b-datepicker 
-              v-model=selectedTime.start
-              :min-date=minTime 
-              :max-date=maxTime
-              icon="calendar-today"
-              :icon-right="selected ? 'close-circle' : ''"
-              icon-right-clickable
-              @icon-right-click="clearDate"
-              trap-focus
-            />
-          </b-field>
-          <b-field label="Fin">
-            <b-datepicker 
-              v-model=selectedTime.end
-              :min-date=minTime
-              :max-date=maxTime
-              icon="calendar-today"
-              :icon-right="selected ? 'close-circle' : ''"
-              icon-right-clickable
-              @icon-right-click="clearDate"
-              trap-focus
-            />
+          <b-field label="Période:">
+            <b-field label="Début" custom-class="is-small">
+              <b-datepicker 
+                label-position="on-border"
+                v-model=selectedTime.start
+                :min-date=minTime 
+                :max-date=maxTime
+                icon="calendar-today"
+                trap-focus
+              />
+            </b-field>
+            <b-field label="Fin" custom-class="is-small">
+              <b-datepicker 
+                v-model=selectedTime.end
+                :min-date=minTime
+                :max-date=maxTime
+                icon="calendar-today"
+                trap-focus
+              />
+            </b-field>
           </b-field>
           <div class="fr-sidemenu__title">Zoom:</div>
-          <b-slider v-model="selectedZoom" :min="1" :max="7" lazy ticks></b-slider>
+          <b-slider v-model="selectedZoom" :min="1" :max="8" lazy ticks>
+            <b-slider-tick :value="0">Min</b-slider-tick>
+            <b-slider-tick :value="8">Max</b-slider-tick>
+          </b-slider>
         </div>
       </ul>
       <b-field>
@@ -56,7 +56,7 @@ import { Component,mixins,PropSync,Prop,Watch } from 'nuxt-property-decorator'
 import BreakpointsMixin from '../../mixins/breakpoints'
 
 @Component
-export default class LocationSidebar extends mixins(BreakpointsMixin){
+export default class DensiteSidebar extends mixins(BreakpointsMixin){
   @PropSync('zoom', { required: true, type: Number }) selectedZoom!: number
   @PropSync('time', { required: true, type: Object }) selectedTime!: { start:Date, end:Date }
   @Prop({ required: true }) maxTime!: Date

@@ -3,6 +3,7 @@ import { ckmeans } from 'simple-statistics'
 import maplibregl from 'maplibre-gl'
 import { Deck } from '@deck.gl/core'
 import BreakpointsMixin from './breakpoints'
+import { RGBAColor } from 'deck.gl'
 
 
 
@@ -16,9 +17,9 @@ interface Territory {
   attribution:boolean
 }
 
-interface Data {
+interface Analyse {
   val:number,
-  color:number[],
+  color:[number,number,number],
   width:number
 }
 
@@ -152,15 +153,15 @@ export default class MapsMixin extends mixins(BreakpointsMixin) {
     return analysis
   }
 
-  classColor(val:number, datas:Array<Data>) {
+  classColor(val:number, datas:Array<Analyse>) {
     const analysisClass = datas.map(d => d.val)
     const classe = analysisClass.reduce((prev, curr) => {
       return Math.abs(curr - val) > Math.abs(prev - val) ? prev : curr
     })
-    return datas.find(d => d.val === classe)?.color
+    return datas.find(d => d.val === classe)?.color || [0,0,0]
   }
 
-  classWidth(val:number, datas:Array<Data>) {
+  public classWidth(val:number, datas:Array<Analyse>) {
     const analysisClass = datas.map(d => d.val)
     const classe = analysisClass.reduce((prev, curr) => {
       return Math.abs(curr - val) > Math.abs(prev - val) ? prev : curr
