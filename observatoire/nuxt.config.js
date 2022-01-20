@@ -67,7 +67,7 @@ export default {
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
     'nuxt-buefy',
-    ['nuxt-matomo', { doNotTrack: true, matomoUrl: 'https://stats.data.gouv.fr/', siteId: 166, cookies: false }],
+    ['nuxt-matomo', { doNotTrack: true, matomoUrl: 'https://stats.data.gouv.fr/', siteId: 213, cookies: false }],
   ],
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {

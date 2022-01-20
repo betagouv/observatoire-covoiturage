@@ -16,9 +16,9 @@ interface Territory {
   attribution:boolean
 }
 
-interface Data {
+interface Analyse {
   val:number,
-  color:RegExpMatchArray | number[],
+  color:[number,number,number],
   width:number
 }
 
@@ -88,7 +88,7 @@ export default class MapsMixin extends mixins(BreakpointsMixin) {
     })
   }
 
-  createDeck(container:any,options:Territory,layer:any) {
+  createDeck(container:any,options:Territory,layer:any,tooltip:any) {
     return new Promise<void>((resolve,reject) =>{
       try{
         // empêche le menu contextuel de s'ouvrir sur le clic droit
@@ -118,19 +118,8 @@ export default class MapsMixin extends mixins(BreakpointsMixin) {
           onHover: ({object}) => (this.isHovering = Boolean(object)),
           getCursor: ({isDragging}) => (isDragging ? 'grabbing' : (this.isHovering ? 'pointer' : 'grab')),
           layers:[layer],
-          getTooltip: ({object}) => object && {
-            html: this.tooltip(object),
-            className:'fr-callout',
-            style: {
-              color:'#000',
-              backgroundColor: '#fff',
-              fontSize: '0.8em',
-              width:'250px',
-              height:'110px',
-              left:'-125px',
-              top:'-110px'
-            }
-          }
+          getTooltip:tooltip
+          
         })
         resolve()
       }
@@ -140,32 +129,40 @@ export default class MapsMixin extends mixins(BreakpointsMixin) {
     })
   }
 
-  hexToRgb(hex:string) {
-    return hex.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i,(_m, r, g, b) => '#' + r + r + g + g + b + b)
-    .substring(1).match(/.{2}/g) || []
-    .map(x => parseInt(x, 16))
+  hexToRgb(hex:string):[number, number, number] {
+    const m = hex.match(/^#?([\da-f]{2})([\da-f]{2})([\da-f]{2})$/i)
+    if(m) {
+    const rgb:[number, number, number] = [parseInt(m[1], 16),parseInt(m[2], 16),parseInt(m[3], 16)]
+    return rgb
+    } else {
+      return [0,0,0]
+    }
   }
 
   jenks(data:Array<Object>,field:string,colors:Array<string>,width:Array<number>){
     const vals:Array<number> = data.map(d => d[field])
-    const breaks = ckmeans(vals, width.length - 1)
-    let analysis = breaks.map((b,i) => {
+    const breaks = ckmeans(vals, colors.length - 1)
+    let analysis:{
+      val: number;
+      color: [number, number, number];
+      width: number;
+  }[] = breaks.map((b,i) => {
       return {val:b[0],color:this.hexToRgb(colors[i]),width:width[i]} 
     })
     return analysis
   }
 
-  classColor(val:number, datas:Array<Data>) {
+  classColor(val:number, datas:Array<Analyse>) {
     const analysisClass = datas.map(d => d.val)
-    const classe = analysisClass.reduce(function (prev, curr) {
+    const classe = analysisClass.reduce((prev, curr) => {
       return Math.abs(curr - val) > Math.abs(prev - val) ? prev : curr
     })
-    return datas.find(d => d.val === classe)?.color
+    return datas.find(d => d.val === classe)?.color || [0,0,0]
   }
 
-  classWidth(val:number, datas:Array<Data>) {
+  public classWidth(val:number, datas:Array<Analyse>) {
     const analysisClass = datas.map(d => d.val)
-    const classe = analysisClass.reduce((prev:number, curr:number) => {
+    const classe = analysisClass.reduce((prev, curr) => {
       return Math.abs(curr - val) > Math.abs(prev - val) ? prev : curr
     })
     return datas.find(d => d.val === classe)?.width
@@ -177,11 +174,5 @@ export default class MapsMixin extends mixins(BreakpointsMixin) {
     } else {
       return options.zoom
     }
-  }
-
-  tooltip(object:any){
-    return `<div class="tooltip-title"><b>${object.ter_1} - ${object.ter_2}</b></div>
-      <div>${object.passengers} passagers transportés</div>
-      <div>${object.distance.toLocaleString()} Km parcourus</div>`
   }
 }
