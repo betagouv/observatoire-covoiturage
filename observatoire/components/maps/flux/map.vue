@@ -296,7 +296,7 @@ export default class FluxMap extends mixins(BreakpointsMixin,MapsMixin){
     }
   }
 
-  public selectedMap(event:any){
+  public selectedMap(event:object){
     this.$emit('rerenderMap', event)
   }
 }

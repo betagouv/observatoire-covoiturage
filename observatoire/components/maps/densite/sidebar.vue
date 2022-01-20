@@ -36,10 +36,17 @@
             </b-field>
           </b-field>
           <div class="fr-sidemenu__title">Zoom:</div>
-          <b-slider v-model="selectedZoom" :min="1" :max="8" lazy ticks>
+          <b-slider v-model="selectedZoom" :min="1" :max="8" ticks>
             <b-slider-tick :value="0">Min</b-slider-tick>
             <b-slider-tick :value="8">Max</b-slider-tick>
           </b-slider>
+          <b-field class="switch">
+            <b-switch v-model="selectedSwitchAires"
+                true-value="visible"
+                false-value="none">
+                Aires de covoiturage
+            </b-switch>
+        </b-field>
         </div>
       </ul>
       <b-field>
@@ -59,6 +66,7 @@ import BreakpointsMixin from '../../mixins/breakpoints'
 export default class DensiteSidebar extends mixins(BreakpointsMixin){
   @PropSync('zoom', { required: true, type: Number }) selectedZoom!: number
   @PropSync('time', { required: true, type: Object }) selectedTime!: { start:Date, end:Date }
+  @PropSync('switchAires', { required: true, type: String }) selectedSwitchAires!: String
   @Prop({ required: true }) maxTime!: Date
 
   minTime = new Date('01/01/2020')
@@ -78,6 +86,9 @@ export default class DensiteSidebar extends mixins(BreakpointsMixin){
 <style lang="scss" scoped>
   .slider{
     padding: 0 1em;
+  }
+  .switch{
+    margin-top: 1em;
   }
   .fr-sidemenu__title{
     font-size: 1rem !important;
