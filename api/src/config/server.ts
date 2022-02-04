@@ -2,8 +2,8 @@ import fp from 'fastify-plugin'
 import {FastifyPluginAsync} from 'fastify'
 import { join } from 'path'
 import cors from 'fastify-cors'
-//import helmet from 'fastify-helmet'
-import compress from 'fastify-compress'
+import helmet from 'fastify-helmet'
+//import compress from 'fastify-compress'
 import swagger from 'fastify-oas'
 import autoLoad from 'fastify-autoload'
 import cache from 'fastify-caching'
@@ -13,7 +13,7 @@ const config: FastifyPluginAsync = async (server, options) => {
   
   // add CORS and Helmet
   server.register(cors,{origin:'*'})
-  //server.register(helmet)
+  server.register(helmet)
 
   // cache
   server.register(cache, {
@@ -24,9 +24,9 @@ const config: FastifyPluginAsync = async (server, options) => {
 )
 
   // compression - add x-protobuf
-  server.register(compress, {
+  /*server.register(compress, {
     customTypes: /^text\/|\+json$|\+text$|\+xml|x-protobuf$/
-  })
+  })*/
   // add Swagger
   server.register(swagger, {
     routePrefix: '/documentation',
