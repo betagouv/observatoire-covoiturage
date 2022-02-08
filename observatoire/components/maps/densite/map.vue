@@ -188,7 +188,7 @@ export default class DensiteMap extends mixins(BreakpointsMixin,MapsMixin){
       try{
         this.loading = true
         if(this.time.start && this.time.end){
-          const response = await $axios.get(`/location?date_1=${this.time.start.toLocaleDateString()}&date_2=${this.time.end.toLocaleDateString()}&zoom=${this.zoom}`)
+          const response = await $axios.get(`/location?date_1=${this.time.start.toISOString().slice(0, 10)}&date_2=${this.time.end.toISOString().slice(0, 10)}&zoom=${this.zoom}`)
           if(response.status === 204){
               this.$buefy.snackbar.open({
               message: response.data.message,
