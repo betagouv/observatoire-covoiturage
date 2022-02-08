@@ -40,16 +40,16 @@ Sachant que 70% des déplacements domicile-travail se font seul et en voiture, l
 - amélioration de la qualité de vie au travail et augmentation de la **productivité** des salariés / agents,
 - **gain d’attractivité** de la structure pour l’employeur.
 
-###Quelles sont les différentes manières de covoiturer pour aller au travail et bénéficier du FMD ?
+### Quelles sont les différentes manières de covoiturer pour aller au travail et bénéficier du FMD ?
 L’article L. 3132-1 du **code des transports** définit le covoiturage comme : l’utilisation en commun d’un véhicule terrestre à moteur par un conducteur et un ou plusieurs passagers, effectuée à titre non onéreux, excepté le partage des frais, dans le cadre d’un déplacement que le conducteur effectue pour son propre compte.
 Ainsi, dans son application, le Forfait Mobilités Durables englobe aussi bien le covoiturage via des plateformes de mise en relation que le covoiturage dit “informel”, c’est-à-dire hors plateformes. 
 Par ailleurs, les échanges financiers entre les conducteurs et les passagers sont limités au partage des frais de déplacement : dépréciation (usure) du véhicule, frais de réparation et d'entretien, pneumatiques, carburant et primes d'assurances, péages et frais de stationnement.
 
-###Quel est le montant de la prise en charge des déplacements ?
+### Quel est le montant de la prise en charge des déplacements ?
 - **Secteur privé** : lorsque l’employeur décide de prendre en charge le FMD, il peut verser jusqu’à **500€** par an par salarié, exonérés d’impôt et de cotisations sociales. Il peut monter jusqu’à **600€** en cas de cumul avec les TC.. De ce fait, si un employeur donne plus de 600 euros, la somme complémentaire est soumise à cotisations et impôts.
 - **Secteur public** : **200€** par an par agent exonérés d’impôts sur le revenu, à condition que l’agent ait covoituré pour un minimum de 100 jours par an.
 
-###Comment en bénéficier ?
+### Comment en bénéficier ?
 L’employeur doit pouvoir se procurer, auprès du salarié et selon une périodicité au moins annuelle, a minima une attestation sur l'honneur du salarié ayant covoituré, voire un justificatif d’utilisation d’une plateforme de mise en relation pour du covoiturage.
 
 Les **justificatifs** possibles si je covoiture **en passant par une [plateforme partenaire** du registre de preuve de covoiturage] (https://covoiturage.beta.gouv.fr/operateurs/) : 
