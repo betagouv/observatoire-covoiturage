@@ -1,5 +1,5 @@
 export const state = () => ({
-  yearList:['2021','2020'],
+  yearList:['2022','2021','2020'],
   monthList:[
     {id:1,name:'Janvier'},
     {id:2,name:'Février'},
