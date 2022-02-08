@@ -1,7 +1,7 @@
 ---
-title: "Le Forfait Mobilités Durables, un levier efficace pour inciter ses salariés/agents à covoiturer pour aller au travail "
+title: "Le Forfait Mobilités Durables, un levier efficace pour inciter ses salariés/agents à covoiturer pour aller au travail"
+date: 2022-02-08T12:46:22.402Z
 description: "Ce document présente les bénéfices et les modalités d'application du Forfait Mobilités Durables dans le cadre du covoiturage"
-description: "Le 09 novembre 2021, le Cerema a proposé un webinaire dans le cadre des Rendez-vous Mobilités, sur le thème des voies réservées définies par la loi 'Climat et résilience'. A cette occasion, il a présenté le cadre général de déploiement de ces voies réservées et invité les gestionnaires routiers à l'associer, le plus tôt possible, à leurs démarches."
 categories: 
   - fiches
 themes: 
@@ -11,6 +11,7 @@ themes:
 
 img: https://images.unsplash.com/photo-1529400971008-f566de0e6dfc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80
 legend: "Trajet domicile travail"
+---
 
 # Le Forfait Mobilités Durables, un levier efficace pour inciter ses salariés/agents à covoiturer pour aller au travail 
 
@@ -59,5 +60,3 @@ Les **justificatifs** possibles si je covoiture **en passant par une [plateforme
 Les **justificatifs** possibles si je covoiture **hors plateforme partenaire** du Registre de Preuve de covoiturage  : 
 - A minima, une attestation sur l’honneur au nom du salarié / agent. Covoiturage.beta.gouv.fr propose à ce sujet un exemple d’attestation sur l’honneur à renseigner et à télécharger depuis son [générateur](https://attestation.covoiturage.beta.gouv.fr/salarie-secteur-prive) ;
 - Éventuellement, une attestation sur l’honneur des personnes avec qui le salarié / agent a covoituré. 
-
----
