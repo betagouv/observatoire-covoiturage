@@ -30,7 +30,10 @@ export class TransportAires2021 extends AbstractDataset {
     ['comm', ['comm', 'varchar']],
   ]);
   fileType: FileTypeEnum = FileTypeEnum.Csv;
-  sheetOptions = {};
+  sheetOptions = {
+    delimiter: ',',
+    columns: true,
+  };
 
   readonly importSql = `
     INSERT INTO ${this.targetTableWithSchema} (
