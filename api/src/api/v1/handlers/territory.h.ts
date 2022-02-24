@@ -106,6 +106,7 @@ export default class territoryHandler {
       else if (rows.length === 0) {
         reply.code(404).send(new Error('Pas de données disponibles'))
       }
+      reply.header('Content-disposition', 'attachment; filename=aom.geojson')
       reply.send(rows[0].json_build_object)
       client.release()
     } catch (err) {
