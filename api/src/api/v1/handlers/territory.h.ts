@@ -84,5 +84,34 @@ export default class territoryHandler {
     }
   }
 
+  static async getAom(request: FastifyRequest<territoryTypes.list>, reply: FastifyReply):Promise<void>{
+    try {
+      const client = await this.pg.connect()
+      const sql =`SELECT json_build_object(
+        'type', 'FeatureCollection',
+        'features', json_agg(ST_AsGeoJSON(t.*)::json)
+      )
+      FROM (
+        SELECT aom, l_aom, ST_Multi(ST_Union(geom_simple)) as geom
+        FROM perimeters
+        WHERE year = ${request.query.year} 
+        AND aom IS NOT NULL
+        AND dep NOT IN ('971','972','973','974','976')
+        GROUP BY aom,l_aom
+      ) as t;`
+      const { rows } = await client.query(sql)
+      if (!rows) {
+        reply.code(404).send(new Error('page not found'))
+      }
+      else if (rows.length === 0) {
+        reply.code(404).send(new Error('Pas de données disponibles'))
+      }
+      reply.send(rows[0].json_build_object)
+      client.release()
+    } catch (err) {
+      reply.send(err)
+    }
+  }
+
 }
   

@@ -98,4 +98,45 @@ export default class territorySchema {
       }
     }
   }
+
+  static territoryAom = {
+    tags: ['territories'],
+    querystring: {
+      year: {
+        type: 'string',
+        description: 'Year (YYYY)'
+      }
+    },
+    response: {
+      200: {
+        type: 'object',
+        description:'Geojson des aom',
+        properties: {
+          type: {type:'string'},
+          features: {
+            type:'array',
+            items: {
+              properties: {
+                type: {type:'string'},
+                geometry:{
+                  type:'object',
+                  properties:{
+                    type: {type:'string'},
+                    coordinates:{
+                      type:'array',
+                      items:{ type: ['array','number']}
+                    }
+                  }
+                },
+                properties: {
+                  aom:{type:'string'},
+                  l_aom:{type:'string'},
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
