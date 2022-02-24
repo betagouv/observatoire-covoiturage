@@ -96,7 +96,7 @@ export default class territoryHandler {
         FROM perimeters
         WHERE year = ${request.query.year} 
         AND aom IS NOT NULL
-        AND reg NOT IN ('971','972','973','974','976')
+        AND dep NOT IN ('971','972','973','974','976')
         GROUP BY aom,l_aom
       ) as t;`
       const { rows } = await client.query(sql)
