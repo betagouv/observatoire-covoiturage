@@ -3,8 +3,8 @@
     <div v-if="lgAndAbove || screen.isSidebarOpen" class="fr-col-12 fr-col-lg-2 sidebar">
       <Sidebar 
         v-if="data"
-        :switch ="categories"
-        :allFeatures="countAires" 
+        :features=data.features
+        @update=update
       />
     </div>
     <div class="fr-col-12 fr-col-lg-10 map">
@@ -14,10 +14,8 @@
           <div class="map_container">
             <div id="map_metropole"></div>
           </div>
-          <Legend :title="legendTitle" :analyzes="categories" type="category"/>
         </div>
         <div v-if="['all','droms'].includes(map)" :class="{'fr-hidden': screen.isSidebarOpen}" class="fr-col-12 fr-col-lg-3 maps_drom">
-          <Legend v-if="map ==='droms'" :title="legendTitle" :analyzes="categories" type="category"/>
           <div class="map_container">
             <div id="map_antilles"></div>
           </div>
@@ -41,31 +39,14 @@
 import { Component,mixins,Prop,Watch } from 'nuxt-property-decorator'
 import BreakpointsMixin from '../../mixins/breakpoints'
 import MapsMixin from '../../mixins/maps'
-import * as turf from '@turf/helpers'
 import maplibregl from 'maplibre-gl'
-import { $axios } from '../../../utils/api'
+import bbox from '@turf/bbox'
 import Sidebar from './sidebar.vue'
-import Legend from '../helpers/legend.vue'
 import Controls from '../helpers/controls.vue'
-
-interface AiresData {
-  id_lieu:string,
-  ad_lieu:string,
-  com_lieu:string,
-  type:string,
-  date_maj: string,
-  nbre_pl?:number,
-  nbre_pmr?:number,
-  duree?:number,
-  horaires?:string,
-  proprio?:string,
-  lumiere?:boolean,
-  comm?:string,
-  geom:{properties:{ type:string,coordinates:[number,number]}}
-}
+import json from '../../../static/data/vr_covoiturage.json'
 
 @Component({
-  components:{Sidebar, Legend, Controls}
+  components:{Sidebar, Controls}
 })
 export default class VoiesMap extends mixins(BreakpointsMixin,MapsMixin){
   @Prop({ required: true }) map!: string
@@ -75,82 +56,20 @@ export default class VoiesMap extends mixins(BreakpointsMixin,MapsMixin){
   map_guyane:any=null
   map_mayotte:any=null
   map_reunion:any=null
-  time:{year:string,month:string}={
-    year:'',
-    month:''
+  data=json
+  feature={
+    geometry:{}
   }
-  data:Array<AiresData>=[]
-  analyse:Array<{val:number,color:RegExpMatchArray | Array<number>,width:number}> = []
   loading=true
-  legendTitle="Aires de covoiturage (source transport.data.gouv.fr)"
-  categories=[
-    {color:[102, 194, 165],val:'Supermarché',width:10,active:true},
-    {color:[252, 141, 98],val:'Parking',width:10,active:true},
-    {color:[141, 160, 203],val:'Aire de covoiturage',width:10,active:true},
-    {color:[231, 138, 195],val:'Délaissé routier',width:10,active:true},
-    {color:[166, 216, 84],val:'Auto-stop',width:10,active:true},
-    {color:[255, 217, 47],val:'Parking relais',width:10,active:true},
-    {color:[229, 196, 148],val:'Sortie d\'autoroute',width:10,active:true},
-    {color:[179, 179, 179],val:'Autres',width:10,active:true}
-  ]
   $buefy:any
 
-  get filteredAires(){
-    if(this.data){
-      return turf.featureCollection(this.data.filter(a => this.categories.filter(c => c.active === true).map(c=>c.val).includes(a.type)).map(d => turf.feature(d.geom,{
-        id_lieu:d.id_lieu,
-        ad_lieu:d.ad_lieu,
-        com_lieu:d.com_lieu,
-        type:d.type,
-        date_maj: d.date_maj,
-        nbre_pl:d.nbre_pl,
-        nbre_pmr:d.nbre_pmr,
-        duree:d.duree,
-        horaires:d.horaires,
-        proprio:d.proprio,
-        lumiere:d.lumiere,
-        comm:d.comm
-      })))
-    }else{
-      return null
-    }
+  @Watch('feature',{ deep: true })
+  onFeatureChanged() {
+    this.fitBound()
   }
 
-  get countAires(){
-    if(this.filteredAires){
-      return this.filteredAires.features.length.toLocaleString('fr-FR')
-    } else{
-      return 0
-    }
-  }
-
-  public async created() {
-    await this.getData()
+  public async mounted() {
     await this.renderMaps()
-  }
-
-  @Watch('filteredAires', { deep: true })
-  onAiresChanged() {
-    for (let territory of this.territories) {
-      if(this.$data['map_'+territory.name]){
-        this.$data['map_'+territory.name].getSource('airesSource').setData(this.filteredAires)
-      }
-    }
-  }
-
-  public getData(){
-    return new Promise<void>(async (resolve, reject) => {
-      try{
-        this.loading = true
-        const response = await $axios.get('/aires_covoiturage')
-        this.data = response.data
-        this.loading = false
-        resolve()
-      }
-      catch(err){
-        reject(err)
-      }
-    })
   }
 
   public renderMaps() {
@@ -172,6 +91,7 @@ export default class VoiesMap extends mixins(BreakpointsMixin,MapsMixin){
           }
           this.map_metropole.addControl(new maplibregl.NavigationControl(), 'top-left')
         }
+        this.loading=false
         resolve()
       }
       catch(err){
@@ -184,7 +104,7 @@ export default class VoiesMap extends mixins(BreakpointsMixin,MapsMixin){
     this.$data[container].on('style.load', () => {
       this.$data[container].addSource('voiesSource', {
         type: 'geojson',
-        data: '/data/vr_covoiturage.geojson'
+        data: this.data
       })
       this.$data[container].addLayer({
         id: 'voiesLayer',
@@ -206,8 +126,7 @@ export default class VoiesMap extends mixins(BreakpointsMixin,MapsMixin){
         this.$data[container].getCanvas().style.cursor = 'pointer'
         let description = `
           <div class="fr-popup">
-            <p><b>nom :</b>${features[0].properties.name}</p>
-            <p>${features[0].properties.description}</p>
+            <p>${features[0].properties.name}</p>
           </div>`
         popup.setLngLat(e.lngLat)
         .setHTML(description)
@@ -226,6 +145,16 @@ export default class VoiesMap extends mixins(BreakpointsMixin,MapsMixin){
     } else {
       this.$emit('rerenderMap', 'metropole')
     }
+  }
+
+  public update(value){
+    this.feature = value
+  }
+
+  public fitBound() {
+    this.map_metropole.fitBounds(bbox(this.feature.geometry), {
+      padding: 20
+    })  
   }
 }
 </script>

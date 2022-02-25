@@ -5,7 +5,12 @@
       "type": "Feature",
       "properties": {
         "name": "Douane Thonex-Vallard",
-        "description": "**Type de mesure : ** Voie réservée 2+\n**Gestionnaire : ** ATMB\n**Localisation : ** A411\n**Année de mise en service : ** 2018\n**Linéaire concerné : ** 500 m par sens, au niveau de la douane\n\n**En savoir plus : **\n[[https://www.atmb.com/fr/lentreprise-atmb/espace-presse/communications/communiques-de-presse/atmb-confirme-sa-position-de]]"
+        "type": "Voie réservée 2+",
+        "gestionnaire": "ATMB",
+        "localisation": "A411",
+        "mise_en_service": "2018",
+        "distance": "500 m par sens, au niveau de la douane",
+        "link": "https://www.atmb.com/fr/lentreprise-atmb/espace-presse/communications/communiques-de-presse/atmb-confirme-sa-position-de"
       },
       "geometry": {
         "type": "LineString",
@@ -104,8 +109,13 @@
     {
       "type": "Feature",
       "properties": {
-        "description": "**Type de mesure : ** Voie réservée 2+\n**Gestionnaire : ** AREA\n**Localisation : ** A48\n**Année de mise en service : ** 2020\n**Linéaire concerné : ** 8,5 km\n\n**En savoir plus : **\n[[https://area-covoiturage.com/]]",
-        "name": "Grenoble - A48"
+        "name": "Grenoble - A48",
+        "type": "Voie réservée 2+",
+        "gestionnaire": "AREA",
+        "localisation": "A48",
+        "mise_en_service": "2020",
+        "distance": "8,5 km",
+        "link": "https://area-covoiturage.com"
       },
       "geometry": {
         "type": "LineString",
@@ -160,8 +170,13 @@
     {
       "type": "Feature",
       "properties": {
-        "description": "**Type de mesure : ** Voie réservée 2+\n**Gestionnaire : ** Métropole de Lyon\n**Localisation : ** M6\n**Année de mise en service : ** 2020\n**Linéaire concerné : ** 4,5 km dans chaque sens\n\n**En savoir plus : **\n[[https://www.grandlyon.com/services/voies-de-covoiturage-m6-m7.html]]",
-        "name": "M6 Lyon"
+        "name": "M6 Lyon",
+        "type": "Voie réservée 2+",
+        "gestionnaire": "Métropole de Lyon",
+        "localisation": "M6",
+        "mise_en_service": "2020",
+        "distance": "4,5 km dans chaque sens",
+        "link": "https://www.grandlyon.com/services/voies-de-covoiturage-m6-m7.html"
       },
       "geometry": {
         "type": "LineString",
@@ -260,8 +275,13 @@
     {
       "type": "Feature",
       "properties": {
-        "description": "**Type de mesure : ** Voie réservée 2+\n**Gestionnaire : ** Métropole de Lyon\n**Localisation : ** M6\n**Année de mise en service : ** 2020\n**Linéaire concerné : ** 4 km dans chaque sens\n\n**En savoir plus : **\n[[https://www.grandlyon.com/services/voies-de-covoiturage-m6-m7.html]]",
-        "name": "M7 Lyon"
+        "name": "M7 Lyon",
+        "type": "Voie réservée 2+",
+        "gestionnaire": "Métropole de Lyon",
+        "localisation": "M6",
+        "mise_en_service": "2020",
+        "distance": "4 km dans chaque sens",
+        "link": "https://www.grandlyon.com/services/voies-de-covoiturage-m6-m7.html"
       },
       "geometry": {
         "type": "LineString",
@@ -361,7 +381,12 @@
       "type": "Feature",
       "properties": {
         "name": "Mérignac",
-        "description": "**Type de mesure : ** Voie réservée Bus & VR2+\n**Gestionnaire : ** Bordeaux Métropole\n**Localisation : ** D213\n**Année de mise en service : ** 2017 puis 2019\n**Linéaire concerné : ** 2,3 km par sens\n\n** En savoir plus : **\n[[http://www.merignac.com/actualites/connaissez-vous-la-voie-de-covoiturage-de-merignac]]"
+        "type": "Voie réservée Bus & VR2+",
+        "gestionnaire": "Bordeaux Métropole",
+        "localisation": "D213",
+        "mise_en_service": "2017 puis 2019",
+        "distance": "2,3 km par sens",
+        "link": "http://www.merignac.com/actualites/connaissez-vous-la-voie-de-covoiturage-de-merignac"
       },
       "geometry": {
         "type": "LineString",
@@ -409,7 +434,12 @@
       "type": "Feature",
       "properties": {
         "name": "VR2+ CCC  sur M35 - Sud",
-        "description": "**Type de mesure : ** Voie réservée au covoiturage\n**Gestionnaire : **  Métropole de Strasbourg\n**Localisation : ** M35\n**Année de mise en service : ** 2021\n**Linéaire concerné : **  La Vigie vers Porte de Schirmeck\n\n ** En savoir plus : **\n[[https://www.strasbourg.eu/evolution-modalites-circulation-m35]]"
+        "type": "Voie réservée au covoiturage",
+        "gestionnaire": "Métropole de Strasbourg",
+        "localisation": "M35",
+        "mise_en_service": "2021",
+        "distance": "La Vigie vers Porte de Schirmeck",
+        "link": "https://www.strasbourg.eu/evolution-modalites-circulation-m35"
       },
       "geometry": {
         "type": "LineString",
@@ -545,7 +575,12 @@
       "type": "Feature",
       "properties": {
         "name": "VR2+ CCC sur M35 - Nord",
-        "description": "**Type de mesure : ** Voie réservée au covoiturage\n**Gestionnaire : **  Métropole de Strasbourg\n**Localisation : ** M35\n**Année de mise en service : ** 2021\n**Linéaire concerné : ** Reichsett vers Place de Haguenau\n\n ** En savoir plus : **\n[[https://www.strasbourg.eu/evolution-modalites-circulation-m35]]\n"
+        "type": "Voie réservée au covoiturage",
+        "gestionnaire": "Métropole de Strasbourg",
+        "localisation": "M35",
+        "mise_en_service": "2021",
+        "distance": "Reichsett vers Place de Haguenau",
+        "link": "https://www.strasbourg.eu/evolution-modalites-circulation-m35"
       },
       "geometry": {
         "type": "LineString",
