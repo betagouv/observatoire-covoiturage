@@ -49,7 +49,7 @@ alt:
         <button class="fr-accordion__btn" aria-expanded="false" aria-controls="accordion-4">Qui sont les opérateurs de covoiturage partenaires du RPC et depuis quand partagent-ils leurs données?</button>
       </h3>
       <div class="fr-collapse" id="accordion-4">
-        L’arrivée de nouveaux opérateurs dans le RPC augmentent le volume de trajets traités. Afin de prendre ce facteur en considération, un tableau avec les dates d’arrivée des opérateurs est mis à disposition.
+        L’arrivée de nouveaux opérateurs dans le RPC augmentent le volume de trajets traités. Afin de prendre ce facteur en considération, un <a href="/uploads/Date_Partenariat_RPC.pdf" target="_blank">tableau</a> avec les dates d’arrivée des opérateurs est mis à disposition.
         <a href="https://covoiturage.beta.gouv.fr/operateurs/">Voir la liste des opérateurs partenaires</a><br/>
       </div>
     </section>
