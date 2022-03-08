@@ -1,6 +1,6 @@
 ---
 title: "L’actualité du covoiturage : vu dans les médias en février …"
-date: 2021-09-06T15:45:01.489Z
+date: 2022-03-01T15:45:01.489Z
 description: "La revue de presse mensuelle sur le thème de covoiturage"
 categories:
   - veille
