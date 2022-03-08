@@ -1,5 +1,5 @@
 <template>
-  <div class="fr-section glossaire">
+  <div class="fr-section">
   <div class="fr-container">
     <div class="fr-grid-row">
       <div class="fr-col-12">
@@ -57,8 +57,3 @@ export default class Page extends Vue{
   }
 }
 </script>
-<style lang="scss">
- .glossaire h3{
-   margin-top: 2rem;
- }
-</style>
