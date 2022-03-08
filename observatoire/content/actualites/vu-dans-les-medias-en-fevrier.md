@@ -1,6 +1,5 @@
 ---
 title: "L’actualité du covoiturage : vu dans les médias en février …"
-"
 date: 2021-09-06T15:45:01.489Z
 description: "La revue de presse mensuelle sur le thème de covoiturage"
 categories:
@@ -8,7 +7,6 @@ categories:
 themes:
   - tendances
 img: https://images.unsplash.com/photo-1504711434969-e33886168f5c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80
-
 ---
 
 ### 📈 Tendances 
