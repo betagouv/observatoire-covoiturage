@@ -41,6 +41,11 @@
               Glossaire
             </NuxtLink>
           </li>
+          <li class="fr-nav__item">
+            <NuxtLink to="/pages/faq" class="fr-nav__link" target="_self">
+              Foire aux questions
+            </NuxtLink>
+          </li>
         </ul>
       </nav>
     </div>

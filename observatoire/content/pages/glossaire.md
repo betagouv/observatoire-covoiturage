@@ -4,6 +4,8 @@ description: "Ce document présente les méthodes de calcul utilisées pour les 
 img:
 alt:
 ---
+<div class="glossaire">
+
 ### <a name="operateur"></a>Opérateurs
 <div role="alert" class="fr-alert fr-alert--info">
     <p class="fr-alert__title">Unité : opérateur(s) actif(s)</p>
@@ -68,3 +70,4 @@ Les économies de CO2 sont calculées en partant du principe que si le passager 
 </div>
 Cet indicateur représente la quantité de pétrole économisé par les trajets issuent des jeux de données <a href="https://www.data.gouv.fr/fr/datasets/trajets-realises-en-covoiturage-registre-de-preuve-de-covoiturage/">"Trajets réalisés en covoiturage"</a>.
 Les économies d’énergie en kilogramme équivalent pétrole (kep) sont calculées en partant du principe que si le passager s’est déplacé en covoiturage, alors il n’a pas utilisé son véhicule personnel. Ceci représente donc un déplacement en moins réalisé par une voiture et autant de kep économisé. Les caractéristiques spécifiques des véhicules ne sont pas connues par le service. De ce fait, nous utilisons la moyenne kep des voitures particulières immatriculées en France. Selon, l’ADEME (Agence de l’Environnement et de la Maîtrise de l'Énergie), les chiffres clés 2015 - Climat, air et énergie, les kep par véhicule particulier et par kilomètre (du puits à la roue) sont de 0,0636 kep / km / véhicule particulier en moyenne.
+</div>
