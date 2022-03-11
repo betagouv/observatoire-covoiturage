@@ -33,11 +33,10 @@ export async function datasets(): Promise<Datasets> {
   datasets.add(TerritoriesPoint2021);
   datasets.add(TerritoriesPoint2022);
   datasets.add(TransportAires2021);
-  datasets.add(rpcJourneys(2020,4, 'https://www.data.gouv.fr/fr/datasets/r/e58f12d5-59ea-48e2-b11e-66f912cc7785'));
-  datasets.add(rpcJourneys(2022,1, 'https://www.data.gouv.fr/fr/datasets/r/8c8a308e-6997-4f03-b278-a0071c24d09b'));
+
  
   
-  /*const url =
+  const url =
     // eslint-disable-next-line max-len
     'https://www.data.gouv.fr/api/1/datasets/trajets-realises-en-covoiturage-registre-de-preuve-de-covoiturage/';
   const urls = await getFilesUrl(url);
@@ -45,6 +44,6 @@ export async function datasets(): Promise<Datasets> {
     const year = parseInt(url.slice(-11, -7));
     const month = parseInt(url.slice(-6, -4));
     datasets.add(rpcJourneys(year, month, url));
-  }*/
+  }
   return datasets;
 }
