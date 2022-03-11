@@ -5,6 +5,7 @@ export class CreateTerritoriesCodeTable extends AbstractDatastructure {
   static table = 'territories_code';
   readonly indexWithSchema = this.tableWithSchema.replace('.', '_');
   readonly sql = `
+      DROP TABLE IF EXISTS ${this.tableWithSchema};
       CREATE TABLE IF NOT EXISTS ${this.tableWithSchema} (
         id SERIAL PRIMARY KEY,
         year smallint NOT NULL,
@@ -24,5 +25,6 @@ export class CreateTerritoriesCodeTable extends AbstractDatastructure {
         country VARCHAR(5) NOT NULL
       );
       CREATE INDEX IF NOT EXISTS ${this.indexWithSchema}_id_index ON ${this.tableWithSchema} USING btree (id);
+      ALTER TABLE ${this.tableWithSchema} ADD CONSTRAINT ${this.table}_unique_key UNIQUE (year,arr,l_arr);
     `;
 }

@@ -5,6 +5,7 @@ export class CreateTerritoriesPointTable extends AbstractDatastructure {
   static table = 'territories_point';
   readonly indexWithSchema = this.tableWithSchema.replace('.', '_');
   readonly sql = `
+      DROP TABLE IF EXISTS ${this.tableWithSchema};
       CREATE TABLE IF NOT EXISTS ${this.tableWithSchema} (
         id SERIAL PRIMARY KEY,
         year integer NOT NULL,
@@ -15,5 +16,6 @@ export class CreateTerritoriesPointTable extends AbstractDatastructure {
       );
       CREATE INDEX IF NOT EXISTS ${this.indexWithSchema}_id_index ON ${this.tableWithSchema} USING btree (id);
       CREATE INDEX IF NOT EXISTS ${this.indexWithSchema}_geom_index ON ${this.tableWithSchema} USING gist (geom);
+      ALTER TABLE ${this.tableWithSchema} ADD CONSTRAINT ${this.table}_unique_key UNIQUE (year,territory,type);
     `;
 }

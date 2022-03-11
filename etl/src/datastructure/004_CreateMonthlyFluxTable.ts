@@ -26,6 +26,7 @@ export class CreateMonthlyFluxTable extends AbstractDatastructure {
         duration float NOT NULL
       );
       CREATE INDEX IF NOT EXISTS ${this.indexWithSchema}_id_index ON ${this.tableWithSchema} USING btree (id);
+      ALTER TABLE ${this.tableWithSchema} ADD CONSTRAINT ${this.table}_unique_key UNIQUE (year,month,type,territory_1,territory_2);
 
       CREATE OR REPLACE FUNCTION ${this.targetSchema}.import_monthly_flux(from_table varchar, year int, month int) 
       RETURNS VOID LANGUAGE 'plpgsql' AS $PROC$
@@ -172,7 +173,9 @@ export class CreateMonthlyFluxTable extends AbstractDatastructure {
       LEFT JOIN perim b on concat(a.territory_1,a.type) = concat(b.territory,b.type) 
       LEFT JOIN perim c on concat(a.territory_2,a.type) = concat(c.territory,c.type)
       ORDER BY a.territory_1,a.territory_2
-      ON CONFLICT DO NOTHING;';
+      ON CONFLICT 
+      ON CONSTRAINT ${this.table}_unique_key
+      DO NOTHING;';
       EXECUTE sql;
       END
       $PROC$;

@@ -9,7 +9,7 @@ export class CreateAiresCovoiturageTable extends AbstractDatastructure {
       CREATE TABLE IF NOT EXISTS ${this.tableWithSchema} (
         id SERIAL PRIMARY KEY,
         year integer,
-        id_lieu varchar,
+        id_lieu varchar UNIQUE,
         nom_lieu varchar,
         ad_lieu varchar,
         com_lieu varchar,

@@ -69,7 +69,9 @@ export function rpcJourneys(year: number, month: number, url: string): StaticMig
         passenger_seats,
         operator_class
       FROM ${this.tableWithSchema} 
-      ON CONFLICT DO NOTHING;
+      ON CONFLICT 
+      ON CONSTRAINT ${this.targetTable}_journey_id_key
+      DO NOTHING;
     `;
     readonly afterSql = `
      SELECT import_monthly_flux('${this.tableWithSchema}', ${year}, ${month});

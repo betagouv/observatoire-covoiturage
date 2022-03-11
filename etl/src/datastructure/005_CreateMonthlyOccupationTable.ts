@@ -19,6 +19,7 @@ export class CreateMonthlyOccupationTable extends AbstractDatastructure {
         geom json NOT NULL
       );
       CREATE INDEX IF NOT EXISTS ${this.indexWithSchema}_id_index ON ${this.tableWithSchema} USING btree (id);
+      ALTER TABLE ${this.tableWithSchema} ADD CONSTRAINT ${this.table}_unique_key UNIQUE (year,month,type,territory);
 
       CREATE OR REPLACE FUNCTION 
       ${this.targetSchema}.import_monthly_occupation(from_table varchar, year int, month int) 
@@ -145,7 +146,9 @@ export class CreateMonthlyOccupationTable extends AbstractDatastructure {
       )
       SELECT a.*,ST_AsGeoJSON(b.geom,6)::json as geom from occupation_rate a
       LEFT JOIN perim b on a.territory=b.territory and a.type=b.type
-      ON CONFLICT DO NOTHING;';
+      ON CONFLICT 
+      ON CONSTRAINT ${this.table}_unique_key
+      DO NOTHING;';
       EXECUTE sql;
       END
       $PROC$;

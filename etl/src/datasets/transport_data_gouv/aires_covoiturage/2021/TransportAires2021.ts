@@ -79,6 +79,8 @@ export class TransportAires2021 extends AbstractDataset {
       comm,
       ST_SetSRID(ST_Point(trim(xlong,chr(160))::float,trim(ylat,chr(160))::float),4326)
     FROM ${this.tableWithSchema} 
-    ON CONFLICT DO NOTHING;
+    ON CONFLICT 
+    ON CONSTRAINT ${this.targetTable}_id_lieu_key
+    DO NOTHING;
   `;
 }
