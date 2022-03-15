@@ -33,9 +33,7 @@ export async function datasets(): Promise<Datasets> {
   datasets.add(TerritoriesPoint2021);
   datasets.add(TerritoriesPoint2022);
   datasets.add(TransportAires2021);
-
  
-  
   const url =
     // eslint-disable-next-line max-len
     'https://www.data.gouv.fr/api/1/datasets/trajets-realises-en-covoiturage-registre-de-preuve-de-covoiturage/';

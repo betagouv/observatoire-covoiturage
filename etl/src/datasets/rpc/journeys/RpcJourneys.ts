@@ -74,8 +74,8 @@ export function rpcJourneys(year: number, month: number, url: string): StaticMig
       DO NOTHING;
     `;
     readonly afterSql = `
-     SELECT import_monthly_flux('${this.tableWithSchema}', ${year}, ${month});
-     SELECT import_monthly_occupation('${this.tableWithSchema}', ${year}, ${month});
+     CALL import_monthly_flux('${this.tableWithSchema}', ${year}, ${month});
+     CALL import_monthly_occupation('${this.tableWithSchema}', ${year}, ${month});
      DROP TABLE IF EXISTS ${this.tableWithSchema};
     `;
   };
