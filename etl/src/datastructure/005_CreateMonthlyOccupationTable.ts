@@ -20,6 +20,7 @@ export class CreateMonthlyOccupationTable extends AbstractDatastructure {
       );
       CREATE INDEX IF NOT EXISTS ${this.indexWithSchema}_id_index ON ${this.tableWithSchema} USING btree (id);
       ALTER TABLE ${this.tableWithSchema} ADD CONSTRAINT ${this.table}_unique_key UNIQUE (year,month,type,territory);
+      DROP FUNCTION IF EXISTS ${this.targetSchema}.import_monthly_occupation;
 
       CREATE OR REPLACE PROCEDURE 
       ${this.targetSchema}.import_monthly_occupation(from_table varchar, year int, month int) 
