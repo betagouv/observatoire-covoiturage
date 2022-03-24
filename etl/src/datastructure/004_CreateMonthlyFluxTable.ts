@@ -27,7 +27,6 @@ export class CreateMonthlyFluxTable extends AbstractDatastructure {
       );
       CREATE INDEX IF NOT EXISTS ${this.indexWithSchema}_id_index ON ${this.tableWithSchema} USING btree (id);
       ALTER TABLE ${this.tableWithSchema} ADD CONSTRAINT ${this.table}_unique_key UNIQUE (year,month,type,territory_1,territory_2);
-      DROP FUNCTION IF EXISTS ${this.targetSchema}.import_monthly_flux;
 
       CREATE OR REPLACE PROCEDURE ${this.targetSchema}.import_monthly_flux(from_table varchar, year int, month int) 
       LANGUAGE 'plpgsql' 
