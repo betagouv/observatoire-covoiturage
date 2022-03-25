@@ -1,5 +1,5 @@
 ---
-title: Nombre de personnes par véhicule partagé (en moyenne) et volume de ces véhicules par territoire
+title: Taux d'occupation des véhicules partagés et volume de ces véhicules par territoire
 date: 2021-09-06T16:47:01.489Z
 link: /cartes/occupation-vehicules
 img: carte_occupation.png
