@@ -87,7 +87,7 @@
                   </h4>
                   <p class="fr-tile__desc">
                     <NuxtLink to=/pages/glossaire/#occupation target="_blank">
-                      taux d'occupation des véhicules
+                      taux d'occupation
                     </NuxtLink>
                   </p>
               </div>
