@@ -5,5 +5,5 @@ link: /cartes/occupation-vehicules
 img: carte_occupation.png
 ---
 
-Cette carte représente le nombre de véhicules partagés entrant et sortant d'un territoire ainsi que le nombre de personnes par véhicule partagé (en moyenne).  
+Cette carte représente le taux d'occupation des véhicules partagés entrant et sortant d'un territoire ainsi que le nombre de personnes par véhicule partagé (en moyenne).  
 Les données sont issues du [registre de preuve de covoiturage](https://www.data.gouv.fr/fr/datasets/trajets-realises-en-covoiturage-registre-de-preuve-de-covoiturage/).

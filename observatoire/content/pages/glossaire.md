@@ -37,13 +37,13 @@ Un passager transporté est une personne ayant réalisé un trajet de covoiturag
 </div>
 Un véhicule partagé est un véhicule motorisé ayant réalisé un trajet de covoiturage avec au moins 2 covoitureurs transportés  (1 conducteur et au minimum 1 passager). Cet indicateur est calculé à partir du jeu de données <a href="https://www.data.gouv.fr/fr/datasets/trajets-realises-en-covoiturage-registre-de-preuve-de-covoiturage/">"Trajets réalisés en covoiturage"</a> du Registre de Preuve de Covoiturage. Il se base sur le champ 'trip_id' du jeu de données qui est l'identifiant permettant de recouper plusieurs couples passager/conducteur dans un même véhicule.
 
-### <a name="occupation"></a>Nombre de personnes moyen par véhicule partagé
+### <a name="occupation"></a>Taux d'occupation des véhicules partagés
 <div role="alert" class="fr-alert fr-alert--info">
-    <p class="fr-alert__title">Unité : nombre de personne(s) par véhicule</p>
+    <p class="fr-alert__title">Unité : Taux d'occupation des véhicules partagés</p>
 </div>
-Cet indicateur représente le nombre de personnes moyen par véhicule partagés à l'arrivé ou au départ d'un territoire  (conducteur compris). Il est calculé à partir du jeu de données <a href="https://www.data.gouv.fr/fr/datasets/trajets-realises-en-covoiturage-registre-de-preuve-de-covoiturage/">"Trajets réalisés en covoiturage"</a> du Registre de Preuve de Covoiturage.<br/> 
-Sa formule de calcul est : (somme des sièges réservés (champ 'passenger_seats') à l'arrivé ou au départ d'un territoire / nombre des véhicules partagés (champ 'trip_id') ayant transité sur le territoire) + 1 (afin d'inclure le conducteur du véhicule).<br/>
-Exemple : en considérant sur une période donnée 4 trajets (couple passager-conducteur). 1. Un trajet conducteur A / passager B (nombre de siège réservé = 1) 2. Un trajet conducteur A / passager C (nombre de siège réservé = 2) 3. Un trajet conducteur D / passager E (nombre de siège réservé = 1) 4. Un trajet conducteur D / passager F (nombre de siège réservé = 1) L'indicateur est ((1+2)+(1+1))/2 = 2,5 passagers par véhicule d'où 3,5 personnes par véhicule.
+Cet indicateur représente le taux d'occupation des véhicules partagés à l'arrivé ou au départ d'un territoire. Il est calculé à partir du jeu de données <a href="https://www.data.gouv.fr/fr/datasets/trajets-realises-en-covoiturage-registre-de-preuve-de-covoiturage/">"Trajets réalisés en covoiturage"</a> du Registre de Preuve de Covoiturage.<br/> 
+Sa formule de calcul est : (somme des distances des passagers + somme des distances des conducteurs ) / somme des distances des conducteurs.<br/>
+La distance du conducteur est approximé en sélectionnant la distance du trajet (journey) réalisé par le passager s’étant déplacé sur la distance la plus longue, pour un voyage (trip) donné.
 
 ### <a name="aire"></a>Aires de covoiturage
 <div role="alert" class="fr-alert fr-alert--info">
