@@ -66,6 +66,23 @@
             <div class="fr-tile">
               <div class="fr-tile__body">
                   <h4 class="fr-tile__title">
+                      {{data.has_incentive.toLocaleString()}}
+                  </h4>
+                  <p class="fr-tile__desc">
+                    <NuxtLink to=/pages/glossaire/#incentive target="_blank">
+                      trajets incités
+                    </NuxtLink>
+                  </p>
+              </div>
+              <div class="fr-tile__img">
+                <img src="/images/Incentive.svg" alt=""/>
+              </div>
+            </div>
+          </div>
+          <div class="fr-col">
+            <div class="fr-tile">
+              <div class="fr-tile__body">
+                  <h4 class="fr-tile__title">
                       {{data.trips.toLocaleString()}}
                   </h4>
                   <p class="fr-tile__desc">
@@ -93,23 +110,6 @@
               </div>
               <div class="fr-tile__img">
                 <img src="/images/groupe.svg" alt=""/>
-              </div>
-            </div>
-          </div>
-          <div class="fr-col">
-            <div class="fr-tile">
-              <div class="fr-tile__body">
-                  <h4 class="fr-tile__title">
-                      {{data.nb_aires.toLocaleString()}}
-                  </h4>
-                  <p class="fr-tile__desc">
-                    <NuxtLink to=/pages/glossaire/#aire target="_blank">
-                      aires de covoiturage
-                    </NuxtLink>
-                  </p>
-              </div>
-              <div class="fr-tile__img">
-                <img src="/images/Parking.svg" alt=""/>
               </div>
             </div>
           </div>
@@ -163,6 +163,23 @@
               </div>
               <div class="fr-tile__img">
                 <img src="/images/Petrole.svg" alt=""/>
+              </div>
+            </div>
+          </div>
+          <div class="fr-col">
+            <div class="fr-tile">
+              <div class="fr-tile__body">
+                  <h4 class="fr-tile__title">
+                      {{data.nb_aires.toLocaleString()}}
+                  </h4>
+                  <p class="fr-tile__desc">
+                    <NuxtLink to=/pages/glossaire/#aire target="_blank">
+                      aires de covoiturage
+                    </NuxtLink>
+                  </p>
+              </div>
+              <div class="fr-tile__img">
+                <img src="/images/Parking.svg" alt=""/>
               </div>
             </div>
           </div>

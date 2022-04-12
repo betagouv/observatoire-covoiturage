@@ -11,17 +11,20 @@ export class CreateRpcTable extends AbstractDatastructure {
         journey_id varchar UNIQUE,
         trip_id varchar,
         journey_start_date date,
+        journey_start_time time without time zone,
         journey_start_lat float,
         journey_start_lon float,
         journey_start_insee varchar(5),
         journey_end_date date,
+        journey_end_time time without time zone,
         journey_end_lat float,
         journey_end_lon float,
         journey_end_insee varchar(5),
         journey_distance integer,
         journey_duration integer,
         passenger_seats integer,
-        operator_class varchar(1)
+        operator_class varchar(1),
+        has_incentive boolean
       );
       CREATE INDEX IF NOT EXISTS ${this.indexWithSchema}_id_index ON ${this.tableWithSchema} USING btree (id);
     `;

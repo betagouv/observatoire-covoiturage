@@ -21,12 +21,14 @@ export class CreateMonthlyFluxTable extends AbstractDatastructure {
         lng_2 float NOT NULL,
         lat_2 float NOT NULL,
         journeys integer NOT NULL,
+        has_incentive integer NOT NULL,
         passengers integer NOT NULL,
         distance float NOT NULL,
         duration float NOT NULL
       );
       CREATE INDEX IF NOT EXISTS ${this.indexWithSchema}_id_index ON ${this.tableWithSchema} USING btree (id);
       ALTER TABLE ${this.tableWithSchema} ADD CONSTRAINT ${this.table}_unique_key UNIQUE (year,month,type,territory_1,territory_2);
+      DROP PROCEDURE IF EXISTS ${this.targetSchema}.import_monthly_flux;
 
       CREATE OR REPLACE PROCEDURE ${this.targetSchema}.import_monthly_flux(from_table varchar, year int, month int) 
       LANGUAGE 'plpgsql' 
@@ -63,6 +65,7 @@ export class CreateMonthlyFluxTable extends AbstractDatastructure {
             LEAST(b.arr, c.arr) as territory_1,
             GREATEST(b.arr, c.arr) as territory_2,
             count(trip_id) as journeys,
+            count(*) filter(where has_incentive = ''OUI'') as has_incentive,
             sum(passenger_seats) as passengers,
             round(sum(journey_distance)::numeric/1000,2) as distance,
             round(sum(journey_duration)::numeric/60,2) as duration
@@ -79,6 +82,7 @@ export class CreateMonthlyFluxTable extends AbstractDatastructure {
             LEAST(b.epci, c.epci) as territory_1,
             GREATEST(b.epci, c.epci) as territory_2,
             count(trip_id) as journeys,
+            count(*) filter(where has_incentive = ''OUI'') as has_incentive,
             sum(passenger_seats) as passengers,
             round(sum(journey_distance)::numeric/1000,2) as distance,
             round(sum(journey_duration)::numeric/60,2) as duration
@@ -95,6 +99,7 @@ export class CreateMonthlyFluxTable extends AbstractDatastructure {
             LEAST(b.aom, c.aom) as territory_1,
             GREATEST(b.aom, c.aom) as territory_2,
             count(trip_id) as journeys,
+            count(*) filter(where has_incentive = ''OUI'') as has_incentive,
             sum(passenger_seats) as passengers,
             round(sum(journey_distance)::numeric/1000,2) as distance,
             round(sum(journey_duration)::numeric/60,2) as duration
@@ -111,6 +116,7 @@ export class CreateMonthlyFluxTable extends AbstractDatastructure {
             LEAST(b.dep, c.dep) as territory_1,
             GREATEST(b.dep, c.dep) as territory_2,
             count(trip_id) as journeys,
+            count(*) filter(where has_incentive = ''OUI'') as has_incentive,
             sum(passenger_seats) as passengers,
             round(sum(journey_distance)::numeric/1000,2) as distance,
             round(sum(journey_duration)::numeric/60,2) as duration
@@ -127,6 +133,7 @@ export class CreateMonthlyFluxTable extends AbstractDatastructure {
             LEAST(b.reg, c.reg) as territory_1,
             GREATEST(b.reg, c.reg) as territory_2,
             count(trip_id) as journeys,
+            count(*) filter(where has_incentive = ''OUI'') as has_incentive,
             sum(passenger_seats) as passengers,
             round(sum(journey_distance)::numeric/1000,2) as distance,
             round(sum(journey_duration)::numeric/60,2) as duration
@@ -143,6 +150,7 @@ export class CreateMonthlyFluxTable extends AbstractDatastructure {
             LEAST(b.country, c.country) as territory_1,
             GREATEST(b.country, c.country) as territory_2,
             count(trip_id) as journeys,
+            count(*) filter(where has_incentive = ''OUI'') as has_incentive,
             sum(passenger_seats) as passengers,
             round(sum(journey_distance)::numeric/1000,2) as distance,
             round(sum(journey_duration)::numeric/60,2) as duration
@@ -154,7 +162,7 @@ export class CreateMonthlyFluxTable extends AbstractDatastructure {
           )
           SELECT a.year, a.month, a.type, a.territory_1, b.l_territory as l_territory_1, b.lng as lng_1, b.lat as lat_1, 
           a.territory_2, c.l_territory as l_territory_2,c.lng as lng_2, c.lat as lat_2, 
-          a.journeys, a.passengers, a.distance, a.duration 
+          a.journeys, a.has_incentive, a.passengers, a.distance, a.duration 
           FROM flux a
           LEFT JOIN perim b on concat(a.territory_1,a.type) = concat(b.territory,b.type) 
           LEFT JOIN perim c on concat(a.territory_2,a.type) = concat(c.territory,c.type)
@@ -175,6 +183,7 @@ export class CreateMonthlyFluxTable extends AbstractDatastructure {
         lng_2,
         lat_2,
         journeys,
+        has_incentive,
         passengers,
         distance,
         duration
