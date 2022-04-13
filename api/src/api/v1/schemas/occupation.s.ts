@@ -3,10 +3,6 @@ export default class occupationSchema {
   static occupationMonthly = {
     tags: ['occupation'],
     querystring: {
-      t: {
-        type: 'string',
-        description: 'type of territories'
-      },
       year: {
         type: 'string',
         description: 'Year (YYYY)'
@@ -14,7 +10,19 @@ export default class occupationSchema {
       month: {
         type: 'string',
         description: 'Month (MM)'
-      }
+      },
+      t: {
+        type: 'string',
+        description: 'type of selected territories'
+      },
+      t2: {
+        type: 'string',
+        description: 'type of observed territory'
+      },
+      code: {
+        type: 'string',
+        description: 'insee code of observed territory'
+      },
     },
     response: {
       200: {

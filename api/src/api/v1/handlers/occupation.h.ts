@@ -9,7 +9,14 @@ export default class occupationHandler {
     try {
       const client = await this.pg.connect()
       const sql = `SELECT * FROM monthly_occupation
-      WHERE year = '${request.query.year}' AND month = '${request.query.month}' AND type = '${request.query.t}';`
+      WHERE year = '${request.query.year}' AND month = '${request.query.month}' AND type = '${request.query.t}'
+      ${(request.query.t2 && request.query.code) ? 
+        `AND territory IN (
+          SELECT ${request.query.t} FROM (SELECT com,epci,aom,dep,reg,country FROM territories_code WHERE year = ${request.query.year}) t 
+          WHERE ${request.query.t2} = '${request.query.code}'
+        )`
+        : ''
+      };`
       const result = await client.query(sql)
       if (!result.rows) {
         reply.code(404).send(new Error('page not found'))

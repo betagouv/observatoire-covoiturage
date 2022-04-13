@@ -13,11 +13,24 @@ export default class locationHandler {
       const sql = `
       SELECT journey_start_lon as lon, 
       journey_start_lat as lat 
-      FROM rpc WHERE journey_start_date BETWEEN '${request.query.date_1}' AND '${request.query.date_2}'
+      FROM rpc WHERE journey_start_date BETWEEN '${request.query.date_1}' 
+      AND '${request.query.date_2}'
+      ${(request.query.t && request.query.code) ? 
+        `AND (journey_start_insee IN (SELECT com FROM (SELECT com,epci,aom,dep,reg,country FROM territories_code WHERE year = ${request.query.date_2.substring(0,4)}) t WHERE ${request.query.t} = '${request.query.code}') 
+        OR journey_end_insee IN (SELECT com FROM (SELECT com,epci,aom,dep,reg,country FROM territories_code WHERE year = ${request.query.date_2.substring(0,4)}) t WHERE ${request.query.t} = '${request.query.code}'))`
+        : ''
+      } 
       UNION ALL 
       SELECT journey_end_lon as lon, 
       journey_end_lat as lat 
-      FROM rpc WHERE journey_start_date BETWEEN '${request.query.date_1}' AND '${request.query.date_2}';`
+      FROM rpc WHERE journey_start_date BETWEEN '${request.query.date_1}'
+      AND '${request.query.date_2}'
+      ${(request.query.t && request.query.code) ? 
+        `AND (journey_start_insee IN (SELECT com FROM (SELECT com,epci,aom,dep,reg,country FROM territories_code WHERE year = ${request.query.date_2.substring(0,4)}) t WHERE ${request.query.t} = '${request.query.code}') 
+        OR journey_end_insee IN (SELECT com FROM (SELECT com,epci,aom,dep,reg,country FROM territories_code WHERE year = ${request.query.date_2.substring(0,4)}) t WHERE ${request.query.t} = '${request.query.code}'))`
+        : ''
+      }
+      ;`
       const sqlResult = await client.query(sql)
       if (!sqlResult.rows) {
         reply.code(404).send(new Error('page not found'))

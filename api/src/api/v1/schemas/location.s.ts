@@ -14,7 +14,15 @@ export default class locationSchema {
       zoom: {
         type: 'number',
         description: 'Zoom index for hexagon layer'
-      }
+      },
+      t: {
+        type: 'string',
+        description: 'type of territories'
+      },
+      code: {
+        type: 'string',
+        description: 'territory id'
+      },
     },
     response: {
       200: {

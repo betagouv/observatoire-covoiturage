@@ -14,7 +14,11 @@ export default class fluxHandler {
       FROM monthly_flux
       WHERE year = '${request.query.year}' 
       AND month = '${request.query.month}' 
-      AND type = '${request.query.t}' 
+      AND type = '${request.query.t}'
+      ${request.query.code ? 
+        `AND (territory_1 = '${request.query.code}' OR territory_2 = '${request.query.code}')`
+        : ''
+      } 
       AND territory_1 <> territory_2;`
       const result = await client.query(sql)
       if (!result.rows) {
