@@ -1,9 +1,11 @@
 declare module occupationTypes {
   interface monthly {
     Querystring: {
-      t:string,
       year:string,
-      month:string
+      month:string,
+      t?:string, //type de territoire selectionné
+      code?:string, //code insee du territoire observé
+      t2:string, //type du territoire observé
     }
   }
 }

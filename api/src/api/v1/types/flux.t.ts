@@ -1,9 +1,10 @@
 declare module fluxTypes {
   interface monthly {
     Querystring: {
-      t:string,
       year:string,
-      month:string
+      month:string,
+      t:string,
+      code?:string,
     }
   }
 }

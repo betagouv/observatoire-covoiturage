@@ -2,6 +2,16 @@ export default class airesSchema {
   
   static all = {
     tags: ['aires'],
+    querystring: {
+      t: {
+        type: 'string',
+        description: 'type of territories'
+      },
+      code: {
+        type: 'string',
+        description: 'territory id'
+      },
+    },
     response: {
       200: {
         type: 'array',
