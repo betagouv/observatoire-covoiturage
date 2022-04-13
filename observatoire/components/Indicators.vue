@@ -49,10 +49,10 @@
             <div class="fr-tile">
               <div class="fr-tile__body">
                   <h4 class="fr-tile__title">
-                      {{data.journeys.toLocaleString()}}
+                      {{data.passengers.toLocaleString()}}
                   </h4>
                   <p class="fr-tile__desc">
-                    <NuxtLink to=/pages/glossaire/#passager target="_blank">
+                    <NuxtLink to=/pages/glossaire/#passager>
                       passagers transportés
                     </NuxtLink>
                   </p>
@@ -69,7 +69,7 @@
                       {{data.has_incentive.toLocaleString()}}
                   </h4>
                   <p class="fr-tile__desc">
-                    <NuxtLink to=/pages/glossaire/#incentive target="_blank">
+                    <NuxtLink to=/pages/glossaire/#incentive>
                       trajets incités
                     </NuxtLink>
                   </p>
@@ -86,7 +86,7 @@
                       {{data.trips.toLocaleString()}}
                   </h4>
                   <p class="fr-tile__desc">
-                    <NuxtLink to=/pages/glossaire/#vehicule target="_blank">
+                    <NuxtLink to=/pages/glossaire/#vehicule>
                       véhicules partagés
                     </NuxtLink>
                   </p>
@@ -103,7 +103,7 @@
                       {{data.occupation_rate.toLocaleString()}}
                   </h4>
                   <p class="fr-tile__desc">
-                    <NuxtLink to=/pages/glossaire/#occupation target="_blank">
+                    <NuxtLink to=/pages/glossaire/#occupation>
                       taux d'occupation
                     </NuxtLink>
                   </p>
@@ -113,8 +113,6 @@
               </div>
             </div>
           </div>
-        </div>
-        <div v-if="data.distance" class="fr-grid-row">
           <div class="fr-col">
             <div class="fr-tile">
               <div class="fr-tile__body">
@@ -122,13 +120,49 @@
                       {{Math.round(data.distance).toLocaleString()}}
                   </h4>
                   <p class="fr-tile__desc">
-                    <NuxtLink to=/pages/glossaire/#km_parcourus target="_blank">
+                    <NuxtLink to=/pages/glossaire/#km_parcourus>
                       km parcourus
                     </NuxtLink>
                   </p>
               </div>
               <div class="fr-tile__img">
                 <img src="/images/Km.svg" alt=""/>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div v-if="data.distance" class="fr-grid-row">
+          <div class="fr-col">
+            <div class="fr-tile">
+              <div class="fr-tile__body">
+                  <h4 class="fr-tile__title">
+                      {{(data.distance/data.passengers).toLocaleString('fr-FR',{maximumFractionDigits: 2})}}
+                  </h4>
+                  <p class="fr-tile__desc">
+                    <NuxtLink to=/pages/glossaire/#av-distance>
+                      distance moyenne (en km)
+                    </NuxtLink>
+                  </p>
+              </div>
+              <div class="fr-tile__img">
+                <img src="/images/Trip.svg" alt=""/>
+              </div>
+            </div>
+          </div>
+          <div class="fr-col">
+            <div class="fr-tile">
+              <div class="fr-tile__body">
+                  <h4 class="fr-tile__title">
+                      {{Math.round((data.duration*60)/data.passengers).toLocaleString()}}
+                  </h4>
+                  <p class="fr-tile__desc">
+                    <NuxtLink to=/pages/glossaire/#duration>
+                      temps moyen (en mn)
+                    </NuxtLink>
+                  </p>
+              </div>
+              <div class="fr-tile__img">
+                <img src="/images/Clock.svg" alt=""/>
               </div>
             </div>
           </div>
@@ -139,7 +173,7 @@
                       {{(data.distance*0.000195).toLocaleString('fr-FR',{maximumFractionDigits: 2})}}
                   </h4>
                   <p class="fr-tile__desc">
-                    <NuxtLink to=/pages/glossaire/#co2 target="_blank">
+                    <NuxtLink to=/pages/glossaire/#co2>
                       tonnes de CO₂ économisés
                     </NuxtLink>
                   </p>
@@ -156,7 +190,7 @@
                       {{Math.round(data.distance*0.0636).toLocaleString()}}
                   </h4>
                   <p class="fr-tile__desc">
-                    <NuxtLink to=/pages/glossaire/#petrole target="_blank">
+                    <NuxtLink to=/pages/glossaire/#petrole>
                       litres de pétrole économisés
                     </NuxtLink>
                   </p>
@@ -173,7 +207,7 @@
                       {{data.nb_aires.toLocaleString()}}
                   </h4>
                   <p class="fr-tile__desc">
-                    <NuxtLink to=/pages/glossaire/#aire target="_blank">
+                    <NuxtLink to=/pages/glossaire/#aire>
                       aires de covoiturage
                     </NuxtLink>
                   </p>

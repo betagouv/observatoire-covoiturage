@@ -33,6 +33,7 @@ export default class territoryHandler {
       sum(a.journeys) AS journeys,
       sum(a.passengers) AS passengers,
       sum(a.distance) AS distance,
+      sum(a.duration) AS duration,
       b.journeys AS trips,
       b.has_incentive,
       b.occupation_rate,

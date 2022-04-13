@@ -53,8 +53,10 @@ export default class territorySchema {
             territory: {type:'string'},
             l_territory: {type:'string'},
             journeys: {type:'integer'},
+            passengers: {type:'integer'},
             has_incentive: {type:'integer'},
             distance: {type:'number'},
+            duration: {type:'number'},
             occupation_rate: {type:'number'},
             trips: {type:'integer'},
             nb_aires: {type:'integer'}
