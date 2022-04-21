@@ -1,4 +1,4 @@
-@import "@gouvfr/dsfr/dist/css/dsfr.css";
+@import "@gouvfr/dsfr/dist/dsfr/dsfr.css";
 .fr-card__img img{
   object-fit: contain;
 }
@@ -47,14 +47,6 @@
 }
 .fr-select-group{
   text-align: left;
-}
-.autocomplete{
-  @import "bulma/sass/utilities/_all.sass";
-  // Set your colors
-  $primary: #000091;
-  $link: $primary;
-  @import "bulma";
-  @import "buefy/src/scss/buefy";
 }
 .notices{
   position: fixed;

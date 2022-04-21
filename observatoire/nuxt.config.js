@@ -66,7 +66,7 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
-    'nuxt-buefy',
+    '@oruga-ui/oruga/nuxt',
     ['nuxt-matomo', { doNotTrack: true, matomoUrl: 'https://stats.data.gouv.fr/', siteId: 213, cookies: false }],
   ],
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -78,7 +78,7 @@ export default {
   content: {
     fullTextSearchFields: ()=>['title', 'description','text']
   },
-  buefy: { css:false },
+  //buefy: { css:false },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     splitChunks: {

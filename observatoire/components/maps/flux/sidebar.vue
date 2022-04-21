@@ -13,11 +13,11 @@
       <ul class="fr-sidemenu__list">
         <div class="fr-sidemenu__title">Flux entre :</div>
         <li class="fr-sidemenu__item">
-          <b-field>
+          <o-field>
             <select v-model="selectedType" class="fr-select" id="select-type" name="select-type">
               <option v-for="option in helpers.territories" :value="option.type" :key="option.type">{{option.name}}</option>
             </select>
-          </b-field>
+          </o-field>
         </li>
       </ul>
       <ul class="fr-sidemenu__list">
@@ -36,11 +36,11 @@
         <Slider :value.sync="selectedValue" :sliderOptions="{'min':sliderOptions.min,'max':sliderOptions.max,'step':sliderOptions.step}"/>
       </ul>
       <p class="side-count">{{passengers}} passagers transportés selon les critères sélectionnés ci-dessus</p>
-      <b-field>
+      <o-field>
         <button v-if="!lgAndAbove" class="fr-btn--menu fr-btn" title="Menu" @click="openSidebar">
           Fermer
         </button>
-      </b-field>
+      </o-field>
     </div>
   </nav>
 </template>

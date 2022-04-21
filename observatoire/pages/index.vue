@@ -44,12 +44,12 @@
   </div>
   <div class="fr-section home-section">
     <div class="fr-container">
-      <div class="fr-grid-row">
+      <div class="fr-grid-row fr-grid-row--gutters">
         <div class="fr-col-lg-10 fr-col-offset-lg-1">
           <ContentList title="Les actualités du covoiturage au quotidien" :contents="actualites" :taxonomies="taxonomies" />
         </div>
       </div>
-      <div class="fr-grid-row">
+      <div class="fr-grid-row fr-grid-row--gutters">
         <div class="fr-col-12 align-center">
             <NuxtLink to="/actualites" class="fr-btn fr-btn--secondary">
               Plus d'actualités
@@ -63,12 +63,12 @@
   </div>
   <div class="fr-section home-section">
     <div class="fr-container">
-      <div class="fr-grid-row">
+      <div class="fr-grid-row fr-grid-row--gutters">
         <div class="fr-col-lg-10 fr-col-offset-lg-1">
           <ContentList title="Ressources" :contents="ressources" :taxonomies="taxonomies" />
         </div>
       </div>
-      <div class="fr-grid-row">
+      <div class="fr-grid-row fr-grid-row--gutters">
         <div class="fr-col-12 align-center">
             <NuxtLink to="/ressources" class="fr-btn fr-btn--secondary">
               Plus de ressources
