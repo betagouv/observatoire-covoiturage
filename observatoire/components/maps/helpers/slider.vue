@@ -1,19 +1,20 @@
 <template>
   <div class="slider">
-    <b-slider  
+    <o-slider  
       v-model="selectedValue" 
       :min="sliderOptions.min" 
       :max="sliderOptions.max" 
       :step="sliderOptions.step"
       lazy
+      rounded
     >
-    </b-slider>
-    <b-field>
+    </o-slider>
+    <o-field>
       <span class="separator"> de </span>
-      <b-numberinput v-model="selectedValue[0]" size="is-small" :controls="false"/>
+      <o-input type="number" class="fr-input" v-model="selectedValue[0]" size="is-small"/>
       <span class="separator"> à </span>
-      <b-numberinput v-model="selectedValue[1]" size="is-small" :controls="false"/>
-    </b-field>
+      <o-input class="fr-input" v-model="selectedValue[1]" type="number" size="is-small"/>
+    </o-field>
   </div>
 </template>
 
