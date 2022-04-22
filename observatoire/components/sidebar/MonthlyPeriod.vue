@@ -14,6 +14,8 @@
 
 <script lang="ts">
 import { Component, PropSync, Vue } from 'nuxt-property-decorator'
+import { MonthlyPeriodInterface } from '../interfaces/sidebar'
+
 @Component
 export default class SidebarMonthlyPeriod extends Vue{
   @PropSync('period', { required: true, type: Object }) selectedPeriod!: MonthlyPeriodInterface

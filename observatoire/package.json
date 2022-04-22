@@ -13,7 +13,8 @@
   },
   "dependencies": {
     "@danmarshall/deckgl-typings": "^4.9.3",
-    "@gouvfr/dsfr": "^1.4.1",
+    "@gouvfr/dsfr": "^1.5.0",
+    "@mdi/font": "^6.6.96",
     "@nuxt/content": "^1.14.0",
     "@nuxtjs/axios": "^5.13.1",
     "@oruga-ui/oruga": "^0.5.5",
