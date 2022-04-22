@@ -8,6 +8,23 @@
   @import "bulma";
   @import "buefy/src/scss/buefy";
 }*/
+.map_container {
+  position:relative;
+  display: flex;
+  flex-flow: column wrap;
+  height: 100%;
+  .controls{
+    position:absolute;
+    z-index: 1;
+    padding: 0.2rem;
+    margin: auto;
+    background-color: #fff;
+    width: 100%;
+    .legend{
+      padding:10px;
+    }
+  }
+}
 
 .map-title{
   background-color: #000091;

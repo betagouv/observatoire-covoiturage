@@ -78,6 +78,9 @@ export default {
   content: {
     fullTextSearchFields: ()=>['title', 'description','text']
   },
+  oruga: {
+    includeCss: 'full'
+  },
   //buefy: { css:false },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {

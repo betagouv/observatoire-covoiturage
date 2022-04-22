@@ -1,7 +1,7 @@
 <template>
   <nav class="fr-sidemenu--full-border" :class="{'fr-p-1w': !lgAndAbove}" role="navigation" aria-label="Menu latéral">
     <div class="fr-sidemenu__inner">
-      <SidebarTitle title="Situation nationale mensuelle" />
+      <SidebarTitle :title=title />
       <SidebarMonthlyPeriod :period=period />
       <SidebarSelectTerritory v-if="period.year" :year=period.year :territory=territory @selectedTerritory=emitTerritory />
     </div>
@@ -14,6 +14,7 @@ import BreakpointsMixin from '../../mixins/breakpoints'
 import SidebarTitle from '../../sidebar/Title.vue'
 import SidebarMonthlyPeriod from '../../sidebar/MonthlyPeriod.vue'
 import SidebarSelectTerritory from '../../sidebar/SelectTerritory.vue'
+import { MonthlyPeriodInterface, TerritoryInterface } from '../../interfaces/sidebar'
 
 
 @Component({
@@ -24,9 +25,17 @@ import SidebarSelectTerritory from '../../sidebar/SelectTerritory.vue'
   }
 })
 export default class KeySidebar extends mixins(BreakpointsMixin){
-   @PropSync('period', { required: true, type: Object }) selectedPeriod!: MonthlyPeriodInterface
-   @Prop({ required: true }) territory!: string
-   selectedTerritory:string | null = null
+  @PropSync('period', { required: true, type: Object }) selectedPeriod!: MonthlyPeriodInterface
+  @Prop({ required: true }) territory!: string
+  selectedTerritory:TerritoryInterface | null = null
+
+  get title(){
+    let title = 'Situation nationale mensuelle'
+    if (this.selectedTerritory && this.selectedTerritory.type !== 'country' ){
+      title = 'Situation locale mensuelle'
+    }
+    return title
+  }
 
   @Watch('selectedTerritory')
   onTerritoryChanged() {
@@ -35,7 +44,7 @@ export default class KeySidebar extends mixins(BreakpointsMixin){
     }
   }
 
-   public emitTerritory(value:string){
+   public emitTerritory(value:TerritoryInterface){
     this.selectedTerritory = value
   }
 }

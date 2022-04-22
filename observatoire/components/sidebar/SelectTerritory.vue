@@ -6,13 +6,14 @@
       placeholder="Saisir un code INSEE ou nom du territoire"
       :data="filteredTerritories"
       field="l_territory"
-      @select="option => selectedTerritory = option.territory"
+      @select="option => selectedTerritory = option"
       clearable
       open-on-focus
       expanded
+      maxHeight="250"
       rootClass="fr-input"
       menuClass="results"
-      
+      override=false
     >
       <template slot-scope="props">
         {{ props.option.l_territory }} - {{ props.option.territory }} ({{ props.option.type }})
@@ -23,6 +24,7 @@
 
 <script lang="ts">
 import { Component, Prop, Watch,  Vue } from 'nuxt-property-decorator'
+import { TerritoryInterface } from '../interfaces/sidebar'
 
 
 @Component
@@ -30,7 +32,7 @@ export default class SelectTerritory extends Vue{
   @Prop({ required: true }) year!: string
   @Prop({ required: true }) territory!: string
   territories:Array<TerritoryInterface>=[]
-  selectedTerritory:string | null = null
+  selectedTerritory:TerritoryInterface | null = null
   searchfield =''
 
   get filteredTerritories() {
@@ -61,7 +63,6 @@ export default class SelectTerritory extends Vue{
 .results {
   width:100% !important;
   overflow-y: auto;
-  max-height: 250px;
   div {
     font-size: 0.8rem;
     padding: 0 5px;
