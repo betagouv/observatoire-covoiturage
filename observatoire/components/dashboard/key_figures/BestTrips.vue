@@ -25,12 +25,35 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'nuxt-property-decorator'
+import { Component, Prop, Watch, Vue } from 'nuxt-property-decorator'
 import { BestTripsInterface } from '../../interfaces/keyfigures'
+import { MonthlyPeriodInterface, TerritoryInterface } from '../../interfaces/sidebar'
 
 @Component
 export default class BestTrips extends Vue{
-  @Prop({ required: true }) data!: Array<BestTripsInterface>
+   @Prop({ required: true }) period!: MonthlyPeriodInterface
+  @Prop({ required: true }) territory!: TerritoryInterface
+  
+  data:BestTripsInterface | [] = []
+
+  public mounted(){
+    this.getData()
+  }
+
+  @Watch('period', { deep: true })
+  onPeriodChanged() {
+    this.getData()
+  }
+  
+  @Watch('territory', { deep: true })
+  onTerritoryChanged() {
+    this.getData()
+  }
+
+  public async getData(){
+    const response = await this.$axios.get(`/best_journeys?territory=${this.territory.territory}&t=${this.territory.type}&year=${this.period.year}&month=${this.period.month}`)
+    this.data = response.data
+  }
 }
 </script>
 <style lang="scss" scoped>
