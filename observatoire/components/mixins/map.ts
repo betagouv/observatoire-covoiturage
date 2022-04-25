@@ -13,7 +13,7 @@ export default class MapMixin extends mixins(BreakpointsMixin) {
     style: process.env.NUXT_ENV_MAPLIBRE_STYLE || '',
     zoom: 5,
     zoomMobile: 4,
-    controls: false,
+    controls: true,
     attribution: true
   }
 
