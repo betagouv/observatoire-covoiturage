@@ -192,16 +192,39 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'nuxt-property-decorator'
+import { Component, Prop, Watch, Vue } from 'nuxt-property-decorator'
 import { IndicatorsInterface } from '../../interfaces/keyfigures'
+import { MonthlyPeriodInterface, TerritoryInterface } from '../../interfaces/sidebar'
 
 @Component
 export default class Indicators extends Vue{
-  @Prop({ required: true }) data!: IndicatorsInterface
-  @Prop({ required: true }) period!: {year:string,month:string}
+  @Prop({ required: true }) period!: MonthlyPeriodInterface
+  @Prop({ required: true }) territory!: TerritoryInterface
+  
+
+  data:IndicatorsInterface | {} = {}
 
   get monthList(){
     return this.$store.state.helpers.monthList
+  }
+
+  public mounted(){
+    this.getData()
+  }
+
+  @Watch('period', { deep: true })
+  onPeriodChanged() {
+    this.getData()
+  }
+
+  @Watch('territory', { deep: true })
+  onTerritoryChanged() {
+    this.getData()
+  }
+
+  public async getData(){
+    const response = await this.$axios.get(`/indicators?territory=${this.territory.territory}&t=${this.territory.type}&year=${this.period.year}&month=${this.period.month}`)
+    response.status === 200 ? this.data = response.data[0] : this.data = {}
   }
 }
 </script>

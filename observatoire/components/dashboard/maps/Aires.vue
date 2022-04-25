@@ -1,6 +1,7 @@
 <template>
   <div class="map_container">
     <div id="map"></div>
+    <Legend :title="legendTitle" :analyzes="categories" type="category"/>
   </div>
 </template>
 
@@ -11,6 +12,7 @@ import * as turf from '@turf/helpers'
 import bbox from '@turf/bbox'
 import maplibregl from 'maplibre-gl'
 import { TerritoryInterface } from '../../interfaces/sidebar'
+import Legend from './helpers/legend.vue'
 
 interface AiresData {
   id_lieu:string,
@@ -28,7 +30,11 @@ interface AiresData {
   geom:{properties:{ type:string,coordinates:[number,number]}}
 }
 
-@Component
+@Component({
+  components:{
+    Legend,
+  }
+})
 export default class Aires extends mixins(MapMixin){
   @Prop({ required: true }) territory!: TerritoryInterface
   map:any = null
@@ -43,6 +49,7 @@ export default class Aires extends mixins(MapMixin){
     {color:[229, 196, 148],val:'Sortie d\'autoroute',width:10,active:true},
     {color:[179, 179, 179],val:'Autres',width:10,active:true}
   ]
+  legendTitle="Aires de covoiturage (source transport.data.gouv.fr)"
 
   get filteredAires(){
     if(this.data){
@@ -121,8 +128,10 @@ export default class Aires extends mixins(MapMixin){
           'circle-opacity': 0.8
         }
       })
-      const bounds = bbox(this.filteredAires)
-      this.map.fitBounds(bounds, {padding: 20})
+      if(this.territory.territory !== 'XXXXX'){
+        const bounds = bbox(this.filteredAires)
+        this.map.fitBounds(bounds, {padding: 20})
+      }
 
       let popup = new maplibregl.Popup({
         closeButton: true,
@@ -166,7 +175,7 @@ export default class Aires extends mixins(MapMixin){
   padding: 0 !important;
 }
 .map_container {
-  height: 650px;
+  height: 700px;
   #map{
     position:relative;
     height: 100%;
