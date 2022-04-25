@@ -13,7 +13,7 @@
       maxHeight="250"
       rootClass="fr-input"
       menuClass="results"
-      override=false
+      override
     >
       <template slot-scope="props">
         {{ props.option.l_territory }} - {{ props.option.territory }} ({{ props.option.type }})

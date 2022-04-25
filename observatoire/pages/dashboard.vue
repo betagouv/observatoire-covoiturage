@@ -6,7 +6,9 @@
           <Sidebar :period=period :territory=territory @selectedTerritory=emitTerritory />
         </div>
         <div class="fr-col">
-          <o-tabs type="toggle" 
+          <o-tabs 
+            v-model="activeTab"
+            type="toggle" 
             position="centered"
             size="large"
             expanded>
@@ -21,11 +23,9 @@
               </div>
             </o-tab-item> 
             <o-tab-item label="Cartes" icon="map">
-              <div class="fr-grid-row">
-                <div class="fr-col">
-                  <Aires :data=aires />
-                </div>
-              </div>
+              
+              <Aires v-if="activeTab===2" :period=period :territory=territory />
+                
             </o-tab-item>
             <o-tab-item label="Evolution" icon="chart-line"></o-tab-item>
           </o-tabs>
@@ -65,9 +65,11 @@ export default class Dashboard extends mixins(BreakpointsMixin){
     l_territory:'France',
     type:'country',
   }
+  activeTab=1
   indicators:IndicatorsInterface | {} = {}
   best_trips:BestTripsInterface | [] = []
   aires = []
+
 
   public async mounted(){
     await this.getPeriod()
