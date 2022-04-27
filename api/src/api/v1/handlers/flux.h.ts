@@ -16,7 +16,13 @@ export default class fluxHandler {
       AND month = '${request.query.month}' 
       AND type = '${request.query.t}'
       ${request.query.code ? 
-        `AND (territory_1 = '${request.query.code}' OR territory_2 = '${request.query.code}')`
+        `AND (territory_1 IN (
+          SELECT ${request.query.t} FROM (SELECT com,epci,aom,dep,reg,country FROM territories_code WHERE year = ${request.query.year}) t 
+          WHERE ${request.query.t2} = '${request.query.code}'
+        ) OR territory_2 IN (
+          SELECT ${request.query.t} FROM (SELECT com,epci,aom,dep,reg,country FROM territories_code WHERE year = ${request.query.year}) t 
+          WHERE ${request.query.t2} = '${request.query.code}'
+        ))`
         : ''
       } 
       AND territory_1 <> territory_2;`

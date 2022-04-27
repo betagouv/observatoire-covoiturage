@@ -56,7 +56,7 @@ export default class MapMixin extends mixins(BreakpointsMixin) {
       },
       controller: true,
       onViewStateChange: ({viewState}) => {
-        this.$data[container].jumpTo({
+        this.$data['map'].jumpTo({
           center: [viewState.longitude, viewState.latitude],
           zoom: viewState.zoom,
           bearing: viewState.bearing,
