@@ -37,36 +37,37 @@ export default class MapMixin extends mixins(BreakpointsMixin) {
     }      
   }
 
-  async createDeck(container:string, options:MapOptionsInterface, layer:any, tooltip:any) {
-      // empêche le menu contextuel de s'ouvrir sur le clic droit
-      document.getElementById(container)!
-      .addEventListener("contextmenu", e => e.preventDefault())
-      
-      this.$data[container] = new Deck({
-        canvas: container,
-        width: '100%',
-        height: '100%',
-        initialViewState: {
-          latitude: options.center[1],
-          longitude:options.center[0],
-          zoom: this.zoomMobile(options),
-          bearing: 0,
-          pitch: 0
-        },
-        controller: true,
-        onViewStateChange: ({viewState}) => {
-          this.$data[container].jumpTo({
-            center: [viewState.longitude, viewState.latitude],
-            zoom: viewState.zoom,
-            bearing: viewState.bearing,
-            pitch: viewState.pitch
-          })
-        },
-        onHover: ({object}) => (this.isHovering = Boolean(object)),
-        getCursor: ({isDragging}) => (isDragging ? 'grabbing' : (this.isHovering ? 'pointer' : 'grab')),
-        layers:[layer],
-        getTooltip:tooltip
-      })
+  async createDeck(container:string,  layer:any, tooltip:any, options?:MapOptionsInterface,) {
+    options = { ...this.defaultOptions, ...options }
+    // empêche le menu contextuel de s'ouvrir sur le clic droit
+    document.getElementById(container)!
+    .addEventListener("contextmenu", e => e.preventDefault())
+    
+    this.$data[container] = new Deck({
+      canvas: container,
+      width: '100%',
+      height: '100%',
+      initialViewState: {
+        latitude: options.center[1],
+        longitude:options.center[0],
+        zoom: this.zoomMobile(options),
+        bearing: 0,
+        pitch: 0
+      },
+      controller: true,
+      onViewStateChange: ({viewState}) => {
+        this.$data[container].jumpTo({
+          center: [viewState.longitude, viewState.latitude],
+          zoom: viewState.zoom,
+          bearing: viewState.bearing,
+          pitch: viewState.pitch
+        })
+      },
+      onHover: ({object}) => (this.isHovering = Boolean(object)),
+      getCursor: ({isDragging}) => (isDragging ? 'grabbing' : (this.isHovering ? 'pointer' : 'grab')),
+      layers:[layer],
+      getTooltip:tooltip
+    })
   }
 
   hexToRgb(hex:string):[number, number, number] {
