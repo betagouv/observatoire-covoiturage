@@ -1,9 +1,11 @@
 <template>
-<div class="container">
-  <div class="map_container">
-    <div id="map"></div>
-    <canvas id="deck" class="deck"></canvas>
-    <Legend :title="legendTitle" :analyzes="analyse" type="interval"/>
+<div class="fr-grid-row">
+  <div class="fr-col mapping">
+    <div class="map_container">
+      <div id="map"></div>
+      <canvas id="deck" class="deck"></canvas>
+      <Legend :title="legendTitle" :analyzes="analyse" type="interval"/>
+    </div>
   </div>
 </div>
 </template>
@@ -44,6 +46,7 @@ export default class Flux extends mixins(MapMixin){
   filteredData:Array<FluxData>=[]
   analyse:Array<Analyse> = []
   slider:Array<number>=[]
+  type='com'
   legendTitle="Aires de covoiturage (source transport.data.gouv.fr)"
 
   
@@ -51,6 +54,9 @@ export default class Flux extends mixins(MapMixin){
   @Watch('territory', { deep: true })
   async onTerritoryChanged() {
     await this.getData()
+
+      this.deck.setProps({layers:[this.addArcLayer()]})
+    
     //this.map.getSource('fluxSource').setData(this.data)
     //const bounds = bbox(this.data)
     //this.map.fitBounds(bounds, {padding: 50})
@@ -59,6 +65,11 @@ export default class Flux extends mixins(MapMixin){
   @Watch('data', { deep: true })
   onFluxChanged() {
     this.jenksAnalyse()
+  }
+
+  @Watch('slider')
+  onSliderChanged() {
+    this.filterData('passengers')
   }
 
   @Watch('screen.window', { deep: true })
@@ -77,8 +88,9 @@ export default class Flux extends mixins(MapMixin){
   }
 
   public async getData(){
-    const response = await this.$axios.get(`/passengers_monthly_flux?code=${this.territory.territory}&t=${this.territory.type}&year=${this.period.year}&month=${this.period.month}`)
+    const response = await this.$axios.get(`/passengers_monthly_flux?code=${this.territory.territory}&t=${this.type}&t2=${this.territory.type}&year=${this.period.year}&month=${this.period.month}`)
     this.data = response.data
+    //this.slider = this.defaultSlider('passengers')
   }
 
   public filterData(field:string){
@@ -130,7 +142,7 @@ export default class Flux extends mixins(MapMixin){
   }
 
   public jenksAnalyse(){
-   if(this.territory.type !== 'country' ){ 
+   if(this.type !== 'country' ){ 
     this.analyse = this.jenks(this.data!,'passengers',['#000091','#000091','#000091','#000091','#000091','#000091'],[1,3,6,12,24,48])
    } else {
      this.analyse = this.jenks(this.data!,'passengers',['#000091','#000091','#000091'],[3,12,48])
@@ -143,9 +155,8 @@ export default class Flux extends mixins(MapMixin){
 .o-tabs__content{
   padding: 0 !important;
 }
-.container {
+.mapping {
   height: 500px;
-  
 }
 .map_container{
   position:relative;
