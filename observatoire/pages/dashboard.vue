@@ -24,7 +24,7 @@
             </o-tab-item> 
             <o-tab-item label="Cartes" icon="map">
               
-              <Aires v-if="activeTab===2" :period=period :territory=territory />
+              <Flux v-if="activeTab===2" :period=period :territory=territory />
                 
             </o-tab-item>
             <o-tab-item label="Evolution" icon="chart-line"></o-tab-item>
@@ -43,6 +43,7 @@ import Sidebar from '../components/dashboard/key_figures/Sidebar.vue'
 import Indicators from '../components/dashboard/key_figures/Indicators.vue'
 import BestTrips from '../components/dashboard/key_figures/BestTrips.vue'
 import Aires from '../components/dashboard/maps/Aires.vue'
+import Flux from '../components/dashboard/maps/Flux.vue'
 import { MonthlyPeriodInterface, TerritoryInterface } from '../components/interfaces/sidebar'
 
 @Component({
@@ -51,6 +52,7 @@ import { MonthlyPeriodInterface, TerritoryInterface } from '../components/interf
     Indicators,
     BestTrips,
     Aires,
+    Flux,
   }
 })
 export default class Dashboard extends mixins(BreakpointsMixin){
