@@ -3,7 +3,6 @@
   <div class="fr-col mapping">
     <div class="map_container">
       <div id="map"></div>
-      <canvas id="deck" class="deck"></canvas>
       <Legend :title="legendTitle" :analyzes="analyse" type="interval"/>
     </div>
   </div>
@@ -15,8 +14,10 @@ import { Component, Prop, Watch, mixins } from 'nuxt-property-decorator'
 import MapMixin from '../../mixins/map'
 import * as turf from '@turf/helpers'
 import bbox from '@turf/bbox'
-import maplibregl from 'maplibre-gl'
+import {MapboxLayer} from '@deck.gl/mapbox';
 import { ArcLayer } from '@deck.gl/layers'
+import { WebMercatorViewport } from '@deck.gl/core';
+import { Deck } from '@deck.gl/core'
 import { MonthlyPeriodInterface, TerritoryInterface } from '../../interfaces/sidebar'
 import Legend from './helpers/legend.vue'
 
@@ -54,12 +55,9 @@ export default class Flux extends mixins(MapMixin){
   @Watch('territory', { deep: true })
   async onTerritoryChanged() {
     await this.getData()
-
-      this.deck.setProps({layers:[this.addArcLayer()]})
-    
-    //this.map.getSource('fluxSource').setData(this.data)
-    //const bounds = bbox(this.data)
-    //this.map.fitBounds(bounds, {padding: 50})
+    const bounds = this.getBbox()
+    this.map.fitBounds(bounds, {padding: 50})
+    this.deck.setProps({layers:[this.addArcLayer()]})
   }
 
   @Watch('data', { deep: true })
@@ -72,19 +70,12 @@ export default class Flux extends mixins(MapMixin){
     this.filterData('passengers')
   }
 
-  @Watch('screen.window', { deep: true })
-  onWindowChanged() {
-    this.deck.setProps({
-      ...this.deck.props,
-      width: "100%",
-      height: "100%",
-    })
-  }
 
   public async mounted() {
     await this.getData()
     await this.createMap('map')
-    await this.createDeck('deck', this.addArcLayer(), this.addTooltip())
+    await this.createDeck( this.addArcLayer())
+    this.addLayers()
   }
 
   public async getData(){
@@ -100,6 +91,21 @@ export default class Flux extends mixins(MapMixin){
     this.deck.setProps({layers:[this.addArcLayer()]})
   }
 
+  async createDeck( layer:any, ) {
+    this.deck = new Deck({
+      gl: this.map.painter.context.gl,
+      onHover: ({object}) => (this.isHovering = Boolean(object)),
+      getCursor: ({isDragging}) => (isDragging ? 'grabbing' : (this.isHovering ? 'pointer' : 'grab')),
+      layers:[layer],
+    })
+  }
+
+  public addLayers() {
+    const deck = this.deck
+    this.map.on('style.load', () => {
+      this.map.addLayer(new MapboxLayer({id: 'flux-layer', deck}))
+    })
+  }
    public addArcLayer(){
     return new ArcLayer({
       id: 'flux-layer',
@@ -147,6 +153,12 @@ export default class Flux extends mixins(MapMixin){
    } else {
      this.analyse = this.jenks(this.data!,'passengers',['#000091','#000091','#000091'],[3,12,48])
    }
+  }
+  public getBbox(){
+    const coords = this.data.map(d => {return [[d.lng_1,d.lat_1],[d.lng_2,d.lat_2]]})
+      .reduce((acc, val) => acc.concat(val), [])
+    return bbox(turf.multiPoint(coords))
+
   }
 }
 </script>
