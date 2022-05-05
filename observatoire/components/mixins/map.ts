@@ -14,6 +14,7 @@ export default class MapMixin extends mixins(BreakpointsMixin) {
     zoom: 5,
     zoomMobile: 4,
     controls: true,
+    antialias: true,
     attribution: true
   }
 
@@ -25,7 +26,8 @@ export default class MapMixin extends mixins(BreakpointsMixin) {
       alert('Your browser does not support Maplibre GL')
     } else {
       this.$data[container] = new maplibregl.Map({
-      container: container,
+        container: container,
+        antialias: options.antialias,
         style: options.style,
         center: options.center,
         zoom: this.zoomMobile(options),

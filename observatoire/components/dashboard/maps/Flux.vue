@@ -16,7 +16,6 @@ import * as turf from '@turf/helpers'
 import bbox from '@turf/bbox'
 import {MapboxLayer} from '@deck.gl/mapbox';
 import { ArcLayer } from '@deck.gl/layers'
-import { WebMercatorViewport } from '@deck.gl/core';
 import { Deck } from '@deck.gl/core'
 import { MonthlyPeriodInterface, TerritoryInterface } from '../../interfaces/sidebar'
 import Legend from './helpers/legend.vue'
@@ -50,7 +49,13 @@ export default class Flux extends mixins(MapMixin){
   type='com'
   legendTitle="Aires de covoiturage (source transport.data.gouv.fr)"
 
-  
+  @Watch('period', { deep: true })
+  async onPeriodChanged() {
+    await this.getData()
+    const bounds = this.getBbox()
+    this.map.fitBounds(bounds, {padding: 50})
+    this.deck.setProps({layers:[this.addArcLayer()]})
+  }
 
   @Watch('territory', { deep: true })
   async onTerritoryChanged() {
@@ -69,7 +74,6 @@ export default class Flux extends mixins(MapMixin){
   onSliderChanged() {
     this.filterData('passengers')
   }
-
 
   public async mounted() {
     await this.getData()
@@ -97,6 +101,7 @@ export default class Flux extends mixins(MapMixin){
       onHover: ({object}) => (this.isHovering = Boolean(object)),
       getCursor: ({isDragging}) => (isDragging ? 'grabbing' : (this.isHovering ? 'pointer' : 'grab')),
       layers:[layer],
+      getTooltip:this.addTooltip()
     })
   }
 
@@ -110,7 +115,7 @@ export default class Flux extends mixins(MapMixin){
     return new ArcLayer({
       id: 'flux-layer',
       data:this.data,
-      opacity:0.4,
+      opacity:0.3,
       pickable: true,
       getWidth: (d:any) => this.classWidth( d.passengers,this.analyse)!,
       getSourcePosition: (d:any) => [d.lng_1,d.lat_1],
@@ -129,7 +134,7 @@ export default class Flux extends mixins(MapMixin){
       style: {
         color:'#000',
         backgroundColor: '#fff',
-        fontSize: '0.8em',
+        fontSize: '1.1em',
         width:'250px',
         height:'110px',
         left:'-125px',
@@ -154,11 +159,11 @@ export default class Flux extends mixins(MapMixin){
      this.analyse = this.jenks(this.data!,'passengers',['#000091','#000091','#000091'],[3,12,48])
    }
   }
+
   public getBbox(){
     const coords = this.data.map(d => {return [[d.lng_1,d.lat_1],[d.lng_2,d.lat_2]]})
       .reduce((acc, val) => acc.concat(val), [])
     return bbox(turf.multiPoint(coords))
-
   }
 }
 </script>
