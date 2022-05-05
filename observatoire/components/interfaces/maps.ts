@@ -5,6 +5,7 @@ export interface MapOptionsInterface {
   zoomMobile?:number,
   controls?:boolean,
   attribution:boolean
+  antialias:boolean
 }
 
 export interface MapAnalyseInterface {

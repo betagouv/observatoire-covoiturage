@@ -31,7 +31,7 @@ import { MonthlyPeriodInterface, TerritoryInterface } from '../../interfaces/sid
 
 @Component
 export default class BestTrips extends Vue{
-   @Prop({ required: true }) period!: MonthlyPeriodInterface
+  @Prop({ required: true }) period!: MonthlyPeriodInterface
   @Prop({ required: true }) territory!: TerritoryInterface
   
   data:BestTripsInterface | [] = []
