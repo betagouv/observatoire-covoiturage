@@ -27,31 +27,36 @@
 <script lang="ts">
 import { Component, Prop, Watch, Vue } from 'nuxt-property-decorator'
 import { BestTripsInterface } from '../../interfaces/keyfigures'
-import { MonthlyPeriodInterface, TerritoryInterface } from '../../interfaces/sidebar'
+import { mapState } from 'vuex'
+import { DashboardState } from 'store/dashboard'
 
-@Component
+@Component({
+  computed:{
+    ...mapState({
+      dashboard: 'dashboard',
+    })
+  }
+})
 export default class BestTrips extends Vue{
-  @Prop({ required: true }) period!: MonthlyPeriodInterface
-  @Prop({ required: true }) territory!: TerritoryInterface
-  
+  dashboard!: DashboardState  
   data:BestTripsInterface | [] = []
 
   public mounted(){
     this.getData()
   }
 
-  @Watch('period', { deep: true })
+  @Watch('dashboard.period', { deep: true })
   onPeriodChanged() {
     this.getData()
   }
   
-  @Watch('territory', { deep: true })
+  @Watch('dashboard.territory', { deep: true })
   onTerritoryChanged() {
     this.getData()
   }
 
   public async getData(){
-    const response = await this.$axios.get(`/best_journeys?territory=${this.territory.territory}&t=${this.territory.type}&year=${this.period.year}&month=${this.period.month}`)
+    const response = await this.$axios.get(`/best_journeys?territory=${this.dashboard.territory.territory}&t=${this.dashboard.territory.type}&year=${this.dashboard.period.year}&month=${this.dashboard.period.month}`)
     this.data = response.data
   }
 }
