@@ -11,24 +11,9 @@ import MapMixin from '../../mixins/map'
 import * as turf from '@turf/helpers'
 import bbox from '@turf/bbox'
 import maplibregl from 'maplibre-gl'
+import { AiresData } from '../../interfaces/maps'
 import { TerritoryInterface } from '../../interfaces/sidebar'
 import Legend from './helpers/legend.vue'
-
-interface AiresData {
-  id_lieu:string,
-  ad_lieu:string,
-  com_lieu:string,
-  type:string,
-  date_maj: string,
-  nbre_pl?:number,
-  nbre_pmr?:number,
-  duree?:number,
-  horaires?:string,
-  proprio?:string,
-  lumiere?:boolean,
-  comm?:string,
-  geom:{properties:{ type:string,coordinates:[number,number]}}
-}
 
 @Component({
   components:{
@@ -39,7 +24,7 @@ export default class Aires extends mixins(MapMixin){
   @Prop({ required: true }) territory!: TerritoryInterface
   map:any = null
   data:Array<AiresData> = []
-  categories=[
+  categories= [
     {color:[102, 194, 165],val:'Supermarché',width:10,active:true},
     {color:[252, 141, 98],val:'Parking',width:10,active:true},
     {color:[141, 160, 203],val:'Aire de covoiturage',width:10,active:true},
