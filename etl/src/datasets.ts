@@ -12,9 +12,9 @@ import { TerritoriesCode2022 } from './datasets/territories/codes/TerritoriesCod
 import { TerritoriesPoint2020 } from './datasets/territories/points/TerritoriesPoint2020';
 import { TerritoriesPoint2021 } from './datasets/territories/points/TerritoriesPoint2021';
 import { TerritoriesPoint2022 } from './datasets/territories/points/TerritoriesPoint2022';
-import { TransportAires2021 } from './datasets/transport_data_gouv/aires_covoiturage/2021/TransportAires2021';
+import { transportAires } from './datasets/transport_data_gouv/aires_covoiturage/TransportAires';
 import { rpcJourneys } from './datasets/rpc/journeys/RpcJourneys';
-import { getFilesUrl } from './helpers';
+import { getRpcFilesUrl, getAiresLastFileUrl } from './helpers';
 import { Datasets } from './interfaces/DatasetsInterface';
 
 export async function datasets(): Promise<Datasets> {
@@ -32,16 +32,23 @@ export async function datasets(): Promise<Datasets> {
   datasets.add(TerritoriesPoint2020);
   datasets.add(TerritoriesPoint2021);
   datasets.add(TerritoriesPoint2022);
-  datasets.add(TransportAires2021);
  
-  const url =
+  // add RPC migrations
+  const rpcUrl =
     // eslint-disable-next-line max-len
     'https://www.data.gouv.fr/api/1/datasets/trajets-realises-en-covoiturage-registre-de-preuve-de-covoiturage/';
-  const urls = await getFilesUrl(url);
+  const urls = await getRpcFilesUrl(rpcUrl);
   for (const url of urls) {
     const year = parseInt(url.slice(-11, -7));
     const month = parseInt(url.slice(-6, -4));
     datasets.add(rpcJourneys(year, month, url));
   }
+
+  // add Aires migration
+  const AiresUrl = 'https://transport.data.gouv.fr/api/datasets/5d6eaffc8b4c417cdc452ac3';
+  const lastUrl = await getAiresLastFileUrl(AiresUrl);
+  console.debug(lastUrl);
+  datasets.add(transportAires(2022, lastUrl));
+
   return datasets;
 }

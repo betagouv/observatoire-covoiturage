@@ -4,7 +4,11 @@ export function getRpcDatasetUuid(producer: string, dataset: string, year: numbe
   return `${producer}_${dataset}_${year.toString()}_${month.toString()}`;
 }
 
-export async function getFilesUrl(url: string): Promise<string[]> {
+export function getAiresDatasetUuid(producer: string, dataset: string, year: number): string {
+  return `${producer}_${dataset}_${year.toString()}}`;
+}
+
+export async function getRpcFilesUrl(url: string): Promise<string[]> {
   const urls: string[] = [];
   const response = await axios.get(url);
   for (const resource of response.data.resources) {
@@ -13,4 +17,10 @@ export async function getFilesUrl(url: string): Promise<string[]> {
     }
   }
   return urls;
+}
+
+export async function getAiresLastFileUrl(url: string): Promise<string> {
+  const response = await axios.get(url);
+  const fileUrl = response.data.history[0].payload.permanent_url
+  return fileUrl;
 }
