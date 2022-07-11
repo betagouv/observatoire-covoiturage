@@ -21,5 +21,10 @@ export const state = () => ({
     {type:'dep',name:'Départements'},
     {type:'reg',name:'Régions'},
     {type:'country',name:'Pays'}
-  ]
+  ],
+  mapList:[
+    {id:'flux',name:'Flux'},
+    {id:'occupation',name:'Occupation des véhicules'},
+    {id:'aires',name:'Aires de covoiturage'},
+  ],
 })

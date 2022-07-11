@@ -2,8 +2,10 @@
   <nav class="fr-sidemenu--full-border" :class="{'fr-p-1w': !lgAndAbove}" role="navigation" aria-label="Menu latéral">
     <div class="fr-sidemenu__inner">
       <SidebarTitle :title=title />
+      <SidebarSelectMap v-if="dashboard.activeTab === 2" />
       <SidebarMonthlyPeriod />
       <SidebarSelectTerritory v-if="dashboard.period.year !== ''" />
+      
     </div>
   </nav>
 </template>
@@ -14,6 +16,7 @@ import BreakpointsMixin from '../../mixins/breakpoints'
 import SidebarTitle from './Title.vue'
 import SidebarMonthlyPeriod from './MonthlyPeriod.vue'
 import SidebarSelectTerritory from './SelectTerritory.vue'
+import SidebarSelectMap from './SelectMap.vue'
 import { mapState } from 'vuex'
 import { DashboardState } from '../../../store/dashboard'
 
@@ -23,6 +26,7 @@ import { DashboardState } from '../../../store/dashboard'
     SidebarTitle,
     SidebarMonthlyPeriod,
     SidebarSelectTerritory,
+    SidebarSelectMap,
   },
   computed:{
     ...mapState({
