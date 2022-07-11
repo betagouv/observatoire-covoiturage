@@ -3,7 +3,7 @@
     <client-only>
       <div class="fr-grid-row">
         <div v-if="lgAndAbove || screen.isSidebarOpen" class="fr-col-12 fr-col-lg-3 sidebar">
-          <Sidebar v-if="dashboard.period" :period=dashboard.period :territory=territory @selectedTerritory=emitTerritory />
+          <Sidebar v-if="dashboard.period" />
         </div>
         <div class="fr-col">
           <o-tabs 
@@ -13,10 +13,10 @@
             size="normal"
             expanded>
             <o-tab-item label="Chiffres clés" icon="car-key">
-              <KeyFiguresIndex />
+              <KeyFiguresIndex v-if="activeTab===1" />
             </o-tab-item> 
             <o-tab-item label="Cartes" icon="map">
-              <MapIndex v-if="activeTab===2" activeMap='occupation' :period=dashboard.period :territory=territory /> 
+              <MapIndex v-if="activeTab===2" /> 
             </o-tab-item>
             <o-tab-item label="Evolution" icon="chart-line"></o-tab-item>
           </o-tabs>
@@ -30,11 +30,11 @@
 <script lang="ts">
 import { Component, mixins } from 'nuxt-property-decorator'
 import BreakpointsMixin from '../components/mixins/breakpoints'
-import Sidebar from '../components/dashboard/key_figures/Sidebar.vue'
+import Sidebar from '../components/dashboard/sidebar/Index.vue'
 import KeyFiguresIndex from '../components/dashboard/key_figures/Index.vue'
 import MapIndex from '../components/dashboard/maps/Index.vue'
-import { MonthlyPeriodInterface, TerritoryInterface } from '../components/interfaces/sidebar'
 import { mapState } from 'vuex'
+import { DashboardState } from '../store/dashboard'
 
 @Component({
   components:{
@@ -49,22 +49,18 @@ import { mapState } from 'vuex'
   }
 })
 export default class Dashboard extends mixins(BreakpointsMixin){
+  dashboard!: DashboardState 
 
-  period:MonthlyPeriodInterface | null = null
-  territory:TerritoryInterface = {
-    territory:'XXXXX',
-    l_territory:'France',
-    type:'country',
+  get activeTab() {
+    return this.dashboard.activeTab
   }
-  activeTab=1
-
+  set activeTab(value) {
+    this.$store.commit('dashboard/ACTIVETAB', value)
+  }
 
   public async created(){
     await this.$store.dispatch('dashboard/getPeriod')
   }
 
-  public emitTerritory(value:TerritoryInterface){
-    this.territory = value
-  }
 }
 </script>

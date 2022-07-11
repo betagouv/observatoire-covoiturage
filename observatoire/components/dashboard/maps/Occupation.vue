@@ -1,29 +1,41 @@
 <template>
-  <div class="map_container">
-    <div id="map"></div>
-    <Legend :title="legendTitleJourneys" :analyzes="categories" type="proportional_circles" class="upper_legend"/>
-    <Legend :title="legendTitleOccupation" :analyzes="analyse" type="interval"/>
-  </div>
+  <section>
+    <div class="fr-grid-row">
+      <div class="map-title fr-col">
+        <h5>{{mapTitle}}</h5>
+      </div>
+    </div>
+    <div class="map_container">
+      <div id="map"></div>
+      <Legend :title="legendTitleJourneys" :analyzes="categories" type="proportional_circles" class="upper_legend"/>
+      <Legend :title="legendTitleOccupation" :analyzes="analyse" type="interval"/>
+    </div>
+  </section>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Watch, mixins } from 'nuxt-property-decorator'
+import { Component, Watch, mixins } from 'nuxt-property-decorator'
 import MapMixin from '../../mixins/map'
 import * as turf from '@turf/helpers'
 import bbox from '@turf/bbox'
 import maplibregl from 'maplibre-gl'
 import { OccupData } from '../../interfaces/maps'
-import { MonthlyPeriodInterface, TerritoryInterface } from '../../interfaces/sidebar'
 import Legend from './helpers/legend.vue'
+import { mapState } from 'vuex'
+import { DashboardState } from '../../../store/dashboard'
 
 @Component({
   components:{
     Legend,
+  },
+  computed:{
+    ...mapState({
+      dashboard: 'dashboard',
+    })
   }
 })
 export default class Occupation extends mixins(MapMixin){
-  @Prop({ required: true }) period!: MonthlyPeriodInterface
-  @Prop({ required: true }) territory!: TerritoryInterface
+  dashboard!: DashboardState
   type='com'
   map:any = null
   data:Array<OccupData> = []
@@ -41,6 +53,7 @@ export default class Occupation extends mixins(MapMixin){
     {color:[0, 0, 116],val:3,width:10,active:true},
     {color:[0, 0, 109],val:4,width:10,active:true},
   ]
+  mapTitle="Taux d'occupation des véhicules partagés et volume de ces véhicules par territoire"
   legendTitleOccupation="Taux d'occupation des véhicules partagés"
 
   get filteredData(){
@@ -68,12 +81,14 @@ export default class Occupation extends mixins(MapMixin){
     return "Nombre de véhicules partagés par "+this.$store.state.helpers.territories.find(t => t.type === this.type).name.toLowerCase() 
   }
 
-  @Watch('territory', { deep: true })
+  @Watch('dashboard.period', { deep: true })
+  async onPeriodChanged() {
+    await this.refreshMap()
+  }
+
+  @Watch('dashboard.territory', { deep: true })
   async onTerritoryChanged() {
-    await this.getData()
-    this.map.getSource('occupationSource').setData(this.filteredData)
-    const bounds = bbox(this.filteredData)
-    this.map.fitBounds(bounds, {padding: 50})
+    await this.refreshMap()
   }
 
   public async mounted() {
@@ -83,7 +98,7 @@ export default class Occupation extends mixins(MapMixin){
   }
 
   public async getData(){
-    const response = await this.$axios.get(`/journeys_monthly_occupation?code=${this.territory.territory}&t=${this.type}&t2=${this.territory.type}&year=${this.period.year}&month=${this.period.month}`)
+    const response = await this.$axios.get(`/journeys_monthly_occupation?code=${this.dashboard.territory.territory}&t=${this.type}&t2=${this.dashboard.territory.type}&year=${this.dashboard.period.year}&month=${this.dashboard.period.month}`)
     this.data = response.data
   }
 
@@ -126,7 +141,7 @@ export default class Occupation extends mixins(MapMixin){
           'circle-opacity': 0.8
         }
       })
-      if(this.territory.territory !== 'XXXXX'){
+      if(this.dashboard.territory.territory !== 'XXXXX'){
         const bounds = bbox(this.filteredData)
         this.map.fitBounds(bounds, {padding: 20})
       }
@@ -156,6 +171,12 @@ export default class Occupation extends mixins(MapMixin){
       })
     })
   }
+   public async refreshMap() {
+    await this.getData()
+    this.map.getSource('occupationSource').setData(this.filteredData)
+    const bounds = bbox(this.filteredData)
+    this.map.fitBounds(bounds, {padding: 50})
+  }
 }
 </script>
 <style lang="scss">
@@ -168,6 +189,15 @@ export default class Occupation extends mixins(MapMixin){
   #map{
     position:relative;
     height: 100%;
+  }
+}
+.map-title{
+  background-color: #000091;
+  padding: 20px 5px;
+   h5 {
+    color: #ffffff;
+    text-align: center;
+    margin:0;
   }
 }
 </style>

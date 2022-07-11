@@ -5,8 +5,8 @@
         <h1 v-if="data.l_territory" class="h-text-center">
           Chiffres clés sur le territoire : {{data.l_territory.charAt(0)}}{{data.l_territory.slice(1).toLowerCase()}}
         </h1>
-        <h2 v-if="period.month" class="h-text-center">
-          Données concernant le mois : {{monthList.find(m=>m.id === Number(period.month)).name}} {{period.year}}
+        <h2 v-if="dashboard.period.month" class="h-text-center">
+          Données concernant le mois : {{monthList.find(m=>m.id === Number(dashboard.period.month)).name}} {{dashboard.period.year}}
         </h2>
       </div>
     </div>
@@ -192,16 +192,20 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Watch, Vue } from 'nuxt-property-decorator'
+import { Component, Watch, Vue } from 'nuxt-property-decorator'
 import { IndicatorsInterface } from '../../interfaces/keyfigures'
-import { MonthlyPeriodInterface, TerritoryInterface } from '../../interfaces/sidebar'
+import { mapState } from 'vuex'
+import { DashboardState } from '../../../store/dashboard'
 
-@Component
+@Component({
+  computed:{
+    ...mapState({
+      dashboard: 'dashboard',
+    })
+  }
+})
 export default class Indicators extends Vue{
-  @Prop({ required: true }) period!: MonthlyPeriodInterface
-  @Prop({ required: true }) territory!: TerritoryInterface
-  
-
+  dashboard!: DashboardState  
   data:IndicatorsInterface | {} = {}
 
   get monthList(){
@@ -212,18 +216,18 @@ export default class Indicators extends Vue{
     this.getData()
   }
 
-  @Watch('period', { deep: true })
+  @Watch('dashboard.period', { deep: true })
   onPeriodChanged() {
     this.getData()
   }
 
-  @Watch('territory', { deep: true })
+  @Watch('dashboard.territory', { deep: true })
   onTerritoryChanged() {
     this.getData()
   }
 
   public async getData(){
-    const response = await this.$axios.get(`/indicators?territory=${this.territory.territory}&t=${this.territory.type}&year=${this.period.year}&month=${this.period.month}`)
+    const response = await this.$axios.get(`/indicators?territory=${this.dashboard.territory.territory}&t=${this.dashboard.territory.type}&year=${this.dashboard.period.year}&month=${this.dashboard.period.month}`)
     response.status === 200 ? this.data = response.data[0] : this.data = {}
   }
 }

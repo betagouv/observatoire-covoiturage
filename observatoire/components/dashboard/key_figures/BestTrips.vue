@@ -25,10 +25,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Watch, Vue } from 'nuxt-property-decorator'
+import { Component, Watch, Vue } from 'nuxt-property-decorator'
 import { BestTripsInterface } from '../../interfaces/keyfigures'
 import { mapState } from 'vuex'
-import { DashboardState } from 'store/dashboard'
+import { DashboardState } from '../../../store/dashboard'
 
 @Component({
   computed:{

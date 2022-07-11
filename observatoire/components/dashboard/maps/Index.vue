@@ -1,28 +1,31 @@
 <template>
   <section>
-    <Occupation v-if="activeMap==='occupation'" :period=period :territory=territory />
-    <Flux v-if="activeMap==='flux'" :period=period :territory=territory />
-    <Aires v-if="activeMap==='aires'" :period=period :territory=territory />
+    <Occupation v-if="dashboard.activeMap==='occupation'" />
+    <Flux v-if="dashboard.activeMap==='flux'" />
+    <Aires v-if="dashboard.activeMap==='aires'" />
   </section>
 </template>
  
 <script lang="ts">
-import { Component, Prop, Vue } from 'nuxt-property-decorator'
+import { Component, Vue } from 'nuxt-property-decorator'
 import Aires from './Aires.vue'
 import Flux from './Flux.vue'
 import Occupation from './Occupation.vue'
-import { MonthlyPeriodInterface, TerritoryInterface } from '../../interfaces/sidebar'
+import { mapState } from 'vuex'
+
 
 @Component({
   components:{
     Aires,
     Flux,
     Occupation,
+  },
+  computed:{
+    ...mapState({
+      dashboard: 'dashboard',
+    })
   }
 })
 export default class MapIndex extends Vue{
-  @Prop({ required: true }) activeMap!: string
-  @Prop({ required: true }) period!: MonthlyPeriodInterface
-  @Prop({ required: true }) territory!: TerritoryInterface
 }
 </script>

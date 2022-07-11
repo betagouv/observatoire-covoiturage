@@ -17,8 +17,9 @@ import bbox from '@turf/bbox'
 import {MapboxLayer} from '@deck.gl/mapbox';
 import { ArcLayer } from '@deck.gl/layers'
 import { Deck } from '@deck.gl/core'
-import { MonthlyPeriodInterface, TerritoryInterface } from '../../interfaces/sidebar'
 import Legend from './helpers/legend.vue'
+import { mapState } from 'vuex'
+import { DashboardState } from '../../../store/dashboard'
 
 interface FluxData {
   ter_1:string,
@@ -35,11 +36,15 @@ interface Analyse {val:number,color:[number, number, number],width:number}
 @Component({
   components:{
     Legend,
+  },
+  computed:{
+    ...mapState({
+      dashboard: 'dashboard',
+    })
   }
 })
 export default class Flux extends mixins(MapMixin){
-  @Prop({ required: true }) period!: MonthlyPeriodInterface
-  @Prop({ required: true }) territory!: TerritoryInterface
+  dashboard!: DashboardState
   map:any = null
   deck:any = null
   data:Array<FluxData> = []
@@ -47,9 +52,9 @@ export default class Flux extends mixins(MapMixin){
   analyse:Array<Analyse> = []
   slider:Array<number>=[]
   type='com'
-  legendTitle="Aires de covoiturage (source transport.data.gouv.fr)"
+  legendTitle="Flux de covoiturage (source transport.data.gouv.fr)"
 
-  @Watch('period', { deep: true })
+  @Watch('dashboard.period', { deep: true })
   async onPeriodChanged() {
     await this.getData()
     const bounds = this.getBbox()
@@ -57,7 +62,7 @@ export default class Flux extends mixins(MapMixin){
     this.deck.setProps({layers:[this.addArcLayer()]})
   }
 
-  @Watch('territory', { deep: true })
+  @Watch('dashboard.territory', { deep: true })
   async onTerritoryChanged() {
     await this.getData()
     const bounds = this.getBbox()
@@ -83,7 +88,7 @@ export default class Flux extends mixins(MapMixin){
   }
 
   public async getData(){
-    const response = await this.$axios.get(`/passengers_monthly_flux?code=${this.territory.territory}&t=${this.type}&t2=${this.territory.type}&year=${this.period.year}&month=${this.period.month}`)
+    const response = await this.$axios.get(`/passengers_monthly_flux?code=${this.dashboard.territory.territory}&t=${this.type}&t2=${this.dashboard.territory.type}&year=${this.dashboard.period.year}&month=${this.dashboard.period.month}`)
     this.data = response.data
     //this.slider = this.defaultSlider('passengers')
   }

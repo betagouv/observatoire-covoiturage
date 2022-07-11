@@ -6,22 +6,28 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Watch, mixins } from 'nuxt-property-decorator'
+import { Component, Watch, mixins } from 'nuxt-property-decorator'
 import MapMixin from '../../mixins/map'
 import * as turf from '@turf/helpers'
 import bbox from '@turf/bbox'
 import maplibregl from 'maplibre-gl'
 import { AiresData } from '../../interfaces/maps'
-import { TerritoryInterface } from '../../interfaces/sidebar'
 import Legend from './helpers/legend.vue'
+import { mapState } from 'vuex'
+import { DashboardState } from '../../../store/dashboard'
 
 @Component({
   components:{
     Legend,
+  },
+  computed:{
+    ...mapState({
+      dashboard: 'dashboard',
+    })
   }
 })
 export default class Aires extends mixins(MapMixin){
-  @Prop({ required: true }) territory!: TerritoryInterface
+  dashboard!: DashboardState
   map:any = null
   data:Array<AiresData> = []
   categories= [
@@ -57,7 +63,7 @@ export default class Aires extends mixins(MapMixin){
     }
   }
 
-  @Watch('territory', { deep: true })
+  @Watch('dashboard.territory', { deep: true })
   async onTerritoryChanged() {
     await this.getData()
     this.map.getSource('airesSource').setData(this.filteredAires)
@@ -72,7 +78,7 @@ export default class Aires extends mixins(MapMixin){
   }
 
   public async getData(){
-    const response = await this.$axios.get(`/aires_covoiturage?code=${this.territory.territory}&t=${this.territory.type}`)
+    const response = await this.$axios.get(`/aires_covoiturage?code=${this.dashboard.territory.territory}&t=${this.dashboard.territory.type}`)
     this.data = response.data
   }
 
@@ -113,7 +119,7 @@ export default class Aires extends mixins(MapMixin){
           'circle-opacity': 0.8
         }
       })
-      if(this.territory.territory !== 'XXXXX'){
+      if(this.dashboard.territory.territory !== 'XXXXX'){
         const bounds = bbox(this.filteredAires)
         this.map.fitBounds(bounds, {padding: 20})
       }
