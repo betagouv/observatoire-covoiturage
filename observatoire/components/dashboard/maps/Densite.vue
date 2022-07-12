@@ -16,7 +16,7 @@ import { h3SetToMultiPolygon } from 'h3-js'
 import bbox from '@turf/bbox'
 import { DensiteData, MapAnalyseInterface } from '../../interfaces/maps'
 import { MapboxLayer } from '@deck.gl/mapbox';
-import { ArcLayer } from '@deck.gl/layers'
+import { H3HexagonLayer } from '@deck.gl/geo-layers'
 import { Deck } from '@deck.gl/core'
 import Legend from './helpers/legend.vue'
 import { mapState } from 'vuex'
@@ -44,16 +44,12 @@ export default class Densite extends mixins(MapMixin){
   type='com'
   legendTitle="Flux de covoiturage (source transport.data.gouv.fr)"
 
-  public async created(){
-    await this.$store.dispatch('dashboard/getDensitePeriod')
-  }
-
   @Watch('dashboard.period', { deep: true })
   async onPeriodChanged() {
     await this.getData()
     const bounds = this.getBbox()
     this.map.fitBounds(bounds, {padding: 50})
-    this.deck.setProps({layers:[this.addArcLayer()]})
+    this.deck.setProps({layers:[this.addHexLayer()]})
   }
 
   @Watch('dashboard.territory', { deep: true })
@@ -61,7 +57,7 @@ export default class Densite extends mixins(MapMixin){
     await this.getData()
     const bounds = this.getBbox()
     this.map.fitBounds(bounds, {padding: 50})
-    this.deck.setProps({layers:[this.addArcLayer()]})
+    this.deck.setProps({layers:[this.addHexLayer()]})
   }
 
   @Watch('data', { deep: true })
@@ -75,14 +71,15 @@ export default class Densite extends mixins(MapMixin){
   }
 
   public async mounted() {
+    await this.$store.dispatch('dashboard/getDensitePeriod')
     await this.getData()
     await this.createMap('map')
-    await this.createDeck( this.addArcLayer())
+    await this.createDeck( this.addHexLayer())
     this.addLayers()
   }
 
   public async getData(){
-    const response = await this.$axios.get(`/location?date_1=${this.dashboard.densitePeriod.start.toISOString().slice(0, 10)}&date_2=${this.dashboard.densitePeriod.end.toISOString().slice(0, 10)}&zoom=${this.zoom}`)
+    const response = await this.$axios.get(`/location?code=${this.dashboard.territory.territory}&t=${this.dashboard.territory.type}&date_1=${this.dashboard.densitePeriod.start.toISOString().slice(0, 10)}&date_2=${this.dashboard.densitePeriod.end.toISOString().slice(0, 10)}&zoom=${this.zoom}`)
     this.data = response.data
   }
 
@@ -90,7 +87,7 @@ export default class Densite extends mixins(MapMixin){
     if(this.data){
       this.filteredData = this.data.filter(d => d[field] >= this.slider[0] && d[field] <= this.slider[1])
     }
-    this.deck.setProps({layers:[this.addArcLayer()]})
+    this.deck.setProps({layers:[this.addHexLayer()]})
   }
 
   async createDeck( layer:any, ) {
@@ -109,32 +106,31 @@ export default class Densite extends mixins(MapMixin){
       this.map.addLayer(new MapboxLayer({id: 'densite-layer', deck}))
     })
   }
-   public addArcLayer(){
-    return new ArcLayer({
-      id: 'flux-layer',
+
+  public addHexLayer(){
+    return new H3HexagonLayer({
+      id: 'densite-layer',
       data:this.data,
-      opacity:0.3,
+      opacity:0.4,
       pickable: true,
-      getWidth: (d:any) => this.classWidth( d.passengers,this.analyse)!,
-      getSourcePosition: (d:any) => [d.lng_1,d.lat_1],
-      getTargetPosition: (d:any) => [d.lng_2,d.lat_2],
-      getSourceColor: [0,0,145],
-      getTargetColor:  [0,0,145],
+      extruded: false,
+      lineWidthMinPixels: 1,
+      getHexagon: d => d.hex,
+      getFillColor: d => this.classColor(d.count,this.analyse),
+      getLineColor: d => [80, 80, 80],
     })
   }
 
   public addTooltip(){
     return ({object}) => object && {
-      html: `<div class="tooltip-title"><b>${object.ter_1} - ${object.ter_2}</b></div>
-      <div>${object.passengers} passagers transportés</div>
-      <div>${object.distance.toLocaleString()} Km parcourus</div>`,
+      html: `<div><b>${object.count.toLocaleString()}</b> départ(s) ou arrivée(s) de covoiturage dans cette maille hexagonale</div>`,
       className:'fr-callout',
       style: {
         color:'#000',
         backgroundColor: '#fff',
-        fontSize: '1.1em',
+        fontSize: '0.8em',
         width:'250px',
-        height:'110px',
+        height:'80px',
         left:'-125px',
         top:'-110px'
       }

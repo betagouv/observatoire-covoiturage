@@ -3,6 +3,7 @@
     <Occupation v-if="dashboard.activeMap==='occupation'" />
     <Flux v-if="dashboard.activeMap==='flux'" />
     <Aires v-if="dashboard.activeMap==='aires'" />
+    <Densite v-if="dashboard.activeMap==='densite'" />
   </section>
 </template>
  
