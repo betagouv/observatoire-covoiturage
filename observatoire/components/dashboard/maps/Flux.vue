@@ -35,8 +35,8 @@ import { DashboardState } from '../../../store/dashboard'
 })
 export default class Flux extends mixins(MapMixin){
   dashboard!: DashboardState
-  map:Map = null
-  deck:Deck = null
+  map:any = null
+  deck:any = null
   data:Array<FluxData> = []
   filteredData:Array<FluxData>=[]
   analyse:Array<MapAnalyseInterface> = []

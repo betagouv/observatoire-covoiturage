@@ -13,8 +13,8 @@ export const state = () => ({
   activeTab:1,
   activeMap :'flux',
   densitePeriod:{
-    start:null,
-    end:null,
+    start:new Date,
+    end:new Date,
   },
 })
 

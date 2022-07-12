@@ -34,8 +34,8 @@ import { DashboardState } from '../../../store/dashboard'
 })
 export default class Densite extends mixins(MapMixin){
   dashboard!: DashboardState
-  map:Deck = null
-  deck:Deck = null
+  map:any = null
+  deck:any = null
   data:Array<DensiteData> = []
   filteredData:Array<DensiteData>=[]
   analyse:Array<MapAnalyseInterface> = []
@@ -151,7 +151,6 @@ export default class Densite extends mixins(MapMixin){
 
   public getBbox(){
     const hexagons = this.data.map(d => {return d.hex})
-      .reduce((acc, val) => acc.concat(val), [])
     const polygon = h3SetToMultiPolygon(hexagons, true)
     return bbox(polygon)
   }
