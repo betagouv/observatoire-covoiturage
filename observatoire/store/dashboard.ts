@@ -12,6 +12,10 @@ export const state = () => ({
   },
   activeTab:1,
   activeMap :'flux',
+  densitePeriod:{
+    start:null,
+    end:null,
+  },
 })
 
 export type DashboardState = ReturnType<typeof state>
@@ -23,11 +27,20 @@ export const mutations: MutationTree<DashboardState> = {
   TERRITORY: (state, territory: DashboardState["territory"]) => (state.territory = territory),
   ACTIVETAB: (state, activeTab: DashboardState["activeTab"]) => (state.activeTab = activeTab),
   ACTIVEMAP: (state, activeMap: DashboardState["activeMap"]) => (state.activeMap = activeMap),
+  DENSITEPERIOD: (state, densitePeriod: DashboardState["densitePeriod"]) => (state.densitePeriod = densitePeriod),
 }
 
 export const actions: ActionTree<DashboardState, DashboardState> = {
   async getPeriod({ commit }){
     const response = await this.$axios.get('/monthly_flux/last')
     commit('PERIOD',response.data)
+  },
+  async getDensitePeriod({ commit }){
+    const response = await this.$axios.get('/monthly_flux/last')
+    const period = { 
+      start: new Date(new Date(response.data.date).setMonth(new Date(response.data.date).getMonth() - 1)),
+      end: new Date(response.data.date)
+    }
+    commit('DENSITEPERIOD',period)
   }
 }

@@ -37,3 +37,19 @@ export interface OccupData {
   occupation_rate:number,
   geom:{properties:{ type:string, coordinates:[number,number]}}
 }
+
+export interface FluxData {
+  ter_1:string,
+  lng_1:number,
+  lat_1:number,
+  ter_2:string,
+  lng_2:number,
+  lat_2:number,
+  passengers:number,
+  distance:number,
+}
+
+export interface DensiteData {
+  hex:string,
+  count:number,
+}

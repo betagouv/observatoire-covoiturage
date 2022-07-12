@@ -12,10 +12,9 @@
 <script lang="ts">
 import { Component, Watch, mixins } from 'nuxt-property-decorator'
 import MapMixin from '../../mixins/map'
-import * as turf from '@turf/helpers'
+import { h3SetToMultiPolygon } from 'h3-js'
 import bbox from '@turf/bbox'
-import { FluxData, MapAnalyseInterface } from '../../interfaces/maps'
-import { Map } from 'maplibre-gl'
+import { DensiteData, MapAnalyseInterface } from '../../interfaces/maps'
 import { MapboxLayer } from '@deck.gl/mapbox';
 import { ArcLayer } from '@deck.gl/layers'
 import { Deck } from '@deck.gl/core'
@@ -33,16 +32,21 @@ import { DashboardState } from '../../../store/dashboard'
     })
   }
 })
-export default class Flux extends mixins(MapMixin){
+export default class Densite extends mixins(MapMixin){
   dashboard!: DashboardState
-  map:Map = null
+  map:Deck = null
   deck:Deck = null
-  data:Array<FluxData> = []
-  filteredData:Array<FluxData>=[]
+  data:Array<DensiteData> = []
+  filteredData:Array<DensiteData>=[]
   analyse:Array<MapAnalyseInterface> = []
+  zoom=8
   slider:Array<number>=[]
   type='com'
   legendTitle="Flux de covoiturage (source transport.data.gouv.fr)"
+
+  public async created(){
+    await this.$store.dispatch('dashboard/getDensitePeriod')
+  }
 
   @Watch('dashboard.period', { deep: true })
   async onPeriodChanged() {
@@ -78,9 +82,8 @@ export default class Flux extends mixins(MapMixin){
   }
 
   public async getData(){
-    const response = await this.$axios.get(`/passengers_monthly_flux?code=${this.dashboard.territory.territory}&t=${this.type}&t2=${this.dashboard.territory.type}&year=${this.dashboard.period.year}&month=${this.dashboard.period.month}`)
+    const response = await this.$axios.get(`/location?date_1=${this.dashboard.densitePeriod.start.toISOString().slice(0, 10)}&date_2=${this.dashboard.densitePeriod.end.toISOString().slice(0, 10)}&zoom=${this.zoom}`)
     this.data = response.data
-    //this.slider = this.defaultSlider('passengers')
   }
 
   public filterData(field:string){
@@ -103,11 +106,10 @@ export default class Flux extends mixins(MapMixin){
   public addLayers() {
     const deck = this.deck
     this.map.on('style.load', () => {
-      this.map.addLayer(new MapboxLayer({id: 'flux-layer', deck}))
+      this.map.addLayer(new MapboxLayer({id: 'densite-layer', deck}))
     })
   }
-  
-  public addArcLayer(){
+   public addArcLayer(){
     return new ArcLayer({
       id: 'flux-layer',
       data:this.data,
@@ -139,15 +141,6 @@ export default class Flux extends mixins(MapMixin){
     }
   }
 
-  public defaultSlider(field:string){
-    if(this.data){
-      const values = this.data!.map((d:FluxData) => d[field])
-      return [10,Math.max(...values)]
-    }else{
-      return []
-    }
-  }
-
   public jenksAnalyse(){
    if(this.type !== 'country' ){ 
     this.analyse = this.jenks(this.data!,'passengers',['#000091','#000091','#000091','#000091','#000091','#000091'],[1,3,6,12,24,48])
@@ -157,9 +150,10 @@ export default class Flux extends mixins(MapMixin){
   }
 
   public getBbox(){
-    const coords = this.data.map(d => {return [[d.lng_1,d.lat_1],[d.lng_2,d.lat_2]]})
+    const hexagons = this.data.map(d => {return d.hex})
       .reduce((acc, val) => acc.concat(val), [])
-    return bbox(turf.multiPoint(coords))
+    const polygon = h3SetToMultiPolygon(hexagons, true)
+    return bbox(polygon)
   }
 }
 </script>

@@ -160,16 +160,4 @@ export default class Aires extends mixins(MapMixin){
   }
 }
 </script>
-<style lang="scss">
-@import "maplibre-gl/dist/maplibre-gl.css";
-.o-tabs__content{
-  padding: 0 !important;
-}
-.map_container {
-  height: 700px;
-  #map{
-    position:relative;
-    height: 100%;
-  }
-}
-</style>
+

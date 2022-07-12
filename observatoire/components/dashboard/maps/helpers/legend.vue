@@ -100,7 +100,8 @@ export default class Legend extends mixins(BreakpointsMixin){
         position: absolute;
         height: 1px; 
         background-color: black;
-        margin:0;
+        margin: 0;
+        padding: 1px 0;
       }
       .circle-class{
         border: 1px solid black;

@@ -179,25 +179,3 @@ export default class Occupation extends mixins(MapMixin){
   }
 }
 </script>
-<style lang="scss">
-@import "maplibre-gl/dist/maplibre-gl.css";
-.o-tabs__content{
-  padding: 0 !important;
-}
-.map_container {
-  height: 500px;
-  #map{
-    position:relative;
-    height: 100%;
-  }
-}
-.map-title{
-  background-color: #000091;
-  padding: 20px 5px;
-   h5 {
-    color: #ffffff;
-    text-align: center;
-    margin:0;
-  }
-}
-</style>
