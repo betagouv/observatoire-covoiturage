@@ -4,6 +4,7 @@
     <li class="fr-sidemenu__item">
       <select v-model="selectedMap" class="fr-select" id="select-map" name="select-map">
         <option v-for="option in helpers.mapList" :value="option.id" :key="option.id">{{option.name}}</option>
+        <option v-if="dashboard.territory.territory === 'XXXXX'" value="voies">Voies réservées</option>
       </select>
     </li>
   </ul>

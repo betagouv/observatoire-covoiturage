@@ -13,6 +13,7 @@
 import { Component, Watch, mixins } from 'nuxt-property-decorator'
 import MapMixin from '../../mixins/map'
 import { h3SetToMultiPolygon } from 'h3-js'
+import * as turf from '@turf/helpers'
 import bbox from '@turf/bbox'
 import { DensiteData, MapAnalyseInterface } from '../../interfaces/maps'
 import { MapboxLayer } from '@deck.gl/mapbox';
@@ -138,17 +139,13 @@ export default class Densite extends mixins(MapMixin){
   }
 
   public jenksAnalyse(){
-   if(this.type !== 'country' ){ 
-    this.analyse = this.jenks(this.data!,'passengers',['#000091','#000091','#000091','#000091','#000091','#000091'],[1,3,6,12,24,48])
-   } else {
-     this.analyse = this.jenks(this.data!,'passengers',['#000091','#000091','#000091'],[3,12,48])
-   }
+    this.analyse = this.jenks(this.data,'count',['#fdd49e','#fdbb84','#fc8d59','#e34a33','#b30000','#000000'],[10,10,10,10,10,10])
   }
 
   public getBbox(){
     const hexagons = this.data.map(d => {return d.hex})
     const polygon = h3SetToMultiPolygon(hexagons, true)
-    return bbox(polygon)
+    return bbox(turf.multiPolygon(polygon))
   }
 }
 </script>

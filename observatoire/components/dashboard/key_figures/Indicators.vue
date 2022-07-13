@@ -2,16 +2,6 @@
   <section>
     <div class="fr-grid-row">
       <div class="fr-col">
-        <h1 v-if="data.l_territory" class="h-text-center">
-          Chiffres clés sur le territoire : {{data.l_territory.charAt(0)}}{{data.l_territory.slice(1).toLowerCase()}}
-        </h1>
-        <h2 v-if="dashboard.period.month" class="h-text-center">
-          Données concernant le mois : {{monthList.find(m=>m.id === Number(dashboard.period.month)).name}} {{dashboard.period.year}}
-        </h2>
-      </div>
-    </div>
-    <div class="fr-grid-row">
-      <div class="fr-col">
         <div class="fr-grid-row">
           <div v-if="data.passengers" class="fr-col">
             <div  class="fr-tile">

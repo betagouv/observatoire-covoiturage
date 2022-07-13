@@ -29,3 +29,5 @@ export const state = () => ({
     {id:'aires',name:'Aires de covoiturage'},
   ],
 })
+
+export type helpersState = ReturnType<typeof state>

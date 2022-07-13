@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <div class="fr-sidemenu__title">Changer de territoire :</div>
+  <div v-if="edit">
     <o-autocomplete
       v-model="searchfield"
       placeholder="Saisir un code INSEE ou nom du territoire"
@@ -20,6 +19,17 @@
       </template>
     </o-autocomplete>
   </div>
+  <div v-else>
+    <h3>
+      Territoire : {{dashboard.territory.l_territory}} 
+      <button @click="edition" class="fr-btn fr-icon-ball-pen-fill" title="Label bouton">
+        Label bouton
+      </button>
+      <button v-if="selectedTerritory && selectedTerritory.territory !== 'XXXXX'" @click="resetFr" class="fr-btn fr-icon-close-circle-fill" title="Label bouton">
+        Label bouton
+      </button>
+    </h3>
+  </div>
 </template>
 
 <script lang="ts">
@@ -37,6 +47,7 @@ import { TerritoryInterface } from '../../interfaces/sidebar'
   }
 })
 export default class SelectTerritory extends Vue{
+  edit = false
   dashboard!: DashboardState
   territories:Array<TerritoryInterface>=[]
   selectedTerritory:TerritoryInterface | null = null
@@ -53,6 +64,7 @@ export default class SelectTerritory extends Vue{
   onTerritoryChanged() {
     if(this.selectedTerritory){
       this.$store.commit('dashboard/TERRITORY', this.selectedTerritory)
+      this.edit = false
     }
   }
 
@@ -63,6 +75,18 @@ export default class SelectTerritory extends Vue{
   public async getTerritories(){
     const response = await this.$axios.get('/territories?year='+this.dashboard.period.year)
     this.territories = response.data
+  }
+
+  public edition(){
+    this.edit = true
+  }
+  public resetFr(){
+    this.selectedTerritory = {
+      l_territory:"France",
+      territory:"XXXXX",
+      type:"country"
+    }
+    this.$store.commit('dashboard/TERRITORY', this.selectedTerritory)
   }
 }
 </script>

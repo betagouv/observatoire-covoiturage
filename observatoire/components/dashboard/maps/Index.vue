@@ -4,6 +4,7 @@
     <Flux v-if="dashboard.activeMap==='flux'" />
     <Aires v-if="dashboard.activeMap==='aires'" />
     <Densite v-if="dashboard.activeMap==='densite'" />
+    <Voies v-if="dashboard.activeMap==='voies'" />
   </section>
 </template>
  
@@ -13,6 +14,7 @@ import Flux from './Flux.vue'
 import Densite from './Densite.vue'
 import Occupation from './Occupation.vue'
 import Aires from './Aires.vue'
+import Voies from './VoiesReservees.vue'
 import { mapState } from 'vuex'
 
 
@@ -22,6 +24,7 @@ import { mapState } from 'vuex'
     Densite,
     Occupation,
     Aires,
+    Voies,
   },
   computed:{
     ...mapState({
