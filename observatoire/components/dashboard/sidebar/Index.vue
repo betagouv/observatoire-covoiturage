@@ -5,7 +5,8 @@
         <SidebarSelectTerritory v-if="dashboard.period.year !== ''" />
         <SidebarMonthlyPeriod />
       </div>
-      <SidebarSelectMap v-if="dashboard.activeTab === 2" />      
+      <SidebarSelectMap v-if="dashboard.activeTab === 2" /> 
+      <SidebarMapControlsSelectVoiesReservees v-if="dashboard.activeTab === 2 && dashboard.activeMap === 'voies' "/>      
     </div>
   </nav>
 </template>
@@ -16,6 +17,7 @@ import BreakpointsMixin from '../../mixins/breakpoints'
 import SidebarMonthlyPeriod from './MonthlyPeriod.vue'
 import SidebarSelectTerritory from './SelectTerritory.vue'
 import SidebarSelectMap from './SelectMap.vue'
+import SidebarMapControlsSelectVoiesReservees from './mapControls/SelectVoiesReservees.vue'
 import { mapState } from 'vuex'
 import { DashboardState } from '../../../store/dashboard'
 
@@ -25,6 +27,7 @@ import { DashboardState } from '../../../store/dashboard'
     SidebarMonthlyPeriod,
     SidebarSelectTerritory,
     SidebarSelectMap,
+    SidebarMapControlsSelectVoiesReservees,
   },
   computed:{
     ...mapState({
@@ -34,14 +37,6 @@ import { DashboardState } from '../../../store/dashboard'
 })
 export default class KeySidebar extends mixins(BreakpointsMixin){
   dashboard!: DashboardState 
-  
-  get title(){
-    let title = 'Situation nationale mensuelle'
-    if (this.dashboard.territory && this.dashboard.territory.type !== 'country' ){
-      title = 'Situation locale mensuelle'
-    }
-    return title
-  }
 }
 </script>
 <style lang="scss">

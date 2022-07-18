@@ -16,6 +16,7 @@ export const state = () => ({
     start:new Date,
     end:new Date,
   },
+  selectedVoie:'',
 })
 
 export type DashboardState = ReturnType<typeof state>
@@ -28,6 +29,7 @@ export const mutations: MutationTree<DashboardState> = {
   ACTIVETAB: (state, activeTab: DashboardState["activeTab"]) => (state.activeTab = activeTab),
   ACTIVEMAP: (state, activeMap: DashboardState["activeMap"]) => (state.activeMap = activeMap),
   DENSITEPERIOD: (state, densitePeriod: DashboardState["densitePeriod"]) => (state.densitePeriod = densitePeriod),
+  SELECTEDVOIE: (state, selectedVoie: DashboardState["selectedVoie"]) => (state.selectedVoie = selectedVoie),
 }
 
 export const actions: ActionTree<DashboardState, DashboardState> = {

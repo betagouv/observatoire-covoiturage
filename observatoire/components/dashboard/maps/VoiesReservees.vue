@@ -7,13 +7,13 @@
 <script lang="ts">
 import { Component, Watch, mixins } from 'nuxt-property-decorator'
 import MapMixin from '../../mixins/map'
+import maplibregl from 'maplibre-gl'
 import * as turf from '@turf/helpers'
 import bbox from '@turf/bbox'
-import maplibregl from 'maplibre-gl'
-import { AiresData } from '../../interfaces/maps'
 import Legend from './helpers/legend.vue'
 import { mapState } from 'vuex'
 import { DashboardState } from '../../../store/dashboard'
+import json from '../../../static/data/vr_covoiturage.json'
 
 @Component({
   components:{
@@ -28,135 +28,67 @@ import { DashboardState } from '../../../store/dashboard'
 export default class Voies extends mixins(MapMixin){
   dashboard!: DashboardState
   map:any = null
-  dataUrl = 'https://gitlab.cerema.fr/centre-est/mobilite/donnees-observatoire-regulations/-/raw/main/final_observatoire_regulation.geojson?inline=false'
-  data:Array<AiresData> = []
-  categories= [
-    {color:[102, 194, 165],val:'Supermarché',width:10,active:true},
-    {color:[252, 141, 98],val:'Parking',width:10,active:true},
-    {color:[141, 160, 203],val:'Aire de covoiturage',width:10,active:true},
-    {color:[231, 138, 195],val:'Délaissé routier',width:10,active:true},
-    {color:[166, 216, 84],val:'Auto-stop',width:10,active:true},
-    {color:[255, 217, 47],val:'Parking relais',width:10,active:true},
-    {color:[229, 196, 148],val:'Sortie d\'autoroute',width:10,active:true},
-    {color:[179, 179, 179],val:'Autres',width:10,active:true}
-  ]
-  legendTitle="Aires de covoiturage (source transport.data.gouv.fr)"
-
-  get filteredAires(){
-    if(this.data){
-      return turf.featureCollection(this.data.filter(a => this.categories.filter(c => c.active === true).map(c=>c.val).includes(a.type)).map(d => turf.feature(d.geom,{
-        id_lieu:d.id_lieu,
-        ad_lieu:d.ad_lieu,
-        com_lieu:d.com_lieu,
-        type:d.type,
-        date_maj: d.date_maj,
-        nbre_pl:d.nbre_pl,
-        nbre_pmr:d.nbre_pmr,
-        duree:d.duree,
-        horaires:d.horaires,
-        proprio:d.proprio,
-        lumiere:d.lumiere,
-        comm:d.comm
-      })))
-    }else{
-      return undefined
-    }
+  data = json
+  feature={
+    geometry:{}
   }
 
-  @Watch('dashboard.territory', { deep: true })
-  async onTerritoryChanged() {
-    await this.getData()
-    this.map.getSource('airesSource').setData(this.filteredAires)
-    const bounds = bbox(this.filteredAires)
-    this.map.fitBounds(bounds, {padding: 50})
+  @Watch('feature',{ deep: true })
+  onFeatureChanged() {
+    this.fitBound()
   }
 
   public async mounted() {
-    await this.getData()
     await this.createMap('map')
     await this.addLayers()
   }
 
-  public async getData(){
-    const response = await this.$axios.get(`${this.dataUrl}`)
-    this.data = response.data
-  }
-
   public addLayers() {
     this.map.on('style.load', () => {
-      this.map.addSource('airesSource', {
+      this.map.addSource('voiesSource', {
         type: 'geojson',
-        data: this.dataUrl
+        data: this.data
       })
       this.map.addLayer({
-        id: 'airesLayer',
-        type: 'circle',
-        source: 'airesSource',
+        id: 'voiesLayer',
+        type: 'line',
+        source: 'voiesSource',
         paint: {
-          'circle-radius': {
-            'base': 3,
-            'stops': [
-            [5, 3],
-            [10,10],
-            [15,15],
-            [22, 50]
-            ]
-          },   
-          'circle-color': [
-          'match',
-          ['get', 'type'],
-          'Supermarché','#66c2a5',
-          'Parking','#fc8d62',
-          'Aire de covoiturage','#8da0cb',
-          'Délaissé routier','#e78ac3',
-          'Auto-stop','#a6d854',
-          'Parking relais','#ffd92f',
-          'Sortie d\'autoroute','#e5c494',
-          /* other */ '#b3b3b3'
-          ],
-          'circle-stroke-color': 'white',
-          'circle-stroke-width': 1,
-          'circle-opacity': 0.8
+          'line-width': 10,  
+          'line-color': '#000091',
+          'line-opacity': 0.8
         }
       })
-      if(this.dashboard.territory.territory !== 'XXXXX'){
-        const bounds = bbox(this.filteredAires)
-        this.map.fitBounds(bounds, {padding: 20})
-      }
-
       let popup = new maplibregl.Popup({
         closeButton: true,
         closeOnClick: false
       })
-      this.map.on('mouseenter', 'airesLayer', e => {
+      this.map.on('mouseenter', 'voiesLayer', e => {
         let features = this.map.queryRenderedFeatures(e.point)
         this.map.getCanvas().style.cursor = 'pointer'
-        if(features[0].properties){
-          let description = `
+        let description = `
           <div class="fr-popup">
-            <p><b>id :</b>${features[0].properties.id_lieu}</p>
-            <p><b>nom :</b>${features[0].properties.ad_lieu}</p>
-            <p><b>commune :</b>${features[0].properties.com_lieu}</p>
-            <p><b>type :</b>${features[0].properties.type}</p>
-            <p><b>date_maj :</b>${new Date(features[0].properties.date_maj).toLocaleDateString('fr-FR')}</p>
-            <p><b>nbre_pl :</b>${features[0].properties.nbre_pl}</p>
-            <p><b>nbre_pmr :</b>${features[0].properties.nbre_pmr}</p>
-            <p><b>duree :</b>${features[0].properties.duree}</p>
-            <p><b>horaires :</b>${features[0].properties.horaires}</p>
-            <p><b>proprio :</b>${features[0].properties.proprio}</p>
-            <p><b>lumiere :</b>${features[0].properties.lumiere}</p>
-            <p><b>comm :</b>${features[0].properties.comm}</p>
+            <p>${features[0].properties.name}</p>
           </div>`
-          popup.setLngLat(e.lngLat)
-          .setHTML(description)
-          .addTo(this.map)
-        }
+        popup.setLngLat(e.lngLat)
+        .setHTML(description)
+        .addTo(this.map)
       })
-      this.map.on('mouseleave', 'airesLayer', () => {
+      this.map.on('mouseleave', 'voiesLayer', () => {
         this.map.getCanvas().style.cursor = ''
         popup.remove()
       })
     })
+  }
+
+  public update(value){
+    this.feature = value
+  }
+
+  public fitBound() {
+    this.map.fitBounds(bbox(this.feature.geometry), {
+      padding: 20
+    })  
   }
 }
 </script>

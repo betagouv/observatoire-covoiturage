@@ -49,8 +49,9 @@ export default class SidebarMonthlyPeriod extends Vue{
     this.edit = false
   }
   get monthName(){
-    if(this.dashboard.period.month){
-      return this.helpers.monthList.find(d => d.id === Number(this.dashboard.period.month)).name
+    const month = this.helpers.monthList.find(d => d.id === Number(this.dashboard.period.month))
+    if(month){
+      return month.name
     }
   }
   get year(){
