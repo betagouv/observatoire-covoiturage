@@ -49,6 +49,6 @@ export const actions: ActionTree<DashboardState, DashboardState> = {
       start: new Date(new Date(response.data.date).setMonth(new Date(response.data.date).getMonth() - 1)),
       end: new Date(response.data.date)
     }
-    commit('DENSITEPERIOD',period)
+    commit('DENSITE_PERIOD',period)
   }
 }
