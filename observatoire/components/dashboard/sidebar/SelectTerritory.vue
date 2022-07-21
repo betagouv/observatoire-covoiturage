@@ -10,7 +10,6 @@
       open-on-focus
       expanded
       maxHeight="250"
-      rootClass="fr-input"
       menuClass="results"
       override
     >
@@ -94,6 +93,7 @@ export default class SelectTerritory extends Vue{
 .results {
   width:100% !important;
   overflow-y: auto;
+  background-color: #FFFFFF;
   div {
     font-size: 0.8rem;
     padding: 0 5px;

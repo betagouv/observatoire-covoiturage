@@ -1,6 +1,6 @@
 <template>
   <ul class="fr-sidemenu__list">
-    <div class="fr-sidemenu__title">Choisir une carte :</div>
+    <label class="fr-sidemenu__title">Choisir une carte :</label>
     <li class="fr-sidemenu__item">
       <select v-model="selectedMap" class="fr-select" id="select-map" name="select-map">
         <option v-for="option in helpers.mapList" :value="option.id" :key="option.id">{{option.name}}</option>

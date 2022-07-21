@@ -29,11 +29,8 @@ export default class Voies extends mixins(MapMixin){
   dashboard!: DashboardState
   map:any = null
   data = json
-  feature={
-    geometry:{}
-  }
 
-  @Watch('feature',{ deep: true })
+  @Watch('dashboard.selectedVoie')
   onFeatureChanged() {
     this.fitBound()
   }
@@ -81,14 +78,13 @@ export default class Voies extends mixins(MapMixin){
     })
   }
 
-  public update(value){
-    this.feature = value
-  }
-
   public fitBound() {
-    this.map.fitBounds(bbox(this.feature.geometry), {
-      padding: 20
-    })  
+    const feature = this.data.features.find(d => d.properties.name === this.dashboard.selectedVoie)
+    if(feature){
+      this.map.fitBounds(bbox(feature.geometry), {
+        padding: 20
+      })
+    }  
   }
 }
 </script>

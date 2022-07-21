@@ -16,6 +16,7 @@ export const state = () => ({
     start:new Date,
     end:new Date,
   },
+  selectedFluxType:'com',
   selectedVoie:'',
 })
 
@@ -29,6 +30,7 @@ export const mutations: MutationTree<DashboardState> = {
   ACTIVETAB: (state, activeTab: DashboardState["activeTab"]) => (state.activeTab = activeTab),
   ACTIVEMAP: (state, activeMap: DashboardState["activeMap"]) => (state.activeMap = activeMap),
   DENSITEPERIOD: (state, densitePeriod: DashboardState["densitePeriod"]) => (state.densitePeriod = densitePeriod),
+  SELECTEDFLUXTYPE: (state, selectedFluxType: DashboardState["selectedFluxType"]) => (state.selectedFluxType = selectedFluxType),
   SELECTEDVOIE: (state, selectedVoie: DashboardState["selectedVoie"]) => (state.selectedVoie = selectedVoie),
 }
 

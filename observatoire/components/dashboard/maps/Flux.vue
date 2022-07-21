@@ -41,7 +41,6 @@ export default class Flux extends mixins(MapMixin){
   filteredData:Array<FluxData>=[]
   analyse:Array<MapAnalyseInterface> = []
   slider:Array<number>=[]
-  type='com'
   legendTitle="Flux de covoiturage (source transport.data.gouv.fr)"
 
   @Watch('dashboard.period', { deep: true })
@@ -65,6 +64,15 @@ export default class Flux extends mixins(MapMixin){
     this.jenksAnalyse()
   }
 
+  @Watch('dashboard.selectedFluxType')
+  async onFluxTypeChanged() {
+    await this.getData()
+    const bounds = this.getBbox()
+    this.map.fitBounds(bounds, {padding: 50})
+    this.deck.setProps({layers:[this.addArcLayer()]})
+  }  
+ 
+
   @Watch('slider')
   onSliderChanged() {
     this.filterData('passengers')
@@ -78,7 +86,7 @@ export default class Flux extends mixins(MapMixin){
   }
 
   public async getData(){
-    const response = await this.$axios.get(`/passengers_monthly_flux?code=${this.dashboard.territory.territory}&t=${this.type}&t2=${this.dashboard.territory.type}&year=${this.dashboard.period.year}&month=${this.dashboard.period.month}`)
+    const response = await this.$axios.get(`/passengers_monthly_flux?code=${this.dashboard.territory.territory}&t=${this.dashboard.selectedFluxType}&t2=${this.dashboard.territory.type}&year=${this.dashboard.period.year}&month=${this.dashboard.period.month}`)
     this.data = response.data
     //this.slider = this.defaultSlider('passengers')
   }
