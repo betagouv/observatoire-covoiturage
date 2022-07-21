@@ -17,6 +17,8 @@ export const state = () => ({
     end:new Date,
   },
   selectedFluxType:'com',
+  maxFluxNb:0,
+  selectedFluxNb: [0,0],
   selectedVoie:'',
 })
 
@@ -29,9 +31,11 @@ export const mutations: MutationTree<DashboardState> = {
   TERRITORY: (state, territory: DashboardState["territory"]) => (state.territory = territory),
   ACTIVETAB: (state, activeTab: DashboardState["activeTab"]) => (state.activeTab = activeTab),
   ACTIVEMAP: (state, activeMap: DashboardState["activeMap"]) => (state.activeMap = activeMap),
-  DENSITEPERIOD: (state, densitePeriod: DashboardState["densitePeriod"]) => (state.densitePeriod = densitePeriod),
-  SELECTEDFLUXTYPE: (state, selectedFluxType: DashboardState["selectedFluxType"]) => (state.selectedFluxType = selectedFluxType),
-  SELECTEDVOIE: (state, selectedVoie: DashboardState["selectedVoie"]) => (state.selectedVoie = selectedVoie),
+  DENSITE_PERIOD: (state, densitePeriod: DashboardState["densitePeriod"]) => (state.densitePeriod = densitePeriod),
+  SELECTED_FLUX_TYPE: (state, selectedFluxType: DashboardState["selectedFluxType"]) => (state.selectedFluxType = selectedFluxType),
+  MAX_FLUX_NB: (state, maxFluxNb: DashboardState["maxFluxNb"]) => (state.maxFluxNb = maxFluxNb),
+  SELECTED_FLUX_NB: (state, selectedFluxNb: DashboardState["selectedFluxNb"]) => (state.selectedFluxNb = selectedFluxNb),
+  SELECTED_VOIE: (state, selectedVoie: DashboardState["selectedVoie"]) => (state.selectedVoie = selectedVoie),
 }
 
 export const actions: ActionTree<DashboardState, DashboardState> = {

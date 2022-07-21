@@ -7,7 +7,8 @@
       </div>
       <SidebarSelectMap v-if="dashboard.activeTab === 2" /> 
       <SidebarMapControlsSelectVoiesReservees v-if="dashboard.activeTab === 2 && dashboard.activeMap === 'voies' "/>
-      <SidebarMapControlsSelectFluxType v-if="dashboard.activeTab === 2 && dashboard.activeMap === 'flux' "/>      
+      <SidebarMapControlsSelectFluxType v-if="dashboard.activeTab === 2 && dashboard.activeMap === 'flux' "/>     
+      <SidebarMapControlBetweenFluxNb v-if="dashboard.activeTab === 2 && dashboard.activeMap === 'flux' "/>  
     </div>
   </nav>
 </template>
@@ -20,6 +21,7 @@ import SidebarSelectTerritory from './SelectTerritory.vue'
 import SidebarSelectMap from './SelectMap.vue'
 import SidebarMapControlsSelectVoiesReservees from './mapControls/SelectVoiesReservees.vue'
 import SidebarMapControlsSelectFluxType from './mapControls/SelectFluxType.vue'
+import SidebarMapControlBetweenFluxNb from './mapControls/BetweenFluxNb.vue'
 import { mapState } from 'vuex'
 import { DashboardState } from '../../../store/dashboard'
 
@@ -31,6 +33,7 @@ import { DashboardState } from '../../../store/dashboard'
     SidebarSelectMap,
     SidebarMapControlsSelectVoiesReservees,
     SidebarMapControlsSelectFluxType,
+    SidebarMapControlBetweenFluxNb,
   },
   computed:{
     ...mapState({

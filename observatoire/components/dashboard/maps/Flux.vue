@@ -40,7 +40,6 @@ export default class Flux extends mixins(MapMixin){
   data:Array<FluxData> = []
   filteredData:Array<FluxData>=[]
   analyse:Array<MapAnalyseInterface> = []
-  slider:Array<number>=[]
   legendTitle="Flux de covoiturage (source transport.data.gouv.fr)"
 
   @Watch('dashboard.period', { deep: true })
@@ -73,9 +72,13 @@ export default class Flux extends mixins(MapMixin){
   }  
  
 
-  @Watch('slider')
+  @Watch('dashboard.selectedFluxNb')
   onSliderChanged() {
-    this.filterData('passengers')
+    if(this.map){
+      this.filterData('passengers')
+    } else {
+      this.filteredData = this.data
+    }
   }
 
   public async mounted() {
@@ -88,12 +91,13 @@ export default class Flux extends mixins(MapMixin){
   public async getData(){
     const response = await this.$axios.get(`/passengers_monthly_flux?code=${this.dashboard.territory.territory}&t=${this.dashboard.selectedFluxType}&t2=${this.dashboard.territory.type}&year=${this.dashboard.period.year}&month=${this.dashboard.period.month}`)
     this.data = response.data
-    //this.slider = this.defaultSlider('passengers')
+    this.$store.commit('dashboard/MAX_FLUX_NB', this.defaultSlider('passengers')[1])
+    this.$store.commit('dashboard/SELECTED_FLUX_NB', this.defaultSlider('passengers'))
   }
 
   public filterData(field:string){
     if(this.data){
-      this.filteredData = this.data.filter(d => d[field] >= this.slider[0] && d[field] <= this.slider[1])
+      this.filteredData = this.data.filter(d => d[field] >= this.dashboard.selectedFluxNb[0] && d[field] <= this.dashboard.selectedFluxNb[1])
     }
     this.deck.setProps({layers:[this.addArcLayer()]})
   }
@@ -118,7 +122,7 @@ export default class Flux extends mixins(MapMixin){
   public addArcLayer(){
     return new ArcLayer({
       id: 'flux-layer',
-      data:this.data,
+      data:this.filteredData,
       opacity:0.3,
       pickable: true,
       getWidth: (d:any) => this.classWidth( d.passengers,this.analyse)!,
@@ -157,7 +161,7 @@ export default class Flux extends mixins(MapMixin){
   }
 
   public jenksAnalyse(){
-   if(this.type !== 'country' ){ 
+   if(this.dashboard.selectedFluxType !== 'country' ){ 
     this.analyse = this.jenks(this.data!,'passengers',['#000091','#000091','#000091','#000091','#000091','#000091'],[1,3,6,12,24,48])
    } else {
      this.analyse = this.jenks(this.data!,'passengers',['#000091','#000091','#000091'],[3,12,48])

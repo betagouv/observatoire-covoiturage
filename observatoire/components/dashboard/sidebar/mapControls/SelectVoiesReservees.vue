@@ -72,7 +72,7 @@ export default class SelectVoiesReservees extends Vue{
   @Watch('selectedVoie')
   onVoieChanged() {
     if(this.selectedVoie){
-      this.$store.commit('dashboard/SELECTEDVOIE', this.selectedVoie.properties.name)
+      this.$store.commit('dashboard/SELECTED_VOIE', this.selectedVoie.properties.name)
     }
   }
   

@@ -43,7 +43,7 @@ export default class SelectFluxType extends Vue{
   @Watch('selectedFluxType')
   onFluxTypeChanged() {
     if(this.selectedFluxType){
-      this.$store.commit('dashboard/SELECTEDFLUXTYPE', this.selectedFluxType)
+      this.$store.commit('dashboard/SELECTED_FLUX_TYPE', this.selectedFluxType)
     }
   }
   
