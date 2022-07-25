@@ -47,6 +47,7 @@ export default class Densite extends mixins(MapMixin){
 
   @Watch('dashboard.period', { deep: true })
   async onPeriodChanged() {
+    await this.changeDensitePeriod()
     await this.getData()
     const bounds = this.getBbox()
     this.map.fitBounds(bounds, {padding: 50})
@@ -146,6 +147,15 @@ export default class Densite extends mixins(MapMixin){
     const hexagons = this.data.map(d => {return d.hex})
     const polygon = h3SetToMultiPolygon(hexagons, true)
     return bbox(turf.multiPolygon(polygon))
+  }
+
+  public async changeDensitePeriod(){
+    
+    const period = { 
+      start: new Date(Number(this.dashboard.period.year),Number(this.dashboard.period.month)-1,1),
+      end: new Date(Number(this.dashboard.period.year),Number(this.dashboard.period.month),0)
+    }
+    this.$store.commit('dashboard/DENSITE_PERIOD',period)
   }
 }
 </script>
