@@ -10,7 +10,6 @@ categories:
   - veille
 themes: 
   - tendances
-  - étude
 img: https://images.unsplash.com/photo-1530685932526-48ec92998eaa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80
 link: https://www.statistiques.developpement-durable.gouv.fr/se-deplacer-en-voiture-seul-plusieurs-ou-en-covoiturage-0?rubrique=60&dossier=1345
 ---

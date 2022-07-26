@@ -3,7 +3,7 @@ title: "Replay webinaire : découvrir le Forfait mobilités durables, les attest
 date: 2022-07-20T15:45:01.489Z
 description: "Déplacements domicile-travail : le Forfait Mobilités Durables, qu'est ce que c'est ? Comment ça marche ? Quels justificatifs fournir pour en bénéficier ? Quelles est la progression de ce dispositif de soutien au salariés / agents qui se déplacent via des mode de mobilités doux et vertueux ? Décryptage en vidéo à l'occasion du webinaire du 12 juillet dernier organisé par les équipe du Registre de preuve de covoiturage."
 categories: 
-  - Etudes
+  - veille
 themes: 
   - entreprises
   - actualite-reglementaire

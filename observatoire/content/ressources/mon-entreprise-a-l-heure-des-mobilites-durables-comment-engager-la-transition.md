@@ -8,7 +8,7 @@ themes:
   - action-publique
 img: https://drive.google.com/file/d/1dFjYnqAwH4Q_XbvMUMlUB27Sml07Z1LK/view?usp=sharing
 files:
-  - name: "Mon entrepriseà l'heure des mobilités durables : Comment engager la transition ? Obligations et dispositifs de soutien dans le secteur privé"
+  - name: "Mon entreprise à l'heure des mobilités durables : Comment engager la transition ? Obligations et dispositifs de soutien dans le secteur privé"
     file: https://www.ecologie.gouv.fr/sites/default/files/mobilite%20durable%20en%20entreprise.pdf
     author: Ministère de la transition écologique et de la cohésion des territoires
     publication_date: 2022-06-01T12:46:31.676Z
