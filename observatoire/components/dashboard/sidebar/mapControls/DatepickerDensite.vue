@@ -1,7 +1,27 @@
 <template>
   <div>
-    <div class="fr-sidemenu__title">Nombre de passagers par flux:</div>
-    <Slider :value.sync="selectedFluxNb" :sliderOptions="{'min':0,'max':dashboard.maxFluxNb,'step':1}"/>
+    <div class="fr-sidemenu__title">Affiner la période:</div>
+    <o-field>
+    <o-field label="Début" custom-class="is-small">
+      <o-datepicker 
+        label-position="on-border"
+        v-model=selectedPeriod.start
+        :min-date=minDate 
+        :max-date=maxDate
+        icon="calendar-today"
+        trap-focus
+      />
+    </o-field>
+    <o-field label="Fin" custom-class="is-small">
+      <o-datepicker 
+        v-model=selectedPeriod.end
+        :min-date=minDate
+        :max-date=maxDate
+        icon="calendar-today"
+        trap-focus
+      />
+    </o-field>
+  </o-field>
   </div>
 </template>
 
@@ -9,10 +29,8 @@
 import { Component, Watch, Vue } from 'nuxt-property-decorator'
 import { mapState } from 'vuex'
 import { DashboardState } from '../../../../store/dashboard'
-import Slider from '../../maps/helpers/slider.vue'
 
 @Component({
-  components:{Slider},
   computed:{
     ...mapState({
       dashboard: 'dashboard',
@@ -21,14 +39,16 @@ import Slider from '../../maps/helpers/slider.vue'
 })
 export default class DatepickerDensite extends Vue{
   dashboard!: DashboardState
+  minDate = new Date('01/01/2020')
+  maxDate = new Date()
+  get selectedPeriod(){
+    return {...this.dashboard.densitePeriod}
+  }
   
-  get period(){
-    return this.dashboard.densitePeriod
+  @Watch('selectedPeriod',{deep:true})
+  onselectedPeriodChanged() {
+    this.$store.commit('dashboard/DENSITE_PERIOD',this.selectedPeriod)
   }
-  set selectedFluxNb(value){
-    this.$store.commit('dashboard/SELECTED_FLUX_NB',value)
-  }
- 
   
 }
 </script>

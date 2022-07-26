@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Watch, Vue } from 'nuxt-property-decorator'
+import { Component, Vue } from 'nuxt-property-decorator'
 import { mapState } from 'vuex'
 import { DashboardState } from '../../../../store/dashboard'
 import Slider from '../../maps/helpers/slider.vue'
