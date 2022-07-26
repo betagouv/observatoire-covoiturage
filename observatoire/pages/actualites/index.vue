@@ -9,7 +9,7 @@
           <ContentList title="Actualités" :contents="actualites" :taxonomies="taxonomies" />
         </div>
         <div class="fr-col-12">
-          <Pagination :lastPage="lastPage" />
+          <Pagination type="actualites" :lastPage="lastPage" />
         </div>
       </div>
     </div>

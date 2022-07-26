@@ -5,10 +5,10 @@ description: "Déplacements domicile-travail : le Forfait Mobilités Durables, q
 categories: 
   - veille
 themes: 
-  - entreprises
+  - entreprise
   - actualite-reglementaire
   - intermodalite
-img: https://drive.google.com/drive/folders/1gmQoSgje8NYd2plVlgNqNw58Cz1dqdnI
+img:  https://drive.google.com/uc?id=1zkNY7ceQC0hiCvuqgGI8EU8p8kD_TnQS
 link: https://drive.google.com/file/d/1G1F77smzSQ39KFlW4XFXGFqWtdeICN80/view
 ---
 
