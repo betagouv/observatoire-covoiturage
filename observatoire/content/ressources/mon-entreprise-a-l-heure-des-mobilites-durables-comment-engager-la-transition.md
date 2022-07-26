@@ -6,7 +6,7 @@ categories:
   - etudes
 themes:
   - action-publique
-img: https://drive.google.com/drive/folders/1gRPYZMwh8HIWvr1YC451B7BMYSIBecoh
+img: https://drive.google.com/file/d/1dFjYnqAwH4Q_XbvMUMlUB27Sml07Z1LK/view?usp=sharing
 files:
   - name: "Mon entrepriseà l'heure des mobilités durables : Comment engager la transition ? Obligations et dispositifs de soutien dans le secteur privé"
     file: https://www.ecologie.gouv.fr/sites/default/files/mobilite%20durable%20en%20entreprise.pdf

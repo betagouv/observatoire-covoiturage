@@ -76,6 +76,6 @@ img: https://images.unsplash.com/photo-1504711434969-e33886168f5c?ixlib=rb-1.2.1
   [Lire l'article de Ouest France en intégralité](https://www.ouest-france.fr/pays-de-la-loire/chemille-en-anjou-49120/la-municipalite-souhaite-favoriser-le-covoiturage-430ce3c0-2c47-40be-ab3e-22dff196f75c)
 
 
-## 📅 Agenda du mois de mars 
+## 📅 Agenda du mois de mai 
 - Sessions rituelles de démonstration du **Registre de preuve de covoiturage**. Un lundi sur deux de 14h à 14h45. 
   [Lien d’inscription](https://app.livestorm.co/dinum-12/demo-hedbo-du-rpc?type=detailed)

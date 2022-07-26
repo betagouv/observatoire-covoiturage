@@ -90,7 +90,7 @@ img: https://images.unsplash.com/photo-1504711434969-e33886168f5c?ixlib=rb-1.2.1
   
   [Lire l'article en intégralité](https://www.lexpress.fr/actualite/a-saint-andre-de-sangonis-le-covoiturage-spontane-pour-lutter-contre-les-bouchons_2175517.html)
 
-## 📅 Agenda du mois de mars 
+## 📅 Agenda du mois de juin 
 - Sessions rituelles de démonstration du **Registre de preuve de covoiturage**. Un lundi sur deux de 14h à 14h45. 
   [Lien d’inscription](https://app.livestorm.co/dinum-12/demo-hedbo-du-rpc?type=detailed)
 
