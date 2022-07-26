@@ -14,8 +14,7 @@ files:
     publication_date: 2022-06-01T12:46:31.676Z
 ---
 
-
-## Mon entreprise à l'heure des mobilités durables : Comment engager la transition ? Obligations et dispositifs de soutien dans le secteur privé
+### Mon entreprise à l'heure des mobilités durables : Comment engager la transition ? Obligations et dispositifs de soutien dans le secteur privé
 
 La loi d’orientation des mobilités (LOM), adoptée en décembre 2019, transforme en profondeur les mobilités. Objectifs : faciliter les transports du quotidien, les
 rendre moins coûteux et plus propres. 
