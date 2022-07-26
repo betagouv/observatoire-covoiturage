@@ -152,7 +152,7 @@ export default class Densite extends mixins(MapMixin){
   public async changeDensitePeriod(){
     
     const period = { 
-      start: new Date(Number(this.dashboard.period.year),Number(this.dashboard.period.month)-1,1),
+      start: new Date(Number(this.dashboard.period.year),Number(this.dashboard.period.month)-1,2),
       end: new Date(Number(this.dashboard.period.year),Number(this.dashboard.period.month),0)
     }
     this.$store.commit('dashboard/DENSITE_PERIOD',period)
