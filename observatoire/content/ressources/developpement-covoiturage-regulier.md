@@ -7,7 +7,7 @@ categories:
   - etudes
 themes:
   - action-publique
-img: https://www.promobilite.fr/sites/default/files/developpement_covoit_regulier_photo.jpg
+img: https://upload.wikimedia.org/wikipedia/fr/thumb/6/67/Logo_ADEME.svg/1200px-Logo_ADEME.svg.png
 alt: Développement du covoiturage régulier
 files:
   - name: "Développement du covoiturage régulier"
