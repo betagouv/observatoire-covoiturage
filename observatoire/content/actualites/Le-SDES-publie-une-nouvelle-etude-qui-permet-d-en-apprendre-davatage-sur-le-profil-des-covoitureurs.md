@@ -1,5 +1,5 @@
 ---
-title: "Le SDES publie une nouvelle étude qui permet d'en apprendre d'avatage sur le profil des covoitureurs "
+title: "Le SDES publie une nouvelle étude qui permet d'en apprendre d'avantage sur le profil des covoitureurs "
 date: 2022-07-26T15:45:01.489Z
 description: "Après plusieurs décennies de baisse, le taux d’occupation des voitures en France se stabilise entre 2008 et 2019. 
 Il augmente même légèrement (+ 1,2 %) sur longue distance. En 2019, 59 % des déplacements en voiture sont effectués à plusieurs. 
