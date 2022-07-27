@@ -40,7 +40,6 @@ export default class Densite extends mixins(MapMixin){
   data:Array<DensiteData> = []
   filteredData:Array<DensiteData>=[]
   analyse:Array<MapAnalyseInterface> = []
-  zoom=8
   slider:Array<number>=[]
   type='com'
   legendTitle="Flux de covoiturage (source transport.data.gouv.fr)"
@@ -52,16 +51,22 @@ export default class Densite extends mixins(MapMixin){
     this.updateLayer()
   }
 
-  /*@Watch('dashboard.densitePeriod', { deep: true })
+  @Watch('dashboard.densitePeriod', { deep: true })
   async ondensitePeriodChanged() {
     await this.getData()
     this.updateLayer()
-  }*/
+  }
 
   @Watch('dashboard.territory', { deep: true })
   async onTerritoryChanged() {
     await this.getData()
     this.updateLayer()
+  }
+
+   @Watch('dashboard.densiteZoom', { deep: true })
+  async onZoomChanged() {
+    await this.getData()
+    this.deck.setProps({layers:[this.addHexLayer()]})
   }
 
   @Watch('data', { deep: true })
@@ -83,7 +88,7 @@ export default class Densite extends mixins(MapMixin){
   }
 
   public async getData(){
-    const response = await this.$axios.get(`/location?code=${this.dashboard.territory.territory}&t=${this.dashboard.territory.type}&date_1=${this.dashboard.densitePeriod.start.toISOString().slice(0, 10)}&date_2=${this.dashboard.densitePeriod.end.toISOString().slice(0, 10)}&zoom=${this.zoom}`)
+    const response = await this.$axios.get(`/location?code=${this.dashboard.territory.territory}&t=${this.dashboard.territory.type}&date_1=${this.dashboard.densitePeriod.start.toISOString().slice(0, 10)}&date_2=${this.dashboard.densitePeriod.end.toISOString().slice(0, 10)}&zoom=${this.dashboard.densiteZoom}`)
     this.data = response.data
   }
 

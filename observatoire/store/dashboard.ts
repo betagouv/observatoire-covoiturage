@@ -1,4 +1,4 @@
-import { GetterTree, MutationTree, ActionTree } from 'vuex'
+import { MutationTree, ActionTree } from 'vuex'
 
 export const state = () => ({
   period:{
@@ -16,18 +16,15 @@ export const state = () => ({
     start:new Date,
     end:new Date,
   },
+  densiteZoom:8,
   selectedFluxType:'com',
   maxFluxNb:0,
   selectedFluxNb: [0,0],
+  selectedOccupationType:'com',
   selectedVoie:'',
 })
 
 export type DashboardState = ReturnType<typeof state>
-
-// getters
-export const getters: GetterTree<DashboardState, DashboardState> = {
-  getDensitePeriod: (state: DashboardState) => {state.densitePeriod},
-}
 
 export const mutations: MutationTree<DashboardState> = {
   YEAR: (state, year: string) => (state.period.year = year),
@@ -36,10 +33,13 @@ export const mutations: MutationTree<DashboardState> = {
   TERRITORY: (state, territory: DashboardState["territory"]) => (state.territory = territory),
   ACTIVETAB: (state, activeTab: DashboardState["activeTab"]) => (state.activeTab = activeTab),
   ACTIVEMAP: (state, activeMap: DashboardState["activeMap"]) => (state.activeMap = activeMap),
-  DENSITE_PERIOD: (state, densitePeriod: DashboardState["densitePeriod"]) => (state.densitePeriod = densitePeriod),
+  DENSITE_PERIOD_START: (state, densitePeriodStart: Date) => (state.densitePeriod.start = densitePeriodStart),
+  DENSITE_PERIOD_END: (state, densitePeriodEnd: Date) => (state.densitePeriod.end = densitePeriodEnd),
+  DENSITE_ZOOM: (state, densiteZoom: DashboardState["densiteZoom"]) => (state.densiteZoom = densiteZoom),
   SELECTED_FLUX_TYPE: (state, selectedFluxType: DashboardState["selectedFluxType"]) => (state.selectedFluxType = selectedFluxType),
   MAX_FLUX_NB: (state, maxFluxNb: DashboardState["maxFluxNb"]) => (state.maxFluxNb = maxFluxNb),
   SELECTED_FLUX_NB: (state, selectedFluxNb: DashboardState["selectedFluxNb"]) => (state.selectedFluxNb = selectedFluxNb),
+  SELECTED_OCCUPATION_TYPE: (state, selectedOccupationType: DashboardState["selectedOccupationType"]) => (state.selectedOccupationType = selectedOccupationType),
   SELECTED_VOIE: (state, selectedVoie: DashboardState["selectedVoie"]) => (state.selectedVoie = selectedVoie),
 }
 
@@ -54,6 +54,7 @@ export const actions: ActionTree<DashboardState, DashboardState> = {
       start: new Date(new Date(response.data.date).getFullYear(),new Date(response.data.date).getMonth() - 1,1),
       end: new Date(new Date(response.data.date).getFullYear(),new Date(response.data.date).getMonth(),0)
     }
-    commit('DENSITE_PERIOD',period)
+    commit('DENSITE_PERIOD_START',period.start)
+    commit('DENSITE_PERIOD_END',period.end)
   }
 }

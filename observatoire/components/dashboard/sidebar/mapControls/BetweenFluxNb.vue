@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div class="fr-sidemenu__title">Nombre de passagers par flux:</div>
+    <label class="fr-sidemenu__title">
+      Nombre de passagers par flux:
+    </label>
     <Slider :value.sync="selectedFluxNb" :sliderOptions="{'min':0,'max':dashboard.maxFluxNb,'step':1}"/>
   </div>
 </template>

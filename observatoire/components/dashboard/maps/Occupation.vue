@@ -36,7 +36,6 @@ import { DashboardState } from '../../../store/dashboard'
 })
 export default class Occupation extends mixins(MapMixin){
   dashboard!: DashboardState
-  type='com'
   map:any = null
   data:Array<OccupData> = []
   categories=[
@@ -78,7 +77,7 @@ export default class Occupation extends mixins(MapMixin){
   }
 
   get legendTitleJourneys(){
-    return "Nombre de véhicules partagés par "+this.$store.state.helpers.territories.find(t => t.type === this.type).name.toLowerCase() 
+    return "Nombre de véhicules partagés par "+this.$store.state.helpers.territories.find(t => t.type === this.dashboard.selectedOccupationType).name.toLowerCase() 
   }
 
   @Watch('dashboard.period', { deep: true })
@@ -91,6 +90,12 @@ export default class Occupation extends mixins(MapMixin){
     await this.refreshMap()
   }
 
+  @Watch('dashboard.selectedOccupationType')
+  async onFluxTypeChanged() {
+    await this.getData()
+    await this.refreshMap()
+  }  
+
   public async mounted() {
     await this.getData()
     await this.createMap('map')
@@ -98,7 +103,7 @@ export default class Occupation extends mixins(MapMixin){
   }
 
   public async getData(){
-    const response = await this.$axios.get(`/journeys_monthly_occupation?code=${this.dashboard.territory.territory}&t=${this.type}&t2=${this.dashboard.territory.type}&year=${this.dashboard.period.year}&month=${this.dashboard.period.month}`)
+    const response = await this.$axios.get(`/journeys_monthly_occupation?code=${this.dashboard.territory.territory}&t=${this.dashboard.selectedOccupationType}&t2=${this.dashboard.territory.type}&year=${this.dashboard.period.year}&month=${this.dashboard.period.month}`)
     this.data = response.data
   }
 

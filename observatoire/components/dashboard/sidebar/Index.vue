@@ -9,7 +9,9 @@
       <SidebarMapControlsSelectVoiesReservees v-if="dashboard.activeTab === 2 && dashboard.activeMap === 'voies' "/>
       <SidebarMapControlsSelectFluxType v-if="dashboard.activeTab === 2 && dashboard.activeMap === 'flux' "/>     
       <SidebarMapControlBetweenFluxNb v-if="dashboard.activeTab === 2 && dashboard.activeMap === 'flux' "/>
-      <SidebarMapControlDatepickerDensite v-if="dashboard.activeTab === 2 && dashboard.activeMap === 'densite' "/>   
+      <SidebarMapControlDatepickerDensite v-if="dashboard.activeTab === 2 && dashboard.activeMap === 'densite' "/>
+      <SidebarMapControlZoomDensite v-if="dashboard.activeTab === 2 && dashboard.activeMap === 'densite' "/> 
+      <SidebarMapControlsSelectOccupationType v-if="dashboard.activeTab === 2 && dashboard.activeMap === 'occupation' "/>  
     </div>
   </nav>
 </template>
@@ -24,6 +26,8 @@ import SidebarMapControlsSelectVoiesReservees from './mapControls/SelectVoiesRes
 import SidebarMapControlsSelectFluxType from './mapControls/SelectFluxType.vue'
 import SidebarMapControlBetweenFluxNb from './mapControls/BetweenFluxNb.vue'
 import SidebarMapControlDatepickerDensite from './mapControls/DatepickerDensite.vue'
+import SidebarMapControlZoomDensite from './mapControls/ZoomDensite.vue'
+import SidebarMapControlsSelectOccupationType from './mapControls/SelectOccupationType.vue'
 import { mapState } from 'vuex'
 import { DashboardState } from '../../../store/dashboard'
 
@@ -37,6 +41,8 @@ import { DashboardState } from '../../../store/dashboard'
     SidebarMapControlsSelectFluxType,
     SidebarMapControlBetweenFluxNb,
     SidebarMapControlDatepickerDensite,
+    SidebarMapControlZoomDensite,
+    SidebarMapControlsSelectOccupationType,
   },
   computed:{
     ...mapState({
