@@ -49,17 +49,19 @@ export default class Densite extends mixins(MapMixin){
   async onPeriodChanged() {
     await this.changeDensitePeriod()
     await this.getData()
-    const bounds = this.getBbox()
-    this.map.fitBounds(bounds, {padding: 50})
-    this.deck.setProps({layers:[this.addHexLayer()]})
+    this.updateLayer()
   }
+
+  /*@Watch('dashboard.densitePeriod', { deep: true })
+  async ondensitePeriodChanged() {
+    await this.getData()
+    this.updateLayer()
+  }*/
 
   @Watch('dashboard.territory', { deep: true })
   async onTerritoryChanged() {
     await this.getData()
-    const bounds = this.getBbox()
-    this.map.fitBounds(bounds, {padding: 50})
-    this.deck.setProps({layers:[this.addHexLayer()]})
+    this.updateLayer()
   }
 
   @Watch('data', { deep: true })
@@ -147,6 +149,13 @@ export default class Densite extends mixins(MapMixin){
     const hexagons = this.data.map(d => {return d.hex})
     const polygon = h3SetToMultiPolygon(hexagons, true)
     return bbox(turf.multiPolygon(polygon))
+  }
+
+  public updateLayer(){
+    if(this.map && this.deck){
+      this.map.fitBounds(this.getBbox(), {padding: 50})
+      this.deck.setProps({layers:[this.addHexLayer()]})
+    }
   }
 
   public async changeDensitePeriod(){

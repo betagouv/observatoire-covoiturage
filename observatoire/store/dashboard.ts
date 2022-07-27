@@ -1,4 +1,4 @@
-import { MutationTree, ActionTree } from 'vuex'
+import { GetterTree, MutationTree, ActionTree } from 'vuex'
 
 export const state = () => ({
   period:{
@@ -23,6 +23,11 @@ export const state = () => ({
 })
 
 export type DashboardState = ReturnType<typeof state>
+
+// getters
+export const getters: GetterTree<DashboardState, DashboardState> = {
+  getDensitePeriod: (state: DashboardState) => {state.densitePeriod},
+}
 
 export const mutations: MutationTree<DashboardState> = {
   YEAR: (state, year: string) => (state.period.year = year),
