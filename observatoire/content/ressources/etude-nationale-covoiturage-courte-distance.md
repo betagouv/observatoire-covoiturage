@@ -8,11 +8,11 @@ categories:
 themes:
   - action-publique
   - tendances
-img: https://librairie.ademe.fr/345916-thickbox_default/etude-nationale-sur-le-covoiturage-de-courte-distance.jpg
+img: https://upload.wikimedia.org/wikipedia/fr/thumb/6/67/Logo_ADEME.svg/1200px-Logo_ADEME.svg.png
 alt: "Etude nationale sur le covoiturage de courte distance"
 files:
   - name: "Etude nationale sur le covoiturage de courte distance"
-    file: https://www.ademe.fr/sites/default/files/assets/documents/etude_nationale_covoiturage_courte_distance-leviers_action_et_benchmark.pdf
+    file: https://librairie.ademe.fr/mobilite-et-transport/2712-etude-nationale-sur-le-covoiturage-de-courte-distance.html
     author: ADEME
     publication_date: 2021-09-07T12:46:31.676Z
 ---
