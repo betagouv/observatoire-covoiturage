@@ -4,7 +4,7 @@
       Flux entre :
     </label>
     <select v-model="selectedFluxType" class="fr-select">
-      <option v-for="fluxType in fluxTypeList" :value="fluxType.type" :key="fluxType">
+      <option v-for="fluxType in fluxTypeList" :value="fluxType.type" :key="fluxType.type">
         {{fluxType.name}}
       </option>
     </select>

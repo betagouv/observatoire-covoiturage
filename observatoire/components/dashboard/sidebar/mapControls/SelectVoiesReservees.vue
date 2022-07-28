@@ -4,7 +4,7 @@
       Selectionner une voie :
     </label>
     <select v-model="selectedVoie" class="fr-select">
-      <option v-for="voie in data.features" :value="voie" :key="voie">
+      <option v-for="voie in data.features" :value="voie" :key="voie.properties.name">
         {{voie.properties.name}}
       </option>
     </select>

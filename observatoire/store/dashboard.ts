@@ -22,6 +22,16 @@ export const state = () => ({
   selectedFluxNb: [0,0],
   selectedOccupationType:'com',
   selectedVoie:'',
+  airesActiveSwitch:[
+    {name:'Supermarché', active:true},
+    {name:'Parking', active:true},
+    {name:'Aire de covoiturage', active:true},
+    {name:'Délaissé routier', active:true},
+    {name:'Auto-stop', active:true},
+    {name:'Parking relais', active:true},
+    {name:'Sortie d\'autoroute', active:true},
+    {name:'Autres',active:true}
+  ]
 })
 
 export type DashboardState = ReturnType<typeof state>
