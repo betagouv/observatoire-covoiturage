@@ -31,22 +31,22 @@ export default class Aires extends mixins(MapMixin){
   map:any = null
   data:Array<AiresData> = []
   categories= [
-    {color:[102, 194, 165],val:'Supermarché',width:10,active:true},
-    {color:[252, 141, 98],val:'Parking',width:10,active:true},
-    {color:[141, 160, 203],val:'Aire de covoiturage',width:10,active:true},
-    {color:[231, 138, 195],val:'Délaissé routier',width:10,active:true},
-    {color:[166, 216, 84],val:'Auto-stop',width:10,active:true},
-    {color:[255, 217, 47],val:'Parking relais',width:10,active:true},
-    {color:[229, 196, 148],val:'Sortie d\'autoroute',width:10,active:true},
-    {color:[179, 179, 179],val:'Autres',width:10,active:true}
+    {color:[102, 194, 165],val:'Supermarché',width:10},
+    {color:[252, 141, 98],val:'Parking',width:10},
+    {color:[141, 160, 203],val:'Aire de covoiturage',width:10},
+    {color:[231, 138, 195],val:'Délaissé routier',width:10},
+    {color:[166, 216, 84],val:'Auto-stop',width:10},
+    {color:[255, 217, 47],val:'Parking relais',width:10},
+    {color:[229, 196, 148],val:'Sortie d\'autoroute',width:10},
+    {color:[179, 179, 179],val:'Autres',width:10}
   ]
   legendTitle="Aires de covoiturage (source transport.data.gouv.fr)"
 
   get filteredAires(){
     if(this.data){
-      return turf.featureCollection(this.data.filter(a => this.categories.filter(c => c.active === true).map(c=>c.val).includes(a.type)).map(d => turf.feature(d.geom,{
+      return turf.featureCollection(this.data.filter(a => this.dashboard.airesSwitch.filter(c => c.active === true).map(c=>c.name).includes(a.type)).map(d => turf.feature(d.geom,{
         id_lieu:d.id_lieu,
-        ad_lieu:d.ad_lieu,
+        nom_lieu:d.nom_lieu,
         com_lieu:d.com_lieu,
         type:d.type,
         date_maj: d.date_maj,
@@ -71,10 +71,18 @@ export default class Aires extends mixins(MapMixin){
     this.map.fitBounds(bounds, {padding: 50})
   }
 
+  @Watch('dashboard.airesSwitch', { deep: true })
+  async onSwitchChanged() {
+    await this.getData()
+    this.map.getSource('airesSource').setData(this.filteredAires)
+    const bounds = bbox(this.filteredAires)
+    this.map.fitBounds(bounds, {padding: 50})
+  }
+
   public async mounted() {
     await this.getData()
     await this.createMap('map')
-    await this.addLayers()
+    this.addLayers()
   }
 
   public async getData(){
@@ -135,7 +143,7 @@ export default class Aires extends mixins(MapMixin){
           let description = `
           <div class="fr-popup">
             <p><b>id :</b>${features[0].properties.id_lieu}</p>
-            <p><b>nom :</b>${features[0].properties.ad_lieu}</p>
+            <p><b>nom :</b>${features[0].properties.nom_lieu}</p>
             <p><b>commune :</b>${features[0].properties.com_lieu}</p>
             <p><b>type :</b>${features[0].properties.type}</p>
             <p><b>date_maj :</b>${new Date(features[0].properties.date_maj).toLocaleDateString('fr-FR')}</p>

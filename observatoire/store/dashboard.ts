@@ -22,7 +22,7 @@ export const state = () => ({
   selectedFluxNb: [0,0],
   selectedOccupationType:'com',
   selectedVoie:'',
-  airesActiveSwitch:[
+  airesSwitch:[
     {name:'Supermarché', active:true},
     {name:'Parking', active:true},
     {name:'Aire de covoiturage', active:true},
@@ -30,7 +30,7 @@ export const state = () => ({
     {name:'Auto-stop', active:true},
     {name:'Parking relais', active:true},
     {name:'Sortie d\'autoroute', active:true},
-    {name:'Autres',active:true}
+    {name:'Autres',active:true},
   ]
 })
 
@@ -51,6 +51,7 @@ export const mutations: MutationTree<DashboardState> = {
   SELECTED_FLUX_NB: (state, selectedFluxNb: DashboardState["selectedFluxNb"]) => (state.selectedFluxNb = selectedFluxNb),
   SELECTED_OCCUPATION_TYPE: (state, selectedOccupationType: DashboardState["selectedOccupationType"]) => (state.selectedOccupationType = selectedOccupationType),
   SELECTED_VOIE: (state, selectedVoie: DashboardState["selectedVoie"]) => (state.selectedVoie = selectedVoie),
+  AIRES_SWITCH:(state, aireSwitch: DashboardState["airesSwitch"][0]) => (state.airesSwitch = [...state.airesSwitch.map(item => item.name !== aireSwitch.name ? item : {...item, ...aireSwitch})])
 }
 
 export const actions: ActionTree<DashboardState, DashboardState> = {
@@ -66,5 +67,5 @@ export const actions: ActionTree<DashboardState, DashboardState> = {
     }
     commit('DENSITE_PERIOD_START',period.start)
     commit('DENSITE_PERIOD_END',period.end)
-  }
+  },
 }

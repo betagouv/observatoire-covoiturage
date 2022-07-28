@@ -16,7 +16,7 @@ export interface MapAnalyseInterface {
 
 export interface AiresData {
   id_lieu:string,
-  ad_lieu:string,
+  nom_lieu:string,
   com_lieu:string,
   type:string,
   date_maj: string,

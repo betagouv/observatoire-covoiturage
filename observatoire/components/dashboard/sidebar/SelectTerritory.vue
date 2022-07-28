@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Watch,  Vue } from 'nuxt-property-decorator'
+import { Component, Vue } from 'nuxt-property-decorator'
 import { mapState } from 'vuex'
 import { DashboardState } from '../../../store/dashboard'
 import { TerritoryInterface } from '../../interfaces/sidebar'
@@ -49,24 +49,24 @@ export default class SelectTerritory extends Vue{
   edit = false
   dashboard!: DashboardState
   territories:Array<TerritoryInterface>=[]
-  selectedTerritory:TerritoryInterface | null = null
   searchfield =''
 
   get filteredTerritories() {
     return this.territories.filter((option) => {
       return (option.l_territory.toLowerCase().indexOf(this.searchfield.toLowerCase()) >= 0 
       || option.territory.indexOf(this.searchfield.toLowerCase()) >= 0)
-    }).slice(0, 20)
+    }).slice(0,100)
   }
 
-  @Watch('selectedTerritory')
-  onTerritoryChanged() {
-    if(this.selectedTerritory){
-      this.$store.commit('dashboard/TERRITORY', this.selectedTerritory)
-      this.edit = false
-    }
+  get selectedTerritory(){
+    return this.dashboard.territory
   }
 
+  set selectedTerritory(value){
+    this.$store.commit('dashboard/TERRITORY', value)
+    this.edit = false
+  }
+  
   public async mounted() {
     await this.getTerritories()
   }
@@ -80,12 +80,12 @@ export default class SelectTerritory extends Vue{
     this.edit = true
   }
   public resetFr(){
-    this.selectedTerritory = {
+    const territory = {
       l_territory:"France",
       territory:"XXXXX",
       type:"country"
     }
-    this.$store.commit('dashboard/TERRITORY', this.selectedTerritory)
+    this.$store.commit('dashboard/TERRITORY', territory)
   }
 }
 </script>
