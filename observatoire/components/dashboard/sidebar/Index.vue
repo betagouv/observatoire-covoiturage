@@ -11,6 +11,7 @@
       <SidebarMapControlBetweenFluxNb v-if="dashboard.activeTab === 2 && dashboard.activeMap === 'flux' "/>
       <SidebarMapControlDatepickerDensite v-if="dashboard.activeTab === 2 && dashboard.activeMap === 'densite' "/>
       <SidebarMapControlZoomDensite v-if="dashboard.activeTab === 2 && dashboard.activeMap === 'densite' "/> 
+      <SidebarMapControlLayersDensite v-if="dashboard.activeTab === 2 && dashboard.activeMap === 'densite' "/> 
       <SidebarMapControlsSelectOccupationType v-if="dashboard.activeTab === 2 && dashboard.activeMap === 'occupation' "/>
       <SidebarMapControlsAiresSwitch v-if="dashboard.activeTab === 2 && dashboard.activeMap === 'aires' "/>    
     </div>
@@ -28,6 +29,7 @@ import SidebarMapControlsSelectFluxType from './mapControls/SelectFluxType.vue'
 import SidebarMapControlBetweenFluxNb from './mapControls/BetweenFluxNb.vue'
 import SidebarMapControlDatepickerDensite from './mapControls/DatepickerDensite.vue'
 import SidebarMapControlZoomDensite from './mapControls/ZoomDensite.vue'
+import SidebarMapControlLayersDensite from './mapControls/LayersDensite.vue'
 import SidebarMapControlsSelectOccupationType from './mapControls/SelectOccupationType.vue'
 import SidebarMapControlsAiresSwitch from './mapControls/AiresSwitch.vue'
 import { mapState } from 'vuex'
@@ -44,6 +46,7 @@ import { DashboardState } from '../../../store/dashboard'
     SidebarMapControlBetweenFluxNb,
     SidebarMapControlDatepickerDensite,
     SidebarMapControlZoomDensite,
+    SidebarMapControlLayersDensite,
     SidebarMapControlsSelectOccupationType,
     SidebarMapControlsAiresSwitch,
   },
