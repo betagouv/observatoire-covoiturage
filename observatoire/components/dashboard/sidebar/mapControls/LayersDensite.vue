@@ -3,9 +3,11 @@
     <label class="fr-sidemenu__title">
       Couche supplémentaire :
     </label>
-    <o-switch size="is-small" v-model="aires">
-      Aires de covoiturage
-    </o-switch>
+    <o-field>
+      <o-switch size="is-small" v-model="aires">
+        Aires de covoiturage
+      </o-switch>
+    </o-field>
   </div>
 </template>
 
@@ -29,7 +31,7 @@ export default class LayersDensite extends Vue{
   }
 
   set aires(value){
-    this.$store.commit('dashboard/DENSITE_Aires',value)
+    this.$store.commit('dashboard/DENSITE_AIRES',value)
   } 
 }
 </script>

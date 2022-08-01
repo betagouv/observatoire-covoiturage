@@ -63,6 +63,10 @@ export default class Densite extends mixins(MapMixin){
       })))
   }
 
+  get visibleAireLayer(){
+    return this.dashboard.densiteAires ? 'visible' : 'none'
+  }
+
   @Watch('dashboard.period', { deep: true })
   async onPeriodChanged() {
     await this.changeDensitePeriod()
@@ -94,9 +98,10 @@ export default class Densite extends mixins(MapMixin){
     this.jenksAnalyse()
   }
 
-  @Watch('slider')
-  onSliderChanged() {
-    this.filterData('passengers')
+  @Watch('dashboard.densiteAires')
+  onLayerChanged() {
+    if(this.map)
+    this.map.setLayoutProperty('airesLayer', 'visibility', this.visibleAireLayer)
   }
 
   public async mounted() {

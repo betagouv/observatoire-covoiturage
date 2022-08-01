@@ -1,15 +1,11 @@
 <template>
   <div v-if="edit">
-    <ul class="fr-sidemenu__list">
-      <li class="fr-sidemenu__item">
-        <select v-model="month" class="fr-select" id="select-month" name="select-month">
-          <option v-for="option in helpers.monthList" :value="option.id" :key="option.id">{{option.name}}</option>
-        </select>
-        <select v-model="year" class="fr-select" id="select-year" name="select-year">
-          <option v-for="option in helpers.yearList" :value="option" :key="option">{{option}}</option>
-        </select>
-      </li>
-    </ul>
+    <select v-model="month" class="fr-select" id="select-month" name="select-month">
+      <option v-for="option in helpers.monthList" :value="option.id" :key="option.id">{{option.name}}</option>
+    </select>
+    <select v-model="year" class="fr-select" id="select-year" name="select-year">
+      <option v-for="option in helpers.yearList" :value="option" :key="option">{{option}}</option>
+    </select>
   </div>
   <div v-else>
     <h3>
