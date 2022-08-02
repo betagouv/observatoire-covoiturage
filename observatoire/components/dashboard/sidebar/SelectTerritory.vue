@@ -1,32 +1,35 @@
 <template>
-  <div v-if="edit">
-    <o-autocomplete
-      v-model="searchfield"
-      placeholder="Saisir un code INSEE ou nom du territoire"
-      :data="filteredTerritories"
-      field="l_territory"
-      @select="option => selectedTerritory = option"
-      clearable
-      open-on-focus
-      expanded
-      maxHeight="250"
-      menuClass="results"
-      override
-    >
-      <template slot-scope="props">
-        {{ props.option.l_territory }} - {{ props.option.territory }} ({{ props.option.type }})
-      </template>
-    </o-autocomplete>
+  <div class="controls" v-if="edit">
+    <o-field grouped>
+      <o-autocomplete
+        v-model="searchfield"
+        placeholder="Saisir un code INSEE ou nom du territoire"
+        :data="filteredTerritories"
+        field="l_territory"
+        @select="option => selectedTerritory = option"
+        expanded
+        open-on-focus
+        maxHeight="250"
+        menuClass="results"
+      >
+        <template slot-scope="props">
+          {{ props.option.l_territory }} - {{ props.option.territory }} ({{ props.option.type }})
+        </template>
+      </o-autocomplete>
+      <o-button @click="edit=!edit" title="Label bouton">
+        <i class="mdi mdi-close-circle-outline mdi-24px"></i>
+      </o-button>
+    </o-field>
   </div>
-  <div v-else>
+  <div class="controls" v-else>
     <h3>
       Territoire : {{dashboard.territory.l_territory}} 
-      <button @click="edition" class="fr-btn fr-icon-ball-pen-fill" title="Label bouton">
-        Label bouton
-      </button>
-      <button v-if="selectedTerritory && selectedTerritory.territory !== 'XXXXX'" @click="resetFr" class="fr-btn fr-icon-close-circle-fill" title="Label bouton">
-        Label bouton
-      </button>
+      <o-button @click="edition" class="fr-btn" title="Label bouton">
+        <i class="mdi mdi-pencil mdi-24px"></i>
+      </o-button>
+      <o-button v-if="selectedTerritory && selectedTerritory.territory !== 'XXXXX'" @click="resetFr" title="Label bouton">
+        <i class="mdi mdi-close-circle-outline mdi-24px"></i>
+      </o-button>
     </h3>
   </div>
 </template>

@@ -1,18 +1,23 @@
 <template>
-  <div v-if="edit">
-    <select v-model="month" class="fr-select" id="select-month" name="select-month">
-      <option v-for="option in helpers.monthList" :value="option.id" :key="option.id">{{option.name}}</option>
-    </select>
-    <select v-model="year" class="fr-select" id="select-year" name="select-year">
-      <option v-for="option in helpers.yearList" :value="option" :key="option">{{option}}</option>
-    </select>
+  <div class="controls" v-if="edit">
+    <o-field grouped>
+      <select v-model="month" class="fr-select" id="select-month" name="select-month">
+        <option v-for="option in helpers.monthList" :value="option.id" :key="option.id">{{option.name}}</option>
+      </select>
+      <select v-model="year" class="fr-select" id="select-year" name="select-year">
+        <option v-for="option in helpers.yearList" :value="option" :key="option">{{option}}</option>
+      </select>
+      <o-button @click="edit=!edit" title="Label bouton">
+        <i class="mdi mdi-close-circle-outline mdi-24px"></i>
+      </o-button>
+    </o-field>
   </div>
-  <div v-else>
+  <div class="controls" v-else>
     <h3>
       Période : {{monthName}} {{dashboard.period.year}} 
-      <button @click="edition" class="fr-btn fr-icon-ball-pen-fill" title="Label bouton">
-        Label bouton
-      </button>
+      <o-button @click="edition" title="Label bouton">
+        <i class="mdi mdi-pencil mdi-24px"></i>
+      </o-button>
     </h3>
   </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="controls">
     <label class="fr-sidemenu__title">
       Types d'aires de covoiturage :
     </label>
