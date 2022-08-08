@@ -11,7 +11,7 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 import { mapState } from 'vuex'
 import { DashboardState } from '../../../../store/dashboard'
-import Slider from '../../maps/helpers/slider.vue'
+import Slider from '../../helpers/slider.vue'
 
 @Component({
   components:{Slider},

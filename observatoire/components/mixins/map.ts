@@ -1,7 +1,6 @@
 import { Component, mixins } from 'nuxt-property-decorator'
 import { ckmeans } from 'simple-statistics'
 import maplibregl from 'maplibre-gl'
-import { Deck } from '@deck.gl/core'
 import BreakpointsMixin from './breakpoints'
 import { MapOptionsInterface, MapAnalyseInterface } from '../interfaces/maps'
 

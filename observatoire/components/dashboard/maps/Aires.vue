@@ -12,7 +12,7 @@ import * as turf from '@turf/helpers'
 import bbox from '@turf/bbox'
 import maplibregl from 'maplibre-gl'
 import { AiresData } from '../../interfaces/maps'
-import Legend from './helpers/legend.vue'
+import Legend from '../helpers/legend.vue'
 import { mapState } from 'vuex'
 import { DashboardState } from '../../../store/dashboard'
 

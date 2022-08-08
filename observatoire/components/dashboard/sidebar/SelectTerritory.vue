@@ -16,7 +16,7 @@
           {{ props.option.l_territory }} - {{ props.option.territory }} ({{ props.option.type }})
         </template>
       </o-autocomplete>
-      <o-button @click="edit=!edit" title="Label bouton">
+      <o-button @click="edit=!edit" class="fr-btn" title="Label bouton">
         <i class="mdi mdi-close-circle-outline mdi-24px"></i>
       </o-button>
     </o-field>
@@ -27,7 +27,7 @@
       <o-button @click="edition" class="fr-btn" title="Label bouton">
         <i class="mdi mdi-pencil mdi-24px"></i>
       </o-button>
-      <o-button v-if="selectedTerritory && selectedTerritory.territory !== 'XXXXX'" @click="resetFr" title="Label bouton">
+      <o-button v-if="selectedTerritory && selectedTerritory.territory !== 'XXXXX'"  class="fr-btn" @click="resetFr" title="Label bouton">
         <i class="mdi mdi-close-circle-outline mdi-24px"></i>
       </o-button>
     </h3>

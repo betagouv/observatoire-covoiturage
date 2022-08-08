@@ -49,7 +49,10 @@ export default {
     '@/assets/scss/main'
   ],
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['@/plugins/axios-accessor.ts'],
+  plugins: [
+    '@/plugins/axios-accessor.ts',
+    '@/plugins/oruga.ts',
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: false,
@@ -66,7 +69,6 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
-    '@oruga-ui/oruga/nuxt',
     ['nuxt-matomo', { doNotTrack: true, matomoUrl: 'https://stats.data.gouv.fr/', siteId: 213, cookies: false }],
   ],
   // Axios module configuration: https://go.nuxtjs.dev/config-axios

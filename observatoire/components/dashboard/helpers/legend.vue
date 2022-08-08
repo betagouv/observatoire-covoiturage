@@ -21,7 +21,7 @@
 
 <script lang="ts">
 import { Component,mixins,Prop } from 'nuxt-property-decorator'
-import BreakpointsMixin from '../../../mixins/breakpoints'
+import BreakpointsMixin from '../../mixins/breakpoints'
 
 @Component
 export default class Legend extends mixins(BreakpointsMixin){

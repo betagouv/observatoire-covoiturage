@@ -19,7 +19,7 @@ import { Map } from 'maplibre-gl'
 import { MapboxLayer } from '@deck.gl/mapbox';
 import { ArcLayer } from '@deck.gl/layers'
 import { Deck } from '@deck.gl/core'
-import Legend from './helpers/legend.vue'
+import Legend from '../helpers/legend.vue'
 import { mapState } from 'vuex'
 import { DashboardState } from '../../../store/dashboard'
 

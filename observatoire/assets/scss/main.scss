@@ -1,10 +1,13 @@
 @import "@gouvfr/dsfr/dist/dsfr/dsfr.css";
 @import "@mdi/font/css/materialdesignicons.min.css";
+@import "./variables";
+@import "node_modules/@oruga-ui/oruga/src/scss/oruga-full.scss";
+
 .fr-card__img img{
   object-fit: contain;
 }
 .hero{
-  background-color: #000091;
+  background-color: $primary;
   padding: 2rem;
   h1,h2{
     color: #ffffff;
@@ -39,6 +42,22 @@
 .img-medium{
   max-height: 250px;
 }
+.fr-sidemenu--full-border{
+  border-top: none !important;
+}
+.fr-sidemenu__inner{
+  margin-top: 10px;
+  padding: 0 1rem;
+  padding-top: 0 !important;
+}
+.sidebar-title{
+  background-color: $primary;
+  padding: 20px 5px;
+  h3 {
+    color: #ffffff;
+    text-align: center;
+  }
+}
 .fr-sidemenu__list{
   padding: 0;
 }
@@ -49,12 +68,22 @@
 .fr-select-group{
   text-align: left;
 }
+.o-tabs{
+  margin-top:10px;
+}
+.o-tabs__nav{
+  padding: 0;
+}
+.o-tabs__nav-item:not(:disabled):hover{
+  background-color: #1212ff !important;
+  color:#ffffff;
+}
 .notices{
   position: fixed;
   top: 50%;
   left: 40%;
   z-index: 1;
-  border: 1px solid #000091;
+  border: 1px solid $primary;
   .snackbar{
     width: 300px;
     text-align: center;

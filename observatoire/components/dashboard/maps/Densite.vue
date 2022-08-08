@@ -20,7 +20,7 @@ import maplibregl from 'maplibre-gl'
 import { MapboxLayer } from '@deck.gl/mapbox';
 import { H3HexagonLayer } from '@deck.gl/geo-layers'
 import { Deck } from '@deck.gl/core'
-import Legend from './helpers/legend.vue'
+import Legend from '../helpers/legend.vue'
 import { mapState } from 'vuex'
 import { DashboardState } from '../../../store/dashboard'
 import { thisExpression } from '@babel/types'

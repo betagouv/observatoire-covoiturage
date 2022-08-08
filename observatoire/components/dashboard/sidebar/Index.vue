@@ -1,6 +1,11 @@
 <template>
-  <nav class="fr-sidemenu--full-border" :class="{'fr-p-1w': !lgAndAbove}" role="navigation" aria-label="Menu latéral">
+  <nav class="fr-sidemenu--sticky" :class="{'fr-p-1w': !lgAndAbove}" role="navigation" aria-label="Menu latéral">
     <div class="fr-sidemenu__inner">
+      <o-field>
+        <button v-if="!lgAndAbove" class="fr-link--close fr-link" title="Menu" @click="openSidebar">
+          Fermer
+        </button>
+      </o-field>
       <div class="sidebar-title">
         <SidebarSelectTerritory v-if="dashboard.period.year !== ''" />
         <SidebarMonthlyPeriod />
@@ -60,13 +65,3 @@ export default class KeySidebar extends mixins(BreakpointsMixin){
   dashboard!: DashboardState 
 }
 </script>
-<style lang="scss">
- .sidebar-title{
-   background-color: #000091;
-   padding: 20px 5px;
-   h3 {
-     color: #ffffff;
-     text-align: center;
-   }
- }
-</style>
