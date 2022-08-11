@@ -1,6 +1,10 @@
 <template>
   <div class="map_container">
+    <o-loading :active.sync="isLoading">
+      <o-icon pack="mdi" icon="tire" size="large" variant="info" spin> </o-icon>
+    </o-loading>
     <div id="map"></div>
+    <Legend :title="legendTitle" :analyzes="analyse" :def=def_url type="categories"/>
   </div>
 </template>
 
@@ -9,25 +13,16 @@ import { Component, Watch, mixins } from 'nuxt-property-decorator'
 import MapMixin from '../../mixins/map'
 import maplibregl from 'maplibre-gl'
 import bbox from '@turf/bbox'
-import Legend from '../helpers/legend.vue'
-import { mapState } from 'vuex'
-import { DashboardState } from '../../../store/dashboard'
 import json from '../../../static/data/vr_covoiturage.json'
 
-@Component({
-  components:{
-    Legend,
-  },
-  computed:{
-    ...mapState({
-      dashboard: 'dashboard',
-    })
-  }
-})
+@Component
 export default class Voies extends mixins(MapMixin){
-  dashboard!: DashboardState
-  map:any = null
   data = json
+  legendTitle="Voies de covoiturage en site propre (source: CEREMA)"
+  def_url="/pages/glossaire/#voie"
+  analyse=[
+    {color:[229, 229, 224],val:'voie réservée',width:10,active:true}
+  ]
 
   @Watch('dashboard.selectedVoie')
   onFeatureChanged() {

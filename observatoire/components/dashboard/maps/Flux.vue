@@ -2,8 +2,11 @@
 <div class="fr-grid-row">
   <div class="fr-col mapping">
     <div class="map_container">
+      <o-loading :active.sync="isLoading">
+        <o-icon pack="mdi" icon="tire" size="large" variant="info" spin> </o-icon>
+      </o-loading>
       <div id="map"></div>
-      <Legend :title="legendTitle" :analyzes="analyse" type="interval"/>
+      <Legend :title="legendTitle" :analyzes="analyse" :def=def_url type="interval"/>
     </div>
   </div>
 </div>
@@ -15,32 +18,17 @@ import MapMixin from '../../mixins/map'
 import * as turf from '@turf/helpers'
 import bbox from '@turf/bbox'
 import { FluxData, MapAnalyseInterface } from '../../interfaces/maps'
-import { Map } from 'maplibre-gl'
 import { MapboxLayer } from '@deck.gl/mapbox';
 import { ArcLayer } from '@deck.gl/layers'
 import { Deck } from '@deck.gl/core'
-import Legend from '../helpers/legend.vue'
-import { mapState } from 'vuex'
-import { DashboardState } from '../../../store/dashboard'
 
-@Component({
-  components:{
-    Legend,
-  },
-  computed:{
-    ...mapState({
-      dashboard: 'dashboard',
-    })
-  }
-})
+@Component
 export default class Flux extends mixins(MapMixin){
-  dashboard!: DashboardState
-  map:any = null
-  deck:any = null
   data:Array<FluxData> = []
   filteredData:Array<FluxData>=[]
   analyse:Array<MapAnalyseInterface> = []
-  legendTitle="Flux de covoiturage (source transport.data.gouv.fr)"
+  legendTitle="Flux mensuels de passagers entre territoires (source: RPC)"
+  def_url="/pages/glossaire/#passager"
 
   @Watch('dashboard.period', { deep: true })
   async onPeriodChanged() {
@@ -71,7 +59,6 @@ export default class Flux extends mixins(MapMixin){
     this.deck.setProps({layers:[this.addArcLayer()]})
   }  
  
-
   @Watch('dashboard.selectedFluxNb')
   onSliderChanged() {
     if(this.map){
@@ -89,10 +76,27 @@ export default class Flux extends mixins(MapMixin){
   }
 
   public async getData(){
-    const response = await this.$axios.get(`/passengers_monthly_flux?code=${this.dashboard.territory.territory}&t=${this.dashboard.selectedFluxType}&t2=${this.dashboard.territory.type}&year=${this.dashboard.period.year}&month=${this.dashboard.period.month}`)
-    this.data = response.data
-    this.$store.commit('dashboard/MAX_FLUX_NB', this.defaultSlider('passengers')[1])
-    this.$store.commit('dashboard/SELECTED_FLUX_NB', this.defaultSlider('passengers'))
+    try{
+      this.isLoading = true
+      const response = await this.$axios.get(`/passengers_monthly_flux?code=${this.dashboard.territory.territory}&t=${this.dashboard.selectedFluxType}&t2=${this.dashboard.territory.type}&year=${this.dashboard.period.year}&month=${this.dashboard.period.month}`)
+      if(response.status === 204){
+        this.$oruga.notification.open({
+          message: response.data.message,
+        })
+      }
+      if(response.status === 200){
+        this.data = response.data
+        this.$store.commit('dashboard/MAX_FLUX_NB', this.defaultSlider('passengers')[1])
+        this.$store.commit('dashboard/SELECTED_FLUX_NB', this.defaultSlider('passengers'))
+      }
+      this.isLoading = false
+    }
+    catch(error:any) {
+      this.$oruga.notification.open({
+        message: error.response.data.message,
+      })
+      this.isLoading = false
+    }
   }
 
   public filterData(field:string){

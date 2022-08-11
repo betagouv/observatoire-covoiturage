@@ -1,7 +1,10 @@
 <template>
   <div class="map_container">
+    <o-loading :active.sync="isLoading">
+      <o-icon pack="mdi" icon="tire" size="large" variant="info" spin> </o-icon>
+    </o-loading>
     <div id="map"></div>
-    <Legend :title="legendTitle" :analyzes="categories" type="category"/>
+    <Legend :title="legendTitle" :analyzes="categories" :def="def_url" type="category"/>
   </div>
 </template>
 
@@ -12,25 +15,11 @@ import * as turf from '@turf/helpers'
 import bbox from '@turf/bbox'
 import maplibregl from 'maplibre-gl'
 import { AiresData } from '../../interfaces/maps'
-import Legend from '../helpers/legend.vue'
-import { mapState } from 'vuex'
-import { DashboardState } from '../../../store/dashboard'
 
-@Component({
-  components:{
-    Legend,
-  },
-  computed:{
-    ...mapState({
-      dashboard: 'dashboard',
-    })
-  }
-})
+@Component
 export default class Aires extends mixins(MapMixin){
-  dashboard!: DashboardState
-  map:any = null
   data:Array<AiresData> = []
-  categories= [
+  categories = [
     {color:[102, 194, 165],val:'Supermarché',width:10},
     {color:[252, 141, 98],val:'Parking',width:10},
     {color:[141, 160, 203],val:'Aire de covoiturage',width:10},
@@ -40,7 +29,8 @@ export default class Aires extends mixins(MapMixin){
     {color:[229, 196, 148],val:'Sortie d\'autoroute',width:10},
     {color:[179, 179, 179],val:'Autres',width:10}
   ]
-  legendTitle="Aires de covoiturage (source transport.data.gouv.fr)"
+  legendTitle="Aires de covoiturage (source :transport.data.gouv.fr)"
+  def_url="/pages/glossaire/#aire"
 
   get filteredAires(){
     if(this.data){
@@ -86,8 +76,25 @@ export default class Aires extends mixins(MapMixin){
   }
 
   public async getData(){
-    const response = await this.$axios.get(`/aires_covoiturage?code=${this.dashboard.territory.territory}&t=${this.dashboard.territory.type}`)
-    this.data = response.data
+    try{
+      this.isLoading = true
+      const response = await this.$axios.get(`/aires_covoiturage?code=${this.dashboard.territory.territory}&t=${this.dashboard.territory.type}`)
+      if(response.status === 204){
+        this.$oruga.notification.open({
+          message: response.data.message,
+        })
+      }
+      if(response.status === 200){
+        this.data = response.data
+      }
+      this.isLoading = false
+    }
+    catch(error:any) {
+      this.$oruga.notification.open({
+        message: error.response.data.message,
+      })
+      this.isLoading = false
+    }
   }
 
   public addLayers() {

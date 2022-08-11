@@ -23,9 +23,9 @@ export const state = () => ({
     {type:'country',name:'Pays'}
   ],
   mapList:[
-    {id:'flux',name:'Flux'},
-    {id:'densite',name:'Densité des départs et des arrivées de covoiturage dans un maillage hexagonale'},
-    {id:'occupation',name:'Occupation des véhicules'},
+    {id:'flux',name:'Flux mensuels de passagers entre territoires'},
+    {id:'densite',name:'Densité de trajets dans un maillage hexagonale'},
+    {id:'occupation',name:'Taux d\'occupation des véhicules partagés et volume de trajets par territoire'},
     {id:'aires',name:'Aires de covoiturage'},
   ],
 })

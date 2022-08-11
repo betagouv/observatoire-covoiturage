@@ -1,9 +1,9 @@
 <template>
-  <div class="controls">
-    <label class="fr-sidemenu__title">Choisir une carte :</label>
+  <div>
+    <label>Choisir une carte :</label>
     <select v-model="selectedMap" class="fr-select" id="select-map" name="select-map">
       <option v-for="option in helpers.mapList" :value="option.id" :key="option.id">{{option.name}}</option>
-      <option v-if="dashboard.territory.territory === 'XXXXX'" value="voies">Voies réservées</option>
+      <option v-if="dashboard.territory.territory === 'XXXXX'" value="voies">Voies de covoiturage en site propre</option>
     </select>
   </div>
 </template>

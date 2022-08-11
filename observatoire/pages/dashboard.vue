@@ -2,8 +2,7 @@
   <div class="fr-container--fluid">
     <client-only>
       <div class="fr-grid-row">
-        <Controls />
-        <div v-if="lgAndAbove || screen.isSidebarOpen" class="fr-col-12 fr-col-lg-3 sidebar">
+        <div class="fr-col-12 fr-col-lg-3 sidebar">
           <Sidebar v-if="dashboard.period" />
         </div>
         <div class="fr-col">
@@ -32,7 +31,6 @@
 <script lang="ts">
 import { Component, mixins } from 'nuxt-property-decorator'
 import BreakpointsMixin from '../components/mixins/breakpoints'
-import Controls from '../components/dashboard/helpers/controls.vue'
 import Sidebar from '../components/dashboard/sidebar/Index.vue'
 import KeyFiguresIndex from '../components/dashboard/key_figures/Index.vue'
 import MapIndex from '../components/dashboard/maps/Index.vue'
@@ -41,7 +39,7 @@ import { DashboardState } from '../store/dashboard'
 
 @Component({
   components:{
-    Controls,
+    //Controls,
     Sidebar,
     KeyFiguresIndex,
     MapIndex,

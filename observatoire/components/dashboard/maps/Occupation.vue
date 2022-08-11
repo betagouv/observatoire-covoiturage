@@ -1,16 +1,16 @@
 <template>
-  <section>
-    <div class="fr-grid-row">
-      <div class="map-title fr-col">
-        <h5>{{mapTitle}}</h5>
-      </div>
-    </div>
+<div class="fr-grid-row">
+  <div class="fr-col mapping">
     <div class="map_container">
+      <o-loading :active.sync="isLoading">
+        <o-icon pack="mdi" icon="tire" size="large" variant="info" spin> </o-icon>
+      </o-loading>
       <div id="map"></div>
-      <Legend :title="legendTitleJourneys" :analyzes="categories" type="proportional_circles" class="upper_legend"/>
-      <Legend :title="legendTitleOccupation" :analyzes="analyse" type="interval"/>
+      <Legend :title="legendTitleJourneys" :analyzes="categories" :def="def_urlJourneys" type="proportional_circles" class="upper_legend"/>
+      <Legend :title="legendTitleOccupation" :analyzes="analyse" :def="def_urlOccupation" type="interval"/>
     </div>
-  </section>
+  </div>
+</div>
 </template>
 
 <script lang="ts">
@@ -20,23 +20,10 @@ import * as turf from '@turf/helpers'
 import bbox from '@turf/bbox'
 import maplibregl from 'maplibre-gl'
 import { OccupData } from '../../interfaces/maps'
-import Legend from '../helpers/legend.vue'
-import { mapState } from 'vuex'
-import { DashboardState } from '../../../store/dashboard'
 
-@Component({
-  components:{
-    Legend,
-  },
-  computed:{
-    ...mapState({
-      dashboard: 'dashboard',
-    })
-  }
-})
+
+@Component
 export default class Occupation extends mixins(MapMixin){
-  dashboard!: DashboardState
-  map:any = null
   data:Array<OccupData> = []
   categories=[
     {color:[229, 229, 224],val:'>= 100 000',width:40,active:true},
@@ -52,8 +39,10 @@ export default class Occupation extends mixins(MapMixin){
     {color:[0, 0, 116],val:3,width:10,active:true},
     {color:[0, 0, 109],val:4,width:10,active:true},
   ]
-  mapTitle="Taux d'occupation des véhicules partagés et volume de ces véhicules par territoire"
-  legendTitleOccupation="Taux d'occupation des véhicules partagés"
+  mapTitle="Taux d'occupation des véhicules partagés et volume de ces véhicules par territoire (source: RPC)"
+  legendTitleOccupation="Taux d'occupation des véhicules partagés (source: RPC)"
+  def_urlJourneys="/pages/glossaire/#passager"
+  def_urlOccupation="/pages/glossaire/#occupation"
 
   get filteredData(){
     if(this.data){
@@ -103,8 +92,25 @@ export default class Occupation extends mixins(MapMixin){
   }
 
   public async getData(){
-    const response = await this.$axios.get(`/journeys_monthly_occupation?code=${this.dashboard.territory.territory}&t=${this.dashboard.selectedOccupationType}&t2=${this.dashboard.territory.type}&year=${this.dashboard.period.year}&month=${this.dashboard.period.month}`)
-    this.data = response.data
+    try{
+      this.isLoading = true
+      const response = await this.$axios.get(`/journeys_monthly_occupation?code=${this.dashboard.territory.territory}&t=${this.dashboard.selectedOccupationType}&t2=${this.dashboard.territory.type}&year=${this.dashboard.period.year}&month=${this.dashboard.period.month}`)
+      if(response.status === 204){
+        this.$oruga.notification.open({
+          message: response.data.message,
+        })
+      }
+      if(response.status === 200){
+        this.data = response.data
+      }
+      this.isLoading = false
+    }
+    catch(error:any) {
+      this.$oruga.notification.open({
+        message: error.response.data.message,
+      })
+      this.isLoading = false
+    }
   }
 
   public addLayers() {

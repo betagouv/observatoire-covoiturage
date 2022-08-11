@@ -197,6 +197,8 @@ import { DashboardState } from '../../../store/dashboard'
 export default class Indicators extends Vue{
   dashboard!: DashboardState  
   data:IndicatorsInterface | {} = {}
+  isLoading = false
+  $oruga:any
 
   get monthList(){
     return this.$store.state.helpers.monthList
@@ -217,8 +219,25 @@ export default class Indicators extends Vue{
   }
 
   public async getData(){
-    const response = await this.$axios.get(`/indicators?territory=${this.dashboard.territory.territory}&t=${this.dashboard.territory.type}&year=${this.dashboard.period.year}&month=${this.dashboard.period.month}`)
-    response.status === 200 ? this.data = response.data[0] : this.data = {}
+    try{
+      this.isLoading = true
+      const response = await this.$axios.get(`/indicators?territory=${this.dashboard.territory.territory}&t=${this.dashboard.territory.type}&year=${this.dashboard.period.year}&month=${this.dashboard.period.month}`)
+      if(response.status === 204){
+        this.$oruga.notification.open({
+          message: response.data.message,
+        })
+      }
+      if(response.status === 200){
+        this.data = response.data[0]
+      }
+      this.isLoading = false
+    }
+    catch(error:any) {
+      this.$oruga.notification.open({
+        message: error.response.data.message,
+      })
+      this.isLoading = false
+    }
   }
 }
 </script>

@@ -2,8 +2,11 @@
 <div class="fr-grid-row">
   <div class="fr-col mapping">
     <div class="map_container">
+      <o-loading :active.sync="isLoading">
+        <o-icon pack="mdi" icon="tire" size="large" variant="info" spin> </o-icon>
+      </o-loading>
       <div id="map"></div>
-      <Legend :title="legendTitle" :analyzes="analyse" type="interval"/>
+      <Legend :title="legendTitle" :analyzes="analyse" :def="def_url" type="interval"/>
     </div>
   </div>
 </div>
@@ -20,32 +23,17 @@ import maplibregl from 'maplibre-gl'
 import { MapboxLayer } from '@deck.gl/mapbox';
 import { H3HexagonLayer } from '@deck.gl/geo-layers'
 import { Deck } from '@deck.gl/core'
-import Legend from '../helpers/legend.vue'
-import { mapState } from 'vuex'
-import { DashboardState } from '../../../store/dashboard'
-import { thisExpression } from '@babel/types'
 
-@Component({
-  components:{
-    Legend,
-  },
-  computed:{
-    ...mapState({
-      dashboard: 'dashboard',
-    })
-  }
-})
+@Component
 export default class Densite extends mixins(MapMixin){
-  dashboard!: DashboardState
-  map:any = null
-  deck:any = null
   data:Array<DensiteData> = []
   filteredData:Array<DensiteData>=[]
   aires:Array<AiresData> = []
   analyse:Array<MapAnalyseInterface> = []
   slider:Array<number>=[]
   type='com'
-  legendTitle="Flux de covoiturage (source transport.data.gouv.fr)"
+  legendTitle="Densité de trajets dans un maillage hexagonale (origine et destination) (source: RPC)"
+  def_url="/pages/glossaire/#passager"
 
   get airesGeojson(){
     return turf.featureCollection(this.aires.map(d => turf.feature(d.geom,{
@@ -114,8 +102,25 @@ export default class Densite extends mixins(MapMixin){
   }
 
   public async getData(){
-    const response = await this.$axios.get(`/location?code=${this.dashboard.territory.territory}&t=${this.dashboard.territory.type}&date_1=${this.dashboard.densitePeriod.start.toISOString().slice(0, 10)}&date_2=${this.dashboard.densitePeriod.end.toISOString().slice(0, 10)}&zoom=${this.dashboard.densiteZoom}`)
-    this.data = response.data
+    try{
+      this.isLoading = true
+      const response = await this.$axios.get(`/location?code=${this.dashboard.territory.territory}&t=${this.dashboard.territory.type}&date_1=${this.dashboard.densitePeriod.start.toISOString().slice(0, 10)}&date_2=${this.dashboard.densitePeriod.end.toISOString().slice(0, 10)}&zoom=${this.dashboard.densiteZoom}`)
+      if(response.status === 204){
+        this.$oruga.notification.open({
+          message: response.data.message,
+        })
+      }
+      if(response.status === 200){
+        this.data = response.data
+      }
+      this.isLoading = false
+    }
+    catch(error:any) {
+      this.$oruga.notification.open({
+        message: error.response.data.message,
+      })
+      this.isLoading = false
+    }
   }
 
   public filterData(field:string){

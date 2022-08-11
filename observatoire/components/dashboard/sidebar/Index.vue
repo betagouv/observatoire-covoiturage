@@ -1,24 +1,36 @@
 <template>
   <nav class="fr-sidemenu--sticky" :class="{'fr-p-1w': !lgAndAbove}" role="navigation" aria-label="Menu latéral">
     <div class="fr-sidemenu__inner">
-      <o-field>
-        <button v-if="!lgAndAbove" class="fr-link--close fr-link" title="Menu" @click="openSidebar">
-          Fermer
-        </button>
-      </o-field>
       <div class="sidebar-title">
         <SidebarSelectTerritory v-if="dashboard.period.year !== ''" />
         <SidebarMonthlyPeriod />
+        <div class="select-map" v-if="dashboard.activeTab === 2">
+          <SidebarSelectMap />
+          <o-field v-if="!lgAndAbove" class="legend">
+          <o-switch class="legend" size="is-small" variant="warning" v-model="legend">
+          Afficher la légende
+          </o-switch>
+        </o-field>
+        </div>
+        <o-field v-if="!lgAndAbove && dashboard.activeTab !== 1">
+          <button v-if="!screen.isSidebarOpen" class="fr-btn fr-btn--primary filter" @click="openSidebar">
+            + de filtres
+          </button>
+          <button v-else class="fr-btn fr-btn--primary filter" @click="openSidebar">
+            Fermer les filtres
+          </button>
+        </o-field>
       </div>
-      <SidebarSelectMap v-if="dashboard.activeTab === 2" /> 
-      <SidebarMapControlsSelectVoiesReservees v-if="dashboard.activeTab === 2 && dashboard.activeMap === 'voies' "/>
-      <SidebarMapControlsSelectFluxType v-if="dashboard.activeTab === 2 && dashboard.activeMap === 'flux' "/>     
-      <SidebarMapControlBetweenFluxNb v-if="dashboard.activeTab === 2 && dashboard.activeMap === 'flux' "/>
-      <SidebarMapControlDatepickerDensite v-if="dashboard.activeTab === 2 && dashboard.activeMap === 'densite' "/>
-      <SidebarMapControlZoomDensite v-if="dashboard.activeTab === 2 && dashboard.activeMap === 'densite' "/> 
-      <SidebarMapControlLayersDensite v-if="dashboard.activeTab === 2 && dashboard.activeMap === 'densite' "/> 
-      <SidebarMapControlsSelectOccupationType v-if="dashboard.activeTab === 2 && dashboard.activeMap === 'occupation' "/>
-      <SidebarMapControlsAiresSwitch v-if="dashboard.activeTab === 2 && dashboard.activeMap === 'aires' "/>    
+      <div v-if="lgAndAbove || screen.isSidebarOpen" class="filters">
+        <SidebarMapControlsSelectVoiesReservees v-if="dashboard.activeTab === 2 && dashboard.activeMap === 'voies' "/>
+        <SidebarMapControlsSelectFluxType v-if="dashboard.activeTab === 2 && dashboard.activeMap === 'flux' "/>     
+        <SidebarMapControlBetweenFluxNb v-if="dashboard.activeTab === 2 && dashboard.activeMap === 'flux' "/>
+        <SidebarMapControlDatepickerDensite v-if="dashboard.activeTab === 2 && dashboard.activeMap === 'densite' "/>
+        <SidebarMapControlZoomDensite v-if="dashboard.activeTab === 2 && dashboard.activeMap === 'densite' "/> 
+        <SidebarMapControlLayersDensite v-if="dashboard.activeTab === 2 && dashboard.activeMap === 'densite' "/> 
+        <SidebarMapControlsSelectOccupationType v-if="dashboard.activeTab === 2 && dashboard.activeMap === 'occupation' "/>
+        <SidebarMapControlsAiresSwitch v-if="dashboard.activeTab === 2 && dashboard.activeMap === 'aires' "/> 
+      </div>
     </div>
   </nav>
 </template>
@@ -63,5 +75,11 @@ import { DashboardState } from '../../../store/dashboard'
 })
 export default class KeySidebar extends mixins(BreakpointsMixin){
   dashboard!: DashboardState 
+  get legend(){
+    return this.$store.state.screen.isLegendOpen
+  } 
+  set legend(value){
+    this.openLegend()
+  }
 }
 </script>

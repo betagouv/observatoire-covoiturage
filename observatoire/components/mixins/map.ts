@@ -2,11 +2,25 @@ import { Component, mixins } from 'nuxt-property-decorator'
 import { ckmeans } from 'simple-statistics'
 import maplibregl from 'maplibre-gl'
 import BreakpointsMixin from './breakpoints'
+import { mapState } from 'vuex'
+import { DashboardState } from '../../store/dashboard'
 import { MapOptionsInterface, MapAnalyseInterface } from '../interfaces/maps'
+import Legend from '../dashboard/helpers/legend.vue'
 
-@Component
+@Component({
+  components:{
+    Legend,
+  },
+  computed:{
+    ...mapState({
+      dashboard: 'dashboard',
+    })
+  }
+})
 export default class MapMixin extends mixins(BreakpointsMixin) {
-  
+  dashboard!: DashboardState
+  map:any = null
+  deck:any = null
   defaultOptions:MapOptionsInterface = {
     center: [2.087, 46],
     style: process.env.NUXT_ENV_MAPLIBRE_STYLE || '',
@@ -16,8 +30,9 @@ export default class MapMixin extends mixins(BreakpointsMixin) {
     antialias: true,
     attribution: true
   }
-
+  isLoading = false
   isHovering = false
+  $oruga:any
 
   async createMap(container:string, options?:MapOptionsInterface) {
     options = { ...this.defaultOptions, ...options }

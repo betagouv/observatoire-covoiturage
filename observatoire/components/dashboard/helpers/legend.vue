@@ -1,6 +1,14 @@
 <template>
   <div v-if="lgAndAbove || screen.isLegendOpen" class='legend'>
-    <div class='legend-title'>{{title}}</div>
+    <div class='legend-title'>
+      {{title}} 
+    <NuxtLink class="fr-link" :to="def">
+      <o-icon pack="mdi" icon="information-outline"></o-icon>
+    </NuxtLink>
+      
+    </div>
+    
+    
     <div v-if="type !== 'proportional_circles'">
       <div class="item" v-for="classe in legend" :key="classe.name">
         <span class="legend-class" :style="'height:'+classe.width+'px;background-color:rgb('+classe.color[0]+','+classe.color[1]+','+classe.color[2]+')'"></span>
@@ -26,6 +34,7 @@ import BreakpointsMixin from '../../mixins/breakpoints'
 @Component
 export default class Legend extends mixins(BreakpointsMixin){
   @Prop({ required: true }) title!: string
+  @Prop({ required: true }) def!: string
   @Prop({ required: true }) analyzes!: Array<{color:Array<number>,val:number,width:number}>
   @Prop({ required: true }) type!: string
 

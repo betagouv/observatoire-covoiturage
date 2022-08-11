@@ -92,18 +92,3 @@ export default class SelectTerritory extends Vue{
   }
 }
 </script>
-<style lang="scss">
-.results {
-  width:100% !important;
-  overflow-y: auto;
-  background-color: #FFFFFF;
-  div {
-    font-size: 0.8rem;
-    padding: 0 5px;
-  }
-  div:hover{
-    background-color: #E7E7E7;
-  }
-}
-
-</style>
