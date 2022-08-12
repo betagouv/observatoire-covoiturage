@@ -1,184 +1,143 @@
 <template>
-  <section>
-    <div class="fr-grid-row">
-      <div class="fr-col">
-        <div class="fr-grid-row">
-          <div v-if="data.passengers" class="fr-col">
-            <div  class="fr-tile">
-              <div class="fr-tile__body">
-                  <h4 class="fr-tile__title">
-                      {{data.passengers.toLocaleString()}}
-                  </h4>
-                  <p class="fr-tile__desc">
+  <div class="fr-grid-row">
+    <div class="fr-col-12 fr-col-lg-6">
+      <div class="fr-tile">
+        <div class="fr-tile__body">
+          <div class="fr-table">
+            <table> 
+              <tbody>
+                <tr v-if="data.passengers">
+                  <td> 
+                    <span><o-icon pack="mdi" icon="hail" size="medium" variant="info" /></span>
+                    <span><o-icon pack="mdi" icon="car" size="medium" variant="info" /></span>
+                  </td>
+                  <td>
+                    {{data.passengers.toLocaleString()}}
                     <NuxtLink to=/pages/glossaire/#passager>
                       passagers transportés
                     </NuxtLink>
-                  </p>
-              </div>
-              <div class="fr-tile__img">
-                <img src="/images/Pouce.svg" alt=""/>
-              </div>
-            </div>
-          </div>
-          <div v-if="data.has_incentive" class="fr-col">
-            <div class="fr-tile">
-              <div class="fr-tile__body">
-                  <h4 class="fr-tile__title">
-                      {{data.has_incentive.toLocaleString()}}
-                  </h4>
-                  <p class="fr-tile__desc">
+                  </td>
+                </tr>
+                <tr v-if="data.has_incentive">
+                  <td> 
+                    <span><o-icon pack="mdi" icon="currency-eur" size="medium" variant="info" /></span>
+                    <span><o-icon pack="mdi" icon="car" size="medium" variant="info" /></span>
+                  </td>
+                  <td>
+                    {{data.has_incentive.toLocaleString()}}
                     <NuxtLink to=/pages/glossaire/#incentive>
                       trajets incités
                     </NuxtLink>
-                  </p>
-              </div>
-              <div class="fr-tile__img">
-                <img src="/images/Incentive.svg" alt=""/>
-              </div>
-            </div>
-          </div>
-          <div v-if="data.trips" class="fr-col">
-            <div class="fr-tile">
-              <div class="fr-tile__body">
-                  <h4 class="fr-tile__title">
-                      {{data.trips.toLocaleString()}}
-                  </h4>
-                  <p class="fr-tile__desc">
+                  </td>
+                </tr>
+                <tr v-if="data.trips">
+                  <td> 
+                    <span><o-icon pack="mdi" icon="car-2-plus" size="medium" variant="info" /></span>
+                  </td>
+                  <td>
+                    {{data.trips.toLocaleString()}}
                     <NuxtLink to=/pages/glossaire/#vehicule>
                       véhicules partagés
                     </NuxtLink>
-                  </p>
-              </div>
-              <div class="fr-tile__img">
-                <img src="/images/Covoiturage.svg" alt=""/>
-              </div>
-            </div>
-          </div>
-          <div v-if="data.occupation_rate" class="fr-col">
-            <div class="fr-tile">
-              <div class="fr-tile__body">
-                  <h4 class="fr-tile__title">
-                      {{data.occupation_rate.toLocaleString()}}
-                  </h4>
-                  <p class="fr-tile__desc">
+                  </td>
+                </tr>
+                <tr v-if="data.occupation_rate">
+                  <td> 
+                    <span><o-icon pack="mdi" icon="account-group" size="medium" variant="info" /></span>
+                  </td>
+                  <td>
+                    {{data.occupation_rate.toLocaleString()}}
                     <NuxtLink to=/pages/glossaire/#occupation>
                       taux d'occupation
                     </NuxtLink>
-                  </p>
-              </div>
-              <div class="fr-tile__img">
-                <img src="/images/groupe.svg" alt=""/>
-              </div>
-            </div>
-          </div>
-          <div v-if="data.distance" class="fr-col">
-            <div class="fr-tile">
-              <div class="fr-tile__body">
-                  <h4 class="fr-tile__title">
-                      {{Math.round(data.distance).toLocaleString()}}
-                  </h4>
-                  <p class="fr-tile__desc">
+                  </td>
+                </tr>
+                <tr v-if="data.distance">
+                  <td> 
+                    <span><o-icon pack="mdi" icon="map-marker-distance" size="medium" variant="info" /></span>
+                  </td>
+                  <td>
+                    {{Math.round(data.distance).toLocaleString()}}
                     <NuxtLink to=/pages/glossaire/#km_parcourus>
                       km parcourus
                     </NuxtLink>
-                  </p>
-              </div>
-              <div class="fr-tile__img">
-                <img src="/images/Km.svg" alt=""/>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div v-if="data.distance" class="fr-grid-row">
-          <div class="fr-col">
-            <div class="fr-tile">
-              <div class="fr-tile__body">
-                  <h4 class="fr-tile__title">
-                      {{(data.distance/data.passengers).toLocaleString('fr-FR',{maximumFractionDigits: 2})}}
-                  </h4>
-                  <p class="fr-tile__desc">
-                    <NuxtLink to=/pages/glossaire/#av-distance>
-                      distance moyenne (en km)
-                    </NuxtLink>
-                  </p>
-              </div>
-              <div class="fr-tile__img">
-                <img src="/images/Trip.svg" alt=""/>
-              </div>
-            </div>
-          </div>
-          <div class="fr-col">
-            <div class="fr-tile">
-              <div class="fr-tile__body">
-                  <h4 class="fr-tile__title">
-                      {{Math.round((data.duration*60)/data.passengers).toLocaleString()}}
-                  </h4>
-                  <p class="fr-tile__desc">
-                    <NuxtLink to=/pages/glossaire/#duration>
-                      temps moyen (en mn)
-                    </NuxtLink>
-                  </p>
-              </div>
-              <div class="fr-tile__img">
-                <img src="/images/Clock.svg" alt=""/>
-              </div>
-            </div>
-          </div>
-          <div class="fr-col">
-            <div class="fr-tile">
-              <div class="fr-tile__body">
-                  <h4 class="fr-tile__title">
-                      {{(data.distance*0.000195).toLocaleString('fr-FR',{maximumFractionDigits: 2})}}
-                  </h4>
-                  <p class="fr-tile__desc">
-                    <NuxtLink to=/pages/glossaire/#co2>
-                      tonnes de CO₂ économisés
-                    </NuxtLink>
-                  </p>
-              </div>
-              <div class="fr-tile__img">
-                <img src="/images/Co2.svg" alt=""/>
-              </div>
-            </div>
-          </div>
-          <div class="fr-col">
-            <div class="fr-tile">
-              <div class="fr-tile__body">
-                  <h4 class="fr-tile__title">
-                      {{Math.round(data.distance*0.0636).toLocaleString()}}
-                  </h4>
-                  <p class="fr-tile__desc">
-                    <NuxtLink to=/pages/glossaire/#petrole>
-                      litres de pétrole économisés
-                    </NuxtLink>
-                  </p>
-              </div>
-              <div class="fr-tile__img">
-                <img src="/images/Petrole.svg" alt=""/>
-              </div>
-            </div>
-          </div>
-          <div class="fr-col">
-            <div class="fr-tile">
-              <div class="fr-tile__body">
-                  <h4 class="fr-tile__title">
-                      {{data.nb_aires.toLocaleString()}}
-                  </h4>
-                  <p class="fr-tile__desc">
-                    <NuxtLink to=/pages/glossaire/#aire>
-                      aires de covoiturage
-                    </NuxtLink>
-                  </p>
-              </div>
-              <div class="fr-tile__img">
-                <img src="/images/Parking.svg" alt=""/>
-              </div>
-            </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
     </div>
-  </section>
+    <div class="fr-col-12 fr-col-lg-6">
+      <div class="fr-tile">
+        <div class="fr-tile__body">
+          <div class="fr-table">
+            <table> 
+              <tbody>
+                <tr v-if="data.distance">
+                  <td> 
+                    <span><o-icon pack="mdi" icon="map-marker-path" size="medium" variant="info" /></span>
+                  </td>
+                  <td>
+                    {{(data.distance/data.passengers).toLocaleString('fr-FR',{maximumFractionDigits: 2})}}
+                    <NuxtLink to=/pages/glossaire/#av-distance>
+                      distance moyenne (en km)
+                    </NuxtLink>
+                  </td>
+                </tr>
+                <tr v-if="data.duration">
+                  <td> 
+                    <span><o-icon pack="mdi" icon="map-clock" size="medium" variant="info" /></span>
+                  </td>
+                  <td>
+                    {{Math.round((data.duration*60)/data.passengers).toLocaleString()}}
+                    <NuxtLink to=/pages/glossaire/#duration>
+                      temps moyen (en mn)
+                    </NuxtLink>
+                  </td>
+                </tr>
+                <tr v-if="data.distance">
+                  <td>
+                    <span><o-icon pack="mdi" icon="smoke" size="medium" variant="info" /></span> 
+                    <span><o-icon pack="mdi" icon="molecule-co2" size="medium" variant="info" /></span>
+                  </td>
+                  <td>
+                    {{(data.distance*0.000195).toLocaleString('fr-FR',{maximumFractionDigits: 2})}}
+                    <NuxtLink to=/pages/glossaire/#co2>
+                      tonnes de CO₂ économisés
+                    </NuxtLink>
+                  </td>
+                </tr>
+                <tr v-if="data.distance">
+                  <td> 
+                    <span><o-icon pack="mdi" icon="barrel" size="medium" variant="info" /></span>
+                  </td>
+                  <td>
+                    {{Math.round(data.distance*0.0636).toLocaleString()}}
+                    <NuxtLink to=/pages/glossaire/#petrole>
+                      litres de pétrole économisés
+                    </NuxtLink>
+                  </td>
+                </tr>
+                <tr v-if="data.nb_aires">
+                  <td> 
+                    <span><o-icon pack="mdi" icon="car-off" size="medium" variant="info" /></span>
+                  </td>
+                  <td>
+                    {{data.nb_aires.toLocaleString()}}
+                    <NuxtLink to=/pages/glossaire/#aire>
+                      aires de covoiturage
+                    </NuxtLink>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
