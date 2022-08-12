@@ -15,27 +15,27 @@
             <h6>Restons connectés</h6>
             <ul class="fr-footer__social-list">
               <li v-if="social.twitter" class="fr-footer__social-item twitter">
-                <a :href="social.twitter" target="_blank" class="no-icon">
+                <a :href="social.twitter" class="no-icon">
                   <img src="/images/social/twitter.svg" alt="Twitter" />
                 </a>
               </li>
               <li v-if="social.youtube" class="fr-footer__social-item youtube">
-                <a :href="social.youtube" target="_blank" class="no-icon">
+                <a :href="social.youtube" class="no-icon">
                   <img src="/images/social/youtube.svg" alt="Youtube" />
                 </a>
               </li>
               <li v-if="social.linkedin" class="fr-footer__social-item linkedin">
-                <a :href="social.linkedin" target="_blank" class="no-icon">
+                <a :href="social.linkedin" class="no-icon">
                   <img src="/images/social/linkedin.svg" alt="Linkedin" />
                 </a>
               </li>
               <li v-if="social.github" class="fr-footer__social-item github">
-                <a :href="social.github" target="_blank" class="no-icon">
+                <a :href="social.github" class="no-icon">
                   <img src="/images/social/github.svg" alt="Github" />
                 </a>
               </li>
               <li v-if="social.rss" class="fr-footer__social-item rss">
-                <a :href="social.rss" target="_blank" class="no-icon">
+                <a :href="social.rss" class="no-icon">
                   <img src="/images/social/rss.svg" alt="RSS" />
                 </a>
               </li>

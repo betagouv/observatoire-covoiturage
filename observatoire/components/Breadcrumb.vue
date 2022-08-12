@@ -12,7 +12,7 @@
             </NuxtLink>
           </li>
           <li v-else>
-            <p class="fr-breadcrumb__link" aria-current="page">{{type.name}}</p>
+            <a class="fr-breadcrumb__link" aria-current="page">{{type.name}}</a>
           </li>
           <li v-if="taxonomy">
             <NuxtLink  v-if="$route.path.indexOf('categorie') >= 0" :to="`/${type.slug}/categorie/${taxonomy.slug}`" class="fr-breadcrumb__link">
@@ -22,8 +22,8 @@
               {{taxonomy.name}}
             </NuxtLink>
           </li>
-          <li  v-if="current">
-            <p class="fr-breadcrumb__link" aria-current="page">{{current}}</p>
+          <li v-if="current">
+            <a class="fr-breadcrumb__link" aria-current="page">{{current}}</a>
           </li>
       </ol>
     </div>
