@@ -54,6 +54,7 @@ export default class Densite extends mixins(MapMixin){
   get visibleAireLayer(){
     return this.dashboard.densiteAires ? 'visible' : 'none'
   }
+  
 
   @Watch('dashboard.period', { deep: true })
   async onPeriodChanged() {

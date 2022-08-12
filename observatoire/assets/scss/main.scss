@@ -42,8 +42,15 @@
 .img-medium{
   max-height: 250px;
 }
+
+.fr-sidemenu{
+  padding: 0;
+}
 .fr-sidemenu--full-border{
   border-top: none !important;
+}
+.fr-sidemenu__list{
+  padding: 0;
 }
 .fr-sidemenu__inner{
   margin-top: 10px;
@@ -66,7 +73,6 @@
     div {
       font-size: 0.8rem;
       padding: 0 5px;
-      z-index: auto;
     }
     div:hover{
       background-color: #E7E7E7;
@@ -84,9 +90,7 @@
     border: 1px solid #ffffff;
   }
 }
-.fr-sidemenu__list{
-  padding: 0;
-}
+
 .fr-tile__body{
   align-items: inherit;
   justify-content:inherit;
@@ -135,4 +139,56 @@
   h3{
     margin: 0 !important;
   }
+}
+
+.legend {
+  position: absolute;
+  bottom: 25px;
+  right: 0;
+  overflow: auto;
+  border-radius: 10%;
+  padding: 10px;
+  z-index: 1;
+  background-color: #ffffff;
+  font-size: 0.8em;
+  width: 250px;
+    @media screen and (min-width: 992px) {
+      font-size: 1em;
+    }
+  .legend-class{
+    display: inline-block;
+    width: 30px;
+    margin-right: 5px;
+    background-color: #ccc;
+  }
+  .legend-title{
+    font-weight: bold;
+  }
+  .amount{
+    margin-top: 10px;
+  }
+  .proportional_circles{
+    position: relative;
+    margin-top: 10px;
+    hr {
+      position: absolute;
+      height: 1px; 
+      background-color: black;
+      margin: 0;
+      padding: 1px 0;
+    }
+    .circle-class{
+      border: 1px solid black;
+      border-radius: 50%;
+      background: whitesmoke;
+      position: absolute;
+    }
+    .circle-label{
+      position: absolute;
+      font-size: 0.8em;
+    }
+  }
+}
+.upper_legend{
+  bottom: 300px;
 }

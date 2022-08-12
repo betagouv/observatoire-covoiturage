@@ -1,7 +1,7 @@
 ---
 title: Flux mensuels de passagers transportés en covoiturage entre territoires
 date: 2021-09-06T17:47:01.489Z
-link: /cartes/flux
+link: /dashboard/map/flux
 img: carte_flux.png
 ---
 

@@ -59,7 +59,7 @@
     </div>
   </div>
   <div class="fr-section--banner hero">
-    <Indicators />
+
   </div>
   <div class="fr-section home-section">
     <div class="fr-container">
@@ -83,11 +83,10 @@
 <script lang="ts">
 import { Component, mixins } from 'nuxt-property-decorator'
 import BreakpointsMixin from '../components/mixins/breakpoints'
-import Indicators from '../components/Indicators.vue'
 import ContentList from '../components/ContentList.vue'
 
 @Component({
-  components:{Indicators,ContentList}
+  components:{ContentList}
 })
 export default class Home extends mixins(BreakpointsMixin){
   async asyncData({ $content }) {

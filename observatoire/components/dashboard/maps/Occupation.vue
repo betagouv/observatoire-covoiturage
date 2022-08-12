@@ -6,7 +6,7 @@
         <o-icon pack="mdi" icon="tire" size="large" variant="info" spin> </o-icon>
       </o-loading>
       <div id="map"></div>
-      <Legend :title="legendTitleJourneys" :analyzes="categories" :def="def_urlJourneys" type="proportional_circles" class="upper_legend"/>
+      <Legend :title="legendTitleJourneys" :analyzes="categories" :def="def_urlJourneys" :amount="amount" type="proportional_circles" class="upper_legend"/>
       <Legend :title="legendTitleOccupation" :analyzes="analyse" :def="def_urlOccupation" type="interval"/>
     </div>
   </div>
@@ -57,12 +57,12 @@ export default class Occupation extends mixins(MapMixin){
     }
   }
   
-  get allJourneys(){
+  get amount(){
+    let count = '0'
     if(this.filteredData){
-      return this.filteredData.features.map(f=>f.properties.journeys).reduce((a, b) => a + b, 0).toLocaleString('fr-FR')
-    } else{
-      return 0
+      count = this.filteredData.features.map(f=>f.properties.journeys).reduce((a, b) => a + b, 0).toLocaleString('fr-FR')
     }
+    return `${count} véhicules partagés selon les critères sélectionnés`
   }
 
   get legendTitleJourneys(){

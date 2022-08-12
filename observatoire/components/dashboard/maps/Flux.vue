@@ -6,7 +6,7 @@
         <o-icon pack="mdi" icon="tire" size="large" variant="info" spin> </o-icon>
       </o-loading>
       <div id="map"></div>
-      <Legend :title="legendTitle" :analyzes="analyse" :def=def_url type="interval"/>
+      <Legend :title="legendTitle" :analyzes="analyse" :def=def_url type="interval" :amount="amount"/>
     </div>
   </div>
 </div>
@@ -29,6 +29,15 @@ export default class Flux extends mixins(MapMixin){
   analyse:Array<MapAnalyseInterface> = []
   legendTitle="Flux mensuels de passagers entre territoires (source: RPC)"
   def_url="/pages/glossaire/#passager"
+
+
+  get amount(){
+    let count = '0'
+    if(this.filteredData){
+      count = this.filteredData.map(f=>f.passengers).reduce((a, b) => a + b, 0).toLocaleString('fr-FR')
+    }
+    return `${count} passagers transportés selon les critères sélectionnés`
+  }
 
   @Watch('dashboard.period', { deep: true })
   async onPeriodChanged() {

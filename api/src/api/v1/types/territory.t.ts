@@ -5,6 +5,14 @@ declare module territoryTypes {
     }
   }
 
+  interface single {
+    Querystring: {
+      year:string,
+      code:string,
+      type:string,
+    }
+  }
+
   interface indicators {
     Querystring: {
       territory:string,

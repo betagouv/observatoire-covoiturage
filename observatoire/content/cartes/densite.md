@@ -1,7 +1,7 @@
 ---
 title: Densité des départs et des arrivées de covoiturage dans un maillage hexagonale
 date: 2021-09-06T17:47:01.489Z
-link: /cartes/densite
+link: /dashboard/map/densite
 img: carte_densite.png
 ---
 

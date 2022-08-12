@@ -23,6 +23,35 @@ export default class territorySchema {
     }
   }
 
+  static singleTerritory = {
+    tags: ['territories'],
+    querystring: {
+      year: {
+        type: 'string',
+        description: 'Year (YYYY)'
+      },
+      code: {
+        type: 'string',
+        description: 'INSEE code'
+      },
+      type: {
+        type: 'string',
+        description: 'territory type (country, dep, reg, aom, com)'
+      }
+    },
+    response: {
+      200: {
+        type: 'object',
+        description:'Informations about a territory',
+        properties: {
+          territory: {type:'string'},
+          l_territory: {type:'string'},
+          type: {type:'string'}
+        }
+      }
+    }
+  }
+
   static territoryIndicators = {
     tags: ['territories'],
     querystring: {

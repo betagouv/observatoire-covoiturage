@@ -4,7 +4,7 @@
       <o-icon pack="mdi" icon="tire" size="large" variant="info" spin> </o-icon>
     </o-loading>
     <div id="map"></div>
-    <Legend :title="legendTitle" :analyzes="categories" :def="def_url" type="category"/>
+    <Legend :title="legendTitle" :analyzes="categories" :def="def_url" type="category" :amount="amount"/>
   </div>
 </template>
 
@@ -29,7 +29,7 @@ export default class Aires extends mixins(MapMixin){
     {color:[229, 196, 148],val:'Sortie d\'autoroute',width:10},
     {color:[179, 179, 179],val:'Autres',width:10}
   ]
-  legendTitle="Aires de covoiturage (source :transport.data.gouv.fr)"
+  legendTitle="Aires de covoiturage (source: transport.data.gouv.fr)"
   def_url="/pages/glossaire/#aire"
 
   get filteredAires(){
@@ -51,6 +51,14 @@ export default class Aires extends mixins(MapMixin){
     }else{
       return undefined
     }
+  }
+
+  get amount(){
+    let count = '0'
+    if(this.filteredAires){
+      count = this.filteredAires.features.length.toLocaleString('fr-FR')
+    }
+    return `${count} aires de covoiturages`
   }
 
   @Watch('dashboard.territory', { deep: true })

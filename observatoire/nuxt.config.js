@@ -89,5 +89,20 @@ export default {
     splitChunks: {
       layouts: true
     }
+  },
+  router: {
+    extendRoutes(routes, resolve) {
+      routes.push({
+          name:'choose_map',
+          path:'/dashboard/map/:map',
+          component: resolve(__dirname, 'pages/dashboard/index.vue')
+        },
+        {
+          name: 'single_territory',
+          path: '/dashboard/:type/:code',
+          component: resolve(__dirname, 'pages/dashboard/index.vue')
+        }
+      )
+    }
   }
 }

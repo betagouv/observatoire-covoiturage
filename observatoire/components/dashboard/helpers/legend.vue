@@ -2,10 +2,9 @@
   <div v-if="lgAndAbove || screen.isLegendOpen" class='legend'>
     <div class='legend-title'>
       {{title}} 
-    <NuxtLink class="fr-link" :to="def">
-      <o-icon pack="mdi" icon="information-outline"></o-icon>
-    </NuxtLink>
-      
+      <NuxtLink class="fr-link" :to="def">
+        <o-icon pack="mdi" icon="information-outline"></o-icon>
+      </NuxtLink>
     </div>
     
     
@@ -24,6 +23,9 @@
         </div>
       </div>
     </div>
+    <div v-if="amount" class="amount">
+      {{amount}}
+    </div>
   </div>
 </template>
 
@@ -37,6 +39,7 @@ export default class Legend extends mixins(BreakpointsMixin){
   @Prop({ required: true }) def!: string
   @Prop({ required: true }) analyzes!: Array<{color:Array<number>,val:number,width:number}>
   @Prop({ required: true }) type!: string
+  @Prop({ required: false }) amount!: string
 
   get legend(){
     let legend:Array<{color:Array<number>,name:string | number,width:number}> =  []
@@ -78,53 +81,3 @@ export default class Legend extends mixins(BreakpointsMixin){
   }
 }
 </script>
-<style lang="scss" scoped>
-  .legend {
-    position: absolute;
-    bottom: 25px;
-    right: 0;
-    overflow: auto;
-    border-radius: 10%;
-    padding: 10px;
-    z-index: 1;
-    background-color: #ffffff;
-    font-size: 0.8em;
-    width: 200px;
-      @media screen and (min-width: 992px) {
-        font-size: 1em;
-      }
-    .legend-class{
-      display: inline-block;
-      width: 30px;
-      margin-right: 5px;
-      background-color: #ccc;
-    }
-    .legend-title{
-      font-weight: bold;
-    }
-    .proportional_circles{
-      position: relative;
-      margin-top: 10px;
-      hr {
-        position: absolute;
-        height: 1px; 
-        background-color: black;
-        margin: 0;
-        padding: 1px 0;
-      }
-      .circle-class{
-        border: 1px solid black;
-        border-radius: 50%;
-        background: whitesmoke;
-        position: absolute;
-      }
-      .circle-label{
-        position: absolute;
-        font-size: 0.8em;
-      }
-    }
-  }
-  .upper_legend{
-    bottom: 250px;
-  }
-</style>
