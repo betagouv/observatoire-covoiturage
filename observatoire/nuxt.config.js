@@ -49,7 +49,10 @@ export default {
     '@/assets/scss/main'
   ],
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['@/plugins/axios-accessor.ts'],
+  plugins: [
+    '@/plugins/axios-accessor.ts',
+    '@/plugins/oruga.ts',
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: false,
@@ -66,7 +69,6 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
-    'nuxt-buefy',
     ['nuxt-matomo', { doNotTrack: true, matomoUrl: 'https://stats.data.gouv.fr/', siteId: 213, cookies: false }],
   ],
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -78,11 +80,29 @@ export default {
   content: {
     fullTextSearchFields: ()=>['title', 'description','text']
   },
-  buefy: { css:false },
+  oruga: {
+    includeCss: 'full'
+  },
+  //buefy: { css:false },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     splitChunks: {
       layouts: true
+    }
+  },
+  router: {
+    extendRoutes(routes, resolve) {
+      routes.push({
+          name:'choose_map',
+          path:'/dashboard/map/:map',
+          component: resolve(__dirname, 'pages/dashboard/index.vue')
+        },
+        {
+          name: 'single_territory',
+          path: '/dashboard/:type/:code',
+          component: resolve(__dirname, 'pages/dashboard/index.vue')
+        }
+      )
     }
   }
 }

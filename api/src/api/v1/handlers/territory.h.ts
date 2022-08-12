@@ -26,6 +26,28 @@ export default class territoryHandler {
     }
   }
 
+  static async singleTerritory(request: FastifyRequest<territoryTypes.single>, reply: FastifyReply):Promise<void>{
+    try {
+      const client = await this.pg.connect()
+      const sql = `SELECT distinct territory, l_territory, type 
+      FROM territories_point
+      WHERE year = '${request.query.year}'
+      AND territory ='${request.query.code}'
+      AND type = '${request.query.type}';`
+      const result = await client.query(sql)
+      if (!result.rows) {
+        reply.code(404).send(new Error('page not found'))
+      }
+      else if (result.rows.length === 0) {
+        reply.code(404).send(new Error('Pas de données disponibles'))
+      }
+      reply.send(result.rows)
+      client.release()
+    } catch (err) {
+      reply.send(err)
+    }
+  }
+
   static async indicators(request: FastifyRequest<territoryTypes.indicators>, reply: FastifyReply):Promise<void>{
     try {
       const client = await this.pg.connect()

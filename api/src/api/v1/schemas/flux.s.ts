@@ -13,7 +13,11 @@ export default class monthlyFluxSchema {
       },
       t: {
         type: 'string',
-        description: 'type of territories'
+        description: 'type of selected territories'
+      },
+      t2: {
+        type: 'string',
+        description: 'type of observed territory'
       },
       code: {
         type: 'string',

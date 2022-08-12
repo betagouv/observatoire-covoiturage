@@ -1,7 +1,7 @@
 ---
 title: Voies de covoiturage sur le territoire français
 date: 2022-02-28T15:47:01.489Z
-link: /cartes/voies-covoiturage
+link: /dashboard/map/voies
 img: carte_voies.png
 
 ---

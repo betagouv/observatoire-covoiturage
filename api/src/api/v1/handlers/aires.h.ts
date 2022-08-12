@@ -9,7 +9,7 @@ export default class airesHandler {
     try {
       const client = await this.pg.connect()
       const sql = `SELECT id_lieu, 
-        ad_lieu, 
+        nom_lieu, 
         com_lieu, 
         type, 
         date_maj, 

@@ -199,7 +199,7 @@ export default class Footer extends Vue{
 
   .fr-footer__newsletter-success,
   .fr-footer__newsletter-error {
-    ovefrlow: hidden;
+    overflow: hidden;
     max-height: 100px;
     transition: max-height 0.5s ease;
     &.hidden {

@@ -1,9 +1,13 @@
-@import "@gouvfr/dsfr/dist/css/dsfr.css";
+@import "@gouvfr/dsfr/dist/dsfr/dsfr.css";
+@import "@mdi/font/css/materialdesignicons.min.css";
+@import "./variables";
+@import "node_modules/@oruga-ui/oruga/src/scss/oruga-full.scss";
+
 .fr-card__img img{
   object-fit: contain;
 }
 .hero{
-  background-color: #000091;
+  background-color: $primary;
   padding: 2rem;
   h1,h2{
     color: #ffffff;
@@ -38,9 +42,55 @@
 .img-medium{
   max-height: 250px;
 }
+
+.fr-sidemenu{
+  padding: 0;
+}
+.fr-sidemenu--full-border{
+  border-top: none !important;
+}
 .fr-sidemenu__list{
   padding: 0;
 }
+.fr-sidemenu__inner{
+  margin-top: 10px;
+  padding: 0 1rem;
+  padding-top: 0 !important;
+}
+.sidebar-title{
+  background-color: $primary;
+  padding: 20px 5px;
+  text-align: center;
+  color:#ffffff;
+  z-index: 1;
+  h3,label {
+    color: #ffffff;
+  }
+  .results {
+    width:100% !important;
+    overflow-y: auto;
+    background-color: #FFFFFF;
+    div {
+      font-size: 0.8rem;
+      padding: 0 5px;
+    }
+    div:hover{
+      background-color: #E7E7E7;
+    }
+  }
+  .select-map{
+    text-align: left;
+    margin-top: 1rem;
+    .legend{
+      margin-top: 0.5rem;
+    }
+  }
+  .filter{
+    margin-top: 1rem;
+    border: 1px solid #ffffff;
+  }
+}
+
 .fr-tile__body{
   align-items: inherit;
   justify-content:inherit;
@@ -48,20 +98,22 @@
 .fr-select-group{
   text-align: left;
 }
-.autocomplete{
-  @import "bulma/sass/utilities/_all.sass";
-  // Set your colors
-  $primary: #000091;
-  $link: $primary;
-  @import "bulma";
-  @import "buefy/src/scss/buefy";
+.o-tabs{
+  margin-top:10px;
+}
+.o-tabs__nav{
+  padding: 0;
+}
+.o-tabs__nav-item:not(:disabled):hover{
+  background-color: #1212ff !important;
+  color:#ffffff;
 }
 .notices{
   position: fixed;
   top: 50%;
   left: 40%;
   z-index: 1;
-  border: 1px solid #000091;
+  border: 1px solid $primary;
   .snackbar{
     width: 300px;
     text-align: center;
@@ -79,7 +131,64 @@
     margin-left: 2rem;
   }
 }
-
 .glossaire > h3{
   margin-top: 2rem;
+}
+.controls{
+  padding-top: 0.8rem;
+  h3{
+    margin: 0 !important;
+  }
+}
+
+.legend {
+  position: absolute;
+  bottom: 25px;
+  right: 0;
+  overflow: auto;
+  border-radius: 10%;
+  padding: 10px;
+  z-index: 1;
+  background-color: #ffffff;
+  font-size: 0.8em;
+  width: 250px;
+    @media screen and (min-width: 992px) {
+      font-size: 1em;
+    }
+  .legend-class{
+    display: inline-block;
+    width: 30px;
+    margin-right: 5px;
+    background-color: #ccc;
+  }
+  .legend-title{
+    font-weight: bold;
+  }
+  .amount{
+    margin-top: 10px;
+  }
+  .proportional_circles{
+    position: relative;
+    margin-top: 10px;
+    hr {
+      position: absolute;
+      height: 1px; 
+      background-color: black;
+      margin: 0;
+      padding: 1px 0;
+    }
+    .circle-class{
+      border: 1px solid black;
+      border-radius: 50%;
+      background: whitesmoke;
+      position: absolute;
+    }
+    .circle-label{
+      position: absolute;
+      font-size: 0.8em;
+    }
+  }
+}
+.upper_legend{
+  bottom: 300px;
 }

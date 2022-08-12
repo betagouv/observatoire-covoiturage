@@ -19,7 +19,7 @@ export default class airesSchema {
         items: {
           properties: {
             id_lieu: {type:'string'},
-            ad_lieu: {type:'string'},
+            nom_lieu: {type:'string'},
             com_lieu:{type:'string'},
             type:{type:'string'},
             date_maj: {type:'string'},

@@ -1,7 +1,7 @@
 ---
 title: Aires de covoiturages sur le territoire français
 date: 2021-09-06T15:47:01.489Z
-link: /cartes/aires-covoiturage
+link: /dashboard/map/aires
 img: carte_aires.png
 
 ---

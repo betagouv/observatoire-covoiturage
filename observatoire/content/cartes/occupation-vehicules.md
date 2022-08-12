@@ -1,7 +1,7 @@
 ---
 title: Taux d'occupation des véhicules partagés et volume de ces véhicules par territoire
 date: 2021-09-06T16:47:01.489Z
-link: /cartes/occupation-vehicules
+link: /dashboard/map/occupation
 img: carte_occupation.png
 ---
 

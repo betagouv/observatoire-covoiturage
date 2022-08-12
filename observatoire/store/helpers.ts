@@ -21,5 +21,13 @@ export const state = () => ({
     {type:'dep',name:'Départements'},
     {type:'reg',name:'Régions'},
     {type:'country',name:'Pays'}
-  ]
+  ],
+  mapList:[
+    {id:'flux',name:'Flux mensuels de passagers entre territoires'},
+    {id:'densite',name:'Densité de trajets dans un maillage hexagonale'},
+    {id:'occupation',name:'Taux d\'occupation des véhicules partagés et volume de trajets par territoire'},
+    {id:'aires',name:'Aires de covoiturage'},
+  ],
 })
+
+export type helpersState = ReturnType<typeof state>
