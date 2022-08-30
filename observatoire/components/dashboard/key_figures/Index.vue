@@ -1,9 +1,9 @@
 <template>
   <div class="fr-grid-row">
-    <div class="fr-col-12 fr-col-lg-8">
+    <div class="fr-col-12 fr-col-lg-7">
       <Indicators v-if="dashboard.period.year !==''" />
     </div>
-    <div class="fr-col-12 fr-col-lg-4">
+    <div class="fr-col-12 fr-col-lg-5">
       <BestTrips v-if="dashboard.period.year !==''" />
     </div>
   </div>

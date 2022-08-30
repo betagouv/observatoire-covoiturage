@@ -184,7 +184,8 @@ export default class Flux extends mixins(MapMixin){
   public getBbox(){
     const coords = this.data.map(d => {return [[d.lng_1,d.lat_1],[d.lng_2,d.lat_2]]})
       .reduce((acc, val) => acc.concat(val), [])
-    return bbox(turf.multiPoint(coords))
+    const bounds = this.dashboard.territory.territory == 'XXXXX' ? [-5.225,41.333,9.55,51.2] : bbox(turf.multiPoint(coords))
+    return bounds
   }
 }
 </script>

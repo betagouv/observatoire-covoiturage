@@ -35,18 +35,13 @@ export default class Aires extends mixins(MapMixin){
   get filteredAires(){
     if(this.data){
       return turf.featureCollection(this.data.filter(a => this.dashboard.airesSwitch.filter(c => c.active === true).map(c=>c.name).includes(a.type)).map(d => turf.feature(d.geom,{
-        id_lieu:d.id_lieu,
         nom_lieu:d.nom_lieu,
         com_lieu:d.com_lieu,
         type:d.type,
         date_maj: d.date_maj,
         nbre_pl:d.nbre_pl,
         nbre_pmr:d.nbre_pmr,
-        duree:d.duree,
         horaires:d.horaires,
-        proprio:d.proprio,
-        lumiere:d.lumiere,
-        comm:d.comm
       })))
     }else{
       return undefined
@@ -65,7 +60,7 @@ export default class Aires extends mixins(MapMixin){
   async onTerritoryChanged() {
     await this.getData()
     this.map.getSource('airesSource').setData(this.filteredAires)
-    const bounds = bbox(this.filteredAires)
+    const bounds = this.dashboard.territory.territory == 'XXXXX' ? [-5.225,41.333,9.55,51.2] : bbox(this.filteredAires)
     this.map.fitBounds(bounds, {padding: 50})
   }
 
@@ -157,18 +152,13 @@ export default class Aires extends mixins(MapMixin){
         if(features[0].properties){
           let description = `
           <div class="fr-popup">
-            <p><b>id :</b>${features[0].properties.id_lieu}</p>
-            <p><b>nom :</b>${features[0].properties.nom_lieu}</p>
-            <p><b>commune :</b>${features[0].properties.com_lieu}</p>
-            <p><b>type :</b>${features[0].properties.type}</p>
-            <p><b>date_maj :</b>${new Date(features[0].properties.date_maj).toLocaleDateString('fr-FR')}</p>
-            <p><b>nbre_pl :</b>${features[0].properties.nbre_pl}</p>
-            <p><b>nbre_pmr :</b>${features[0].properties.nbre_pmr}</p>
-            <p><b>duree :</b>${features[0].properties.duree}</p>
-            <p><b>horaires :</b>${features[0].properties.horaires}</p>
-            <p><b>proprio :</b>${features[0].properties.proprio}</p>
-            <p><b>lumiere :</b>${features[0].properties.lumiere}</p>
-            <p><b>comm :</b>${features[0].properties.comm}</p>
+            <p><b>nom : </b>${features[0].properties.nom_lieu}</p>
+            <p><b>commune : </b>${features[0].properties.com_lieu}</p>
+            <p><b>type : </b>${features[0].properties.type}</p>
+            <p><b>Places : </b>${features[0].properties.nbre_pl}</p>
+            <p><b>Places pmr : </b>${features[0].properties.nbre_pmr}</p>
+            <p><b>horaires : </b>${features[0].properties.horaires}</p>
+            <p><b>Mise à jour : </b>${new Date(features[0].properties.date_maj).toLocaleDateString('fr-FR')}</p>
           </div>`
           popup.setLngLat(e.lngLat)
           .setHTML(description)
