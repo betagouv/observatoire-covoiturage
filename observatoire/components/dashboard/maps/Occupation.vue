@@ -168,8 +168,8 @@ export default class Occupation extends mixins(MapMixin){
           let description = `
           <div class="popup">
             <p><b>${features[0].properties.l_territory}</b></p>
-            <p>Véhicules partagés :${features[0].properties.journeys.toLocaleString('fr-FR')}</p>
-            <p>Nb de personnes par véhicule en moyenne :${features[0].properties.occupation_rate.toLocaleString('fr-FR')}</p>
+            <p>Véhicules partagés : ${features[0].properties.journeys.toLocaleString('fr-FR')}</p>
+            <p>Nb de personnes par véhicule en moyenne : ${features[0].properties.occupation_rate.toLocaleString('fr-FR')}</p>
           </div>`
           popup.setLngLat(e.lngLat)
           .setHTML(description)
@@ -185,7 +185,7 @@ export default class Occupation extends mixins(MapMixin){
    public async refreshMap() {
     await this.getData()
     this.map.getSource('occupationSource').setData(this.filteredData)
-    const bounds = bbox(this.filteredData)
+    const bounds = this.dashboard.territory.territory == 'XXXXX' ? [-5.225,41.333,9.55,51.2] : bbox(this.filteredData)
     this.map.fitBounds(bounds, {padding: 50})
   }
 }

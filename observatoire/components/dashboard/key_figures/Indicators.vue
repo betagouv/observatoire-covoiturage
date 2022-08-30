@@ -12,10 +12,12 @@
                     <span><o-icon pack="mdi" icon="car" size="medium" variant="info" /></span>
                   </td>
                   <td>
-                    {{data.passengers.toLocaleString()}}
                     <NuxtLink to=/pages/glossaire/#passager>
-                      passagers transportés
+                      Passagers transportés
                     </NuxtLink>
+                  </td>
+                  <td>
+                    {{data.passengers.toLocaleString()}}
                   </td>
                 </tr>
                 <tr v-if="data.has_incentive">
@@ -24,10 +26,12 @@
                     <span><o-icon pack="mdi" icon="car" size="medium" variant="info" /></span>
                   </td>
                   <td>
-                    {{data.has_incentive.toLocaleString()}}
                     <NuxtLink to=/pages/glossaire/#incentive>
-                      trajets incités
+                      Trajets incités
                     </NuxtLink>
+                  </td>
+                  <td>
+                    {{data.has_incentive.toLocaleString()}}
                   </td>
                 </tr>
                 <tr v-if="data.trips">
@@ -35,10 +39,12 @@
                     <span><o-icon pack="mdi" icon="car-2-plus" size="medium" variant="info" /></span>
                   </td>
                   <td>
-                    {{data.trips.toLocaleString()}}
                     <NuxtLink to=/pages/glossaire/#vehicule>
-                      véhicules partagés
+                      Véhicules partagés
                     </NuxtLink>
+                  </td>
+                  <td>
+                    {{data.trips.toLocaleString()}}
                   </td>
                 </tr>
                 <tr v-if="data.occupation_rate">
@@ -46,10 +52,12 @@
                     <span><o-icon pack="mdi" icon="account-group" size="medium" variant="info" /></span>
                   </td>
                   <td>
-                    {{data.occupation_rate.toLocaleString()}}
                     <NuxtLink to=/pages/glossaire/#occupation>
-                      taux d'occupation
+                      Taux d'occupation
                     </NuxtLink>
+                  </td>
+                  <td>
+                    {{data.occupation_rate.toLocaleString()}}
                   </td>
                 </tr>
                 <tr v-if="data.distance">
@@ -57,10 +65,12 @@
                     <span><o-icon pack="mdi" icon="map-marker-distance" size="medium" variant="info" /></span>
                   </td>
                   <td>
-                    {{Math.round(data.distance).toLocaleString()}}
                     <NuxtLink to=/pages/glossaire/#km_parcourus>
-                      km parcourus
+                      Km parcourus
                     </NuxtLink>
+                  </td>
+                  <td>
+                    {{Math.round(data.distance).toLocaleString()}}
                   </td>
                 </tr>
               </tbody>
@@ -80,10 +90,12 @@
                     <span><o-icon pack="mdi" icon="map-marker-path" size="medium" variant="info" /></span>
                   </td>
                   <td>
-                    {{(data.distance/data.passengers).toLocaleString('fr-FR',{maximumFractionDigits: 2})}}
                     <NuxtLink to=/pages/glossaire/#av-distance>
-                      distance moyenne (en km)
+                      Distance moyenne
                     </NuxtLink>
+                  </td>
+                  <td>
+                    {{(data.distance/data.passengers).toLocaleString('fr-FR',{maximumFractionDigits: 2})}} km
                   </td>
                 </tr>
                 <tr v-if="data.duration">
@@ -91,10 +103,12 @@
                     <span><o-icon pack="mdi" icon="map-clock" size="medium" variant="info" /></span>
                   </td>
                   <td>
-                    {{Math.round((data.duration*60)/data.passengers).toLocaleString()}}
                     <NuxtLink to=/pages/glossaire/#duration>
-                      temps moyen (en mn)
+                      Temps moyen
                     </NuxtLink>
+                  </td>
+                  <td>
+                    {{Math.round((data.duration*60)/data.passengers).toLocaleString()}}  mn
                   </td>
                 </tr>
                 <tr v-if="data.distance">
@@ -103,10 +117,12 @@
                     <span><o-icon pack="mdi" icon="molecule-co2" size="medium" variant="info" /></span>
                   </td>
                   <td>
-                    {{(data.distance*0.000195).toLocaleString('fr-FR',{maximumFractionDigits: 2})}}
                     <NuxtLink to=/pages/glossaire/#co2>
-                      tonnes de CO₂ économisés
+                      Tonnes de CO₂ économisés
                     </NuxtLink>
+                  </td>
+                  <td>
+                    {{(data.distance*0.000195).toLocaleString('fr-FR',{maximumFractionDigits: 2})}}
                   </td>
                 </tr>
                 <tr v-if="data.distance">
@@ -114,10 +130,12 @@
                     <span><o-icon pack="mdi" icon="barrel" size="medium" variant="info" /></span>
                   </td>
                   <td>
-                    {{Math.round(data.distance*0.0636).toLocaleString()}}
                     <NuxtLink to=/pages/glossaire/#petrole>
-                      litres de pétrole économisés
+                      Litres de pétrole économisés
                     </NuxtLink>
+                  </td>
+                  <td>
+                    {{Math.round(data.distance*0.0636).toLocaleString()}}
                   </td>
                 </tr>
                 <tr v-if="data.nb_aires">
@@ -125,10 +143,12 @@
                     <span><o-icon pack="mdi" icon="car-off" size="medium" variant="info" /></span>
                   </td>
                   <td>
-                    {{data.nb_aires.toLocaleString()}}
                     <NuxtLink to=/pages/glossaire/#aire>
-                      aires de covoiturage
+                      Aires de covoiturage
                     </NuxtLink>
+                  </td>
+                  <td>
+                    {{data.nb_aires.toLocaleString()}}
                   </td>
                 </tr>
               </tbody>

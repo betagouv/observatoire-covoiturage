@@ -68,6 +68,7 @@ export default class SelectTerritory extends Vue{
   set selectedTerritory(value){
     this.$store.commit('dashboard/TERRITORY', value)
     this.edit = false
+    this.$router.push(`/dashboard/${value.type}/${value.territory}`)
   }
   
   public async mounted() {
@@ -89,6 +90,7 @@ export default class SelectTerritory extends Vue{
       type:"country"
     }
     this.$store.commit('dashboard/TERRITORY', territory)
+    this.$router.push(`/dashboard`)
   }
 }
 </script>

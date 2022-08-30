@@ -230,18 +230,13 @@ export default class Densite extends mixins(MapMixin){
       this.map.getCanvas().style.cursor = 'pointer'
       let description = `
         <div class="fr-popup">
-          <p><b>id :</b>${features[0].properties.id_lieu}</p>
-          <p><b>nom :</b>${features[0].properties.nom_lieu}</p>
-          <p><b>commune :</b>${features[0].properties.com_lieu}</p>
-          <p><b>type :</b>${features[0].properties.type}</p>
-          <p><b>date_maj :</b>${new Date(features[0].properties.date_maj).toLocaleDateString('fr-FR')}</p>
-          <p><b>nbre_pl :</b>${features[0].properties.nbre_pl}</p>
-          <p><b>nbre_pmr :</b>${features[0].properties.nbre_pmr}</p>
-          <p><b>duree :</b>${features[0].properties.duree}</p>
-          <p><b>horaires :</b>${features[0].properties.horaires}</p>
-          <p><b>proprio :</b>${features[0].properties.proprio}</p>
-          <p><b>lumiere :</b>${features[0].properties.lumiere}</p>
-          <p><b>comm :</b>${features[0].properties.comm}</p>
+          <p><b>nom : </b>${features[0].properties.nom_lieu}</p>
+          <p><b>commune : </b>${features[0].properties.com_lieu}</p>
+          <p><b>type : </b>${features[0].properties.type}</p>
+          <p><b>Places : </b>${features[0].properties.nbre_pl}</p>
+          <p><b>Places pmr : </b>${features[0].properties.nbre_pmr}</p>
+          <p><b>horaires : </b>${features[0].properties.horaires}</p>
+          <p><b>Mise à jour : </b>${new Date(features[0].properties.date_maj).toLocaleDateString('fr-FR')}</p>
         </div>`
       popup.setLngLat(e.lngLat)
       .setHTML(description)
@@ -260,7 +255,8 @@ export default class Densite extends mixins(MapMixin){
   public getBbox(){
     const hexagons = this.data.map(d => {return d.hex})
     const polygon = h3SetToMultiPolygon(hexagons, true)
-    return bbox(turf.multiPolygon(polygon))
+    const bounds = this.dashboard.territory.territory == 'XXXXX' ? [-5.225,41.333,9.55,51.2] : bbox(turf.multiPolygon(polygon))
+    return bounds
   }
 
   public updateLayer(){
