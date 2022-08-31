@@ -1,8 +1,9 @@
 ---
 title: Taux d'occupation des véhicules partagés et volume de ces véhicules par territoire
+description: "Cette carte représente le taux d'occupation des véhicules partagés entrant et sortant d'un territoire ainsi que le nombre de personnes par véhicule partagé (en moyenne)."
 date: 2021-09-06T16:47:01.489Z
 link: /dashboard/map/occupation
-img: carte_occupation.png
+img: /images/cartes/carte_occupation.png
 ---
 
 Cette carte représente le taux d'occupation des véhicules partagés entrant et sortant d'un territoire ainsi que le nombre de personnes par véhicule partagé (en moyenne).  

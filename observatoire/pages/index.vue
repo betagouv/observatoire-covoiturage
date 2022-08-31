@@ -58,8 +58,21 @@
       </div>
     </div>
   </div>
-  <div class="fr-section--banner hero">
-
+  <div class="fr-section home-section">
+    <div class="fr-container">
+      <div class="fr-grid-row fr-grid-row--gutters">
+        <div class="fr-col-lg-10 fr-col-offset-lg-1">
+          <ContentList title="Les dernières cartes de l'observatoire" :contents="cartes" />
+        </div>
+      </div>
+      <div class="fr-grid-row fr-grid-row--gutters">
+        <div class="fr-col-12 align-center">
+            <NuxtLink to="/cartes" class="fr-btn fr-btn--secondary">
+              Plus de cartes
+            </NuxtLink>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="fr-section home-section">
     <div class="fr-container">
@@ -103,6 +116,11 @@ export default class Home extends mixins(BreakpointsMixin){
     .limit(perPage)
     .fetch()
 
+    const cartes = await $content('cartes')
+    .sortBy('date', 'desc')
+    .limit(perPage)
+    .fetch()
+
     const categories = await $content('categories')
     .only(['name', 'slug'])
     .fetch()
@@ -113,7 +131,7 @@ export default class Home extends mixins(BreakpointsMixin){
 
     const taxonomies = {'categories':categories,'themes':themes}
 
-    return { actualites, ressources, taxonomies }
+    return { actualites, ressources, taxonomies, cartes }
   }
 }
 </script>

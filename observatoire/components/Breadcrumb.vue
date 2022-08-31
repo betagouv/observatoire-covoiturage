@@ -6,7 +6,7 @@
           <li>
               <NuxtLink class="fr-breadcrumb__link" to="/">Accueil</NuxtLink>
           </li>
-          <li v-if="taxonomy || current">
+          <li v-if="taxonomy | current">
             <NuxtLink :to="`/${type.slug}`" class="fr-breadcrumb__link">
               {{type.name}}
             </NuxtLink>

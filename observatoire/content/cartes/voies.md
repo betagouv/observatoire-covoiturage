@@ -1,8 +1,9 @@
 ---
 title: Voies de covoiturage sur le territoire français
+description: "Cette carte représente les voies de covoiturage en site propre sur le territoire français."
 date: 2022-02-28T15:47:01.489Z
 link: /dashboard/map/voies
-img: carte_voies.png
+img: /images/cartes/carte_voies.png
 
 ---
 

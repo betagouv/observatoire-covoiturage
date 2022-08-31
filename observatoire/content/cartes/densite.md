@@ -1,8 +1,9 @@
 ---
 title: Densité des départs et des arrivées de covoiturage dans un maillage hexagonale
+description: "Cette carte représente la densité des départs et des arrivées de covoiturage à différentes échelles sur un maillage hexagonale."
 date: 2021-09-06T17:47:01.489Z
 link: /dashboard/map/densite
-img: carte_densite.png
+img: /images/cartes/carte_densite.png
 ---
 
 Cette carte représente la densité des départs et des arrivées de covoiturage à différentes échelles sur un maillage hexagonale.  
