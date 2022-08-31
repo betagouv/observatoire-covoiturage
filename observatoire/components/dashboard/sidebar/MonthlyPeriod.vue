@@ -8,17 +8,17 @@
         <option v-for="option in helpers.yearList" :value="option" :key="option">{{option}}</option>
       </select>
       <o-button @click="edit=!edit" class="fr-btn" title="Label bouton">
-        <i class="mdi mdi-close-circle-outline mdi-24px"></i>
+        <i class="mdi mdi-close-circle-outline mdi-22px"></i>
       </o-button>
     </o-field>
   </div>
   <div class="controls" v-else>
-    <h3>
+    <h4>
       Période : {{monthName}} {{dashboard.period.year}} 
       <o-button @click="edition" class="fr-btn" title="Label bouton">
-        <i class="mdi mdi-pencil mdi-24px"></i>
+        <i class="mdi mdi-pencil mdi-22px"></i>
       </o-button>
-    </h3>
+    </h4>
   </div>
 </template>
 

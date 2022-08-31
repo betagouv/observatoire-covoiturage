@@ -3,7 +3,7 @@
     <div class="fr-col-12 fr-col-lg-6">
       <div class="fr-tile">
         <div class="fr-tile__body">
-          <div class="fr-table">
+          <div class="fr-table fr-table--layout-fixed">
             <table> 
               <tbody>
                 <tr v-if="data.passengers">
@@ -82,8 +82,8 @@
     <div class="fr-col-12 fr-col-lg-6">
       <div class="fr-tile">
         <div class="fr-tile__body">
-          <div class="fr-table">
-            <table> 
+          <div class="fr-table fr-table--layout-fixed">
+            <table>
               <tbody>
                 <tr v-if="data.distance">
                   <td> 

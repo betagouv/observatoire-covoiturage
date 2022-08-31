@@ -59,11 +59,10 @@
 }
 .sidebar-title{
   background-color: $primary;
-  padding: 20px 5px;
-  text-align: center;
+  padding: 20px;
   color:#ffffff;
   z-index: 1;
-  h3,label {
+  h4,label {
     color: #ffffff;
   }
   .results {
@@ -81,14 +80,10 @@
   .select-map{
     text-align: left;
     margin-top: 1rem;
-    .legend{
-      margin-top: 0.5rem;
-    }
   }
-  .filter{
-    margin-top: 1rem;
-    border: 1px solid #ffffff;
-  }
+}
+.filter{
+  margin: 1rem !important;
 }
 
 .fr-tile__body{
@@ -105,7 +100,7 @@
   padding: 0;
 }
 .o-tabs__nav-item:not(:disabled):hover{
-  background-color: #1212ff !important;
+  background-color: #a19237 !important;
   color:#ffffff;
 }
 .notices{

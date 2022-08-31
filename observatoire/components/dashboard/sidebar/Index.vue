@@ -4,15 +4,15 @@
       <div class="sidebar-title">
         <SidebarSelectTerritory v-if="dashboard.period.year !== ''" />
         <SidebarMonthlyPeriod />
-        <div class="select-map" v-if="dashboard.activeTab === 2">
-          <SidebarSelectMap />
-          <o-field v-if="!lgAndAbove" class="legend">
-          <o-switch class="legend" size="is-small" variant="warning" v-model="legend">
+      </div>
+      <div class="select-map" v-if="dashboard.activeTab === 2">
+        <SidebarSelectMap />
+      </div>
+      <div v-if="!lgAndAbove && dashboard.activeTab !== 1">
+        <o-field>
+          <o-switch size="small" variant="warning" v-model="legend">
           Afficher la légende
           </o-switch>
-        </o-field>
-        </div>
-        <o-field v-if="!lgAndAbove && dashboard.activeTab !== 1">
           <button v-if="!screen.isSidebarOpen" class="fr-btn fr-btn--primary filter" @click="openSidebar">
             + de filtres
           </button>
