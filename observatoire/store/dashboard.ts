@@ -61,11 +61,11 @@ export const actions: ActionTree<DashboardState, DashboardState> = {
     const response = await this.$axios.get('/monthly_flux/last')
     commit('PERIOD',response.data)
   },
-  async getDensitePeriod({ commit }){
-    const response = await this.$axios.get('/rpc/last')
+  async getDensitePeriod({ state, commit }){
+    
     const period = { 
-      start: new Date(new Date(response.data.date).getFullYear(),new Date(response.data.date).getMonth() - 1,1),
-      end: new Date(new Date(response.data.date).getFullYear(),new Date(response.data.date).getMonth(),0)
+      start: new Date(Number(state.period.year),Number(state.period.month) - 1,1),
+      end: new Date(Number(state.period.year),Number(state.period.month),0)
     }
     commit('DENSITE_PERIOD_START',period.start)
     commit('DENSITE_PERIOD_END',period.end)

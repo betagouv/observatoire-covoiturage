@@ -9,7 +9,7 @@
           label-position="on-border"
           v-model=startPeriod
           :min-date=minDate 
-          :max-date=maxDate
+          :max-date=endPeriod
           icon="calendar-today"
           trap-focus
         />
@@ -17,7 +17,7 @@
       <o-field label="Fin" custom-class="is-small">
         <o-datepicker 
           v-model=endPeriod
-          :min-date=minDate
+          :min-date=startPeriod
           :max-date=maxDate
           icon="calendar-today"
           trap-focus
@@ -41,13 +41,10 @@ import { DashboardState } from '../../../../store/dashboard'
 })
 export default class DatepickerDensite extends Vue{
   dashboard!: DashboardState
-  minDate = new Date('01/01/2020')
-  maxDate = new Date()
 
   get startPeriod(){
     return this.dashboard.densitePeriod.start
   }
-
   set startPeriod(value){
     this.$store.commit('dashboard/DENSITE_PERIOD_START',value)
   }
@@ -55,9 +52,16 @@ export default class DatepickerDensite extends Vue{
   get endPeriod(){
     return this.dashboard.densitePeriod.end
   }
-
   set endPeriod(value){
     this.$store.commit('dashboard/DENSITE_PERIOD_END',value)
+  }
+
+  get minDate(){
+    return new Date(Number(this.dashboard.period.year),Number(this.dashboard.period.month) - 1,1)
   }  
+
+  get maxDate(){
+    return new Date(Number(this.dashboard.period.year),Number(this.dashboard.period.month),0)
+  } 
 }
 </script>
