@@ -18,6 +18,9 @@
             <o-tab-item label="Cartes" icon="map">
               <MapIndex v-if="activeTab===2" /> 
             </o-tab-item>
+            <o-tab-item label="Graphiques" icon="chart-bar">
+              <GraphIndex v-if="activeTab===3" /> 
+            </o-tab-item>
           </o-tabs>
         </div>
       </div>
@@ -31,6 +34,7 @@ import BreakpointsMixin from '../../components/mixins/breakpoints'
 import Sidebar from '../../components/dashboard/sidebar/Index.vue'
 import KeyFiguresIndex from '../../components/dashboard/key_figures/Index.vue'
 import MapIndex from '../../components/dashboard/maps/Index.vue'
+import GraphIndex from '../../components/dashboard/graphs/Index.vue'
 import { mapState } from 'vuex'
 import { DashboardState } from '../../store/dashboard'
 
@@ -40,6 +44,7 @@ import { DashboardState } from '../../store/dashboard'
     Sidebar,
     KeyFiguresIndex,
     MapIndex,
+    GraphIndex,
   },
   computed:{
     ...mapState({
