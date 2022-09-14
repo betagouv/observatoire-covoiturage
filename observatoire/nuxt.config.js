@@ -99,6 +99,11 @@ export default {
           component: resolve(__dirname, 'pages/dashboard/index.vue')
         },
         {
+          name: 'choose_graph',
+          path: '/dashboard/graph/:graph',
+          component: resolve(__dirname, 'pages/dashboard/index.vue')
+        },
+        {
           name: 'single_territory',
           path: '/dashboard/:type/:code',
           component: resolve(__dirname, 'pages/dashboard/index.vue')

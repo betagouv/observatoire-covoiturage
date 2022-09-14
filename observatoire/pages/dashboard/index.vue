@@ -5,7 +5,7 @@
         <div class="fr-col-12 fr-col-lg-3 sidebar">
           <Sidebar v-if="dashboard.period" />
         </div>
-        <div class="fr-col">
+        <div class="fr-col-12 fr-col-lg-9">
           <o-tabs 
             v-model="activeTab"
             type="toggle" 
@@ -75,6 +75,10 @@ export default class Dashboard extends mixins(BreakpointsMixin){
     if(this.$route.params.map){
       this.$store.commit('dashboard/ACTIVEMAP',this.$route.params.map)
       this.$store.commit('dashboard/ACTIVETAB',2)
+    }
+    if(this.$route.params.graph){
+      this.$store.commit('dashboard/ACTIVEGRAPH',this.$route.params.graph)
+      this.$store.commit('dashboard/ACTIVETAB',3)
     }
   }
 

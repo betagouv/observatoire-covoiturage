@@ -1,8 +1,11 @@
-export interface JourneysInterface {
+export interface EvolInterface {
   year:number,
   month:number,
-  territory:string,
-  l_territory:string,
   journeys:number,
+  passengers:number,
+  distance:number,
+  duration:number,
+  trips:number,
+  has_incentive:number,
   occupation_rate:number,
 }

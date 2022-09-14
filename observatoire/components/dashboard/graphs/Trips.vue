@@ -4,6 +4,7 @@
       <div class="fr-tile__body">
         <line-chart
           :chart-data="chartData"
+          title="test"
           :height=150
           :chart-options="chartOptions"
         />
@@ -25,7 +26,7 @@ import { DashboardState } from '../../../store/dashboard'
     })
   }
 })
-export default class Journeys extends Vue{
+export default class Trips extends Vue{
   dashboard!: DashboardState  
   data:EvolInterface[] | [] = []
 
@@ -51,24 +52,14 @@ export default class Journeys extends Vue{
       const month = this.monthList.find(m => m.id == d.month)
       return month.name + ' '+ d.year
     })
-    const journeys = this.data.map(d => d.journeys)
-    const incentive = this.data.map(d => d.has_incentive)
+    const trips = this.data.map(d => d.trips)
     chart.labels = labels.reverse() 
     chart.datasets.push({
-      label:'Nombre de trajets',
-      data:journeys.reverse(),
+      label:'Nombre de véhicules partagées',
+      data:trips.reverse(),
       borderColor:'#000091',
       backgroundColor:'rgba(0, 0, 145, 0.2)',
       tension: 0.1,
-      order:2
-    },
-    {
-      label:'Nombre de trajets incités',
-      data:incentive.reverse(),
-      borderColor:'#A19237',
-      backgroundColor:'rgba(161, 146, 55, 0.6)',
-      tension: 0.1,
-      order:1
     })
     return chart
   }

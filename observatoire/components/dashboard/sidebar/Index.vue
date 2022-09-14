@@ -8,6 +8,9 @@
       <div class="select-map" v-if="dashboard.activeTab === 2">
         <SidebarSelectMap />
       </div>
+      <div class="select-graph" v-if="dashboard.activeTab === 3">
+        <SidebarSelectGraph />
+      </div>
       <div v-if="!lgAndAbove && dashboard.activeTab !== 1">
         <o-field>
           <o-switch size="small" variant="warning" v-model="legend">
@@ -41,6 +44,7 @@ import BreakpointsMixin from '../../mixins/breakpoints'
 import SidebarMonthlyPeriod from './MonthlyPeriod.vue'
 import SidebarSelectTerritory from './SelectTerritory.vue'
 import SidebarSelectMap from './SelectMap.vue'
+import SidebarSelectGraph from './SelectGraph.vue'
 import SidebarMapControlsSelectVoiesReservees from './mapControls/SelectVoiesReservees.vue'
 import SidebarMapControlsSelectFluxType from './mapControls/SelectFluxType.vue'
 import SidebarMapControlBetweenFluxNb from './mapControls/BetweenFluxNb.vue'
@@ -58,6 +62,7 @@ import { DashboardState } from '../../../store/dashboard'
     SidebarMonthlyPeriod,
     SidebarSelectTerritory,
     SidebarSelectMap,
+    SidebarSelectGraph,
     SidebarMapControlsSelectVoiesReservees,
     SidebarMapControlsSelectFluxType,
     SidebarMapControlBetweenFluxNb,
