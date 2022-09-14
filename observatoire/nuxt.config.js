@@ -52,6 +52,7 @@ export default {
   plugins: [
     '@/plugins/axios-accessor.ts',
     '@/plugins/oruga.ts',
+    {src: '~/plugins/chart.ts', mode: 'client'}
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
