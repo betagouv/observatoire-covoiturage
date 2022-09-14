@@ -5,7 +5,7 @@
         <div class="fr-col-12 fr-col-lg-3 sidebar">
           <Sidebar v-if="dashboard.period" />
         </div>
-        <div class="fr-col">
+        <div class="fr-col-12 fr-col-lg-9">
           <o-tabs 
             v-model="activeTab"
             type="toggle" 
@@ -17,6 +17,9 @@
             </o-tab-item> 
             <o-tab-item label="Cartes" icon="map">
               <MapIndex v-if="activeTab===2" /> 
+            </o-tab-item>
+            <o-tab-item label="Graphiques" icon="chart-bar">
+              <GraphIndex v-if="activeTab===3" /> 
             </o-tab-item>
           </o-tabs>
         </div>
@@ -31,6 +34,7 @@ import BreakpointsMixin from '../../components/mixins/breakpoints'
 import Sidebar from '../../components/dashboard/sidebar/Index.vue'
 import KeyFiguresIndex from '../../components/dashboard/key_figures/Index.vue'
 import MapIndex from '../../components/dashboard/maps/Index.vue'
+import GraphIndex from '../../components/dashboard/graphs/Index.vue'
 import { mapState } from 'vuex'
 import { DashboardState } from '../../store/dashboard'
 
@@ -40,6 +44,7 @@ import { DashboardState } from '../../store/dashboard'
     Sidebar,
     KeyFiguresIndex,
     MapIndex,
+    GraphIndex,
   },
   computed:{
     ...mapState({
@@ -70,6 +75,10 @@ export default class Dashboard extends mixins(BreakpointsMixin){
     if(this.$route.params.map){
       this.$store.commit('dashboard/ACTIVEMAP',this.$route.params.map)
       this.$store.commit('dashboard/ACTIVETAB',2)
+    }
+    if(this.$route.params.graph){
+      this.$store.commit('dashboard/ACTIVEGRAPH',this.$route.params.graph)
+      this.$store.commit('dashboard/ACTIVETAB',3)
     }
   }
 

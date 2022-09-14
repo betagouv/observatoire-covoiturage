@@ -12,6 +12,7 @@ export const state = () => ({
   },
   activeTab:1,
   activeMap :'flux',
+  activeGraph:'journeys',
   densitePeriod:{
     start:new Date,
     end:new Date,
@@ -44,6 +45,7 @@ export const mutations: MutationTree<DashboardState> = {
   TERRITORY: (state, territory: DashboardState["territory"]) => (state.territory = territory),
   ACTIVETAB: (state, activeTab: DashboardState["activeTab"]) => (state.activeTab = activeTab),
   ACTIVEMAP: (state, activeMap: DashboardState["activeMap"]) => (state.activeMap = activeMap),
+  ACTIVEGRAPH: (state, activeGraph: DashboardState["activeGraph"]) => (state.activeGraph = activeGraph),
   DENSITE_PERIOD_START: (state, densitePeriodStart: Date) => (state.densitePeriod.start = densitePeriodStart),
   DENSITE_PERIOD_END: (state, densitePeriodEnd: Date) => (state.densitePeriod.end = densitePeriodEnd),
   DENSITE_ZOOM: (state, densiteZoom: DashboardState["densiteZoom"]) => (state.densiteZoom = densiteZoom),
