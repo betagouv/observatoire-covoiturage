@@ -30,28 +30,5 @@ export default class occupationHandler {
       reply.send(err)
     }
   }
-
-  static async occupationEvolMonthly(request: FastifyRequest<occupationTypes.monthly>, reply: FastifyReply):Promise<void>{
-    try {
-      const client = await this.pg.connect()
-      const sql = `SELECT year,month,type,territory,l_territory,journeys,has_incentive,occupation_rate FROM monthly_occupation
-      WHERE concat(year::varchar,TO_CHAR(month, 'fm00'))::integer <= ${request.query.year+String(request.query.month).padStart(2, '0')} 
-      AND type = '${request.query.t}'
-      AND territory = '${request.query.code}'
-      ORDER BY (year,month) DESC
-      LIMIT 12;`
-      const result = await client.query(sql)
-      if (!result.rows) {
-        reply.code(404).send(new Error('page not found'))
-      }
-      else if (result.rows.length === 0) {
-        reply.code(404).send(new Error('Pas de données disponibles'))
-      }
-      reply.send(result.rows)
-      client.release()
-    } catch (err) {
-      reply.send(err)
-    }
-  }
 }
   

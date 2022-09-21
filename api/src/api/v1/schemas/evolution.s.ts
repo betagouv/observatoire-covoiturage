@@ -1,6 +1,6 @@
-export default class occupationSchema {
+export default class evolutionSchema {
   
-  static occupationMonthly = {
+  static evolMonthly = {
     tags: ['occupation'],
     querystring: {
       year: {
@@ -15,10 +15,6 @@ export default class occupationSchema {
         type: 'string',
         description: 'type of selected territories'
       },
-      t2: {
-        type: 'string',
-        description: 'type of observed territory'
-      },
       code: {
         type: 'string',
         description: 'insee code of observed territory'
@@ -27,20 +23,18 @@ export default class occupationSchema {
     response: {
       200: {
         type: 'array',
-        description:'Trajets et taux d\'occupation mensuels pour le type de territoires selectionné (tout sens confondus)',
+        description:'Trajets et taux d\'occupation mensuels pour le type de territoires selectionné (tout sens confondus) sur 12 mois',
         items: {
           properties: {
-            territory: {type:'string'},
-            l_territory:{type:'string'},
+            year:{type:'integer'},
+            month:{type:'integer'},
             journeys:{type:'integer'},
+            passengers:{type:'integer'},
+            distance:{type:'number'},
+            duration:{type:'number'},
+            trips:{type:'integer'},
             has_incentive:{type:'integer'},
             occupation_rate:{type:'number'},
-            geom:{type:'object',
-              properties: {
-                type: {type:'string'},
-                coordinates:{type:'array',minItems: 2,maxItems: 2,items:{ type: 'number'}}
-              }
-            }
           }
         }
       }

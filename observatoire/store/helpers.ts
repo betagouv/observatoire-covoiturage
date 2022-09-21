@@ -28,6 +28,11 @@ export const state = () => ({
     {id:'occupation',name:'Taux d\'occupation des véhicules partagés et volume de trajets par territoire'},
     {id:'aires',name:'Aires de covoiturage'},
   ],
+  graphList:[
+    {id:'journeys',name:'Evolution du nombre de trajets'},
+    {id:'trips',name:'Evolution du nombre de véhicules partagés'},
+    {id:'occupation',name:'Evolution du taux d\'occupation'},
+  ],
 })
 
 export type helpersState = ReturnType<typeof state>

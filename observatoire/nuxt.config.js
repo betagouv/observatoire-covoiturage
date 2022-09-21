@@ -52,6 +52,7 @@ export default {
   plugins: [
     '@/plugins/axios-accessor.ts',
     '@/plugins/oruga.ts',
+    {src: '~/plugins/chart.ts', mode: 'client'}
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -95,6 +96,11 @@ export default {
       routes.push({
           name:'choose_map',
           path:'/dashboard/map/:map',
+          component: resolve(__dirname, 'pages/dashboard/index.vue')
+        },
+        {
+          name: 'choose_graph',
+          path: '/dashboard/graph/:graph',
           component: resolve(__dirname, 'pages/dashboard/index.vue')
         },
         {
