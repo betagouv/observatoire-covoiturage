@@ -32,6 +32,8 @@ export const state = () => ({
     {id:'journeys',name:'Evolution du nombre de trajets'},
     {id:'trips',name:'Evolution du nombre de véhicules partagés'},
     {id:'occupation',name:'Evolution du taux d\'occupation'},
+    {id:'distance',name:'Evolution de la distance moyenne'},
+    {id:'journeys_by_hours',name:'Répartition des trajets par tranche horaire'},
   ],
 })
 

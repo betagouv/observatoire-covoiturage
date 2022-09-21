@@ -108,6 +108,38 @@ export default class territoryHandler {
     }
   }
 
+  static async JourneysByHours(request: FastifyRequest<territoryTypes.indicators>, reply: FastifyReply):Promise<void>{
+    try {
+      const client = await this.pg.connect()
+      const sql =`
+      WITH journeys AS (
+        SELECT EXTRACT(HOUR FROM journey_start_time)::int as hour, journey_id
+        FROM rpc 
+        WHERE (
+          journey_start_insee IN (SELECT com FROM (SELECT com,epci,aom,dep,reg,country FROM territories_code WHERE year = '${request.query.year}') t WHERE ${request.query.t} = '${request.query.territory}') 
+          OR journey_end_insee IN (SELECT com FROM (SELECT com,epci,aom,dep,reg,country FROM territories_code WHERE year = '${request.query.year}') t WHERE ${request.query.t} = '${request.query.territory}')
+        )
+        AND EXTRACT(MONTH FROM journey_start_date) = ${request.query.month}
+        AND EXTRACT(YEAR FROM journey_start_date)= ${request.query.year}
+        )
+        SELECT hour, count(journey_id) as journeys
+        FROM journeys
+        GROUP BY hour
+        ORDER BY hour ASC;`
+      const result = await client.query(sql)
+      if (!result.rows) {
+        reply.code(404).send(new Error('page not found'))
+      }
+      else if (result.rows.length === 0) {
+        reply.code(404).send(new Error('Pas de données disponibles'))
+      }
+      reply.send(result.rows)
+      client.release()
+    } catch (err) {
+      reply.send(err)
+    }
+  }
+
   static async getAom(request: FastifyRequest<territoryTypes.list>, reply: FastifyReply):Promise<void>{
     try {
       const client = await this.pg.connect()

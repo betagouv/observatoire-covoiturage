@@ -25,7 +25,7 @@ import { DashboardState } from '../../../store/dashboard'
     })
   }
 })
-export default class Occupation extends Vue{
+export default class Distance extends Vue{
   dashboard!: DashboardState  
   data:EvolInterface[] | [] = []
 
@@ -35,7 +35,27 @@ export default class Occupation extends Vue{
       line: {
         fill: true
       }
+    },
+    scales: {
+      y: {
+        ticks: {
+          // Include a dollar sign in the ticks
+          callback: function(value, index, ticks) {
+            return value + ' km';
+          }
+        }
+      }
+    },
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label: function(context) {
+            return context.parsed.y + ' km';
+          }
+        }
+      }
     }
+    
   }
 
   get monthList(){
@@ -45,17 +65,17 @@ export default class Occupation extends Vue{
   get chartData(){
     const chart:any = {
       labels:[],
-      datasets:[]
+      datasets:[],
     }
     const labels = this.data.map((d:EvolInterface) =>{ 
       const month = this.monthList.find(m => m.id == d.month)
       return month.name + ' '+ d.year
     })
-    const occupation = this.data.map(d => d.occupation_rate)
+    const distance = this.data.map(d => (d.distance/d.passengers).toFixed(2))
     chart.labels = labels.reverse() 
     chart.datasets.push({
-      label:'Taux d\'occupation des véhicules/km',
-      data:occupation.reverse(),
+      label:'Distance moyenne des trajets (en km)',
+      data:distance.reverse(),
       borderColor:'#000091',
       backgroundColor:'rgba(0, 0, 145, 0.2)',
       tension: 0.1,
