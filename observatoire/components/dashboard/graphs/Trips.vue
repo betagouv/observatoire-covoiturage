@@ -4,7 +4,6 @@
       <div class="fr-tile__body">
         <line-chart
           :chart-data="chartData"
-          title="test"
           :height=150
           :chart-options="chartOptions"
         />
