@@ -2,7 +2,10 @@
   <div class="graph">
     <div class="fr-tile">
       <div class="fr-tile__body">
-        <line-chart
+        <o-loading :active.sync="isLoading">
+          <o-icon pack="mdi" icon="tire" size="large" variant="info" spin> </o-icon>
+        </o-loading>
+        <bar-chart
           :chart-data="chartData"
           :height=150
           :chart-options="chartOptions"
@@ -25,37 +28,23 @@ import { DashboardState } from '../../../store/dashboard'
     })
   }
 })
-export default class Distance extends Vue{
+export default class JourneysByHours extends Vue{
   dashboard!: DashboardState  
   data:EvolInterface[] | [] = []
 
+  isLoading = false
   chartOptions = {
     responsive: true,
-    elements: {
-      line: {
-        fill: true
-      }
-    },
     scales: {
-      y: {
+      x: {
         ticks: {
           // Include a dollar sign in the ticks
           callback: function(value, index, ticks) {
-            return value + ' km';
+            return value + ' h';
           }
         }
       }
-    },
-    plugins: {
-      tooltip: {
-        callbacks: {
-          label: function(context) {
-            return context.parsed.y + ' km';
-          }
-        }
-      }
-    }
-    
+    },    
   }
 
   get monthList(){
@@ -64,18 +53,12 @@ export default class Distance extends Vue{
 
   get chartData(){
     const chart:any = {
-      labels:[],
+      labels:[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],
       datasets:[],
     }
-    const labels = this.data.map((d:EvolInterface) =>{ 
-      const month = this.monthList.find(m => m.id == d.month)
-      return month.name + ' '+ d.year
-    })
-    const distance = this.data.map(d => (d.distance/d.passengers).toFixed(2))
-    chart.labels = labels.reverse() 
     chart.datasets.push({
-      label:'Distance moyenne des trajets (en km)',
-      data:distance.reverse(),
+      label:'Répartition des trajets par tranche horaire',
+      data:this.data.map(d=>d.journeys),
       borderColor:'#000091',
       backgroundColor:'rgba(0, 0, 145, 0.2)',
       tension: 0.1,
@@ -98,8 +81,10 @@ export default class Distance extends Vue{
   }
 
   public async getData(){
-    const response = await this.$axios.get(`/evolution/monthly?code=${this.dashboard.territory.territory}&t=${this.dashboard.territory.type}&year=${this.dashboard.period.year}&month=${this.dashboard.period.month}`)
+    this.isLoading = true
+    const response = await this.$axios.get(`/journeys_by_hours?territory=${this.dashboard.territory.territory}&t=${this.dashboard.territory.type}&year=${this.dashboard.period.year}&month=${this.dashboard.period.month}`)
     this.data = response.data
+    this.isLoading = false
   }
 }
 </script>
