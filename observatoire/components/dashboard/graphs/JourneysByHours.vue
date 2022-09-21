@@ -44,7 +44,11 @@ export default class JourneysByHours extends Vue{
           }
         }
       }
-    },    
+    },
+    parsing: {
+      xAxisKey: 'hour',
+      yAxisKey: 'journeys'
+    }    
   }
 
   get monthList(){
@@ -58,7 +62,7 @@ export default class JourneysByHours extends Vue{
     }
     chart.datasets.push({
       label:'Répartition des trajets par tranche horaire',
-      data:this.data.map(d=>d.journeys),
+      data:this.data,
       borderColor:'#000091',
       backgroundColor:'rgba(0, 0, 145, 0.2)',
       tension: 0.1,
