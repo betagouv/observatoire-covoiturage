@@ -14,7 +14,9 @@
   </div>
   <div class="controls" v-else>
     <h4>
-      Période : {{monthName}} {{dashboard.period.year}} 
+      <span v-if="dashboard.activeTab == 3 && dashboard.activeGraph !== 'journeys_by_hours'">Jusqu'à</span>
+      <span v-else>Période</span>
+       : {{monthName}} {{dashboard.period.year}} 
       <o-button @click="edition" class="fr-btn" title="Label bouton">
         <i class="mdi mdi-pencil mdi-22px"></i>
       </o-button>
