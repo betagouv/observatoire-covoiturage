@@ -5,6 +5,7 @@
     <Occupation v-if="dashboard.activeGraph ==='occupation'" />
     <Distance v-if="dashboard.activeGraph ==='distance'" />
     <JourneysByHours v-if="dashboard.activeGraph ==='journeys_by_hours'" />
+    <NewDrivers v-if="dashboard.activeGraph ==='new_drivers'" />
   </section>
 </template>
  
@@ -15,6 +16,7 @@ import Trips from './Trips.vue'
 import Occupation from './Occupation.vue'
 import Distance from './Distance.vue'
 import JourneysByHours from './JourneysByHours.vue'
+import NewDrivers from './NewDrivers.vue'
 import { mapState } from 'vuex'
 
 
@@ -25,6 +27,7 @@ import { mapState } from 'vuex'
     Occupation,
     Distance,
     JourneysByHours,
+    NewDrivers,
   },
   computed:{
     ...mapState({

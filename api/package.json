@@ -18,6 +18,7 @@
     "@": "src"
   },
   "dependencies": {
+    "@fastify/http-proxy": "^7.1.0",
     "fastify": "^3.15.0",
     "fastify-autoload": "^3.7.1",
     "fastify-caching": "^6.2.0",
