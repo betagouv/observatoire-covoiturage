@@ -15,7 +15,7 @@ legend: "Trajet domicile travail"
 
 ### Le Forfait Mobilité Durables, qu’est-ce que c’est au juste ?
 Le forfait mobilités durables (FMD) est un dispositif financier de soutien aux salariés du secteur privé et agents de la fonction publique pour leurs déplacements domicile-travail.
-Pour tout comprendre et tout connaître sur le Forfait Mobilités Durables, rendez-vous directement sur la [page dédiée](https://www.ecologie.gouv.fr/faq-forfait-mobilites-durables-fmd) du Ministère de la Transition écologique
+Pour tout comprendre et tout connaître sur le Forfait Mobilités Durables, rendez-vous directement sur la [page dédiée](https://www.ecologie.gouv.fr/faq-forfait-mobilites-durables-fmd) du Ministère de la Transition écologique et consultez le [kit](https://www.ecologie.gouv.fr/sites/default/files/mobilite%20durable%20en%20entreprise.pdf) de mise en place du FMD
 
 
 
