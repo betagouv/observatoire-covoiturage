@@ -13,7 +13,7 @@
       <span class="separator"> de </span>
       <o-input type="number" v-model="selectedValue[0]" size="is-small"/>
       <span class="separator"> à </span>
-      <o-input  v-model="selectedValue[1]" type="number" size="is-small"/>
+      <o-input type="number" v-model="selectedValue[1]" size="is-small"/>
     </o-field>
   </div>
 </template>

@@ -70,15 +70,15 @@ export default class Flux extends mixins(MapMixin){
  
   @Watch('dashboard.selectedFluxNb')
   onSliderChanged() {
-    if(this.map){
+    if(this.map && this.deck){
       this.filterData('passengers')
-    } else {
-      this.filteredData = this.data
+      this.deck.setProps({layers:[this.addArcLayer()]})
     }
   }
 
   public async mounted() {
     await this.getData()
+    await this.filterData('passengers')
     await this.createMap('map')
     await this.createDeck( this.addArcLayer())
     this.addLayers()
@@ -108,11 +108,10 @@ export default class Flux extends mixins(MapMixin){
     }
   }
 
-  public filterData(field:string){
+  async filterData(field:string){
     if(this.data){
       this.filteredData = this.data.filter(d => d[field] >= this.dashboard.selectedFluxNb[0] && d[field] <= this.dashboard.selectedFluxNb[1])
     }
-    this.deck.setProps({layers:[this.addArcLayer()]})
   }
 
   async createDeck( layer:any, ) {
