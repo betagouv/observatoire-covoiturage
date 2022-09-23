@@ -17,7 +17,7 @@
 
 <script lang="ts">
 import { Component, Watch, Vue } from 'nuxt-property-decorator'
-import { EvolInterface } from '../../interfaces/graphs'
+import { JourneysByHoursInterface } from '../../interfaces/graphs'
 import { mapState } from 'vuex'
 import { DashboardState } from '../../../store/dashboard'
 
@@ -30,7 +30,7 @@ import { DashboardState } from '../../../store/dashboard'
 })
 export default class JourneysByHours extends Vue{
   dashboard!: DashboardState  
-  data:EvolInterface[] | [] = []
+  data:JourneysByHoursInterface[] | [] = []
 
   isLoading = false
   chartOptions = {

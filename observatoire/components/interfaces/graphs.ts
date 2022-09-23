@@ -9,3 +9,8 @@ export interface EvolInterface {
   has_incentive:number,
   occupation_rate:number,
 }
+
+export interface JourneysByHoursInterface {
+  hour:number,
+  journeys:number,
+}
