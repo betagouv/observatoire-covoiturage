@@ -50,5 +50,10 @@ const config: FastifyPluginAsync = async (server, options) => {
     dir: join(__dirname,'../api/v1/routes'),
     options: { prefix: '/v1/' },
   })
+
+  server.register(require('@fastify/http-proxy'), {
+    upstream: 'https://stats.covoiturage.beta.gouv.fr/api',
+    prefix: '/v1/stats', // optional
+  })
 }
 export default fp(config)

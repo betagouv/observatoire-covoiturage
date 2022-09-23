@@ -74,7 +74,7 @@ export default {
   ],
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL:process.env.URL_API
+    baseURL:process.env.URL_API,
   },
 
   // Content module configuration: https://go.nuxtjs.dev/config-content

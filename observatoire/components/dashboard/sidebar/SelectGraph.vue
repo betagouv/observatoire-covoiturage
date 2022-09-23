@@ -2,6 +2,7 @@
   <div>
     <label class="fr-sidemenu__title">Choisir un graphique :</label>
     <select v-model="selectedGraph" class="fr-select" id="select-graph" name="select-graph">
+      <option v-if="dashboard.territory.territory === 'XXXXX'" value="new_covoit">Evolution des nouveaux covoitureurs</option>
       <option v-for="option in helpers.graphList" :value="option.id" :key="option.id">{{option.name}}</option>
     </select>
   </div>
