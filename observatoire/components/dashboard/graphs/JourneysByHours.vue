@@ -31,6 +31,7 @@ import { DashboardState } from '../../../store/dashboard'
 export default class JourneysByHours extends Vue{
   dashboard!: DashboardState  
   data:JourneysByHoursInterface[] | [] = []
+  def_url = "/pages/glossaire/#trajet"
 
   isLoading = false
   chartOptions = {
@@ -72,6 +73,7 @@ export default class JourneysByHours extends Vue{
 
   public mounted(){
     this.getData()
+    this.$store.commit('dashboard/REF_GLOSSARY', this.def_url)
   }
 
   @Watch('dashboard.period', { deep: true })

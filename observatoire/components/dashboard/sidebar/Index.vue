@@ -5,13 +5,13 @@
         <SidebarSelectTerritory v-if="dashboard.period.year !== ''" />
         <SidebarMonthlyPeriod />
       </div>
+      <div class="select-graph" v-if="dashboard.activeTab === 1">
+        <SidebarSelectGraph />
+      </div>
       <div class="select-map" v-if="dashboard.activeTab === 2">
         <SidebarSelectMap />
       </div>
-      <div class="select-graph" v-if="dashboard.activeTab === 3">
-        <SidebarSelectGraph />
-      </div>
-      <div v-if="!lgAndAbove && dashboard.activeTab !== 1">
+      <div v-if="!lgAndAbove && dashboard.activeTab !== 3">
         <o-field>
           <o-switch size="small" variant="warning" v-model="legend">
           Afficher la légende
@@ -33,6 +33,11 @@
         <SidebarMapControlLayersDensite v-if="dashboard.activeTab === 2 && dashboard.activeMap === 'densite' "/> 
         <SidebarMapControlsSelectOccupationType v-if="dashboard.activeTab === 2 && dashboard.activeMap === 'occupation' "/>
         <SidebarMapControlsAiresSwitch v-if="dashboard.activeTab === 2 && dashboard.activeMap === 'aires' "/> 
+      </div>
+      <div class="glossary_link" v-if="dashboard.refGlossary !== '' && dashboard.activeTab !== 3">
+        <NuxtLink class="fr-link" :to="dashboard.refGlossary">
+          <o-icon pack="mdi" icon="information-outline"></o-icon> En savoir plus sur cet indicateur
+        </NuxtLink>
       </div>
     </div>
   </nav>

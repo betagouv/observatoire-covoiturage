@@ -28,6 +28,7 @@ export default class NewDrivers extends Vue{
   dashboard!: DashboardState  
   data: [string ,number, number, number][] = []
   filterData: [string ,number, number, number][] = []
+  def_url = "/pages/glossaire/#new_covoit"
 
   chartOptions = {
     responsive: true,  
@@ -68,6 +69,7 @@ export default class NewDrivers extends Vue{
   public async mounted(){
     await this.getData()
     this.chunkData()
+    this.$store.commit('dashboard/REF_GLOSSARY', this.def_url)
   }
 
   @Watch('dashboard.period', { deep: true })

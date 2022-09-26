@@ -28,6 +28,7 @@ import { DashboardState } from '../../../store/dashboard'
 export default class Journeys extends Vue{
   dashboard!: DashboardState  
   data:EvolInterface[] | [] = []
+  def_url = "/pages/glossaire/#trajet"
 
   chartOptions = {
     responsive: true,
@@ -75,6 +76,7 @@ export default class Journeys extends Vue{
 
   public mounted(){
     this.getData()
+    this.$store.commit('dashboard/REF_GLOSSARY', this.def_url)
   }
 
   @Watch('dashboard.period', { deep: true })

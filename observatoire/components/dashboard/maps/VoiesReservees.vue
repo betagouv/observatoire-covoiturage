@@ -32,6 +32,7 @@ export default class Voies extends mixins(MapMixin){
   public async mounted() {
     await this.createMap('map')
     await this.addLayers()
+    this.$store.commit('dashboard/REF_GLOSSARY', this.def_url)
   }
 
   public addLayers() {
