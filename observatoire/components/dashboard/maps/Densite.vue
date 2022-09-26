@@ -100,6 +100,7 @@ export default class Densite extends mixins(MapMixin){
     await this.createMap('map')
     await this.createDeck( this.addHexLayer())
     this.addLayers()
+    this.$store.commit('dashboard/REF_GLOSSARY', this.def_url)
   }
 
   public async getData(){

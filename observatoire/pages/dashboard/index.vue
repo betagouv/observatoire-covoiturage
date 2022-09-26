@@ -12,15 +12,15 @@
             position="centered"
             size="normal"
             expanded>
-            <o-tab-item label="Chiffres clés" icon="car-key">
-              <KeyFiguresIndex v-if="activeTab===1" />
-            </o-tab-item> 
+            <o-tab-item label="Graphiques" icon="chart-bar">
+              <GraphIndex v-if="activeTab===1" /> 
+            </o-tab-item>
             <o-tab-item label="Cartes" icon="map">
               <MapIndex v-if="activeTab===2" /> 
             </o-tab-item>
-            <o-tab-item label="Graphiques" icon="chart-bar">
-              <GraphIndex v-if="activeTab===3" /> 
-            </o-tab-item>
+            <o-tab-item label="Chiffres clés" icon="car-key">
+              <KeyFiguresIndex v-if="activeTab===3" />
+            </o-tab-item>             
           </o-tabs>
         </div>
       </div>
@@ -78,7 +78,7 @@ export default class Dashboard extends mixins(BreakpointsMixin){
     }
     if(this.$route.params.graph){
       this.$store.commit('dashboard/ACTIVEGRAPH',this.$route.params.graph)
-      this.$store.commit('dashboard/ACTIVETAB',3)
+      this.$store.commit('dashboard/ACTIVETAB',1)
     }
   }
 

@@ -55,7 +55,13 @@ Cet indicateur représente les lieux de covoiturage classés par type suivant la
 <div role="alert" class="fr-alert fr-alert--info">
     <p class="fr-alert__title">Unité : km parcourus</p>
 </div>
-Cet indicateur représente la somme des distances parcourues par chacun des couples passager / conducteur des jeux de données <a href="https://www.data.gouv.fr/fr/datasets/trajets-realises-en-covoiturage-registre-de-preuve-de-covoiturage/">"Trajets réalisés en covoiturage"</a>.
+Cet indicateur représente la somme des distances parcourues par chacun des couples passager / conducteur des jeux de données <a href="https://www.data.gouv.fr/fr/datasets/trajets-realises-en-covoiturage-registre-de-preuve-de-covoiturage/">"Trajets réalisés en covoiturage"</a> sur le territoire sélectionné.
+
+### <a id="distance_moyenne"></a>Distance moyenne
+<div role="alert" class="fr-alert fr-alert--info">
+    <p class="fr-alert__title">Unité : km</p>
+</div>
+Cet indicateur représente la moyenne des distances parcourues par les couples passager / conducteur des jeux de données <a href="https://www.data.gouv.fr/fr/datasets/trajets-realises-en-covoiturage-registre-de-preuve-de-covoiturage/">"Trajets réalisés en covoiturage"</a> sur le territoire sélectionné.
 
 ### <a id="co2"></a>CO₂ économisé
 <div role="alert" class="fr-alert fr-alert--info">
@@ -70,4 +76,12 @@ Les économies de CO2 sont calculées en partant du principe que si le passager 
 </div>
 Cet indicateur représente la quantité de pétrole économisé par les trajets issuent des jeux de données <a href="https://www.data.gouv.fr/fr/datasets/trajets-realises-en-covoiturage-registre-de-preuve-de-covoiturage/">"Trajets réalisés en covoiturage"</a>.
 Les économies d’énergie en kilogramme équivalent pétrole (kep) sont calculées en partant du principe que si le passager s’est déplacé en covoiturage, alors il n’a pas utilisé son véhicule personnel. Ceci représente donc un déplacement en moins réalisé par une voiture et autant de kep économisé. Les caractéristiques spécifiques des véhicules ne sont pas connues par le service. De ce fait, nous utilisons la moyenne kep des voitures particulières immatriculées en France. Selon, l’ADEME (Agence de l’Environnement et de la Maîtrise de l'Énergie), les chiffres clés 2015 - Climat, air et énergie, les kep par véhicule particulier et par kilomètre (du puits à la roue) sont de 0,0636 kep / km / véhicule particulier en moyenne.
+</div>
+
+### <a id="new_covoit"></a>Primo covoitureurs
+<div role="alert" class="fr-alert fr-alert--info">
+    <p class="fr-alert__title">Nouveaux covoitureurs</p>
+</div>
+Cet indicateur représente une estimation des nouveaux covoitureurs  dans le <a href="https://covoiturage.beta.gouv.fr">Registre de Preuve de Covoiturage</a>. 
+Cet indicateur est calculé chaque mois et donne un ordre de grandeur mais il comporte un biais non négligeable. Nous additionnons les primo-conducteurs ou primo-passagers de chaque opérateur, les utilisateurs ayant un compte chez plusieurs opérateurs sont donc compter plusieurs fois.
 </div>

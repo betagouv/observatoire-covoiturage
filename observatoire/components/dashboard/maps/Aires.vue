@@ -76,6 +76,7 @@ export default class Aires extends mixins(MapMixin){
     await this.getData()
     await this.createMap('map')
     this.addLayers()
+    this.$store.commit('dashboard/REF_GLOSSARY', this.def_url)
   }
 
   public async getData(){
