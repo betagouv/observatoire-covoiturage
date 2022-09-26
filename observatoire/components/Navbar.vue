@@ -27,11 +27,6 @@
             </NuxtLink>
           </li>
           <li class="fr-nav__item">
-            <NuxtLink to="/cartes" class="fr-nav__link" target="_self">
-              Cartes interactives
-            </NuxtLink>
-          </li>
-          <li class="fr-nav__item">
             <NuxtLink to="/dashboard" class="fr-nav__link" target="_self">
               Tableau de bord
             </NuxtLink>
