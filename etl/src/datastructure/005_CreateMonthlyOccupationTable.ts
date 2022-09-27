@@ -175,6 +175,7 @@ export class CreateMonthlyOccupationTable extends AbstractDatastructure {
         territory,
         l_territory,
         journeys,
+        trips,
         has_incentive,
         occupation_rate,
         geom
