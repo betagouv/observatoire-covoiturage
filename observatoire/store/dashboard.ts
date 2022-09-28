@@ -12,7 +12,7 @@ export const state = () => ({
   },
   activeTab:1,
   activeMap :'flux',
-  activeGraph:'journeys',
+  activeGraph:'occupation',
   refGlossary:'',
   densitePeriod:{
     start:new Date,

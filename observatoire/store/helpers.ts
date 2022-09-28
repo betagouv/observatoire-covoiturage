@@ -29,9 +29,9 @@ export const state = () => ({
     {id:'aires',name:'Aires de covoiturage'},
   ],
   graphList:[
-    {id:'journeys',name:'Evolution du nombre de trajets'},
-    {id:'trips',name:'Evolution du nombre de véhicules partagés'},
+    //{id:'journeys',name:'Evolution du nombre de trajets'},
     {id:'occupation',name:'Evolution du taux d\'occupation'},
+    {id:'trips',name:'Evolution du nombre de véhicules partagés'},
     {id:'distance',name:'Evolution de la distance moyenne'},
     {id:'journeys_by_hours',name:'Répartition des trajets par tranche horaire'},
     
