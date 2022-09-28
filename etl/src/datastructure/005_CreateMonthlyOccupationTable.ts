@@ -15,6 +15,7 @@ export class CreateMonthlyOccupationTable extends AbstractDatastructure {
         territory varchar NOT NULL,
         l_territory varchar NOT NULL,
         journeys integer NOT NULL,
+        trips integer NOT NULL,
         has_incentive integer NOT NULL,
         occupation_rate float NOT NULL,
         geom json NOT NULL
@@ -50,7 +51,9 @@ export class CreateMonthlyOccupationTable extends AbstractDatastructure {
           AND territory <>''XXXXX''
         ),
         journeys as (
-          SELECT trip_id,
+          SELECT 
+          journey_id,
+          trip_id,
           journey_start_insee as insee,
           ''origin'' as one_way,
           journey_distance,
@@ -58,7 +61,9 @@ export class CreateMonthlyOccupationTable extends AbstractDatastructure {
           has_incentive
           FROM '|| $1 ||'
           UNION ALL
-          SELECT trip_id,
+          SELECT 
+          journey_id,
+          trip_id,
           journey_end_insee as insee,
           ''destination'' as one_way,
           journey_distance,
@@ -68,6 +73,7 @@ export class CreateMonthlyOccupationTable extends AbstractDatastructure {
         ),
         distances as(
           SELECT 
+          journey_id,
           trip_id,
           insee,
           (journey_distance * passenger_seats) as passengers_distance,
@@ -81,8 +87,9 @@ export class CreateMonthlyOccupationTable extends AbstractDatastructure {
           SELECT 
           ''com'' as type, 
           b.arr as territory,  
-          count(distinct trip_id) as journeys,
-          count(distinct trip_id) filter(where has_incentive = ''OUI'') as has_incentive, 
+          count(distinct journey_id) as journeys,
+          count(distinct trip_id) as trips,
+          count(distinct journey_id) filter(where has_incentive = ''OUI'') as has_incentive, 
           sum(passengers_distance) as passengers_distance,
           sum(driver_distance) as driver_distance
           FROM distances a
@@ -92,8 +99,9 @@ export class CreateMonthlyOccupationTable extends AbstractDatastructure {
           UNION
           SELECT ''epci'' as type, 
           b.epci as territory, 
-          count(distinct trip_id) as journeys,
-          count(distinct trip_id) filter(where has_incentive = ''OUI'') as has_incentive, 
+          count(distinct journey_id) as journeys,
+          count(distinct trip_id) as trips,
+          count(distinct journey_id) filter(where has_incentive = ''OUI'') as has_incentive, 
           sum(passengers_distance) as passengers_distance,
           sum(driver_distance) as driver_distance
           FROM distances a
@@ -103,8 +111,9 @@ export class CreateMonthlyOccupationTable extends AbstractDatastructure {
           UNION
           SELECT ''aom'' as type, 
           b.aom as territory, 
-          count(distinct trip_id) as journeys,
-          count(distinct trip_id) filter(where has_incentive = ''OUI'') as has_incentive, 
+          count(distinct journey_id) as journeys,
+          count(distinct trip_id) as trips,
+          count(distinct journey_id) filter(where has_incentive = ''OUI'') as has_incentive, 
           sum(passengers_distance) as passengers_distance,
           sum(driver_distance) as driver_distance
           FROM distances a
@@ -114,8 +123,9 @@ export class CreateMonthlyOccupationTable extends AbstractDatastructure {
           UNION
           SELECT ''dep'' as type, 
           b.dep as territory,
-          count(distinct trip_id) as journeys, 
-          count(distinct trip_id) filter(where has_incentive = ''OUI'') as has_incentive,
+          count(distinct journey_id) as journeys,
+          count(distinct trip_id) as trips,
+          count(distinct journey_id) filter(where has_incentive = ''OUI'') as has_incentive, 
           sum(passengers_distance) as passengers_distance,
           sum(driver_distance) as driver_distance
           FROM distances a
@@ -125,8 +135,9 @@ export class CreateMonthlyOccupationTable extends AbstractDatastructure {
           UNION
           SELECT ''reg'' as type,
           b.reg as territory, 
-          count(distinct trip_id) as journeys,
-          count(distinct trip_id) filter(where has_incentive = ''OUI'') as has_incentive, 
+          count(distinct journey_id) as journeys,
+          count(distinct trip_id) as trips,
+          count(distinct journey_id) filter(where has_incentive = ''OUI'') as has_incentive,  
           sum(passengers_distance) as passengers_distance,
           sum(driver_distance) as driver_distance
           FROM distances a
@@ -136,8 +147,9 @@ export class CreateMonthlyOccupationTable extends AbstractDatastructure {
           UNION
           SELECT ''country'' as type, 
           b.country as territory, 
-          count(distinct trip_id) as journeys,
-          count(distinct trip_id) filter(where has_incentive = ''OUI'') as has_incentive, 
+          count(distinct journey_id) as journeys,
+          count(distinct trip_id) as trips,
+          count(distinct journey_id) filter(where has_incentive = ''OUI'') as has_incentive, 
           sum(passengers_distance) as passengers_distance,
           sum(driver_distance) as driver_distance
           FROM distances a
@@ -151,6 +163,7 @@ export class CreateMonthlyOccupationTable extends AbstractDatastructure {
         a.territory,
         b.l_territory,
         a.journeys,
+        a.trips,
         a.has_incentive,
         round((a.passengers_distance + a.driver_distance)::numeric / a.driver_distance::numeric,2) as occupation_rate,
         ST_AsGeoJSON(b.geom,6)::json as geom 
@@ -167,6 +180,7 @@ export class CreateMonthlyOccupationTable extends AbstractDatastructure {
         territory,
         l_territory,
         journeys,
+        trips,
         has_incentive,
         occupation_rate,
         geom

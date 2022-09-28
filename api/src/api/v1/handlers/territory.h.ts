@@ -52,11 +52,11 @@ export default class territoryHandler {
     try {
       const client = await this.pg.connect()
       const sql = `SELECT b.territory,b.l_territory,
-      sum(a.journeys) AS journeys,
       sum(a.passengers) AS passengers,
       sum(a.distance) AS distance,
       sum(a.duration) AS duration,
-      b.journeys AS trips,
+      b.journeys,
+      b.trips,
       b.has_incentive,
       b.occupation_rate,
       c.nb_aires 
@@ -69,7 +69,7 @@ export default class territoryHandler {
         WHERE b.${request.query.t} = '${request.query.territory}'
       ) c ON b.territory = c.territory 
       WHERE b.territory = '${request.query.territory}' AND a.type = '${request.query.t}' AND a.year = ${request.query.year} AND a.month = ${request.query.month}
-      GROUP BY b.territory,b.l_territory,b.journeys,b.has_incentive,b.occupation_rate,c.nb_aires;`
+      GROUP BY b.territory,b.l_territory,b.journeys,b.trips,b.has_incentive,b.occupation_rate,c.nb_aires;`
       const result = await client.query(sql)
       if (!result.rows) {
         reply.code(404).send(new Error('page not found'))
