@@ -20,7 +20,7 @@
                     {{data.passengers.toLocaleString()}}
                   </td>
                 </tr>
-                <!-- <tr v-if="data.has_incentive">
+                <tr v-if="data.has_incentive">
                   <td> 
                     <span><o-icon pack="mdi" icon="currency-eur" size="medium" variant="info" /></span>
                     <span><o-icon pack="mdi" icon="car" size="medium" variant="info" /></span>
@@ -33,7 +33,7 @@
                   <td>
                     {{data.has_incentive.toLocaleString()}}
                   </td>
-                </tr> -->
+                </tr>
                 <tr v-if="data.trips">
                   <td> 
                     <span><o-icon pack="mdi" icon="car-2-plus" size="medium" variant="info" /></span>
