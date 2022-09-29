@@ -56,21 +56,21 @@ export default class Journeys extends Vue{
     const incentive = this.data.map(d => d.has_incentive)
     chart.labels = labels.reverse() 
     chart.datasets.push({
-      label:'Nombre de trajets',
+      label:'Nombre de trajets réalisés',
       data:journeys.reverse(),
       borderColor:'#000091',
       backgroundColor:'rgba(0, 0, 145, 0.2)',
       tension: 0.1,
       order:2
     },
-    {
+    /*{
       label:'Nombre de trajets incités',
       data:incentive.reverse(),
       borderColor:'#A19237',
       backgroundColor:'rgba(161, 146, 55, 0.6)',
       tension: 0.1,
       order:1
-    })
+    }*/)
     return chart
   }
 
