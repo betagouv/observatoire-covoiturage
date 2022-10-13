@@ -1,7 +1,7 @@
 <template>
   <div class="graph">
-    <div class="fr-tile">
-      <div class="fr-tile__body">
+    <div class="fr-card fr-card--no-border">
+      <div class="fr-card__body">
         <line-chart
           :chart-data="chartData"
           :height=150

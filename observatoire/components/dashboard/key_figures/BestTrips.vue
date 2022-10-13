@@ -1,26 +1,19 @@
 <template>
-  <div class="fr-col">
-    <div class="fr-tile">
-      <div class="fr-tile__body">
-        <div class="fr-table fr-table--layout-fixed">
-          <table> 
-            <caption>Les 10 trajets les plus covoiturés (tous sens confondus):</caption>
-            <thead>
-              <tr>
-                <th scope="col">Nom</th>
-                <th scope="col">Nombre</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(line,index) in data" :key="index">
-                <td>{{line.l_territory_1}} - {{line.l_territory_2}}</td>
-                <td>{{line.journeys.toLocaleString()}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+  <div class="fr-table fr-table--layout-fixed">
+    <table> 
+      <thead>
+        <tr>
+          <th scope="col">Nom</th>
+          <th scope="col">Nombre</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="line in data" :key="line.l_territory_1">
+          <td>{{line.l_territory_1}} - {{line.l_territory_2}}</td>
+          <td>{{line.journeys.toLocaleString()}}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -39,7 +32,7 @@ import { DashboardState } from '../../../store/dashboard'
 })
 export default class BestTrips extends Vue{
   dashboard!: DashboardState  
-  data:BestTripsInterface | [] = []
+  data:BestTripsInterface[] | [] = []
 
   public mounted(){
     this.getData()

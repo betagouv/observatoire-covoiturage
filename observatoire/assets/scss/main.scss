@@ -46,9 +46,7 @@
 .fr-sidemenu{
   padding: 0;
 }
-.fr-sidemenu--full-border{
-  border-top: none !important;
-}
+
 .fr-sidemenu__list{
   padding: 0;
 }
@@ -56,6 +54,8 @@
   margin-top: 10px;
   padding: 0 1rem;
   padding-top: 0 !important;
+  box-shadow:none;
+  min-height: 500px;
   .glossary_link {
     margin-top: 1rem;
   }

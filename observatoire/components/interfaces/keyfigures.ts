@@ -3,10 +3,13 @@ export interface IndicatorsInterface {
   month: string,
   territory:string,
   l_territory:string,
+  passengers:number,
   journeys:number,
   occupation_rate:number,
   trips:number,
-  nb_aires:number
+  nb_aires:number,
+  distance:number,
+  duration:number,
 }
 
 export interface BestTripsInterface {

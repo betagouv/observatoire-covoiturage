@@ -27,8 +27,8 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import { mapState } from 'vuex'
-import { DashboardState } from '../../../store/dashboard'
-import { helpersState } from '../../../store/helpers'
+import { DashboardState } from 'store/dashboard'
+import { helpersState } from 'store/helpers'
 
 
 @Component({

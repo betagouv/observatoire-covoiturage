@@ -18,6 +18,7 @@ import Distance from './Distance.vue'
 import JourneysByHours from './JourneysByHours.vue'
 import NewCovoit from './NewCovoit.vue'
 import { mapState } from 'vuex'
+import { DashboardState } from 'store/dashboard'
 
 
 @Component({
@@ -36,6 +37,6 @@ import { mapState } from 'vuex'
   }
 })
 export default class GraphIndex extends Vue{
-  
+  dashboard!: DashboardState
 }
 </script>

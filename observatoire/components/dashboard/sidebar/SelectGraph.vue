@@ -10,8 +10,9 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
+import { helpersState } from 'store/helpers'
 import { mapState } from 'vuex'
-import { DashboardState } from '../../../store/dashboard'
+import { DashboardState } from 'store/dashboard'
 
 
 @Component({
@@ -24,6 +25,7 @@ import { DashboardState } from '../../../store/dashboard'
 })
 export default class SelectGraph extends Vue{
   dashboard!: DashboardState
+  helpers!: helpersState
 
   get selectedGraph(){
     return this.dashboard.activeGraph

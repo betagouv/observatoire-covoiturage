@@ -3,7 +3,7 @@
     <label class="fr-sidemenu__title">
       Types d'aires de covoiturage :
     </label>
-    <o-field v-for="cat in this.switch" :key="cat.name">
+    <o-field v-for="cat in aireSwitch" :key="cat.name">
       <o-switch size="is-small" :value="cat.active" @input="update(cat)">
         {{cat.name}}
       </o-switch>
@@ -27,7 +27,7 @@ import { DashboardState } from '../../../../store/dashboard'
 export default class AiresSwitch extends Vue{
   dashboard!: DashboardState
 
-  get switch(){
+  get aireSwitch(){
     return this.dashboard.airesSwitch
   }
 

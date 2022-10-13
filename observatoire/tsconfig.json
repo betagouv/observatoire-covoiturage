@@ -26,6 +26,9 @@
       "buefy/types"
     ]
   },
+  "vueCompilerOptions":{
+    "target": 2,
+  },
   "exclude": [
     "node_modules",
     ".nuxt",

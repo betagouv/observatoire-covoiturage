@@ -1,7 +1,7 @@
 <template>
   <div class="graph">
-    <div class="fr-tile">
-      <div class="fr-tile__body">
+    <div class="fr-card fr-card--no-border">
+      <div class="fr-card__body">
         <o-loading :active.sync="isLoading">
           <o-icon pack="mdi" icon="tire" size="large" variant="info" spin> </o-icon>
         </o-loading>
@@ -36,6 +36,11 @@ export default class JourneysByHours extends Vue{
   isLoading = false
   chartOptions = {
     responsive: true,
+    plugins:{
+      legend: {
+        display: false
+      }
+    },
     scales: {
       x: {
         ticks: {
@@ -62,7 +67,6 @@ export default class JourneysByHours extends Vue{
       datasets:[],
     }
     chart.datasets.push({
-      label:'Répartition des trajets par tranche horaire',
       data:this.data,
       borderColor:'#000091',
       backgroundColor:'rgba(0, 0, 145, 0.2)',

@@ -1,5 +1,5 @@
 <template>
-  <nav class="fr-sidemenu" :class="{'fr-p-1w': !lgAndAbove}" role="navigation" aria-label="Menu latéral">
+  <nav class="fr-sidemenu fr-sidemenu--sticky" :class="{'fr-p-1w': !lgAndAbove}" role="navigation" aria-label="Menu latéral">
     <div class="fr-sidemenu__inner">
       <div class="sidebar-title">
         <SidebarSelectTerritory v-if="dashboard.period.year !== ''" />
