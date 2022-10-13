@@ -164,6 +164,39 @@ export default class territorySchema {
     }
   }
 
+  static territoryJourneysByDistance = {
+    tags: ['territories'],
+    querystring: {
+      territory: {
+        type: 'string',
+        description: 'territory id'
+      },
+      t: {
+        type: 'string',
+        description: 'type of territories'
+      },
+      year: {
+        type: 'string',
+        description: 'Year (YYYY)'
+      },
+      month: {
+        type: 'string',
+        description: 'Month (MM)'
+      }
+    },
+    response: {
+      200: {
+        type: 'array',
+        items: {
+          properties: {
+            dist_classes: {type:'integer'},
+            journeys: {type:'integer'}
+          }
+        }
+      }
+    }
+  }
+
   static territoryAom = {
     tags: ['territories'],
     querystring: {

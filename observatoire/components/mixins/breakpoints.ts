@@ -1,6 +1,6 @@
 import { Component,Vue } from 'nuxt-property-decorator'
 import { mapState } from 'vuex'
-impot { ScreenState } from 'store/screen'
+import { ScreenState } from 'store/screen'
 
 @Component({
   computed:{
