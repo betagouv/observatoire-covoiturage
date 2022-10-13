@@ -1,5 +1,6 @@
 import { Component,Vue } from 'nuxt-property-decorator'
 import { mapState } from 'vuex'
+impot { ScreenState } from 'store/screen'
 
 @Component({
   computed:{
@@ -9,7 +10,7 @@ import { mapState } from 'vuex'
   }
 })
 export default class BreakpointsMixin extends Vue {
-
+  screen!: ScreenState 
   get lgAndAbove(){
     return this.includeInBreaks(['lg','xl'])
   }

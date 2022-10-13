@@ -85,6 +85,7 @@ import { DashboardState } from '../../../store/dashboard'
 })
 export default class KeySidebar extends mixins(BreakpointsMixin){
   dashboard!: DashboardState 
+  screen: any
   get legend(){
     return this.$store.state.screen.isLegendOpen
   } 
