@@ -189,7 +189,7 @@ export default class territorySchema {
         type: 'array',
         items: {
           properties: {
-            dist_classes: {type:'integer'},
+            dist_classes: {type:'string'},
             journeys: {type:'integer'}
           }
         }
