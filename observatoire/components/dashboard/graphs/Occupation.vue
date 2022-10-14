@@ -60,6 +60,11 @@ export default class Occupation extends Vue{
       borderColor:'#000091',
       backgroundColor:'rgba(0, 0, 145, 0.2)',
       tension: 0.1,
+      datalabels: {
+        labels: {
+          title: null
+        }
+      }
     })
     return chart
   }

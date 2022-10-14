@@ -5,7 +5,7 @@
         <o-loading :active.sync="isLoading">
           <o-icon pack="mdi" icon="tire" size="large" variant="info" spin> </o-icon>
         </o-loading>
-        <bar-chart
+        <doughnut-chart
           :chart-data="chartData"
           :height=150
           :chart-options="chartOptions"
@@ -49,14 +49,44 @@ export default class JourneysByDistance extends Vue{
 
   get chartData(){
     const chart:any = {
-      labels:['< 10 km','10-20 km','20-30 km','30-40 km','40-50 km','>50 km'],
+      labels:['< 10 km','10-20 km','20-30 km','30-40 km','40-50 km','> 50 km'],
       datasets:[],
     }
     chart.datasets.push({
       data:this.data.map(d=>d.journeys),
-      borderColor:'#000091',
-      backgroundColor:'rgba(0, 0, 145, 0.2)',
-      tension: 0.1,
+      backgroundColor: [
+        '#08519c',
+        '#3182bd',
+        '#6baed6',
+        '#9ecae1',
+        '#c6dbef',
+        '#eff3ff'
+      ],
+      datalabels: {
+        labels: {
+          name: {
+            align: 'middle',
+            font: {size: 14, weight:'bold'},
+            color:'black',
+            formatter: function(value, ctx) {
+              return ctx.chart.data.labels[ctx.dataIndex];
+            }
+          },
+          value: {
+            align: 'bottom',
+            color:'black',
+            formatter: function(value, ctx) {
+              let sum = 0;
+              let dataArr = ctx.chart.data.datasets[0].data;
+              dataArr.map(data => {
+                sum += data;
+              });
+              let percentage = (value * 100 / sum).toFixed(1) + "%";
+              return percentage;
+            }
+          }
+        }
+      },
     })
     return chart
   }

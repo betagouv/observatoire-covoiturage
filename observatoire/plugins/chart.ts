@@ -1,5 +1,6 @@
 import Vue from "vue";
-import { Line, Bar } from "vue-chartjs/legacy";
+import { Line, Bar, Doughnut } from "vue-chartjs/legacy";
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 import {
   Chart as ChartJS,
   Title,
@@ -11,6 +12,7 @@ import {
   LinearScale,
   LineElement,
   PointElement,
+  ArcElement,
 } from "chart.js";
 
 ChartJS.register(
@@ -18,11 +20,13 @@ ChartJS.register(
   Tooltip,
   Legend,
   Filler,
+  ArcElement,
   PointElement,
   BarElement,
   CategoryScale,
   LinearScale,
   LineElement,
+  ChartDataLabels,
 );
 
 Vue.component("line-chart", {
@@ -30,4 +34,7 @@ Vue.component("line-chart", {
 });
 Vue.component("bar-chart", {
   extends: Bar,
+});
+Vue.component("doughnut-chart", {
+  extends: Doughnut,
 });

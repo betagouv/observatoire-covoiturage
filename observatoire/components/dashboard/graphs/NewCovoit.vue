@@ -55,6 +55,11 @@ export default class NewDrivers extends Vue{
       borderColor:'#000091',
       backgroundColor:'rgba(0, 0, 145, 0.2)',
       tension: 0.1,
+      datalabels: {
+        labels: {
+          title: null
+        }
+      }
     })
     chart.datasets.push({
       label:'Nombre de nouveaux passagers',
@@ -62,6 +67,11 @@ export default class NewDrivers extends Vue{
       borderColor:'#A19237',
       backgroundColor:'rgba(161, 146, 55, 0.6)',
       tension: 0.1,
+      datalabels: {
+        labels: {
+          title: null
+        }
+      }
     })
     return chart
   }

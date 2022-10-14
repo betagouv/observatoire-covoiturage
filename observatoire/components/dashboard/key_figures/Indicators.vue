@@ -106,26 +106,12 @@
         </div>
         <h4>Distances et durée</h4>
         <div class="fr-grid-row fr-grid-row--gutters">
-          <div class="fr-col-12 fr-col-md-4">
+          <div class="fr-col-12 fr-col-md-3">
             <div class="fr-card fr-card--sm fr-card--no-border">
-              <div class="fr-card__body">
-                <div class="fr-card__content">
-                  <div class="fr-card__start">
-                    <o-icon pack="mdi" icon="map-marker-distance" size="large" variant="info" />
-                  </div>
-                  <h4 class="fr-card__title">
-                    {{Math.round(data.distance).toLocaleString()}}
-                  </h4>
-                  <div class="fr-card__desc">
-                    <NuxtLink to=/pages/glossaire/#km_parcourus>
-                      Km parcourus
-                    </NuxtLink>
-                  </div>
-                </div>
-              </div>
+              <JourneysByDistance />
             </div>
           </div>
-          <div class="fr-col-12 fr-col-md-4">
+          <div class="fr-col-12 fr-col-md-3">
             <div class="fr-card fr-card--sm fr-card--no-border">
               <div class="fr-card__body">
                 <div class="fr-card__content">
@@ -144,7 +130,26 @@
               </div>
             </div>
           </div>
-          <div class="fr-col-12 fr-col-md-4">
+          <div class="fr-col-12 fr-col-md-2">
+            <div class="fr-card fr-card--sm fr-card--no-border">
+              <div class="fr-card__body">
+                <div class="fr-card__content">
+                  <div class="fr-card__start">
+                    <o-icon pack="mdi" icon="map-marker-distance" size="large" variant="info" />
+                  </div>
+                  <h4 class="fr-card__title">
+                    {{Math.round(data.distance).toLocaleString()}}
+                  </h4>
+                  <div class="fr-card__desc">
+                    <NuxtLink to=/pages/glossaire/#km_parcourus>
+                      Km parcourus
+                    </NuxtLink>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="fr-col-12 fr-col-md-3">
             <div class="fr-card fr-card--sm fr-card--no-border">
               <div class="fr-card__body">
                 <div class="fr-card__content">
@@ -159,18 +164,6 @@
                       Temps moyen
                     </NuxtLink>
                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="fr-grid-row fr-grid-row--gutters">
-          <div class="fr-col-12">
-            <div class="fr-card fr-card--sm fr-card--no-border">
-              <div class="fr-card__body">
-                <div class="fr-card__content">
-                  <b>Répartition des trajets par distances</b>
-                  <JourneysByDistance />
                 </div>
               </div>
             </div>

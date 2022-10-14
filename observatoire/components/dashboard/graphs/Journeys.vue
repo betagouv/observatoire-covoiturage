@@ -61,7 +61,12 @@ export default class Journeys extends Vue{
       borderColor:'#000091',
       backgroundColor:'rgba(0, 0, 145, 0.2)',
       tension: 0.1,
-      order:2
+      order:2,
+      datalabels: {
+        labels: {
+          title: null
+        }
+      }
     },
     /*{
       label:'Nombre de trajets incités',
