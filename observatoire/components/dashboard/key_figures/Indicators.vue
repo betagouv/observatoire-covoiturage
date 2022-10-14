@@ -164,6 +164,18 @@
             </div>
           </div>
         </div>
+        <div class="fr-grid-row fr-grid-row--gutters">
+          <div class="fr-col-12">
+            <div class="fr-card fr-card--sm fr-card--no-border">
+              <div class="fr-card__body">
+                <div class="fr-card__content">
+                  <b>Répartition des trajets par distances</b>
+                  <JourneysByDistance />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <h4>Environnement et infrastructures</h4>
         <div class="fr-grid-row fr-grid-row--gutters">
           <div class="fr-col-12 fr-col-md-4">
@@ -237,11 +249,13 @@ import { mapState } from 'vuex'
 import { DashboardState } from 'store/dashboard'
 import JourneysByHours from '../graphs/JourneysByHours.vue'
 import BestTrips from './BestTrips.vue'
+import JourneysByDistance from '../graphs/JourneysByDistance.vue'
 
 @Component({
   components:{
     JourneysByHours,
     BestTrips,
+    JourneysByDistance,
   },
   computed:{
     ...mapState({

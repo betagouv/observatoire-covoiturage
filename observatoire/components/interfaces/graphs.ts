@@ -14,3 +14,7 @@ export interface JourneysByHoursInterface {
   hour:number,
   journeys:number,
 }
+export interface JourneysByDistanceInterface {
+  dist_classes:string,
+  journeys:number,
+}

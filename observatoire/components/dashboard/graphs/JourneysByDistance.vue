@@ -17,7 +17,7 @@
 
 <script lang="ts">
 import { Component, Watch, Vue } from 'nuxt-property-decorator'
-import { JourneysByHoursInterface } from '../../interfaces/graphs'
+import { JourneysByDistanceInterface } from '../../interfaces/graphs'
 import { mapState } from 'vuex'
 import { DashboardState } from '../../../store/dashboard'
 
@@ -28,9 +28,9 @@ import { DashboardState } from '../../../store/dashboard'
     })
   }
 })
-export default class JourneysByHours extends Vue{
+export default class JourneysByDistance extends Vue{
   dashboard!: DashboardState  
-  data:JourneysByHoursInterface[] | [] = []
+  data:JourneysByDistanceInterface[] | [] = []
   def_url = "/pages/glossaire/#trajet"
 
   isLoading = false
@@ -41,20 +41,6 @@ export default class JourneysByHours extends Vue{
         display: false
       }
     },
-    scales: {
-      x: {
-        ticks: {
-          // Include a dollar sign in the ticks
-          callback: function(value, index, ticks) {
-            return value + 'h';
-          }
-        }
-      }
-    },
-    parsing: {
-      xAxisKey: 'hour',
-      yAxisKey: 'journeys'
-    }    
   }
 
   get monthList(){
@@ -63,11 +49,11 @@ export default class JourneysByHours extends Vue{
 
   get chartData(){
     const chart:any = {
-      labels:['0h','1h','2h','3h','4h','5h','6h','7h','8h','9h','10h','11h','12h','13h','14h','15h','16h','17h','18h','19h','20h','21h','22h','23h'],
+      labels:['< 10 km','10-20 km','20-30 km','30-40 km','40-50 km','>50 km'],
       datasets:[],
     }
     chart.datasets.push({
-      data:this.data,
+      data:this.data.map(d=>d.journeys),
       borderColor:'#000091',
       backgroundColor:'rgba(0, 0, 145, 0.2)',
       tension: 0.1,
@@ -92,7 +78,7 @@ export default class JourneysByHours extends Vue{
 
   public async getData(){
     this.isLoading = true
-    const response = await this.$axios.get(`/journeys_by_hours?territory=${this.dashboard.territory.territory}&t=${this.dashboard.territory.type}&year=${this.dashboard.period.year}&month=${this.dashboard.period.month}`)
+    const response = await this.$axios.get(`/journeys_by_distance?territory=${this.dashboard.territory.territory}&t=${this.dashboard.territory.type}&year=${this.dashboard.period.year}&month=${this.dashboard.period.month}`)
     this.data = response.data
     this.isLoading = false
   }
