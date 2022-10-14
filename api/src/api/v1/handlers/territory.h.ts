@@ -56,6 +56,13 @@ export default class territoryHandler {
       sum(a.distance) AS distance,
       sum(a.duration) AS duration,
       b.journeys,
+      (SELECT journeys 
+        FROM monthly_flux
+        WHERE territory_1 = territory_2
+      AND year = ${request.query.year}
+      AND month = ${request.query.month}
+      AND type= '${request.query.t}'
+      AND territory_1 = '${request.query.territory}') as intra_journeys,
       b.trips,
       b.has_incentive,
       b.occupation_rate,

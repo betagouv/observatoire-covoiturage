@@ -5,6 +5,7 @@ export interface IndicatorsInterface {
   l_territory:string,
   passengers:number,
   journeys:number,
+  intra_journeys:number,
   occupation_rate:number,
   trips:number,
   nb_aires:number,

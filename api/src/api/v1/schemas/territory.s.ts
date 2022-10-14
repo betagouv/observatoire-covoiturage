@@ -82,6 +82,7 @@ export default class territorySchema {
             territory: {type:'string'},
             l_territory: {type:'string'},
             journeys: {type:'integer'},
+            intra_journeys: {type:'integer'},
             trips: {type:'integer'},
             passengers: {type:'integer'},
             has_incentive: {type:'integer'},
