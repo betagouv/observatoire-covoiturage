@@ -9,6 +9,7 @@ const routes:FastifyPluginAsync = async (server) => {
   server.get<territoryTypes.single>('/territory',{schema:territorySchema.territoriesList}, territoryHandler.singleTerritory)
   server.get<territoryTypes.indicators>('/indicators',{schema:territorySchema.territoryIndicators}, territoryHandler.indicators)
   server.get<territoryTypes.indicators>('/best_journeys',{schema:territorySchema.territoryBestJourneys}, territoryHandler.BestJourneys)
+  server.get<territoryTypes.indicators>('/best_territories',{schema:territorySchema.territoryBestTerritories}, territoryHandler.BestTerritories)
   server.get<territoryTypes.indicators>('/journeys_by_hours',{schema:territorySchema.territoryJourneysByHours}, territoryHandler.JourneysByHours)
   server.get<territoryTypes.indicators>('/journeys_by_distance',{schema:territorySchema.territoryJourneysByDistance}, territoryHandler.JourneysByDistance)
   server.get<territoryTypes.list>('/aom',{schema:territorySchema.territoryAom}, territoryHandler.getAom)

@@ -18,7 +18,8 @@ declare module territoryTypes {
       territory:string,
       t:string,
       year:string,
-      month:string
+      month:string,
+      t2?:string
     }
   }
 }

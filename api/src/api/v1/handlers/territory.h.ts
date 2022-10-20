@@ -115,6 +115,31 @@ export default class territoryHandler {
     }
   }
 
+  static async BestTerritories(request: FastifyRequest<territoryTypes.indicators>, reply: FastifyReply):Promise<void>{
+    try {
+      const client = await this.pg.connect()
+      const sql = `SELECT l_territory, journeys 
+      FROM monthly_occupation
+      WHERE year = ${request.query.year} 
+      AND month = ${request.query.month}
+      AND type = '${request.query.t2}'
+      AND territory IN (SELECT ${request.query.t2} FROM (SELECT com,epci,aom,dep,reg,country FROM territories_code WHERE year = ${request.query.year}) t WHERE ${request.query.t} = '${request.query.territory}') 
+      ORDER BY journeys DESC
+      LIMIT 10;`
+      const result = await client.query(sql)
+      if (!result.rows) {
+        reply.code(404).send(new Error('page not found'))
+      }
+      else if (result.rows.length === 0) {
+        reply.code(404).send(new Error('Pas de données disponibles'))
+      }
+      reply.send(result.rows)
+      client.release()
+    } catch (err) {
+      reply.send(err)
+    }
+  }
+
   static async JourneysByHours(request: FastifyRequest<territoryTypes.indicators>, reply: FastifyReply):Promise<void>{
     try {
       const client = await this.pg.connect()

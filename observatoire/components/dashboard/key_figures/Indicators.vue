@@ -1,30 +1,11 @@
 <template>
-  <div class="container">
+  <div class="fr-container--fluid">
     <div class="fr-tile">
       <div class="fr-tile__body">
-        <h4>Concernant les trajets</h4>
+        <h4>Analyse des déplacements</h4>
         <div class="fr-grid-row fr-grid-row--gutters">
-          <div class="fr-col-12 fr-col-md-4">
-            <div class="fr-card fr-card--sm fr-card--no-border">
-              <div class="fr-card__body">
-                <div class="fr-card__content">
-                  <div class="fr-card__start">
-                    <o-icon pack="mdi" icon="account-multiple" size="large" variant="info" />
-                  </div>
-                  <h4 class="fr-card__title">
-                    {{data.journeys.toLocaleString()}}
-                  </h4>
-                  <div class="fr-card__desc">
-                    <NuxtLink to=/pages/glossaire/#trajet>
-                      trajets réalisés
-                    </NuxtLink>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="fr-col-12 fr-col-md-4">
-            <div class="fr-card fr-card--sm fr-card--no-border">
+          <div class="fr-col-12 fr-col-md-3">
+            <div class="fr-card fr-card--sm">
               <div class="fr-card__body">
                 <div class="fr-card__content">
                   <div class="fr-card__start">
@@ -43,8 +24,8 @@
               </div>
             </div>
           </div>
-          <div class="fr-col-12 fr-col-md-4">
-            <div class="fr-card fr-card--sm fr-card--no-border">
+          <div class="fr-col-12 fr-col-md-3">
+            <div class="fr-card fr-card--sm">
               <div class="fr-card__body">
                 <div class="fr-card__content">
                   <div class="fr-card__start">
@@ -62,10 +43,8 @@
               </div>
             </div>
           </div>
-        </div>
-        <div class="fr-grid-row fr-grid-row--gutters">
-          <div class="fr-col-12 fr-col-offset-sm-3 fr-col-md-3">
-            <div class="fr-card fr-card--sm fr-card--no-border">
+          <div class="fr-col-12 fr-col-md-3">
+            <div class="fr-card fr-card--sm">
               <div class="fr-card__body">
                 <div class="fr-card__content">
                   <div class="fr-card__start">
@@ -76,7 +55,7 @@
                   </h4>
                   <div class="fr-card__desc">
                     <NuxtLink to=/pages/glossaire/#trajet>
-                      sont réalisés à l'intérieur du territoire 
+                       des trajets sont réalisés à l'intérieur du territoire 
                     </NuxtLink>
                   </div>
                 </div>
@@ -84,7 +63,7 @@
             </div>
           </div>
           <div class="fr-col-12 fr-col-md-3">
-            <div class="fr-card fr-card--sm fr-card--no-border">
+            <div class="fr-card fr-card--sm">
               <div class="fr-card__body">
                 <div class="fr-card__content">
                   <div class="fr-card__start">
@@ -108,7 +87,7 @@
             <div class="fr-card fr-card--sm fr-card--no-border">
               <div class="fr-card__body">
                 <div class="fr-card__content">
-                  <b>Répartition par tranche horaire</b>
+                  <b>Répartition des trajets par tranche horaire</b>
                   <JourneysByHours />
                 </div>
               </div>
@@ -118,41 +97,16 @@
             <div class="fr-card fr-card--sm fr-card--no-border">
               <div class="fr-card__body">
                 <div class="fr-card__content">
-                  <b>Top 10 (tous sens confondus)</b>
-                  <BestTrips />
+                  <b>Répartition des trajets par distance</b>
+                  <JourneysByDistance />
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <h4>Distances et durée</h4>
         <div class="fr-grid-row fr-grid-row--gutters">
-          <div class="fr-col-12 fr-col-md-3">
-            <div class="fr-card fr-card--sm fr-card--no-border">
-              <JourneysByDistance />
-            </div>
-          </div>
-          <div class="fr-col-12 fr-col-md-3">
-            <div class="fr-card fr-card--sm fr-card--no-border">
-              <div class="fr-card__body">
-                <div class="fr-card__content">
-                  <div class="fr-card__start">
-                    <o-icon pack="mdi" icon="map-marker-path" size="large" variant="info" />
-                  </div>
-                  <h4 class="fr-card__title">
-                    {{(data.distance/data.passengers).toLocaleString('fr-FR',{maximumFractionDigits: 2})}} km
-                  </h4>
-                  <div class="fr-card__desc">
-                    <NuxtLink to=/pages/glossaire/#av-distance>
-                      Distance moyenne
-                    </NuxtLink>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="fr-col-12 fr-col-md-2">
-            <div class="fr-card fr-card--sm fr-card--no-border">
+          <div class="fr-col-12 fr-col-md-4">
+            <div class="fr-card fr-card--sm">
               <div class="fr-card__body">
                 <div class="fr-card__content">
                   <div class="fr-card__start">
@@ -170,8 +124,27 @@
               </div>
             </div>
           </div>
-          <div class="fr-col-12 fr-col-md-3">
-            <div class="fr-card fr-card--sm fr-card--no-border">
+          <div class="fr-col-12 fr-col-md-4">
+            <div class="fr-card fr-card--sm">
+              <div class="fr-card__body">
+                <div class="fr-card__content">
+                  <div class="fr-card__start">
+                    <o-icon pack="mdi" icon="map-marker-path" size="large" variant="info" />
+                  </div>
+                  <h4 class="fr-card__title">
+                    {{(data.distance/data.passengers).toLocaleString('fr-FR',{maximumFractionDigits: 2})}} km
+                  </h4>
+                  <div class="fr-card__desc">
+                    <NuxtLink to=/pages/glossaire/#av-distance>
+                      Distance moyenne
+                    </NuxtLink>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="fr-col-12 fr-col-md-4">
+            <div class="fr-card fr-card--sm">
               <div class="fr-card__body">
                 <div class="fr-card__content">
                   <div class="fr-card__start">
@@ -190,10 +163,33 @@
             </div>
           </div>
         </div>
-        <h4>Environnement et infrastructures</h4>
+        <h4>Analyse des destinations</h4>
         <div class="fr-grid-row fr-grid-row--gutters">
-          <div class="fr-col-12 fr-col-md-4">
+          <div class="fr-col-12 fr-col-md-6">
             <div class="fr-card fr-card--sm fr-card--no-border">
+              <div class="fr-card__body">
+                <div class="fr-card__content">
+                  <b>Top 10  des trajets les plus covoiturés(tous sens confondus)</b>
+                  <BestTrips />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="fr-col-12 fr-col-md-6">
+            <div class="fr-card fr-card--sm fr-card--no-border">
+              <div class="fr-card__body">
+                <div class="fr-card__content">
+                  <b>Top 10  des territoires</b>
+                  <BestTerritories />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <h4>Impact Environnemental</h4>
+        <div class="fr-grid-row fr-grid-row--gutters">
+          <div class="fr-col-12 fr-col-offset-md-2 fr-col-md-4">
+            <div class="fr-card fr-card--sm">
               <div class="fr-card__body">
                 <div class="fr-card__content">
                   <div class="fr-card__start">
@@ -213,7 +209,7 @@
             </div>
           </div>
           <div class="fr-col-12 fr-col-md-4">
-            <div class="fr-card fr-card--sm fr-card--no-border">
+            <div class="fr-card fr-card--sm">
               <div class="fr-card__body">
                 <div class="fr-card__content">
                   <div class="fr-card__start">
@@ -231,8 +227,11 @@
               </div>
             </div>
           </div>
-          <div class="fr-col-12 fr-col-md-4">
-            <div class="fr-card fr-card--sm fr-card--no-border">
+        </div>
+        <h4>Infrastuctures</h4>
+        <div class="fr-grid-row fr-grid-row--gutters">
+          <div class="fr-col-12 fr-col-offset-md-4 fr-col-md-4">
+            <div class="fr-card fr-card--sm">
               <div class="fr-card__body">
                 <div class="fr-card__content">
                   <div class="fr-card__start">
@@ -262,14 +261,17 @@ import { IndicatorsInterface } from 'components/interfaces/keyfigures'
 import { mapState } from 'vuex'
 import { DashboardState } from 'store/dashboard'
 import JourneysByHours from '../graphs/JourneysByHours.vue'
-import BestTrips from './BestTrips.vue'
 import JourneysByDistance from '../graphs/JourneysByDistance.vue'
+import BestTrips from './BestTrips.vue'
+import BestTerritories from './BestTerritories.vue'
+
 
 @Component({
   components:{
     JourneysByHours,
-    BestTrips,
     JourneysByDistance,
+    BestTrips,
+    BestTerritories,
   },
   computed:{
     ...mapState({

@@ -18,3 +18,8 @@ export interface BestTripsInterface {
   l_territory_2: string,
   journeys:number,
 }
+
+export interface BestTerritoriesInterface {
+  l_territory: string,
+  journeys:number,
+}
