@@ -66,7 +66,14 @@ export default class JourneysByDistance extends Vue{
         labels: {
           name: {
             align: 'middle',
-            font: {size: 14, weight:'bold'},
+            font: function (context) {
+              const avgSize = Math.round((context.chart.height + context.chart.width) / 2)
+              const params = {
+                  size: Math.round(avgSize / 24) > 10 ? 14 : Math.round(avgSize / 24),
+                  weight: 'bold'
+              }
+              return params
+            },
             color:'black',
             formatter: function(value, ctx) {
               return ctx.chart.data.labels[ctx.dataIndex];
@@ -75,6 +82,13 @@ export default class JourneysByDistance extends Vue{
           value: {
             align: 'bottom',
             color:'black',
+            font: function (context) {
+              const avgSize = Math.round((context.chart.height + context.chart.width) / 2)
+              const params = {
+                  size: Math.round(avgSize / 24) > 10 ? 12 : Math.round(avgSize / 24),
+              }
+              return params
+            },
             formatter: function(value, ctx) {
               let sum = 0;
               let dataArr = ctx.chart.data.datasets[0].data;

@@ -24,7 +24,7 @@ export default class evolutionHandler {
         AND b.territory = '${request.query.code}'
         GROUP BY b.year,b.month,b.journeys,b.has_incentive,b.occupation_rate
         ORDER BY (b.year,b.month) DESC
-        LIMIT 13;
+        LIMIT 25;
       `
       const result = await client.query(sql)
       if (!result.rows) {
