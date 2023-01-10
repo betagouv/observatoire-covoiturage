@@ -48,7 +48,7 @@ export default class MapMixin extends mixins(BreakpointsMixin) {
         attributionControl: options.attribution
       })
       if(options.controls){
-        this.$data[container].addControl(new maplibregl.NavigationControl(), 'top-left')
+        this.$data[container].addControl(new maplibregl.NavigationControl({}), 'top-left')
       }
     }      
   }
