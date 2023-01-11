@@ -21,9 +21,9 @@
               <nuxt-content :document="carte" />
             </div>
             <div v-if="carte.link" class="fr-callout">
-              <button class="fr-btn" :href="carte.link">
+              <a class="fr-btn" :href="carte.link">
                 Voir la carte
-              </button>
+              </a>
             </div>
             <div class="fr-share">
               <p class="fr-share__title">Partager la page</p>
