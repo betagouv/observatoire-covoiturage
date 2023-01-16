@@ -24,8 +24,14 @@ export default class airesHandler {
         FROM aires_covoiturage
         ${(request.query.t && request.query.code) ? 
           `WHERE
-          insee IN (
-            SELECT com FROM (SELECT com,epci,aom,dep,reg,country FROM territories_code WHERE year = ${new Date().getFullYear()}) t 
+            insee IN (
+              SELECT com FROM (
+                SELECT com,epci,aom,dep,reg,country 
+                FROM territories_code 
+                GROUP BY year,com,epci,aom,dep,reg,country
+                HAVING year = (SELECT max(year) FROM territories_code
+              )
+            ) t 
             WHERE ${request.query.t} = '${request.query.code}'
           )`
           : ''
