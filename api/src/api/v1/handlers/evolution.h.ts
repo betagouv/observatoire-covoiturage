@@ -13,7 +13,7 @@ export default class evolutionHandler {
         sum(a.passengers) AS passengers,
         sum(a.distance) AS distance,
         sum(a.duration) AS duration,
-        b.journeys AS trips,
+        b.trips,
         b.has_incentive,
         b.occupation_rate
         FROM monthly_flux a
@@ -22,7 +22,7 @@ export default class evolutionHandler {
         WHERE concat(b.year::varchar,TO_CHAR(b.month, 'fm00'))::integer <= ${request.query.year+String(request.query.month).padStart(2, '0')} 
         AND b.type = '${request.query.t}'
         AND b.territory = '${request.query.code}'
-        GROUP BY b.year,b.month,b.journeys,b.has_incentive,b.occupation_rate
+        GROUP BY b.year,b.month,b.trips,b.has_incentive,b.occupation_rate
         ORDER BY (b.year,b.month) DESC
         LIMIT 25;
       `
