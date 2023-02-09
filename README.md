@@ -36,6 +36,6 @@ Vous pouvez utilisez pgAdmin 4 localement pour interagir avec les données de la
 
 # License
 
-DINUM, 2020-2021.
+DINUM, 2020-2023.
 
 The source code is published under [Apache license 2.0](https://github.com/betagouv/observatoire-covoiturage/LICENSE).
