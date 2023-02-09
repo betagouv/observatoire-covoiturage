@@ -21,6 +21,6 @@ export async function getRpcFilesUrl(url: string): Promise<string[]> {
 
 export async function getAiresLastFileUrl(url: string): Promise<string> {
   const response = await axios.get(url);
-  const fileUrl = response.data.history[0].payload.permanent_url
+  const fileUrl = response.data.history[0].payload.permanent_url;
   return fileUrl;
 }

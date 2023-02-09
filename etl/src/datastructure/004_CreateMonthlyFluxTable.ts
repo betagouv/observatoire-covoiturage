@@ -27,7 +27,8 @@ export class CreateMonthlyFluxTable extends AbstractDatastructure {
         duration float NOT NULL
       );
       CREATE INDEX IF NOT EXISTS ${this.indexWithSchema}_id_index ON ${this.tableWithSchema} USING btree (id);
-      ALTER TABLE ${this.tableWithSchema} ADD CONSTRAINT ${this.table}_unique_key UNIQUE (year,month,type,territory_1,territory_2);
+      ALTER TABLE ${this.tableWithSchema} 
+      ADD CONSTRAINT ${this.table}_unique_key UNIQUE (year,month,type,territory_1,territory_2);
       DROP PROCEDURE IF EXISTS ${this.targetSchema}.import_monthly_flux;
 
       CREATE OR REPLACE PROCEDURE ${this.targetSchema}.import_monthly_flux(from_table varchar, year int, month int) 
@@ -160,7 +161,8 @@ export class CreateMonthlyFluxTable extends AbstractDatastructure {
             GROUP BY LEAST(b.country, c.country), GREATEST(b.country, c.country)
             HAVING (LEAST(b.country, c.country)) IS NOT NULL OR (GREATEST(b.country, c.country)) IS NOT NULL
           )
-          SELECT a.year, a.month, a.type, a.territory_1, b.l_territory as l_territory_1, b.lng as lng_1, b.lat as lat_1, 
+          SELECT a.year, a.month, a.type, a.territory_1, b.l_territory as l_territory_1, 
+          b.lng as lng_1, b.lat as lat_1, 
           a.territory_2, c.l_territory as l_territory_2,c.lng as lng_2, c.lat as lat_2, 
           a.journeys, a.has_incentive, a.passengers, a.distance, a.duration 
           FROM flux a

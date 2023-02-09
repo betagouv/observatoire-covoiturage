@@ -1,5 +1,6 @@
 import { datasets as perimDatasets, StaticMigrable } from '@betagouvpdc/evolution-geo';
 import { Perim2022 } from './datasets/manual/Perim2022';
+import { Perim2023 } from './datasets/manual/Perim2023';
 import { CreateTerritoriesCodeTable } from './datastructure/000_CreateTerritoriesCodeTable';
 import { CreateTerritoriesPointTable } from './datastructure/001_CreateTerritoriesPointTable';
 import { CreateAiresCovoiturageTable } from './datastructure/002_CreateAiresCovoiturageTable';
@@ -9,9 +10,11 @@ import { CreateMonthlyOccupationTable } from './datastructure/005_CreateMonthlyO
 import { TerritoriesCode2020 } from './datasets/territories/codes/TerritoriesCode2020';
 import { TerritoriesCode2021 } from './datasets/territories/codes/TerritoriesCode2021';
 import { TerritoriesCode2022 } from './datasets/territories/codes/TerritoriesCode2022';
+import { TerritoriesCode2023 } from './datasets/territories/codes/TerritoriesCode2023';
 import { TerritoriesPoint2020 } from './datasets/territories/points/TerritoriesPoint2020';
 import { TerritoriesPoint2021 } from './datasets/territories/points/TerritoriesPoint2021';
 import { TerritoriesPoint2022 } from './datasets/territories/points/TerritoriesPoint2022';
+import { TerritoriesPoint2023 } from './datasets/territories/points/TerritoriesPoint2023';
 import { transportAires } from './datasets/transport_data_gouv/aires_covoiturage/TransportAires';
 import { rpcJourneys } from './datasets/rpc/journeys/RpcJourneys';
 import { getRpcFilesUrl, getAiresLastFileUrl } from './helpers';
@@ -20,6 +23,7 @@ import { Datasets } from './interfaces/DatasetsInterface';
 export async function datasets(): Promise<Datasets> {
   const datasets: Set<StaticMigrable> = perimDatasets.datasets;
   datasets.add(Perim2022);
+  datasets.add(Perim2023);
   datasets.add(CreateTerritoriesCodeTable);
   datasets.add(CreateTerritoriesPointTable);
   datasets.add(CreateAiresCovoiturageTable);
@@ -29,10 +33,11 @@ export async function datasets(): Promise<Datasets> {
   datasets.add(TerritoriesCode2020);
   datasets.add(TerritoriesCode2021);
   datasets.add(TerritoriesCode2022);
+  datasets.add(TerritoriesCode2023);
   datasets.add(TerritoriesPoint2020);
   datasets.add(TerritoriesPoint2021);
   datasets.add(TerritoriesPoint2022);
- 
+  datasets.add(TerritoriesPoint2023);
   // add RPC migrations
   const rpcUrl =
     // eslint-disable-next-line max-len
@@ -48,7 +53,7 @@ export async function datasets(): Promise<Datasets> {
   const AiresUrl = 'https://transport.data.gouv.fr/api/datasets/5d6eaffc8b4c417cdc452ac3';
   const lastUrl = await getAiresLastFileUrl(AiresUrl);
   console.debug(lastUrl);
-  datasets.add(transportAires(2022, lastUrl));
+  datasets.add(transportAires(2023, lastUrl));
 
   return datasets;
 }

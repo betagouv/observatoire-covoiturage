@@ -32,7 +32,7 @@ export function transportAires(year: number, url: string): StaticMigrable {
     fileType: FileTypeEnum = FileTypeEnum.Csv;
     sheetOptions = {
       delimiter: ',',
-      columns:true,
+      columns: true,
     };
 
     readonly importSql = `
