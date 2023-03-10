@@ -8,7 +8,6 @@ themes:
   - tendances
 img: https://covoiturage.beta.gouv.fr/images/logo-rpc.png
 legend: ""
-link: https://covoiturage.beta.gouv.fr/
 ---
 
 ## Un plan gouvernemental en faveur du covoiturage
