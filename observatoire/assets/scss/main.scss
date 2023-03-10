@@ -6,6 +6,9 @@
 .fr-card__img img{
   object-fit: contain;
 }
+.fr-content-media__img{
+  text-align:center;
+}
 .hero{
   background-color: $primary;
   padding: 2rem;

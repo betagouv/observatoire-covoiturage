@@ -7,7 +7,7 @@ categories:
 themes: 
   - tendances
 img: https://covoiturage.beta.gouv.fr/images/logo-rpc.png
-legend: "Capamob : un outil en ligne du Cerema pour faire votre diagnostic de mobilité"
+legend: ""
 link: https://covoiturage.beta.gouv.fr/
 ---
 
