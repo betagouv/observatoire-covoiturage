@@ -17,8 +17,8 @@
 
 <script lang="ts">
 import { Component, Watch, Vue } from 'nuxt-property-decorator'
-import { JourneysByHoursInterface } from '../../interfaces/graphs'
 import { mapState } from 'vuex'
+import { JourneysByHoursInterface } from '../../interfaces/graphs'
 import { DashboardState } from '../../../store/dashboard'
 
 @Component({
@@ -28,14 +28,15 @@ import { DashboardState } from '../../../store/dashboard'
     })
   }
 })
-export default class JourneysByHours extends Vue{
-  dashboard!: DashboardState  
+export default class JourneysByHours extends Vue {
+  dashboard!: DashboardState
   data:JourneysByHoursInterface[] | [] = []
-  def_url = "/pages/glossaire/#trajet"
+  def_url = '/pages/glossaire/#trajet'
 
   isLoading = false
   chartOptions = {
     responsive: true,
+    skipNull: true,
     plugins:{
       legend: {
         display: false
@@ -44,7 +45,6 @@ export default class JourneysByHours extends Vue{
     scales: {
       x: {
         ticks: {
-          // Include a dollar sign in the ticks
           callback: function(value, index, ticks) {
             return value + 'h';
           }
@@ -54,7 +54,15 @@ export default class JourneysByHours extends Vue{
     parsing: {
       xAxisKey: 'hour',
       yAxisKey: 'journeys'
-    }    
+    }
+  }
+
+  get dataWithNull(){
+    const arrayA = [...this.data]
+    const arrayB:number[] = Array.from({length:24}, (v, k) => k);
+    const lookupA = arrayA.reduce((acc, curr) => ({ ...acc, [curr.hour]: curr }), {});
+    const result = arrayB.map((hour) => lookupA[hour] ?? { hour, journeys: 0 });
+    return result
   }
 
   get monthList(){
@@ -67,7 +75,7 @@ export default class JourneysByHours extends Vue{
       datasets:[],
     }
     chart.datasets.push({
-      data:this.data,
+      data:this.dataWithNull,
       borderColor:'#000091',
       backgroundColor:'rgba(0, 0, 145, 0.2)',
       tension: 0.1,
