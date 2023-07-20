@@ -8,7 +8,7 @@ themes:
   - action-publique
   - territoires
   - tendances
-img: https://drive.google.com/file/d/1Jq0GqzyPw5J2R_pps6ZhTN-RgRdEfJ8A/view?usp=drive_link
+img: /uploads/fonds-vert.png
 legend: ""
 ---
 
