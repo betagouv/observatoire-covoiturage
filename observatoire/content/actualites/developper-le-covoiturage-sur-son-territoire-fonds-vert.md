@@ -195,7 +195,7 @@ Ce projet ambitieux de réseau de lignes de covoiturage à haut niveau de servic
 [La Communauté d'agglomération Cannes Pays de Lérins](https://www.linkedin.com/company/communaute-d'agglomeration-cannes-pays-de-lerins/) voit sa campagne d'incitation financière co-financée à hauteur de 90 008 € euros grâce au fonds vert ! 💪
 
 ▶️ Les modalités et avantages pour les covoitureurs qui bénéficient de la politique incitative : 
-- Sous réserve d’utiliser l’application Klaxit par BlaBlaCar Daily(https://www.linkedin.com/company/klaxit/) et d’avoir un point de départ et/ou d’arrivée dans l'agglomération.
+- Sous réserve d’utiliser l’application [Klaxit par BlaBlaCar Daily](https://www.linkedin.com/company/klaxit/) et d’avoir un point de départ et/ou d’arrivée dans l'agglomération.
 - gratuité passager dès 2 km ;
 - indemnité pour le conducteur :
   - de 2 à 15 km : 1,5€ incité par passager transporté ;
@@ -223,7 +223,7 @@ Ce projet ambitieux de réseau de lignes de covoiturage à haut niveau de servic
 [Le Syndicat des mobilités de Touraine](https://www.linkedin.com/company/syndicat-des-mobilites-de-touraine/) qui voit sa campagne d'incitation financière co-financée à hauteur de 65 977 € euros grâce au fonds vert ! 💪
 
 ▶️ Les modalités et avantages pour les covoitureurs qui bénéficient de la politique incitative : 
-- Sous réserve d’utiliser l'application Klaxit par BlaBlaCar Daily et d’avoir un point de départ et/ou d’arrivée sur l'une des 25 communes du Syndicat des Mobilités de Touraine.
+- Sous réserve d’utiliser l'application [Klaxit par BlaBlaCar Daily](https://www.linkedin.com/company/klaxit/) et d’avoir un point de départ et/ou d’arrivée sur l'une des 25 communes du Syndicat des Mobilités de Touraine.
 - Les conducteurs effectuant un trajet d'au moins 2 km sont incités selon les règles suivantes :
   - De 2 à 20km : 2€ par passager transporté ;
   - De 20 à 40 km : 2€ par passager + 0,10 € par km supplémentaire par passager ;
@@ -268,7 +268,7 @@ Les conducteurs effectuant un trajet compris entre 2 et 30 km sont incités selo
 
 ### Retour sur le webinaire "Fonds vert : 1€ de l'État pour 1€ de la collectivité - Développement du covoiturage”
 
-Ce webinaire organisé le 04 juillet 2023 par Covoiturage.beta.gouv.fr est à destination des autorités organisatrices de la mobilité qui souhaitent candidater au volet 1 € de l'État pour 1 € de la collectivité de la mesure «Développement du covoiturage» du Fonds vert.
+Ce webinaire organisé le 04 juillet 2023 par Covoiturage.beta.gouv.fr est à destination des autorités organisatrices de la mobilité qui souhaitent candidater au volet 1 € de l'État pour 1 € de la collectivité de la mesure « Développement du covoiturage » du Fonds vert.
 
 #### 📌 Au programme (Durée : 1h30) :
 - Rappel sur les aides locales à destination des collectivités : présentation du volet 1 € de l’État pour 1 € de la collectivité, comment y candidater ?
@@ -278,5 +278,5 @@ Ce webinaire organisé le 04 juillet 2023 par Covoiturage.beta.gouv.fr est à de
 #### 👉 Retrouvez les informations diffusées :
 
 - [Le replay du webinaire](https://drive.google.com/file/d/1qchdBI0I9V8udou0326sI1a8XFHiMUFv/view?usp=sharing)
-- [Le support de présentation du webinaire](/uploads/07042023_webinaire_fonds_vert.pdf)
+- [Le support de présentation du webinaire](https://drive.google.com/file/d/1VT7ycHq-7FzWGY4jKCZNOO_Bd1cDf6Ch/view?usp=sharing)
 - [La FAQ officielle](https://aides-territoires.beta.gouv.fr/programmes/fonds-vert/?tab=faq)
