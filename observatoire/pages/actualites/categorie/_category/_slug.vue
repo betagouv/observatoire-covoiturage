@@ -1,6 +1,6 @@
 <template>
 <div class="fr-section">
-  <div class="fr-container">
+  <div class="fr-container actualites">
     <div class="fr-grid-row">
       <div class="fr-col-12">
         <Breadcrumb :taxonomy="taxonomies.categories[0]" :current="actualite.title"/>

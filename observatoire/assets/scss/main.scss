@@ -196,3 +196,27 @@
 .fr-grid-row--gutters{
   margin:0;
 }
+
+// Actualites articles
+.fr-container {
+  &.actualites {
+    img {
+      display: block;
+      max-width: 100%;
+      margin: 1em auto;
+    }
+    .fig {
+      background: #fdfdfd;
+      border: 1px solid #eee;
+      padding: 0 1em;
+      margin: 0 0 2em;
+      blockquote {
+        font-style: italic;
+      }
+      figcaption {
+        font-size: 80%;
+        text-align: right;
+      }
+    }
+  }
+}
